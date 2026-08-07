@@ -1,0 +1,36 @@
+{
+  "year": 2026,
+  "effectiveFrom": "2026-01-01",
+  "taxBaseDeductsContributions": true,
+  "allowanceType": "flat",
+  "flatAllowanceAmount": 600.0,
+  "brackets": [
+    { "upTo": 5000.0, "rate": 0.20 },
+    { "upTo": null, "rate": 0.30 }
+  ],
+  "contributions": [
+    {
+      "id": "pension",
+      "label": "Pension insurance (Pillar I + II)",
+      "employeeRate": 0.20,
+      "employerRate": 0.0,
+      "minBase": null,
+      "maxBase": 11958.0
+    },
+    {
+      "id": "health",
+      "label": "Health insurance (employer-paid)",
+      "employeeRate": 0.0,
+      "employerRate": 0.165,
+      "minBase": null,
+      "maxBase": null
+    }
+  ],
+  "localSurtax": { "defaultRate": 0.0, "maxRate": 0.15 },
+  "sources": [
+    "https://finacro.hr/en/dobro-je-znati/key-changes-in-salaries-and-income-tax-as-of-january-1-2026/",
+    "https://taxravens.com/en/croatia/income-tax",
+    "https://taxravens.com/en/croatia/social-contributions"
+  ],
+  "lastUpdated": "2026-08-06"
+}

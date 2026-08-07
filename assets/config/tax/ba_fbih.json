@@ -1,0 +1,43 @@
+{
+  "year": 2026,
+  "effectiveFrom": "2026-01-01",
+  "taxBaseDeductsContributions": true,
+  "allowanceType": "flat",
+  "flatAllowanceAmount": 300.0,
+  "brackets": [
+    { "upTo": null, "rate": 0.10 }
+  ],
+  "contributions": [
+    {
+      "id": "pension",
+      "label": "Pension & disability insurance",
+      "employeeRate": 0.17,
+      "employerRate": 0.025,
+      "minBase": null,
+      "maxBase": null
+    },
+    {
+      "id": "health",
+      "label": "Health insurance",
+      "employeeRate": 0.125,
+      "employerRate": 0.02,
+      "minBase": null,
+      "maxBase": null
+    },
+    {
+      "id": "unemployment",
+      "label": "Unemployment insurance",
+      "employeeRate": 0.015,
+      "employerRate": 0.005,
+      "minBase": null,
+      "maxBase": null
+    }
+  ],
+  "localSurtax": null,
+  "sources": [
+    "https://rivermate.com/guides/bosnia-and-herzegovina/taxes",
+    "https://taxravens.com/en/bosnia-and-herzegovina/salary-calculation-example",
+    "https://eurofast.eu/wp-content/uploads/2026/02/PayrollGuide2026-Bosnia.pdf"
+  ],
+  "lastUpdated": "2026-08-06"
+}

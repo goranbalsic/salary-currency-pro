@@ -1,0 +1,36 @@
+{
+  "year": 2026,
+  "effectiveFrom": "2026-01-01",
+  "taxBaseDeductsContributions": true,
+  "allowanceType": "formula",
+  "flatAllowanceAmount": null,
+  "allowanceParams": {
+    "lowerAnnualIncomeThreshold": 16000.0,
+    "higherAllowanceAnnual": 7500.0,
+    "lowerAllowanceAnnual": 5000.0
+  },
+  "brackets": [
+    { "upTo": 767.50, "rate": 0.16 },
+    { "upTo": 2257.42, "rate": 0.26 },
+    { "upTo": 4514.83, "rate": 0.33 },
+    { "upTo": 6501.33, "rate": 0.39 },
+    { "upTo": null, "rate": 0.50 }
+  ],
+  "contributions": [
+    {
+      "id": "social",
+      "label": "Social security (pension, health, unemployment, maternity)",
+      "employeeRate": 0.221,
+      "employerRate": 0.161,
+      "minBase": null,
+      "maxBase": 6862.17
+    }
+  ],
+  "localSurtax": null,
+  "sources": [
+    "https://orbitax.com/news/country/article/Slovenia-Personal-Income-Tax-B-60703",
+    "https://taxravens.com/en/slovenia/social-security",
+    "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/slovenia_e96deb88.html"
+  ],
+  "lastUpdated": "2026-08-06"
+}

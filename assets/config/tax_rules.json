@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "rules_version": "2026-08-07",
+  "regimes": {
+    "rs": {
+      "country": "rs",
+      "regimeName": "Samooporezivanje frilensera",
+      "currency": "RSD",
+      "filingForm": "PP OPO-K",
+      "sources": [
+        "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2",
+        "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf",
+        "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"
+      ],
+      "values": {
+        "model1TaxRate": {"value": 0.20, "effectiveFrom": "2026-02-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "model1NormativeExpenseQuarterly": {"value": 110647.0, "effectiveFrom": "2026-02-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "model2TaxRate": {"value": 0.10, "effectiveFrom": "2026-02-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "model2FixedDeductionQuarterly": {"value": 66733.0, "effectiveFrom": "2026-02-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "model2PercentDeduction": {"value": 0.34, "effectiveFrom": "2026-02-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "pioMinBaseQuarterlyMultiple": {"value": 3, "effectiveFrom": "2026-01-01", "source": "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"},
+        "pioContributionRate": {"value": 0.24, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "healthContributionRate": {"value": 0.1030, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "unemploymentContributionRate": {"value": 0.0075, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "minMonthlyContributionBase": {"value": 51297.0, "effectiveFrom": "2026-01-01", "source": "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"},
+        "maxMonthlyContributionBase": {"value": 732820.0, "effectiveFrom": "2026-01-01", "source": "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"},
+        "maxAnnualContributionBase": {"value": 8793840.0, "effectiveFrom": "2026-01-01", "source": "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"},
+        "vatThresholdRolling12m": {"value": 8000000.0, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "pausalCeilingAnnual": {"value": 6000000.0, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "pausalTotalBurdenPercentOfDeemedBase": {"value": 0.4505, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "filingDeadlineDaysAfterQuarterEnd": {"value": 30, "effectiveFrom": "2026-01-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
+        "contributionsDeductibleFromTaxBase": {"value": false, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"}
+      }
+    },
+    "bg": {
+      "country": "bg",
+      "regimeName": "Свободна професия",
+      "currency": "EUR",
+      "filingForm": "Приложение 3 (образец 2031), чл. 50 ЗДДФЛ",
+      "sources": [
+        "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii",
+        "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2",
+        "https://nra.bg/wps/portal/nra/taxes/dds-v-balgariya/registratsiya-po-zdds"
+      ],
+      "values": {
+        "normativeExpensePercent": {"value": 0.25, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "normativeExpensePercentRegulatedCreative": {"value": 0.40, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "normativeExpensePercentUnprocessedAgricultural": {"value": 0.60, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "taxRate": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "pensionRateBornBefore1960": {"value": 0.198, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "pensionRateBornFrom1960": {"value": 0.148, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "upfSupplementaryRateBornFrom1960": {"value": 0.05, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "healthContributionRate": {"value": 0.08, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "sicknessContributionRateOptional": {"value": 0.035, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "minMonthlyInsuranceBaseEur": {"value": 550.66, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "maxMonthlyInsuranceBaseEur": {"value": 2111.64, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "vatThresholdAnnualEur": {"value": 51130.0, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/taxes/dds-v-balgariya/registratsiya-po-zdds"},
+        "eFilingDiscountPercent": {"value": 0.05, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "eFilingDiscountMaxBgn": {"value": 500.0, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "eurBgnPegRate": {"value": 1.95583, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
+        "contributionsDeductedBeforeTaxBase": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"}
+      }
+    },
+    "hr": {
+      "country": "hr",
+      "regimeName": "Paušalni obrt",
+      "currency": "EUR",
+      "filingForm": "PO-SD / DOH",
+      "sources": [
+        "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775",
+        "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/",
+        "https://stuasistent.hr/porezni-razredi-i-doprinosi-za-pausalne-obrte-u-2026-godini/"
+      ],
+      "values": {
+        "deemedIncomePercent": {"value": 0.15, "effectiveFrom": "2026-01-01", "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"},
+        "deemedIncomeTaxRate": {"value": 0.12, "effectiveFrom": "2026-01-01", "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"},
+        "receiptBands": {
+          "value": [
+            {"upTo": 11300, "annualBase": 1695, "annualTax": 203.40},
+            {"upTo": 15300, "annualBase": 2295, "annualTax": 275.40},
+            {"upTo": 19900, "annualBase": 2985, "annualTax": 358.20},
+            {"upTo": 30600, "annualBase": 4590, "annualTax": 550.80},
+            {"upTo": 40000, "annualBase": 6000, "annualTax": 720.0},
+            {"upTo": 50000, "annualBase": 7500, "annualTax": 900.0},
+            {"upTo": 60000, "annualBase": 9000, "annualTax": 1080.0}
+          ],
+          "effectiveFrom": "2026-01-01",
+          "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"
+        },
+        "contributionsFixedMonthlyBase": {"value": 797.20, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "contributionRateMioI": {"value": 0.15, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "contributionRateMioII": {"value": 0.05, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "contributionRateHealth": {"value": 0.165, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "contributionsFixedMonthlyTotal": {"value": 290.98, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "secondActivityContributionPercentOfAnnualDeemedBase": {"value": 0.175, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "minMonthlyBase": {"value": 757.34, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "maxMonthlyBase": {"value": 11958.00, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "maxAnnualBase": {"value": 143496.00, "effectiveFrom": "2026-01-01", "source": "https://www.teb.hr/novosti/2025/osnovice-za-obracun-doprinosa-u-2026-godini/"},
+        "vatThresholdAnnual": {"value": 60000.0, "effectiveFrom": "2026-01-01", "source": "https://stuasistent.hr/porezni-razredi-i-doprinosi-za-pausalne-obrte-u-2026-godini/"},
+        "pausalCeilingAnnual": {"value": 60000.0, "effectiveFrom": "2026-01-01", "source": "https://stuasistent.hr/porezni-razredi-i-doprinosi-za-pausalne-obrte-u-2026-godini/"},
+        "quarterlyInstalments": {"value": 4, "effectiveFrom": "2026-01-01", "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"},
+        "drugiDohodakFlatExpensePercent": {"value": 0.30, "effectiveFrom": "2026-01-01", "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"},
+        "drugiDohodakMioRate": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://porezna-uprava.gov.hr/hr/porezna-osnovica-i-stope/4775"}
+      }
+    },
+    "ba_fbih": {
+      "country": "ba",
+      "regimeName": "Samostalna djelatnost (FBiH)",
+      "currency": "BAM",
+      "filingForm": "GIP",
+      "sources": [
+        "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026",
+        "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"
+      ],
+      "values": {
+        "taxRate": {"value": 0.10, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "personalAllowanceMonthly": {"value": 300.0, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "personalAllowanceAnnual": {"value": 3600.0, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "dependantCoefficientSpouse": {"value": 0.5, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "dependantCoefficientFirstChild": {"value": 0.5, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "dependantCoefficientSecondChild": {"value": 0.7, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "dependantCoefficientThirdPlusChild": {"value": 0.9, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "dependantCoefficientDisability": {"value": 0.3, "effectiveFrom": "2026-02-16", "source": "https://feb.ba/wp-content/uploads/2026/02/16_02_2026_PRECISCENI-Pravilnik-o-primjeni-Zakona-o-porezu-na-dohodak-12-26.pdf"},
+        "contributionTotalRate": {"value": 0.36, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "contributionRatePio": {"value": 0.195, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "contributionRateHealth": {"value": 0.145, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "contributionRateUnemployment": {"value": 0.02, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "statutoryBaseFreeProfessionsMonthly": {"value": 2710.00, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "statutoryBaseObrtMonthly": {"value": 1602.00, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "statutoryBaseAgricultureMonthly": {"value": 715.00, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "statutoryBaseLumpSumObrtMonthly": {"value": 1355.00, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "statutoryBaseTraditionalCraftsTaxiMonthly": {"value": 616.00, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "maxContributionBase": {"value": null, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "contributionsDeductibleFromTaxBase": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"},
+        "vatThresholdAnnual": {"value": 100000.0, "effectiveFrom": "2023-12-02", "source": "https://mojobrt.ba/blog/osnovice-za-doprinose-slobodna-zanimanja-2026"}
+      }
+    },
+    "ba_rs": {
+      "country": "ba",
+      "regimeName": "Mali preduzetnik (Republika Srpska)",
+      "currency": "BAM",
+      "filingForm": null,
+      "sources": [
+        "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news",
+        "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html",
+        "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"
+      ],
+      "values": {
+        "smallEntrepreneurFlatTaxLowBandAnnual": {"value": 600.0, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "smallEntrepreneurFlatTaxMidBandAnnual": {"value": 1200.0, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "smallEntrepreneurLowBandRevenueCeiling": {"value": 50000.0, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "smallEntrepreneurMidBandRevenueCeiling": {"value": 100000.0, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "realProfitTaxRateAboveMidBand": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "contributionTotalRate": {"value": 0.31, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "contributionRatePio": {"value": 0.185, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "contributionRateHealth": {"value": 0.102, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "contributionRateUnemployment": {"value": 0.006, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "contributionRateChildProtection": {"value": 0.017, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "contributionBasePercentOfPriorYearAvgSalary": {"value": 0.70, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "priorYearAvgGrossSalaryMonthly": {"value": 2349.0, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "contributionBaseMonthly": {"value": 1644.30, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "contributionMonthlyAmount": {"value": 509.73, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "independentProfessionsBasePercentOfAvg": {"value": 1.00, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "independentProfessionsContributionMonthly": {"value": 728.19, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "supplementaryActivityPioOnlyPercentOfAvg": {"value": 0.30, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "supplementaryActivityPioOnlyMonthly": {"value": 130.37, "effectiveFrom": "2026-01-01", "source": "https://zanatskakomorars.com/ukinuto-povecanje-osnovice-za-doprinose-za-preduzetnike-od-1-januara-2026-godine/"},
+        "minTotalBurdenAnnualLowRevenue": {"value": 6680.28, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "minTotalBurdenAnnualHighRevenue": {"value": 7280.28, "effectiveFrom": "2026-01-01", "source": "https://ba.bloombergadria.com/ekonomija/bih/92842/samostalni-preduzetnici-u-rs-obaveze-u-2026/news"},
+        "maxContributionBase": {"value": null, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"},
+        "vatThresholdAnnual": {"value": 100000.0, "effectiveFrom": "2026-01-01", "source": "https://www.paragraf.ba/propisi/republika-srpska/zakon-o-doprinosima.html"}
+      }
+    },
+    "me": {
+      "country": "me",
+      "regimeName": "Preduzetnik",
+      "currency": "EUR",
+      "filingForm": "GPP-FL",
+      "sources": [
+        "https://unija.com/cg/porez-na-dohodak-fizickih-lica/",
+        "https://eporezi.me/vodici/porez-na-dohodak",
+        "https://eporezi.me/vodici/pdv"
+      ],
+      "values": {
+        "taxBrackets": {
+          "value": [
+            {"upTo": 8400, "rate": 0.0},
+            {"upTo": 12000, "rate": 0.09},
+            {"upTo": null, "rate": 0.15}
+          ],
+          "effectiveFrom": "2026-01-01",
+          "source": "https://unija.com/cg/porez-na-dohodak-fizickih-lica/"
+        },
+        "municipalSurtaxPodgoricaCetinje": {"value": 0.15, "effectiveFrom": "2026-01-01", "source": "https://unija.com/cg/porez-na-dohodak-fizickih-lica/"},
+        "municipalSurtaxMostMunicipalities": {"value": 0.13, "effectiveFrom": "2026-01-01", "source": "https://unija.com/cg/porez-na-dohodak-fizickih-lica/"},
+        "municipalSurtaxBudva": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://unija.com/cg/porez-na-dohodak-fizickih-lica/"},
+        "contributionRatePio": {"value": 0.10, "effectiveFrom": "2022-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "contributionRateHealth": {"value": 0.0, "effectiveFrom": "2022-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "contributionRateUnemployment": {"value": 0.005, "effectiveFrom": "2022-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "minContributionBase": {"value": null, "effectiveFrom": "2026-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "maxContributionBase": {"value": null, "effectiveFrom": "2026-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "pausalCeilingAnnual": {"value": 30000.0, "effectiveFrom": "2025-01-01", "source": "https://eporezi.me/vodici/porez-na-dohodak"},
+        "pausalRecognisedCostsByActivityGroup": {
+          "value": [
+            {"group": "A", "percent": 0.50},
+            {"group": "B", "percent": 0.40},
+            {"group": "C", "percent": 0.35},
+            {"group": "D", "percent": 0.30}
+          ],
+          "effectiveFrom": "2025-01-01",
+          "source": "https://eporezi.me/vodici/porez-na-dohodak"
+        },
+        "pausalAnnualTaxScale": {
+          "value": [
+            {"upTo": 1250, "annualTax": 70},
+            {"upTo": 2500, "annualTax": 260},
+            {"upTo": 3750, "annualTax": 450},
+            {"upTo": 4500, "annualTax": 540}
+          ],
+          "effectiveFrom": "2025-01-01",
+          "source": "https://eporezi.me/vodici/porez-na-dohodak"
+        },
+        "vatThresholdAnnual": {"value": 30000.0, "effectiveFrom": "2026-01-01", "source": "https://eporezi.me/vodici/pdv"}
+      }
+    },
+    "mk": {
+      "country": "mk",
+      "regimeName": "Самостојна дејност",
+      "currency": "MKD",
+      "filingForm": "Образец „Б\" + ДЛД-ДБ / ДЛД-ГДП",
+      "sources": [
+        "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf",
+        "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266",
+        "https://ujp.gov.mk/;133305/javnost/soopstenija/pogledni/1187"
+      ],
+      "values": {
+        "taxRate": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf"},
+        "investmentReductionPercent": {"value": 0.30, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf"},
+        "investmentReductionCapPercentOfBase": {"value": 0.50, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf"},
+        "contributionRatePio": {"value": 0.199, "effectiveFrom": "2026-07-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "contributionRateHealth": {"value": 0.075, "effectiveFrom": "2026-07-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "contributionRateInjury": {"value": 0.005, "effectiveFrom": "2026-07-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "contributionRateUnemployment": {"value": 0.001, "effectiveFrom": "2026-07-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "contributionTotalRate": {"value": 0.28, "effectiveFrom": "2026-07-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "previousContributionRatePio": {"value": 0.188, "effectiveFrom": "2026-01-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "previousContributionRateHealth": {"value": 0.075, "effectiveFrom": "2026-01-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "previousContributionRateInjury": {"value": 0.012, "effectiveFrom": "2026-01-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "previousContributionRateUnemployment": {"value": 0.005, "effectiveFrom": "2026-01-01", "source": "https://www.ujp.gov.mk/-/javnost/soopstenija/pogledni/1266"},
+        "averageGrossMonthlySalary": {"value": 69141.0, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/;133305/javnost/soopstenija/pogledni/1187"},
+        "minContributionBaseMonthly": {"value": 34570.0, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/;133305/javnost/soopstenija/pogledni/1187"},
+        "maxContributionBaseMonthly": {"value": 829692.0, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/;133305/javnost/soopstenija/pogledni/1187"},
+        "regulatedProfessionsMinBaseMonthly": {"value": 69141.0, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/;133305/javnost/soopstenija/pogledni/1187"},
+        "vatThresholdAnnual": {"value": 2000000.0, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf"},
+        "monthlyAdvanceDenominator": {"value": 12, "effectiveFrom": "2026-01-01", "source": "https://ujp.gov.mk/files/attachment/0000/0730/08-2102-1-Odanocuvanje_na_prihodi_ostvareni_od_vrsenje_na_samostojna_dejnost_09.03.2026.pdf"}
+      }
+    },
+    "si": {
+      "country": "si",
+      "regimeName": "Normirani s.p. / Popoldanski s.p.",
+      "currency": "EUR",
+      "filingForm": "DDV-P2",
+      "sources": [
+        "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema",
+        "https://mojizracun.si/davcni-vodic-sp",
+        "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/",
+        "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"
+      ],
+      "values": {
+        "normiraniDeemedExpensePercent": {"value": 0.80, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "normiraniDeemedExpenseCapEur": {"value": 48000.0, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "normiraniRevenueThresholdEur": {"value": 60000.0, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "normiraniTaxRateLow": {"value": 0.20, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "normiraniTaxRateHigh": {"value": 0.35, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "normiraniTaxBaseThresholdEur": {"value": 72000.0, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "normiraniContributionTotalRate": {"value": 0.4020, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionRatePiz": {"value": 0.2435, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionRateZzzs": {"value": 0.1345, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionRateLongTermCare": {"value": 0.02, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionRateParentalEmployment": {"value": 0.004, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniFlatOzpMonthly": {"value": 39.36, "effectiveFrom": "2026-03-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionMinMonthly": {"value": 651.04, "effectiveFrom": "2026-04-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniContributionMaxMonthly": {"value": 3607.57, "effectiveFrom": "2026-04-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "normiraniMinBaseMonthly": {"value": 1521.62, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "normiraniMaxBaseMonthly": {"value": 8876.11, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "normiraniNewSpReliefYear1MinMonthly": {"value": 463.60, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "normiraniNewSpReliefYear1MaxMonthly": {"value": 465.79, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "normiraniNewSpReliefYear2Monthly": {"value": 540.74, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "normiraniEntryCeilingEur": {"value": 120000.0, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "popoldanskiDeemedExpensePercentLow": {"value": 0.80, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "popoldanskiDeemedExpensePercentHigh": {"value": 0.40, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "popoldanskiDeemedExpenseLowThresholdEur": {"value": 12500.0, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "popoldanskiDeemedExpenseHighThresholdEur": {"value": 30000.0, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "popoldanskiDeemedExpenseCapEur": {"value": 17000.0, "effectiveFrom": "2026-01-01", "source": "https://www.gov.si/novice/2025-11-24-novosti-pri-ugotavljanju-davcne-osnove-z-upostevanjem-normiranih-odhodkov-v-letu-2026/"},
+        "popoldanskiTaxRateLow": {"value": 0.20, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "popoldanskiTaxRateHigh": {"value": 0.35, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "popoldanskiTaxBaseThresholdEur": {"value": 33000.0, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "popoldanskiFlatContributionMonthlyJanMar2026": {"value": 110.11, "effectiveFrom": "2026-01-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "popoldanskiFlatContributionMonthlyFromApr2026": {"value": 113.01, "effectiveFrom": "2026-04-01", "source": "https://lider.si/polni-s-p-v-aprilu-2026-placa-651-evrov-prispevkov-popoldanski-113-evrov/"},
+        "popoldanskiEntryCeilingEur": {"value": 50000.0, "effectiveFrom": "2026-01-01", "source": "https://www.frs.si/spremembe-obdavcitve-za-normirance-v-letu-2026-kaj-prinasa-nova-shema"},
+        "vatThresholdEur": {"value": 60000.0, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"},
+        "vatDelayedRegistrationCeilingEur": {"value": 66000.0, "effectiveFrom": "2026-01-01", "source": "https://mojizracun.si/davcni-vodic-sp"}
+      }
+    },
+    "al": {
+      "country": "al",
+      "regimeName": "I vetëpunësuar (Ligji 29/2023)",
+      "currency": "ALL",
+      "filingForm": "Deklarata Vjetore + DIVA",
+      "sources": [
+        "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/",
+        "https://sherbimekontabiliteti.al/en/albania-tax-changes-2026/",
+        "https://www.karanovicpartners.com/news/albania-implementing-new-income-tax-law/"
+      ],
+      "values": {
+        "zeroTaxTurnoverCeilingAll": {"value": 14000000.0, "effectiveFrom": "2025-01-01", "source": "https://sherbimekontabiliteti.al/en/albania-tax-changes-2026/"},
+        "taxBracketsAboveZeroCeiling": {
+          "value": [
+            {"upTo": 14000000, "rate": 0.15},
+            {"upTo": null, "rate": 0.23}
+          ],
+          "effectiveFrom": "2025-01-01",
+          "source": "https://sherbimekontabiliteti.al/en/albania-tax-changes-2026/"
+        },
+        "socialContributionRatePercentOfMinWage": {"value": 0.23, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "healthContributionRatePercentOfTwiceMinWage": {"value": 0.034, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "minimumWageMonthlyAll": {"value": 50000.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "fixedMonthlyContributionAll": {"value": 14900.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "fixedAnnualContributionAll": {"value": 178800.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "contributionDueDayOfMonth": {"value": 20, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "minContributionBaseMonthly": {"value": 50000.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "maxContributionBaseMonthly": {"value": 186416.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "selfEmployedHealthBaseFixedMonthly": {"value": 100000.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "deemedExpensePercentTurnoverUpTo10M": {"value": null, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "vatThresholdAll": {"value": 10000000.0, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "regulatedProfessionsMustRegisterForVatRegardlessOfTurnover": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "contributionsDeductibleFromTaxBase": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://sherbimekontabiliteti.al/en/freelancer-tax-guide-albania/"},
+        "employeeLikeThresholdSingleClientPercent": {"value": 0.80, "effectiveFrom": "2026-01-01", "source": "https://www.karanovicpartners.com/news/albania-implementing-new-income-tax-law/"},
+        "employeeLikeThresholdFewClientsPercent": {"value": 0.90, "effectiveFrom": "2026-01-01", "source": "https://www.karanovicpartners.com/news/albania-implementing-new-income-tax-law/"},
+        "employeeLikeThresholdFewClientsCount": {"value": 3, "effectiveFrom": "2026-01-01", "source": "https://www.karanovicpartners.com/news/albania-implementing-new-income-tax-law/"}
+      }
+    },
+    "ro": {
+      "country": "ro",
+      "regimeName": "PFA în sistem real / normă de venit",
+      "currency": "RON",
+      "filingForm": "Declarația Unică D212",
+      "sources": [
+        "https://declaratie-unica.ro/ghiduri/pfa",
+        "https://eghiseul.ro/calculator/contributii-pfa/",
+        "https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/Brosura_Declaratia_Unica_212_2025.pdf",
+        "https://www.solo.ro/blog/declaratia-unica-2026-pentru-pfa-termene-ce-completezi-si-ce-e-nou-fata-de-2025"
+      ],
+      "values": {
+        "taxRate": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://declaratie-unica.ro/ghiduri/pfa"},
+        "minimumGrossSalaryMonthlyRon": {"value": 4050.0, "effectiveFrom": "2026-01-01", "source": "https://declaratie-unica.ro/ghiduri/pfa"},
+        "casRate": {"value": 0.25, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "casThresholdMultiple12": {"value": 12, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "casThresholdMultiple24": {"value": 24, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "cassRate": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "cassFloorMultiple": {"value": 6, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold6SmRon": {"value": 24300.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold6SmMinCassRon": {"value": 2430.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold12SmRon": {"value": 48600.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold12SmCasRon": {"value": 12150.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold24SmRon": {"value": 97200.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "threshold24SmCasRon": {"value": 24300.0, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "cassCapMultiple2026": {"value": 72, "effectiveFrom": "2026-01-01", "source": "https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/Brosura_Declaratia_Unica_212_2025.pdf"},
+        "cassCapRon2026": {"value": 291600.0, "effectiveFrom": "2026-01-01", "source": "https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/Brosura_Declaratia_Unica_212_2025.pdf"},
+        "earlyFilingBonusPercent": {"value": 0.03, "effectiveFrom": "2026-01-01", "source": "https://www.solo.ro/blog/declaratia-unica-2026-pentru-pfa-termene-ce-completezi-si-ce-e-nou-fata-de-2025"},
+        "vatThresholdRon": {"value": 395000.0, "effectiveFrom": "2025-09-01", "source": "https://declaratie-unica.ro/ghiduri/pfa"},
+        "standardVatRate": {"value": 0.21, "effectiveFrom": "2025-08-01", "source": "https://declaratie-unica.ro/ghiduri/pfa"},
+        "normaDeVenitCeilingEur": {"value": 25000.0, "effectiveFrom": "2026-01-01", "source": "https://declaratie-unica.ro/ghiduri/pfa"},
+        "casDeductibleFromTaxBase": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"},
+        "cassDeductibleFromTaxBase": {"value": true, "effectiveFrom": "2026-01-01", "source": "https://eghiseul.ro/calculator/contributii-pfa/"}
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "rates": {
+    "rs": 20.0,
+    "hr": 25.0,
+    "ba": 17.0,
+    "me": 21.0,
+    "mk": 18.0,
+    "si": 22.0,
+    "bg": 20.0,
+    "al": 20.0,
+    "ro": 21.0
+  },
+  "sources": [
+    "https://taxfoundation.org/data/all/eu/value-added-tax-vat-rates-europe/",
+    "https://www.vatcalc.com/vat-rates/",
+    "https://taxratesbycountry.com/"
+  ],
+  "lastUpdated": "2026-08-06"
+}

@@ -1,0 +1,35 @@
+{
+  "year": 2026,
+  "effectiveFrom": "2026-01-01",
+  "taxBaseDeductsContributions": true,
+  "allowanceType": "flat",
+  "flatAllowanceAmount": 0.0,
+  "brackets": [
+    { "upTo": null, "rate": 0.10 }
+  ],
+  "contributions": [
+    {
+      "id": "social",
+      "label": "Social insurance",
+      "employeeRate": 0.1058,
+      "employerRate": 0.1412,
+      "minBase": null,
+      "maxBase": 3850.0
+    },
+    {
+      "id": "health",
+      "label": "Health insurance",
+      "employeeRate": 0.032,
+      "employerRate": 0.048,
+      "minBase": null,
+      "maxBase": 3850.0
+    }
+  ],
+  "localSurtax": null,
+  "sources": [
+    "https://innovires.com/tax-residency/blog/social-security-bulgaria-contributions.html",
+    "https://taxravens.com/en/bulgaria/social-contributions",
+    "https://outsorcy.com/payroll-taxes-in-bulgaria/"
+  ],
+  "lastUpdated": "2026-08-06"
+}
