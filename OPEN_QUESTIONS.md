@@ -246,7 +246,29 @@ Does it block current work? No — PROMPT-004 itself is unaffected.
 Recommended default if no answer is received: option (a) as a scoped
 follow-up prompt, not folded silently into unrelated work.
 
-Status: Open, non-blocking.
+**Resolved 2026-08-08 (PROMPT-005 Part 3, option (a)):** full audit found
+the blast radius was narrower than feared — `grep` confirmed `BGN`/`лв`
+appeared in exactly one place in the entire codebase
+(`lib/models/country.dart`), since the currency converter, expense/
+budget/invoice trackers, and loan/savings/VAT-amount display all use an
+independent currency picker that never listed BGN. Fixed:
+`Country.currencyCode`/`currencySymbol` for `bg` → `EUR`/`€`;
+`assets/config/tax/bg.json`'s contribution-base cap re-sourced from NRA
+directly (was 3850 from non-NRA blogs, now EUR 2,300, itself found to be
+stale as of 1 Aug 2026 — also fixed in `tax_rules.json`); an idempotent,
+versioned `BgEuroMigrationService` redenominates any pre-existing
+Bulgaria salary/VAT `Scenario` amount at the fixed 1.95583 peg exactly
+once (8 tests, including a run-twice-is-a-no-op test); BGN kept in the
+currency converter as a legacy/pegged entry only (`ExchangeRateService`
+special-cases it — confirmed live that Frankfurter has removed BGN
+entirely, so no live fetch was ever possible for it going forward); dual
+mandatory price display was live-verified to run 2025-08-08 through
+2026-08-08 (today) — expiring within the day this was fixed, so single
+EUR display (already the only mode the app has) was kept rather than
+building a toggle for a requirement that's already over. See
+`DECISIONS.md` D-020.
+
+Status: Resolved.
 
 ## Question Template
 

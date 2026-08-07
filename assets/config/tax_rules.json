@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "rules_version": "2026-08-07",
+  "rules_version": "2026-08-08",
   "regimes": {
     "rs": {
       "country": "rs",
@@ -53,7 +53,7 @@
         "healthContributionRate": {"value": 0.08, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
         "sicknessContributionRateOptional": {"value": 0.035, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
         "minMonthlyInsuranceBaseEur": {"value": 550.66, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
-        "maxMonthlyInsuranceBaseEur": {"value": 2111.64, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
+        "maxMonthlyInsuranceBaseEur": {"value": 2300.0, "effectiveFrom": "2026-08-01", "source": "https://nra.bg/wps/portal/nra/osiguryavane/osiguritelen-dohod-2"},
         "vatThresholdAnnualEur": {"value": 51130.0, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/portal/nra/taxes/dds-v-balgariya/registratsiya-po-zdds"},
         "eFilingDiscountPercent": {"value": 0.05, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},
         "eFilingDiscountMaxBgn": {"value": 500.0, "effectiveFrom": "2026-01-01", "source": "https://nra.bg/wps/wcm/connect/agency/site/taxes/danak-vurhu-dohodite-na-fizicheski-lica/svobodni-profesii"},

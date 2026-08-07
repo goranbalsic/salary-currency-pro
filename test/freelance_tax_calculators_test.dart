@@ -100,8 +100,9 @@ void main() {
       final r = strategy.compute(regime, const FreelanceTaxInput(income: 20000));
       final reduced = 20000 * 0.75; // 25% normative expense
       expect(r.totalDeduction, closeTo(5000.0, 0.01));
-      // insurance base clamped to [550.66*12, 2111.64*12]
-      final base = reduced.clamp(550.66 * 12, 2111.64 * 12);
+      // insurance base clamped to [550.66*12, 2300.0*12] — max updated
+      // 1 Aug 2026 to EUR 2,300/month, per NRA (PROMPT-005 Part 3 audit).
+      final base = reduced.clamp(550.66 * 12, 2300.0 * 12);
       final pension = base * (0.148 + 0.05);
       final health = base * 0.08;
       expect(r.contributions['pension'], closeTo(pension, 1));

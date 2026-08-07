@@ -145,4 +145,65 @@ void main() {
     expect(result.rate, 117.3);
     expect(result.source, contains('open.er-api.com'));
   });
+
+  group('BGN — legacy pegged entry, never live-fetched (PROMPT-005 Part 3)', () {
+    test('BGN -> EUR uses the fixed 1.95583 peg without touching any provider', () async {
+      final frankfurter = _FakeProvider(
+        'frankfurter',
+        (_) => throw StateError('BGN must never reach a live provider'),
+      );
+      final service = ExchangeRateService(frankfurter: frankfurter, cache: RateCacheService());
+
+      final result = await service.getRate('BGN', 'EUR');
+
+      expect(result.rate, closeTo(1 / 1.95583, 0.00001));
+      expect(result.isLive, isTrue);
+      expect(result.source, contains('peg'));
+    });
+
+    test('EUR -> BGN uses the fixed 1.95583 peg', () async {
+      final service = ExchangeRateService(
+        frankfurter: _FakeProvider('frankfurter', (_) => throw StateError('should not be called')),
+        cache: RateCacheService(),
+      );
+
+      final result = await service.getRate('EUR', 'BGN');
+      expect(result.rate, closeTo(1.95583, 0.00001));
+    });
+
+    test('1000 BGN converts to exactly 511.30 EUR (the real redenomination amount)', () async {
+      final service = ExchangeRateService(
+        frankfurter: _FakeProvider('frankfurter', (_) => throw StateError('should not be called')),
+        cache: RateCacheService(),
+      );
+      final result = await service.getRate('BGN', 'EUR');
+      expect(1000 * result.rate, closeTo(511.30, 0.01));
+    });
+
+    test('BGN -> USD compounds the peg with a live EUR -> USD rate', () async {
+      final frankfurter = _FakeProvider(
+        'frankfurter',
+        (base) => _snapshot(base: 'EUR', rates: {'USD': 1.1}),
+      );
+      final service = ExchangeRateService(frankfurter: frankfurter, cache: RateCacheService());
+
+      final result = await service.getRate('BGN', 'USD');
+
+      // 1 BGN = (1/1.95583) EUR = 0.51130 EUR = 0.51130 * 1.1 USD.
+      expect(result.rate, closeTo((1 / 1.95583) * 1.1, 0.0001));
+    });
+
+    test('USD -> BGN compounds a live EUR -> USD rate with the peg (inverted)', () async {
+      final frankfurter = _FakeProvider(
+        'frankfurter',
+        (base) => _snapshot(base: 'EUR', rates: {'USD': 1.1}),
+      );
+      final service = ExchangeRateService(frankfurter: frankfurter, cache: RateCacheService());
+
+      final result = await service.getRate('USD', 'BGN');
+
+      // 1 USD = (1/1.1) EUR = (1/1.1)*1.95583 BGN.
+      expect(result.rate, closeTo((1 / 1.1) * 1.95583, 0.0001));
+    });
+  });
 }

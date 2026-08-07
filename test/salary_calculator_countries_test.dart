@@ -149,7 +149,10 @@ void main() {
     expectMonotonicAndInvertible(calc, 'North Macedonia');
   });
 
-  test('Bulgaria — gross BGN 2,000/mo', () async {
+  test('Bulgaria — gross EUR 2,000/mo (below the EUR 2,300 contribution cap)', () async {
+    // Bulgaria adopted the euro 1 Jan 2026 (DECISIONS.md D-020); this
+    // config's contribution base is EUR-denominated, cap EUR 2,300/month
+    // effective 1 Aug 2026. 2,000 is below the cap, so it isn't clamped.
     final cfg = await load('bg', 'assets/config/tax/bg.json');
     final calc = SalaryCalculator(cfg);
     final r = calc.fromBruto(2000);
@@ -165,6 +168,16 @@ void main() {
     expect(r.bruto2, closeTo(2378.4, 0.001));
 
     expectMonotonicAndInvertible(calc, 'Bulgaria');
+  });
+
+  test('Bulgaria — gross EUR 3,000/mo is clamped at the EUR 2,300 contribution cap', () async {
+    final cfg = await load('bg', 'assets/config/tax/bg.json');
+    final calc = SalaryCalculator(cfg);
+    final r = calc.fromBruto(3000);
+
+    // Contribution base clamps at 2,300, not the full 3,000 gross.
+    expect(r.employeeContributionsTotal, closeTo(2300 * 0.1378, 0.001));
+    expect(r.employerContributionsTotal, closeTo(2300 * 0.1892, 0.001));
   });
 
   test('Albania — gross ALL 100,000/mo', () async {

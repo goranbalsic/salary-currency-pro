@@ -6,7 +6,11 @@ class Currency {
 }
 
 /// Fixed set of currencies the converter offers. RSD is included even
-/// though it's routed to a different provider under the hood.
+/// though it's routed to a different provider under the hood. BGN is a
+/// legacy/pegged entry — Bulgaria adopted the euro 1 Jan 2026 and its rate
+/// provider (Frankfurter) has since removed BGN entirely, so it's always
+/// computed from the fixed 1.95583 peg (see ExchangeRateService), never
+/// live-fetched. Kept for users converting old Bulgarian lev cash/savings.
 const List<Currency> supportedCurrencies = [
   Currency('EUR', 'Euro'),
   Currency('USD', 'US Dollar'),
@@ -18,6 +22,7 @@ const List<Currency> supportedCurrencies = [
   Currency('AUD', 'Australian Dollar'),
   Currency('CNY', 'Chinese Yuan'),
   Currency('TRY', 'Turkish Lira'),
+  Currency('BGN', 'Bulgarian Lev (legacy, pegged)'),
 ];
 
 String currencyName(String code) {

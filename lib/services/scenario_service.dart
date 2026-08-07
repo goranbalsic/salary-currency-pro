@@ -109,6 +109,15 @@ class ScenarioService {
     changes.value++;
   }
 
+  /// Overwrites the entire stored list — used by one-off data migrations
+  /// (e.g. `BgEuroMigrationService`) that need to rewrite several scenarios
+  /// at once. Callers are responsible for preserving every scenario they
+  /// don't intend to change.
+  Future<void> replaceAll(List<Scenario> scenarios) async {
+    await _save(scenarios);
+    changes.value++;
+  }
+
   Future<void> _save(List<Scenario> scenarios) async {
     try {
       final prefs = await SharedPreferences.getInstance();

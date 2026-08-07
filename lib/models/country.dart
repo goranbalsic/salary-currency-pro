@@ -117,9 +117,13 @@ const kCountries = <Country>[
   ),
   Country(
     id: 'bg',
+    // Bulgaria adopted the euro 1 Jan 2026 at the fixed, irrevocable rate
+    // 1 EUR = 1.95583 BGN. See DECISIONS.md D-020 and
+    // lib/services/bg_euro_migration_service.dart, which migrates any
+    // BGN-denominated data saved before this fix, exactly once.
     name: 'Bulgaria',
-    currencyCode: 'BGN',
-    currencySymbol: 'лв',
+    currencyCode: 'EUR',
+    currencySymbol: '€',
     localeCode: 'bg',
     flagEmoji: '🇧🇬',
     taxConfigAsset: 'assets/config/tax/bg.json',

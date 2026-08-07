@@ -1,5 +1,129 @@
 # DECISIONS.md
 
+## D-021 — PROMPT-005 Part 1/2: version control established; tax-rules publishing tooling added
+
+- **Date:** 2026-08-08.
+- **Context:** This project had no git repository at all — PROMPT-005
+  named this "the highest-risk fact in the project" and required fixing
+  it before any further code change, including this session's own
+  Bulgaria/Serbia work.
+- **Part 1:** `git init -b main`. Local (not global) commit identity set
+  with explicit user authorization (the default git-config rule is "never
+  update it silently" — the user was asked and explicitly said to
+  proceed). A Flutter `.gitignore` was written before the first `git
+  add`, catching a real gap found during staging: `android/build/` isn't
+  covered by Flutter's own template `/build/` rule (root-only) — Gradle's
+  own build output needed its own exclusion, along with
+  `android/app/build/`, `android/.gradle/`, CocoaPods dirs, `**/ephemeral/`,
+  and explicit keystore/`key.properties`/`google-services.json`/`.env`
+  exclusions (none currently exist in the tree — confirmed by `find`).
+  `.claude/settings.local.json` (personal, per-machine permissions) was
+  also excluded; `.claude/launch.json` (shared project config) was kept.
+  Seven logical commits (scaffolding+pubspec, core app+calculators, l10n,
+  tests, branding, governance markdown, store_listing) — 317 tracked
+  files, 0 files from `build/`/`.dart_tool/` tracked, clean working tree.
+  No remote created, nothing pushed — the exact `gh repo create .../git
+  push` commands were reported for the user to run themselves.
+- **Part 2:** `tools/rules-publish/` — a publishable copy of
+  `tax_rules.json` kept byte-identical to the bundled asset (enforced by
+  a new parity test), a five-minute runbook, and `validate.dart` (schema
+  validation, exits non-zero on failure). `kFreelanceTaxRulesRemoteUrl`
+  stays a placeholder (still no public rules repo exists) but repointing
+  it is now documented as an exact one-line change
+  (`lib/services/tax_rules_service.dart`, the `kFreelanceTaxRulesRemoteUrl`
+  constant).
+- **Verification:** `dart run tools/rules-publish/validate.dart` exercised
+  against both a valid and a deliberately malformed file (correct OK/FAIL
+  output, correct exit codes). Full suite green after both parts (202/202
+  at that point, before Part 3's additions).
+- **Confidence:** High. **Reversibility:** Part 1 is what makes every
+  later part of this session (and all future sessions) reversible; Part 2
+  is fully reversible (new files only, no coupling into existing code
+  beyond the already-placeholder constant).
+
+## D-020 — PROMPT-005 Part 3: Bulgaria BGN → EUR, root-caused and migrated
+
+- **Date:** 2026-08-08.
+- **Context:** `OPEN_QUESTIONS.md` QUESTION-007 — Bulgaria adopted the
+  euro 1 Jan 2026, but `Country.currencyCode` still said `BGN`. PROMPT-005
+  reclassified this as a bug, not an open question, and required an
+  audit-first fix plus data migration.
+- **Audit result (full, before any edit):** `BGN`/`лв` appeared in
+  exactly one place in the whole codebase — `lib/models/country.dart`.
+  The currency converter, expense/budget/invoice trackers, and every
+  amount-formatting call site derive currency from either an independent
+  currency picker (`supportedCurrencies`, never listed BGN) or from
+  `Country.currencyCode` alone — no second hardcoded assumption existed
+  anywhere to find.
+- **Two additional real findings surfaced by the audit itself**, fixed in
+  the same pass since leaving them known-wrong after finding them would
+  contradict this app's own "no fabricated/stale number" discipline:
+  1. `assets/config/tax/bg.json` (the salary calculator's contribution
+     cap) was `3850.0`, sourced from three non-NRA blogs, matching
+     neither BGN nor EUR magnitude for any figure obtainable from NRA
+     directly. Replaced with a real NRA-sourced figure.
+  2. That NRA source states Bulgaria's max monthly insurance income
+     changed **1 August 2026** (a week before this session) to
+     **EUR 2,300** — meaning `tax_rules.json`'s own freelance-regime
+     figure (2,111.64, from PROMPT-004's research) was itself already
+     stale. Both `assets/config/tax/bg.json` and
+     `assets/config/tax_rules.json`'s `bg.maxMonthlyInsuranceBaseEur`
+     now use 2,300 with `effectiveFrom: "2026-08-01"` and the direct NRA
+     URL as source; `rules_version` bumped; the publishable copy in
+     `tools/rules-publish/` kept in parity.
+  3. **Not independently re-verified**: the contribution rate
+     percentages themselves (10.58%/14.12% social, 3.2%/4.8% health) —
+     these are unit-less and were left unchanged; only the currency-
+     denominated cap was corrected and re-sourced this session.
+- **Migration design:** `lib/services/bg_euro_migration_service.dart` —
+  idempotent via a persisted `SharedPreferences` flag, checked first and
+  set in a `finally` block so it's set even when there's nothing to
+  migrate. Targets exactly the data class that could actually be wrong:
+  `Scenario` entries (not `HistoryEntry`, which stores summaries only,
+  never raw amounts) where `currencyCode == 'BGN'` — the stored snapshot
+  value at save time, a more reliable migration key than re-deriving it
+  from `countryId`. Only the Salary and VAT tools ever produced such a
+  scenario (freelancer payout and expense/budget/invoice use the
+  independent currency picker; the new freelance-tax tool didn't exist
+  before this fix). Divides the tool-specific raw amount field
+  (`amountText` for salary, `amount` for VAT) by the fixed statutory peg
+  1.95583 exactly once, updates `currencyCode` to `EUR` going forward.
+  **`summary` is deliberately left untouched** — `scenario.dart`'s own
+  doc comment already establishes it as a frozen historical receipt
+  ("what was true at save time"), so an old scenario still showing a
+  lev-denominated summary is correct under the app's existing design,
+  not a bug; only `inputs` (what a reopened scenario recalculates from)
+  needed correcting.
+- **Currency converter:** BGN added to `supportedCurrencies` as an
+  explicitly labeled legacy/pegged entry. `ExchangeRateService` special-
+  cases any pair involving BGN before reaching a live provider — live-
+  verified via a direct API call that Frankfurter has removed BGN
+  entirely (a direct BGN query 404s; BGN is absent from the full EUR
+  rates list), so live-fetching it was never going to work regardless.
+  BGN↔EUR uses the peg directly; any other pair (e.g. BGN↔USD) compounds
+  the peg with a live EUR↔other rate.
+- **Dual-price display, live-verified via web search:** Bulgaria's
+  mandatory dual BGN/EUR display ran 2025-08-08 → **2026-08-08 — the
+  exact date of this session** — switching to euro-only from the next
+  day. Per the prompt's own instruction not to add a toggle unless
+  actually required: single EUR display was kept (the app never showed
+  dual pricing to begin with), since the requirement is expiring within
+  hours of this fix regardless.
+- **Verification:** 14 new tests (8 migration-idempotency tests including
+  a run-twice-is-a-no-op test per the prompt's explicit requirement, 5
+  BGN-peg exchange-rate tests including a compound-conversion case, 1
+  salary-cap-clamping test) — all passing. Full suite 216/216,
+  `flutter analyze` clean. Not device-verified (build-verified only, per
+  this app's own accepted-before disclosure convention).
+- **Confidence:** High on the architecture and the two web-search/API-
+  verified facts (insurance cap date, Frankfurter's BGN removal, dual-
+  pricing end date) — each confirmed via a live fetch this session, not
+  recalled from training data. Medium on the un-re-verified contribution
+  rate percentages (disclosed above).
+- **Reversibility:** Fully reversible via git (D-021's Part 1) — no
+  destructive step; the migration only rewrites `Scenario.inputs`/
+  `currencyCode` for BGN-flagged entries, and is itself idempotent.
+
 ## D-019 — PROMPT-004 Parts 3–4: 10 freelance-tax calculator engines, screen, tests, l10n — complete, STOP reached
 
 - **Date:** 2026-08-08.
