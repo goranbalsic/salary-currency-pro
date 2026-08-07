@@ -15,7 +15,7 @@ Archived.
 | PROMPT-003A | Stage A Closure — Consent Flow + App Icon | Large standing instruction | Item 1 done; Item 2 superseded by PROMPT-003C | UMP/GDPR consent flow (D-014) accepted. In-house icon (D-015) rejected on design review |
 | PROMPT-003C | Checkpoint + Icon Handoff | Large standing instruction | Icon integrated (D-016), verified | Externally-approved icon artwork integrated into branding/; flutter analyze/test/release build re-run and confirmed clean 2026-08-07 |
 | PROMPT-004 | Per-Country Freelancer Calculator + Store Listing De-Serbianisation | Large standing instruction | Parts 1–4 complete, own STOP condition reached — awaiting approval | Extends PROMPT-003 Stage A trust surface: fix Serbia-only store listing bullet in all 9 locales, sweep for similar leaks, then build a remote-updatable (bundled-fallback) tax_rules.json data layer and a real per-country freelancer self-assessment calculator covering all 9 countries (BiH split FBiH/RS) |
-| PROMPT-005 | Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation | Large standing instruction | Active | Closes the three gaps PROMPT-004 disclosed (git repo missing, Bulgaria still BGN, two overlapping Serbia freelancer tools) plus verifies two PROMPT-004 claims (cliff test coverage, all 10 regimes actually wired in) before building on them |
+| PROMPT-005 | Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation | Large standing instruction | Parts 0–5 complete, own STOP condition reached — awaiting approval | Closes the three gaps PROMPT-004 disclosed (git repo missing, Bulgaria still BGN, two overlapping Serbia freelancer tools) plus verifies two PROMPT-004 claims (cliff test coverage, all 10 regimes actually wired in) before building on them |
 
 ## Active Prompts
 
@@ -285,7 +285,13 @@ actually run and can be named.
 
 ### PROMPT-005: Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation
 
-Status: Active. Supplied as
+Status: Parts 0–5 all implemented and verified 2026-08-08 — see
+`DECISIONS.md` D-021 (Parts 1–2: git + rules-publish tooling), D-020
+(Part 3: Bulgaria BGN→EUR, closes QUESTION-007), D-022 (Part 4: Serbia
+tool consolidation, closes QUESTION-006). Per this prompt's own Part 5
+instruction ("Then STOP and await approval"), work stopped here — do
+not start QUESTION-005 (still open: real remote-rules URL) or PROMPT-003
+Stage B without explicit instruction. Supplied as
 `_userprompts/PROMPT-005_Git_Bulgaria_Euro_Serbia_Consolidation.md` (full
 verbatim text preserved there). Closes the three items PROMPT-004
 disclosed at session end (D-019's remote-URL gap, `OPEN_QUESTIONS.md`

@@ -1,6 +1,21 @@
 # Project Context
 
-## Last Updated
+## Last Updated (newest first)
+
+- Date: 2026-08-08 (later same day). PROMPT-005 (Version Control,
+  Bulgaria Euro Migration, Serbia Tool Consolidation) fully implemented,
+  Parts 0–5, own STOP condition in force. This repository now has a git
+  repository (10 commits, clean tree) — the single highest-risk gap
+  flagged at the end of the previous entry is closed. Bulgaria's
+  BGN→EUR bug (QUESTION-007) and the two-overlapping-Serbia-tools issue
+  (QUESTION-006) are both resolved. See `session_logs/
+  2026-08-08-session-02.md` and `DECISIONS.md` D-020 through D-022
+  (plus D-021 for Part 1/2). 218/218 tests passing, l10n 390/390.
+  **Do not start further scope (QUESTION-005, PROMPT-003 Stage B, or
+  anything else) without explicit instruction — see Next Recommended
+  Action below.**
+
+## Superseded entry (still accurate as history)
 
 - Date: 2026-08-08
 - Updated by: Claude Code session that first verified the D-016 icon swap
@@ -425,29 +440,34 @@ the user explicitly approves it).
 
 ## Next Recommended Action
 
-0. **NEWEST, READ FIRST:** PROMPT-004 (store listing de-Serbianisation +
-   9-country freelancer self-assessment calculator) is fully implemented,
-   Parts 1–4, verified 186/186 tests + clean analyze + 399/399 l10n
-   lockstep (D-017, D-018, D-019). **Its own explicit stop condition is
-   in force — do not start any further scope without the user's
-   go-ahead**, including:
+0. **NEWEST, READ FIRST:** PROMPT-005 (git + Bulgaria BGN→EUR + Serbia
+   tool consolidation) is fully implemented, Parts 0–5, verified
+   218/218 tests + clean analyze + 390/390 l10n lockstep + a real release
+   build (D-020, D-021, D-022). **This repo now has git** — 10 commits on
+   `main`, nothing pushed, no remote created. To push:
+   `gh repo create salary-currency-pro --private --source=. --remote=origin`
+   then `git push -u origin main` (or create the private repo on
+   github.com first and `git remote add origin ...`). **PROMPT-005's own
+   explicit stop condition is in force — do not start any further scope
+   without the user's go-ahead**, including:
+   - `OPEN_QUESTIONS.md` QUESTION-005 (still open: set up a real public
+     repo/GitHub Pages URL for `tax_rules.json` over-the-air updates —
+     `kFreelanceTaxRulesRemoteUrl` in
+     `lib/services/tax_rules_service.dart` is still a placeholder; once a
+     real URL exists, repointing it is a one-line change).
    - PROMPT-003 Stage B (still blocked by PROMPT-003A's own separate
-     stop condition, item 1 below — unrelated to PROMPT-004, still open).
-   - `OPEN_QUESTIONS.md` QUESTION-005 (set up a real public repo/GitHub
-     Pages URL for `tax_rules.json` over-the-air updates — currently a
-     placeholder).
-   - QUESTION-006 (whether/when to consolidate the old Serbia-only
-     "Freelancer Tax" tool into the new one — deliberately not done this
-     session, no git repo exists yet for a safe removal).
-   - QUESTION-007 (Bulgaria's salary/VAT/currency-converter code still
-     assumes BGN; PROMPT-004's own sourced data says EUR since 1 Jan
-     2026 — found, not fixed, out of PROMPT-004's stated scope).
+     stop condition, item 1 below — unrelated to PROMPT-004/005, still
+     open, unchanged from before this session).
+   QUESTION-006 (Serbia tool overlap) and QUESTION-007 (Bulgaria BGN)
+   are now **resolved** — see `DECISIONS.md` D-022 and D-020.
 1. **Do not start PROMPT-003 Stage B** — PROMPT-003A's explicit stop
-   condition applies until the user says otherwise. Report Stage A's
-   full completion and wait. (D-014/D-015's real Android icon swap is
-   verified per D-016's addendum; on-device consent-dialog/launcher
-   verification is still the one open item under this heading, unchanged
-   from before this session — still needs a real device/emulator.)
+   condition applies until the user says otherwise. (D-014/D-015's real
+   Android icon swap is verified per D-016's addendum; on-device
+   consent-dialog/launcher verification is still the one open item under
+   this heading, unchanged from before this session — still needs a real
+   device/emulator, as does the Bulgaria BGN→EUR fix, which was only
+   build-verified this session, not device-verified — no browser/device
+   tooling was available.)
 2. Once the user gives the go-ahead, start PROMPT-003 Stage B (retention
    mechanics) — see `PROMPTS.md` for the full item list. Each item needs
    its own audit-first pass, same as Stage A.
