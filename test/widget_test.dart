@@ -147,6 +147,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('No tools found'), findsOneWidget);
 
+    // PROMPT-005 Part 4: the retired Serbia-only "Freelancer Tax" tool's
+    // legal search terms must still find the unified replacement, via its
+    // non-displayed searchKeywords — not just its generic title/subtitle.
+    await tester.enterText(find.byType(TextField), 'samooporezivanje');
+    await tester.pumpAndSettle();
+    expect(find.text('Freelancer Self-Assessment'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'PP OPO-K');
+    await tester.pumpAndSettle();
+    expect(find.text('Freelancer Self-Assessment'), findsOneWidget);
+
     // Clear the search, then drag the list down to confirm the categories
     // further down (off the initial viewport) are also present. The Tools
     // ListView is dragged directly rather than relying on

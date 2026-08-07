@@ -13,7 +13,6 @@ import '../tools/budget_screen.dart';
 import '../tools/freelance_tax_screen.dart';
 import '../tools/freelancer_payout_screen.dart';
 import '../tools/loan_screen.dart';
-import '../tools/samooporezivanje_screen.dart';
 import '../tools/savings_screen.dart';
 import '../tools/vat_screen.dart';
 
@@ -33,8 +32,6 @@ IconData _iconFor(String toolId) {
       return Icons.pie_chart_outline;
     case HistoryToolIds.freelancerPayout:
       return Icons.laptop_mac_outlined;
-    case HistoryToolIds.samo:
-      return Icons.description_outlined;
     case HistoryToolIds.freelanceTax:
       return Icons.public_outlined;
     default:
@@ -61,8 +58,6 @@ Widget _screenForScenario(Scenario scenario) {
       return BudgetScreen(initialScenario: scenario);
     case HistoryToolIds.freelancerPayout:
       return FreelancerPayoutScreen(initialScenario: scenario);
-    case HistoryToolIds.samo:
-      return SamooporezivanjeScreen(initialScenario: scenario);
     case HistoryToolIds.freelanceTax:
       return FreelanceTaxScreen(initialScenario: scenario);
     default:

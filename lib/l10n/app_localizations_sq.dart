@@ -268,9 +268,6 @@ class AppLocalizationsSq extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Pagesa e freelancer-it';
 
   @override
-  String get toolsSamooporezivanjeTitle => 'Tatimi për freelancer (Serbi)';
-
-  @override
   String get toolsFreelanceTaxTitle => 'Vetëdeklarimi i të vetëpunësuarve';
 
   @override
@@ -378,10 +375,6 @@ class AppLocalizationsSq extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Faturë e huaj → tarifat → pagesa reale lokale';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Vetëtaksimi (PP OPO-K) mbi të ardhurat e huaja';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -587,35 +580,10 @@ class AppLocalizationsSq extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Shuma neto në valutë të huaj';
 
   @override
-  String get samoScreenTitle => 'Vetëtaksimi i freelancer-it (Serbi)';
-
-  @override
-  String samoParamsLine(int year) {
-    return 'Pragjet tremujore për $year';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'Për freelancer-at që marrin të ardhura të huaja drejtpërdrejt dhe i deklarojnë tremujor përmes formularit PP OPO-K (vetëtaksim) — jo për sipërmarrësit e regjistruar me taksë fikse (\"paušalac\"), shuma e taksës së të cilëve caktohet nga Administrata Tatimore, jo nga një formulë. Kjo tregon vetëm taksën 10% mbi të ardhurat; kontributet e sigurimeve shoqërore për këtë regjim nuk përfshihen ende — verifikoji ato veçmas.';
-
-  @override
-  String get samoQuarterlyGrossInput =>
-      'Të ardhura bruto tremujore të huaja, RSD';
-
-  @override
   String get samoFixedModel => 'Modeli me shpenzim fiks';
 
   @override
   String get samoMixedModel => 'Modeli me shpenzim të përzier';
-
-  @override
-  String get samoIncomeTax => 'Tatimi mbi të ardhurat (10%)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Bruto tremujor';
-
-  @override
-  String get samoTaxableBase => 'Baza e tatueshme';
 
   @override
   String get samoCheaperSame =>

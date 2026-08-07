@@ -82,7 +82,6 @@
   "toolsVatTitle": "PDV kalkulator",
   "toolsBudgetTitle": "Planer proračuna",
   "toolsFreelancerPayoutTitle": "Isplata freelancera",
-  "toolsSamooporezivanjeTitle": "Porez za freelancere (Srbija)",
   "toolsFreelanceTaxTitle": "Samoprijava freelancera",
 
   "homeQuoteOfDay": "Citat dana",
@@ -125,7 +124,6 @@
   "toolsVatSubtitle": "Dodajte ili oduzmite PDV po stopi vaše zemlje",
   "toolsBudgetSubtitle": "Podijelite mjesečni prihod na potrebe / želje / štednju",
   "toolsFreelancerPayoutSubtitle": "Strani račun → naknade → stvarna lokalna isplata",
-  "toolsSamooporezivanjeSubtitle": "Samooporezivanje (PP OPO-K) na strani prihod",
   "toolsFreelanceTaxSubtitle": "Porez na dohodak i doprinosi za freelancere, 9 zemalja",
 
   "loanScreenTitle": "Krediti i dugovi",
@@ -196,16 +194,8 @@
   "freelancerBankFeeRow": "Bankovna naknada",
   "freelancerNetForeignAmount": "Neto iznos u stranoj valuti",
 
-  "samoScreenTitle": "Samooporezivanje freelancera (Srbija)",
-  "samoParamsLine": "Kvartalni pragovi za {year}.",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "Za freelancere koji izravno primaju strani prihod i prijavljuju ga kvartalno putem obrasca PP OPO-K (samooporezivanje) — ne za registrirane paušalne poduzetnike (\"paušalac\"), čiji iznos poreza utvrđuje Porezna uprava, a ne formula. Ovo prikazuje samo porez na dohodak od 10%; doprinosi za socijalno osiguranje za ovaj režim još nisu uključeni — provjerite ih zasebno.",
-  "samoQuarterlyGrossInput": "Kvartalni bruto strani prihod, RSD",
   "samoFixedModel": "Model s fiksnim troškom",
   "samoMixedModel": "Model s mješovitim troškom",
-  "samoIncomeTax": "Porez na dohodak (10%)",
-  "samoQuarterlyGrossRow": "Kvartalni bruto",
-  "samoTaxableBase": "Porezna osnovica",
   "samoCheaperSame": "Ovaj model je jeftinija opcija za ovaj iznos.",
   "samoCheaperOther": "Drugi model bi proizveo manji porez za ovaj iznos — modele možete slobodno mijenjati svakog kvartala.",
 

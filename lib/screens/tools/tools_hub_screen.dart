@@ -15,7 +15,6 @@ import 'budget_screen.dart';
 import 'freelance_tax_screen.dart';
 import 'freelancer_payout_screen.dart';
 import 'loan_screen.dart';
-import 'samooporezivanje_screen.dart';
 import 'savings_screen.dart';
 import 'vat_screen.dart';
 
@@ -28,6 +27,14 @@ class _ToolEntry {
   final String subtitle;
   final _ToolCategory category;
   final WidgetBuilder builder;
+
+  /// Extra, non-displayed search terms — e.g. a regime's own filing-form
+  /// name in the local language, so a user searching for a specific legal
+  /// term (like Serbia's "samooporezivanje" / "PP OPO-K") still finds the
+  /// tool that implements it even though the tile's own title/subtitle is
+  /// necessarily generic across 10 regimes. See DECISIONS.md D-022.
+  final List<String> searchKeywords;
+
   const _ToolEntry({
     required this.id,
     required this.icon,
@@ -35,6 +42,7 @@ class _ToolEntry {
     required this.subtitle,
     required this.category,
     required this.builder,
+    this.searchKeywords = const [],
   });
 }
 
@@ -93,7 +101,6 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
     HistoryToolIds.vat,
     HistoryToolIds.budget,
     HistoryToolIds.freelancerPayout,
-    HistoryToolIds.samo,
     HistoryToolIds.freelanceTax,
   };
 
@@ -162,20 +169,22 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         builder: (_) => const FreelancerPayoutScreen(),
       ),
       _ToolEntry(
-        id: HistoryToolIds.samo,
-        icon: Icons.description_outlined,
-        title: l10n.toolsSamooporezivanjeTitle,
-        subtitle: l10n.toolsSamooporezivanjeSubtitle,
-        category: _ToolCategory.freelance,
-        builder: (_) => const SamooporezivanjeScreen(),
-      ),
-      _ToolEntry(
         id: HistoryToolIds.freelanceTax,
         icon: Icons.public_outlined,
         title: l10n.toolsFreelanceTaxTitle,
         subtitle: l10n.toolsFreelanceTaxSubtitle,
         category: _ToolCategory.freelance,
         builder: (_) => const FreelanceTaxScreen(),
+        // Filing-form/regime proper nouns from every covered country, so a
+        // user searching for the specific legal term they already know
+        // (e.g. Serbia's "samooporezivanje" / "PP OPO-K") still finds this
+        // tool — see DECISIONS.md D-022.
+        searchKeywords: const [
+          'samooporezivanje', 'pp opo-k', 'paušal', 'pausal',
+          'свободна професия', 'paušalni obrt', 'mali preduzetnik',
+          'preduzetnik', 'самостојна дејност', 'normirani', 'popoldanski',
+          's.p.', 'vetëpunësuar', 'pfa',
+        ],
       ),
       _ToolEntry(
         id: 'invoices',
@@ -194,7 +203,8 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         : tools
             .where((t) =>
                 t.title.toLowerCase().contains(_query) ||
-                t.subtitle.toLowerCase().contains(_query))
+                t.subtitle.toLowerCase().contains(_query) ||
+                t.searchKeywords.any((k) => k.toLowerCase().contains(_query)))
             .toList();
 
     String categoryLabel(_ToolCategory c) {

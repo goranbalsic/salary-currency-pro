@@ -1,5 +1,71 @@
 # DECISIONS.md
 
+## D-022 — PROMPT-005 Part 4: two overlapping Serbia freelancer tools consolidated into one
+
+- **Date:** 2026-08-08.
+- **Context:** `OPEN_QUESTIONS.md` QUESTION-006 — D-019 deliberately kept
+  the old Serbia-only "Freelancer Tax" tool alongside the new 9-country
+  engine because this repo had no git repository (no safe rollback for a
+  removal). D-021 (Part 1) fixed that; PROMPT-005 Part 4 required an
+  honest delta comparison before deciding, per its own instruction not to
+  remove anything without first checking what would be lost.
+- **Delta found — the old tool had a real defect, not just a missing
+  feature:** it charged a flat 10% income-tax rate for BOTH standardized-
+  expense models. PROMPT-004's more carefully sourced 2026 research (used
+  by the new engine) found Serbia's actual rule is 20% for Model 1, 10%
+  for Model 2 — the old tool wasn't just missing contributions (its own
+  documented limitation), it was also silently wrong about Model 1's tax
+  rate. This made the removal decision easier, not just a parity call.
+- **Two genuine gaps ported before removal**, per the prompt's explicit
+  "port any genuine gap into the new engine, then remove the old tool":
+  1. Search discoverability: the old tool's title/subtitle contained the
+     legal terms "samooporezivanje"/"PP OPO-K"; the new tool's necessarily
+     generic 9-country subtitle doesn't. Rather than cramming Serbia-
+     specific terms into a shared subtitle, added a `searchKeywords`
+     field to `_ToolEntry` (`tools_hub_screen.dart`) — non-displayed,
+     search-only — populated with every covered regime's own filing-form/
+     proper-noun terms (Serbia's, but also Bulgaria's, Montenegro's,
+     Slovenia's, etc.), verified by a new widget test searching
+     "samooporezivanje" and "PP OPO-K" and finding the new tool.
+  2. The old screen's samooporezivanje-vs-paušalac disclaimer nuance —
+     judged substantially covered by the new engine's existing paušal-
+     ceiling cliff message ("informational only, not modeled by this
+     calculator"); not duplicated as a second explicit banner.
+- **Removed:** `lib/screens/tools/samooporezivanje_screen.dart`,
+  `lib/logic/samooporezivanje_calculator.dart`, the Tools-hub entry, the
+  `HistoryToolIds.samo` constant, the 4 old-tool-specific unit tests in
+  `toolkit_logic_test.dart`, and 9 old-tool-exclusive l10n keys × 9
+  locales (`toolsSamooporezivanjeTitle`/`Subtitle`, `samoScreenTitle`,
+  `samoParamsLine`, `samoInfoBanner`, `samoQuarterlyGrossInput`,
+  `samoIncomeTax`, `samoQuarterlyGrossRow`, `samoTaxableBase`) — 399→390
+  keys/locale. **Kept**: `samoFixedModel`/`samoMixedModel`/
+  `samoCheaperSame`/`samoCheaperOther` — the new screen reuses these
+  verbatim for its own Model 1/2 picker and cheaper-model comparison, so
+  they're no longer "old tool" keys, just historically named ones; left
+  as-is rather than churning a rename with no functional benefit.
+- **Data migration:** `lib/services/samo_to_freelance_tax_migration_service.dart`
+  — same idempotency contract as `BgEuroMigrationService` (D-020):
+  persisted flag, checked first, set in a `finally` block. Translates any
+  `toolId: 'samo'` scenario's `{gross, model}` input shape into the new
+  engine's `{regimeId: 'rs', income, serbiaModel}` shape
+  (`fixedExpense`→`model1`, `mixedExpense`→`model2`), sets `currencyCode`
+  to `RSD` going forward. `summary` is left untouched — same "frozen
+  historical receipt" reasoning as D-020. `HistoryEntry` needs no
+  migration (summaries only, and the Tools-hub "Recently used" tile
+  already guards against an unknown `toolId` by simply not rendering it).
+- **Race-window judgment call:** the migration runs fire-and-forget at
+  app startup, same as D-020's; `MyScenariosScreen` already listens to
+  `ScenarioService.changes` and reloads reactively, so the practical
+  window where a user could tap a not-yet-migrated scenario and hit the
+  (now-nonexistent) old route is negligible — judged acceptable rather
+  than adding a second reopen-time fallback path for defense in depth
+  that would duplicate the same translation logic.
+- **Verification:** 6 new migration tests (including run-twice-no-
+  duplicate) + 1 new widget-level search-keyword test. Full suite
+  218/218, `flutter analyze` clean, l10n 390/390 across all 9 locales.
+- **Confidence:** High. **Reversibility:** Fully reversible via git
+  history (D-021) if this judgment call turns out wrong.
+
 ## D-021 — PROMPT-005 Part 1/2: version control established; tax-rules publishing tooling added
 
 - **Date:** 2026-08-08.

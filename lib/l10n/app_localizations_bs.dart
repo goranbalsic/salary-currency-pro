@@ -265,9 +265,6 @@ class AppLocalizationsBs extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Isplata frilensera';
 
   @override
-  String get toolsSamooporezivanjeTitle => 'Porez za frilensere (Srbija)';
-
-  @override
   String get toolsFreelanceTaxTitle => 'Samoprijava frilensera';
 
   @override
@@ -375,10 +372,6 @@ class AppLocalizationsBs extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Strana faktura → naknade → stvarna lokalna isplata';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Samooporezivanje (PP OPO-K) na strani prihod';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -582,34 +575,10 @@ class AppLocalizationsBs extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Neto iznos u stranoj valuti';
 
   @override
-  String get samoScreenTitle => 'Samooporezivanje frilensera (Srbija)';
-
-  @override
-  String samoParamsLine(int year) {
-    return 'Kvartalni pragovi za $year.';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'Za frilensere koji direktno primaju strani prihod i prijavljuju ga kvartalno putem obrasca PP OPO-K (samooporezivanje) — ne za registrovane paušalne preduzetnike (\"paušalac\"), čiji iznos poreza utvrđuje Poreska uprava, a ne formula. Ovo prikazuje samo porez na dohodak od 10%; doprinosi za socijalno osiguranje za ovaj režim još nisu uključeni — provjerite ih posebno.';
-
-  @override
-  String get samoQuarterlyGrossInput => 'Kvartalni bruto strani prihod, RSD';
-
-  @override
   String get samoFixedModel => 'Model sa fiksnim troškom';
 
   @override
   String get samoMixedModel => 'Model sa mješovitim troškom';
-
-  @override
-  String get samoIncomeTax => 'Porez na dohodak (10%)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Kvartalni bruto';
-
-  @override
-  String get samoTaxableBase => 'Poreska osnovica';
 
   @override
   String get samoCheaperSame => 'Ovaj model je jeftinija opcija za ovaj iznos.';

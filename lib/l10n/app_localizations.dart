@@ -562,12 +562,6 @@ abstract class AppLocalizations {
   /// **'Freelancer Payout'**
   String get toolsFreelancerPayoutTitle;
 
-  /// No description provided for @toolsSamooporezivanjeTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Freelancer Tax (Serbia)'**
-  String get toolsSamooporezivanjeTitle;
-
   /// No description provided for @toolsFreelanceTaxTitle.
   ///
   /// In en, this message translates to:
@@ -777,12 +771,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Foreign invoice → fees → real local payout'**
   String get toolsFreelancerPayoutSubtitle;
-
-  /// No description provided for @toolsSamooporezivanjeSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Self-taxation (PP OPO-K) on foreign income'**
-  String get toolsSamooporezivanjeSubtitle;
 
   /// No description provided for @toolsFreelanceTaxSubtitle.
   ///
@@ -1162,30 +1150,6 @@ abstract class AppLocalizations {
   /// **'Net foreign amount'**
   String get freelancerNetForeignAmount;
 
-  /// No description provided for @samoScreenTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Freelancer Self-Taxation (Serbia)'**
-  String get samoScreenTitle;
-
-  /// No description provided for @samoParamsLine.
-  ///
-  /// In en, this message translates to:
-  /// **'{year} quarterly thresholds'**
-  String samoParamsLine(int year);
-
-  /// No description provided for @samoInfoBanner.
-  ///
-  /// In en, this message translates to:
-  /// **'For freelancers who receive foreign income directly and self-report it quarterly via form PP OPO-K (samooporezivanje) — not for registered flat-rate entrepreneurs (\"paušalac\"), whose tax amount is assessed by the Tax Administration, not computed by a formula. This shows the 10% income tax only; social security contributions for this regime are not yet included — verify those separately.'**
-  String get samoInfoBanner;
-
-  /// No description provided for @samoQuarterlyGrossInput.
-  ///
-  /// In en, this message translates to:
-  /// **'Quarterly gross foreign income, RSD'**
-  String get samoQuarterlyGrossInput;
-
   /// No description provided for @samoFixedModel.
   ///
   /// In en, this message translates to:
@@ -1197,24 +1161,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mixed expense model'**
   String get samoMixedModel;
-
-  /// No description provided for @samoIncomeTax.
-  ///
-  /// In en, this message translates to:
-  /// **'Income tax (10%)'**
-  String get samoIncomeTax;
-
-  /// No description provided for @samoQuarterlyGrossRow.
-  ///
-  /// In en, this message translates to:
-  /// **'Quarterly gross'**
-  String get samoQuarterlyGrossRow;
-
-  /// No description provided for @samoTaxableBase.
-  ///
-  /// In en, this message translates to:
-  /// **'Taxable base'**
-  String get samoTaxableBase;
 
   /// No description provided for @samoCheaperSame.
   ///

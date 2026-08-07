@@ -82,7 +82,6 @@
   "toolsVatTitle": "Kalkulatori i TVSH-së",
   "toolsBudgetTitle": "Planifikuesi i buxhetit",
   "toolsFreelancerPayoutTitle": "Pagesa e freelancer-it",
-  "toolsSamooporezivanjeTitle": "Tatimi për freelancer (Serbi)",
   "toolsFreelanceTaxTitle": "Vetëdeklarimi i të vetëpunësuarve",
 
   "homeQuoteOfDay": "Citimi i ditës",
@@ -125,7 +124,6 @@
   "toolsVatSubtitle": "Shto ose hiq TVSH-në sipas normës së vendit tënd",
   "toolsBudgetSubtitle": "Ndaj të ardhurat mujore në nevoja / dëshira / kursime",
   "toolsFreelancerPayoutSubtitle": "Faturë e huaj → tarifat → pagesa reale lokale",
-  "toolsSamooporezivanjeSubtitle": "Vetëtaksimi (PP OPO-K) mbi të ardhurat e huaja",
   "toolsFreelanceTaxSubtitle": "Tatimi mbi të ardhurat dhe kontributet për të vetëpunësuarit, 9 vende",
 
   "loanScreenTitle": "Kredi dhe borxhe",
@@ -196,16 +194,8 @@
   "freelancerBankFeeRow": "Tarifa bankare",
   "freelancerNetForeignAmount": "Shuma neto në valutë të huaj",
 
-  "samoScreenTitle": "Vetëtaksimi i freelancer-it (Serbi)",
-  "samoParamsLine": "Pragjet tremujore për {year}",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "Për freelancer-at që marrin të ardhura të huaja drejtpërdrejt dhe i deklarojnë tremujor përmes formularit PP OPO-K (vetëtaksim) — jo për sipërmarrësit e regjistruar me taksë fikse (\"paušalac\"), shuma e taksës së të cilëve caktohet nga Administrata Tatimore, jo nga një formulë. Kjo tregon vetëm taksën 10% mbi të ardhurat; kontributet e sigurimeve shoqërore për këtë regjim nuk përfshihen ende — verifikoji ato veçmas.",
-  "samoQuarterlyGrossInput": "Të ardhura bruto tremujore të huaja, RSD",
   "samoFixedModel": "Modeli me shpenzim fiks",
   "samoMixedModel": "Modeli me shpenzim të përzier",
-  "samoIncomeTax": "Tatimi mbi të ardhurat (10%)",
-  "samoQuarterlyGrossRow": "Bruto tremujor",
-  "samoTaxableBase": "Baza e tatueshme",
   "samoCheaperSame": "Ky model është opsioni më i lirë për këtë shumë.",
   "samoCheaperOther": "Modeli tjetër do të prodhonte më pak taksë për këtë shumë — mund t'i ndërrosh modelet lirisht çdo tremujor.",
 

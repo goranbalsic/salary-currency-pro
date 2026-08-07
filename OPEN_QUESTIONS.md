@@ -211,6 +211,33 @@ repository exists for this project — matches this app's general
 "delete what's genuinely superseded" convention (see `CLAUDE.md`'s
 "avoid backwards-compatibility hacks" rule) once it's safe to do so.
 
+**Resolved 2026-08-08 (PROMPT-005 Part 4, option (a) — git now exists,
+D-021):** honest delta comparison found the old tool had no missing
+feature the new engine lacked — and one thing the old tool actively got
+wrong: it applied a flat 10% income-tax rate to BOTH standardized-expense
+models, while the correctly-sourced 2026 rule set uses 20% for Model 1
+and 10% for Model 2 (the old tool predates that more careful research).
+Two genuine gaps WERE found and ported before removal: (1) search
+discoverability — the old tool's title/subtitle contained
+"samooporezivanje"/"PP OPO-K", terms the new tool's necessarily-generic
+9-country subtitle doesn't; ported as a non-displayed `searchKeywords`
+field on the Tools-hub entry (covering every regime's own filing-form/
+proper-noun terms, not just Serbia's), verified by a new widget test.
+(2) The old screen's samooporezivanje-vs-paušalac disclaimer nuance is
+substantially covered by the new engine's paušal-ceiling cliff note
+("informational only, not modeled by this calculator") — judged adequate
+rather than porting a second explicit banner. Removed:
+`samooporezivanje_screen.dart`, `samooporezivanje_calculator.dart`, the
+Tools-hub entry, the `HistoryToolIds.samo` constant, and 9 old-tool-
+exclusive l10n keys × 9 locales (4 keys — the model-name and cheaper-
+model-comparison strings — are reused by the new screen and were kept).
+Added an idempotent `SamoToFreelanceTaxMigrationService` (6 tests
+including a run-twice-no-duplicate case) so any previously-saved `samo`
+scenario translates into the new engine's input shape rather than being
+orphaned. See `DECISIONS.md` D-022.
+
+Status: Resolved.
+
 Status: Open, non-blocking.
 
 ### QUESTION-007: Bulgaria's salary calculator still quotes BGN; PROMPT-004's freelance data says EUR (adopted 1 Jan 2026)

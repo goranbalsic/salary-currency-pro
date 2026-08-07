@@ -10,7 +10,6 @@ class HistoryToolIds {
   static const vat = 'vat';
   static const budget = 'budget';
   static const freelancerPayout = 'freelancer_payout';
-  static const samo = 'samo';
   static const freelanceTax = 'freelance_tax';
 }
 

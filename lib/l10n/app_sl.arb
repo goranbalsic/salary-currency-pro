@@ -82,7 +82,6 @@
   "toolsVatTitle": "Kalkulator DDV",
   "toolsBudgetTitle": "Načrtovalnik proračuna",
   "toolsFreelancerPayoutTitle": "Izplačilo freelancerja",
-  "toolsSamooporezivanjeTitle": "Davek za freelancerje (Srbija)",
   "toolsFreelanceTaxTitle": "Samoobdavčitev samozaposlenih",
 
   "homeQuoteOfDay": "Citat dneva",
@@ -125,7 +124,6 @@
   "toolsVatSubtitle": "Dodajte ali odštejte DDV po stopnji vaše države",
   "toolsBudgetSubtitle": "Razdelite mesečni dohodek na potrebe / želje / prihranke",
   "toolsFreelancerPayoutSubtitle": "Tuji račun → provizije → dejansko lokalno izplačilo",
-  "toolsSamooporezivanjeSubtitle": "Samoobdavčitev (PP OPO-K) tujega dohodka",
   "toolsFreelanceTaxSubtitle": "Dohodnina in prispevki za samozaposlene, 9 držav",
 
   "loanScreenTitle": "Posojila in dolgovi",
@@ -196,16 +194,8 @@
   "freelancerBankFeeRow": "Bančna provizija",
   "freelancerNetForeignAmount": "Neto znesek v tuji valuti",
 
-  "samoScreenTitle": "Samoobdavčitev freelancerja (Srbija)",
-  "samoParamsLine": "Četrtletni pragovi za leto {year}",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "Za freelancerje, ki tuji dohodek prejemajo neposredno in ga četrtletno prijavljajo prek obrazca PP OPO-K (samoobdavčitev) — ne za registrirane pavšalne podjetnike (\"paušalac\"), katerih znesek davka določi davčna uprava in ne formula. To prikazuje samo 10-odstotni dohodninski davek; prispevki za socialno varnost za ta režim še niso vključeni — preverite jih posebej.",
-  "samoQuarterlyGrossInput": "Četrtletni bruto tuji dohodek, RSD",
   "samoFixedModel": "Model s fiksnimi stroški",
   "samoMixedModel": "Model z mešanimi stroški",
-  "samoIncomeTax": "Dohodnina (10 %)",
-  "samoQuarterlyGrossRow": "Četrtletni bruto",
-  "samoTaxableBase": "Davčna osnova",
   "samoCheaperSame": "Ta model je cenejša možnost za ta znesek.",
   "samoCheaperOther": "Drugi model bi za ta znesek prinesel nižji davek — modela lahko prosto menjavate vsako četrtletje.",
 

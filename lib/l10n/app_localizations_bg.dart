@@ -271,9 +271,6 @@ class AppLocalizationsBg extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Изплащане на фрийлансър';
 
   @override
-  String get toolsSamooporezivanjeTitle => 'Данък за фрийлансъри (Сърбия)';
-
-  @override
   String get toolsFreelanceTaxTitle => 'Самооблагане на фрийлансъри';
 
   @override
@@ -382,10 +379,6 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Чуждестранна фактура → такси → реално локално плащане';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Самооблагане (PP OPO-K) на чуждестранен доход';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -591,35 +584,10 @@ class AppLocalizationsBg extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Нетна сума в чуждестранна валута';
 
   @override
-  String get samoScreenTitle => 'Самооблагане на фрийлансър (Сърбия)';
-
-  @override
-  String samoParamsLine(int year) {
-    return 'Тримесечни прагове за $year г.';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'За фрийлансъри, които получават чуждестранен доход директно и го декларират тримесечно чрез формуляр PP OPO-K (самооблагане) — не за регистрирани патентни предприемачи (\"paušalac\"), чиято сума на данъка се определя от Данъчната администрация, а не по формула. Това показва само данъка върху дохода от 10%; осигурителните вноски за този режим все още не са включени — проверете ги отделно.';
-
-  @override
-  String get samoQuarterlyGrossInput =>
-      'Тримесечен брутен чуждестранен доход, RSD';
-
-  @override
   String get samoFixedModel => 'Модел с фиксирани разходи';
 
   @override
   String get samoMixedModel => 'Модел със смесени разходи';
-
-  @override
-  String get samoIncomeTax => 'Данък върху дохода (10%)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Тримесечен бруто';
-
-  @override
-  String get samoTaxableBase => 'Облагаема основа';
 
   @override
   String get samoCheaperSame =>

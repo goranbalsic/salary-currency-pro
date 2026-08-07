@@ -82,7 +82,6 @@
   "toolsVatTitle": "Calculator TVA",
   "toolsBudgetTitle": "Planificator de buget",
   "toolsFreelancerPayoutTitle": "Plata freelancerului",
-  "toolsSamooporezivanjeTitle": "Impozit pentru freelanceri (Serbia)",
   "toolsFreelanceTaxTitle": "Autoimpunere pentru liber-profesioniști",
 
   "homeQuoteOfDay": "Citatul zilei",
@@ -125,7 +124,6 @@
   "toolsVatSubtitle": "Adaugă sau elimină TVA la rata țării tale",
   "toolsBudgetSubtitle": "Împarte venitul lunar în nevoi / dorințe / economii",
   "toolsFreelancerPayoutSubtitle": "Factură externă → taxe → plată locală reală",
-  "toolsSamooporezivanjeSubtitle": "Autoimpozitare (PP OPO-K) pe venitul din străinătate",
   "toolsFreelanceTaxSubtitle": "Impozit și contribuții pentru liber-profesioniști, 9 țări",
 
   "loanScreenTitle": "Împrumuturi și datorii",
@@ -196,16 +194,8 @@
   "freelancerBankFeeRow": "Comision bancar",
   "freelancerNetForeignAmount": "Sumă netă în valută străină",
 
-  "samoScreenTitle": "Autoimpozitarea freelancerului (Serbia)",
-  "samoParamsLine": "Praguri trimestriale pentru {year}",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "Pentru freelanceri care primesc venituri din străinătate direct și le declară trimestrial prin formularul PP OPO-K (autoimpozitare) — nu pentru antreprenorii înregistrați cu impozit forfetar (\"paušalac\"), a căror sumă de impozit este stabilită de Administrația Fiscală, nu printr-o formulă. Aceasta arată doar impozitul pe venit de 10%; contribuțiile de asigurări sociale pentru acest regim nu sunt încă incluse — verificați-le separat.",
-  "samoQuarterlyGrossInput": "Venit brut trimestrial din străinătate, RSD",
   "samoFixedModel": "Model cu cheltuială fixă",
   "samoMixedModel": "Model cu cheltuială mixtă",
-  "samoIncomeTax": "Impozit pe venit (10%)",
-  "samoQuarterlyGrossRow": "Brut trimestrial",
-  "samoTaxableBase": "Bază impozabilă",
   "samoCheaperSame": "Acest model este opțiunea mai ieftină pentru această sumă.",
   "samoCheaperOther": "Celălalt model ar produce un impozit mai mic pentru această sumă — puteți schimba liber modelele în fiecare trimestru.",
 

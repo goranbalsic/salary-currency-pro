@@ -9,6 +9,7 @@ import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/root/root_shell.dart';
 import 'services/bg_euro_migration_service.dart';
 import 'services/purchase_service.dart';
+import 'services/samo_to_freelance_tax_migration_service.dart';
 import 'theme/app_theme.dart';
 
 const _prefsThemeModeKey = 'app_theme_mode';
@@ -45,6 +46,7 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
     // Fire-and-forget: idempotent, checks its own persisted flag first, and
     // never blocks the UI — see BgEuroMigrationService's own doc comment.
     BgEuroMigrationService().migrateIfNeeded();
+    SamoToFreelanceTaxMigrationService().migrateIfNeeded();
     // in_app_purchase's real purchase stream is Android/iOS-only; starting
     // it elsewhere (desktop/web dev builds) would throw on unsupported
     // platform channels. The service itself is still always provided so

@@ -268,9 +268,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Freelancer Payout';
 
   @override
-  String get toolsSamooporezivanjeTitle => 'Freelancer Tax (Serbia)';
-
-  @override
   String get toolsFreelanceTaxTitle => 'Freelancer Self-Assessment';
 
   @override
@@ -377,10 +374,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Foreign invoice → fees → real local payout';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Self-taxation (PP OPO-K) on foreign income';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -584,34 +577,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Net foreign amount';
 
   @override
-  String get samoScreenTitle => 'Freelancer Self-Taxation (Serbia)';
-
-  @override
-  String samoParamsLine(int year) {
-    return '$year quarterly thresholds';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'For freelancers who receive foreign income directly and self-report it quarterly via form PP OPO-K (samooporezivanje) — not for registered flat-rate entrepreneurs (\"paušalac\"), whose tax amount is assessed by the Tax Administration, not computed by a formula. This shows the 10% income tax only; social security contributions for this regime are not yet included — verify those separately.';
-
-  @override
-  String get samoQuarterlyGrossInput => 'Quarterly gross foreign income, RSD';
-
-  @override
   String get samoFixedModel => 'Fixed expense model';
 
   @override
   String get samoMixedModel => 'Mixed expense model';
-
-  @override
-  String get samoIncomeTax => 'Income tax (10%)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Quarterly gross';
-
-  @override
-  String get samoTaxableBase => 'Taxable base';
 
   @override
   String get samoCheaperSame =>

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:salary_currency_pro/logic/budget_planner.dart';
 import 'package:salary_currency_pro/logic/freelancer_payout_calculator.dart';
 import 'package:salary_currency_pro/logic/loan_calculator.dart';
-import 'package:salary_currency_pro/logic/samooporezivanje_calculator.dart';
 import 'package:salary_currency_pro/logic/savings_calculator.dart';
 import 'package:salary_currency_pro/logic/vat_calculator.dart';
 import 'package:salary_currency_pro/models/rate_snapshot.dart';
@@ -119,43 +118,6 @@ void main() {
       expect(r.needs, closeTo(1500, 0.001));
       expect(r.wants, closeTo(900, 0.001));
       expect(r.savings, closeTo(600, 0.001));
-    });
-  });
-
-  group('SamooporezivanjeCalculator', () {
-    test('fixed-expense model: 300,000 RSD quarterly gross', () {
-      final r = SamooporezivanjeCalculator.compute(
-        300000,
-        SamooporezivanjeModel.fixedExpense,
-      );
-      expect(r.taxableBase, closeTo(189353.0, 0.01));
-      expect(r.incomeTax, closeTo(18935.3, 0.01));
-    });
-
-    test('mixed-expense model: 300,000 RSD quarterly gross', () {
-      final r = SamooporezivanjeCalculator.compute(
-        300000,
-        SamooporezivanjeModel.mixedExpense,
-      );
-      expect(r.taxableBase, closeTo(131267.0, 0.01));
-      expect(r.incomeTax, closeTo(13126.7, 0.01));
-    });
-
-    test('cheaperModel picks the lower-tax option', () {
-      expect(
-        SamooporezivanjeCalculator.cheaperModel(300000),
-        SamooporezivanjeModel.mixedExpense,
-      );
-    });
-
-    test('gross below the standardized deduction floors the base at zero '
-        'instead of going negative', () {
-      final r = SamooporezivanjeCalculator.compute(
-        50000,
-        SamooporezivanjeModel.fixedExpense,
-      );
-      expect(r.taxableBase, 0);
-      expect(r.incomeTax, 0);
     });
   });
 

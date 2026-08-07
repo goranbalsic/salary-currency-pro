@@ -92,7 +92,6 @@
   "toolsVatTitle": "VAT Calculator",
   "toolsBudgetTitle": "Budget Planner",
   "toolsFreelancerPayoutTitle": "Freelancer Payout",
-  "toolsSamooporezivanjeTitle": "Freelancer Tax (Serbia)",
   "toolsFreelanceTaxTitle": "Freelancer Self-Assessment",
 
   "homeQuoteOfDay": "Quote of the day",
@@ -135,7 +134,6 @@
   "toolsVatSubtitle": "Add or remove VAT at your country's rate",
   "toolsBudgetSubtitle": "Split monthly income into needs / wants / savings",
   "toolsFreelancerPayoutSubtitle": "Foreign invoice → fees → real local payout",
-  "toolsSamooporezivanjeSubtitle": "Self-taxation (PP OPO-K) on foreign income",
   "toolsFreelanceTaxSubtitle": "Income tax & contributions for freelancers, 9 countries",
 
   "loanScreenTitle": "Loans & Debt",
@@ -209,16 +207,8 @@
   "freelancerBankFeeRow": "Bank/wire fee",
   "freelancerNetForeignAmount": "Net foreign amount",
 
-  "samoScreenTitle": "Freelancer Self-Taxation (Serbia)",
-  "samoParamsLine": "{year} quarterly thresholds",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "For freelancers who receive foreign income directly and self-report it quarterly via form PP OPO-K (samooporezivanje) — not for registered flat-rate entrepreneurs (\"paušalac\"), whose tax amount is assessed by the Tax Administration, not computed by a formula. This shows the 10% income tax only; social security contributions for this regime are not yet included — verify those separately.",
-  "samoQuarterlyGrossInput": "Quarterly gross foreign income, RSD",
   "samoFixedModel": "Fixed expense model",
   "samoMixedModel": "Mixed expense model",
-  "samoIncomeTax": "Income tax (10%)",
-  "samoQuarterlyGrossRow": "Quarterly gross",
-  "samoTaxableBase": "Taxable base",
   "samoCheaperSame": "This model is the cheaper option for this amount.",
   "samoCheaperOther": "The other model would produce less tax at this amount — you may freely switch models each quarter.",
 

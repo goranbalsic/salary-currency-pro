@@ -266,9 +266,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Izplačilo freelancerja';
 
   @override
-  String get toolsSamooporezivanjeTitle => 'Davek za freelancerje (Srbija)';
-
-  @override
   String get toolsFreelanceTaxTitle => 'Samoobdavčitev samozaposlenih';
 
   @override
@@ -376,10 +373,6 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Tuji račun → provizije → dejansko lokalno izplačilo';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Samoobdavčitev (PP OPO-K) tujega dohodka';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -585,34 +578,10 @@ class AppLocalizationsSl extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Neto znesek v tuji valuti';
 
   @override
-  String get samoScreenTitle => 'Samoobdavčitev freelancerja (Srbija)';
-
-  @override
-  String samoParamsLine(int year) {
-    return 'Četrtletni pragovi za leto $year';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'Za freelancerje, ki tuji dohodek prejemajo neposredno in ga četrtletno prijavljajo prek obrazca PP OPO-K (samoobdavčitev) — ne za registrirane pavšalne podjetnike (\"paušalac\"), katerih znesek davka določi davčna uprava in ne formula. To prikazuje samo 10-odstotni dohodninski davek; prispevki za socialno varnost za ta režim še niso vključeni — preverite jih posebej.';
-
-  @override
-  String get samoQuarterlyGrossInput => 'Četrtletni bruto tuji dohodek, RSD';
-
-  @override
   String get samoFixedModel => 'Model s fiksnimi stroški';
 
   @override
   String get samoMixedModel => 'Model z mešanimi stroški';
-
-  @override
-  String get samoIncomeTax => 'Dohodnina (10 %)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Četrtletni bruto';
-
-  @override
-  String get samoTaxableBase => 'Davčna osnova';
 
   @override
   String get samoCheaperSame => 'Ta model je cenejša možnost za ta znesek.';

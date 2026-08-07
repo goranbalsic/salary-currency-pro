@@ -82,7 +82,6 @@
   "toolsVatTitle": "ДДВ калкулатор",
   "toolsBudgetTitle": "Планер за буџет",
   "toolsFreelancerPayoutTitle": "Исплата на фриленсер",
-  "toolsSamooporezivanjeTitle": "Данок за фриленсери (Србија)",
   "toolsFreelanceTaxTitle": "Самооданочување на фриленсери",
 
   "homeQuoteOfDay": "Цитат на денот",
@@ -125,7 +124,6 @@
   "toolsVatSubtitle": "Додадете или одземете ДДВ по стапката на вашата земја",
   "toolsBudgetSubtitle": "Поделете го месечниот приход на потреби / желби / штедење",
   "toolsFreelancerPayoutSubtitle": "Странска фактура → провизии → реална локална исплата",
-  "toolsSamooporezivanjeSubtitle": "Самооданочување (PP OPO-K) на странски приход",
   "toolsFreelanceTaxSubtitle": "Данок и придонеси за фриленсери, 9 земји",
 
   "loanScreenTitle": "Кредити и долгови",
@@ -196,16 +194,8 @@
   "freelancerBankFeeRow": "Банкарска провизија",
   "freelancerNetForeignAmount": "Нето износ во странска валута",
 
-  "samoScreenTitle": "Самооданочување на фриленсер (Србија)",
-  "samoParamsLine": "Квартални прагови за {year} г.",
-  "@samoParamsLine": {"placeholders": {"year": {"type": "int"}}},
-  "samoInfoBanner": "За фриленсери кои примаат странски приход директно и го пријавуваат квартално преку образецот PP OPO-K (самооданочување) — не за регистрирани паушални претприемачи („паушалац“), чиј износ на данок го утврдува Даночната управа, а не формула. Ова прикажува само данок на доход од 10%; придонесите за социјално осигурување за овој режим сè уште не се вклучени — проверете ги посебно.",
-  "samoQuarterlyGrossInput": "Квартален бруто странски приход, RSD",
   "samoFixedModel": "Модел со фиксен трошок",
   "samoMixedModel": "Модел со мешан трошок",
-  "samoIncomeTax": "Данок на доход (10%)",
-  "samoQuarterlyGrossRow": "Квартален бруто",
-  "samoTaxableBase": "Даночна основа",
   "samoCheaperSame": "Овој модел е поевтината опција за овој износ.",
   "samoCheaperOther": "Другиот модел би произвел помал данок за овој износ — моделите може слободно да ги менувате секој квартал.",
 

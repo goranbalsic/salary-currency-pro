@@ -269,10 +269,6 @@ class AppLocalizationsRo extends AppLocalizations {
   String get toolsFreelancerPayoutTitle => 'Plata freelancerului';
 
   @override
-  String get toolsSamooporezivanjeTitle =>
-      'Impozit pentru freelanceri (Serbia)';
-
-  @override
   String get toolsFreelanceTaxTitle =>
       'Autoimpunere pentru liber-profesioniști';
 
@@ -380,10 +376,6 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get toolsFreelancerPayoutSubtitle =>
       'Factură externă → taxe → plată locală reală';
-
-  @override
-  String get toolsSamooporezivanjeSubtitle =>
-      'Autoimpozitare (PP OPO-K) pe venitul din străinătate';
 
   @override
   String get toolsFreelanceTaxSubtitle =>
@@ -588,35 +580,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get freelancerNetForeignAmount => 'Sumă netă în valută străină';
 
   @override
-  String get samoScreenTitle => 'Autoimpozitarea freelancerului (Serbia)';
-
-  @override
-  String samoParamsLine(int year) {
-    return 'Praguri trimestriale pentru $year';
-  }
-
-  @override
-  String get samoInfoBanner =>
-      'Pentru freelanceri care primesc venituri din străinătate direct și le declară trimestrial prin formularul PP OPO-K (autoimpozitare) — nu pentru antreprenorii înregistrați cu impozit forfetar (\"paušalac\"), a căror sumă de impozit este stabilită de Administrația Fiscală, nu printr-o formulă. Aceasta arată doar impozitul pe venit de 10%; contribuțiile de asigurări sociale pentru acest regim nu sunt încă incluse — verificați-le separat.';
-
-  @override
-  String get samoQuarterlyGrossInput =>
-      'Venit brut trimestrial din străinătate, RSD';
-
-  @override
   String get samoFixedModel => 'Model cu cheltuială fixă';
 
   @override
   String get samoMixedModel => 'Model cu cheltuială mixtă';
-
-  @override
-  String get samoIncomeTax => 'Impozit pe venit (10%)';
-
-  @override
-  String get samoQuarterlyGrossRow => 'Brut trimestrial';
-
-  @override
-  String get samoTaxableBase => 'Bază impozabilă';
 
   @override
   String get samoCheaperSame =>

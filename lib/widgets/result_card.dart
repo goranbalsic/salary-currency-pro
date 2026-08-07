@@ -4,7 +4,7 @@ import '../theme/app_theme.dart';
 
 /// The standard "headline value + breakdown rows" shell used by every
 /// single-result calculator (Loans, Savings, VAT, Budget's siblings,
-/// Freelancer Payout, Samooporezivanje). Screens with a genuinely different
+/// Freelancer Payout, Freelancer Self-Assessment). Screens with a genuinely different
 /// shape (the salary breakdown has two dividers and three sections) build
 /// their own layout instead of forcing this one to be more flexible than
 /// it needs to be — but still reuse [LabeledRow] for each line.
