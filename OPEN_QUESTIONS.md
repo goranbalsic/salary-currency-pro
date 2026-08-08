@@ -453,6 +453,48 @@ Recommended default if no answer is received: option (a).
 
 Status: Open.
 
+### QUESTION-010: PROMPT-003G (Stage C item 13, Cross-Border Pack) — per-diem and mileage excluded for all 9 countries
+
+Date added: 2026-08-08
+
+Why it matters: the prompt requires per-diem/mileage rates to be sourced
+to official, effective-dated documents to the project's established
+evidence standard, with no blogs, aggregators, approximations, stale
+figures, or invented defaults — and explicitly says any rate that can't
+be sourced that way must be excluded and logged rather than block the
+core comparison/employer-cost feature. Rigorously locating and citing an
+official effective-dated per-diem rate AND a separate official mileage
+(per-km) rate for all 9 jurisdictions (10 regimes counting Bosnia's FBiH/
+RS split) — 18–20 individual figures — is not achievable to a trustworthy
+standard within one session; the risk of citing a stale, unofficial, or
+misremembered figure as if verified is exactly what this project's
+evidence standard (and QUESTION-008/QUESTION-009's precedent of excluding
+rather than approximating) exists to prevent.
+
+Current assumptions: none implemented. The Cross-Border Pack ships with
+no per-diem/mileage feature at all this item — the comparison table and
+employer-cost view (checkpoint 1/2/3) are unaffected and fully
+functional without it, per the prompt's own "do not block the core
+feature" instruction.
+
+Possible answers: (a) leave unimplemented indefinitely — the core
+comparison/employer-cost feature does not need it (recommended, current
+default); (b) a future prompt sources per-diem/mileage rates one country
+at a time from each country's own official gazette/ministry-of-finance
+publication (the same standard already applied to `tax_rules.json` and
+`freelance_tax_rules.json`), and this item's cross-border UI gets a
+follow-on increment to display whichever subset clears that bar,
+excluding the rest by name (same pattern as QUESTION-008/QUESTION-009);
+(c) explicitly abandon per-diem/mileage as a feature.
+
+Does it block current work? No — PROMPT-003G's own instruction is that
+optional rate data must never block the core cross-border salary and
+employer-cost feature.
+
+Recommended default if no answer is received: option (a).
+
+Status: Open.
+
 ## Question Template
 
 ### QUESTION-NNN: Title

@@ -1,5 +1,115 @@
 # DECISIONS.md
 
+## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (in progress)
+
+- **Date:** started 2026-08-08. Implements
+  `_userprompts/PROMPT-003G_StageC_Item13_Cross_Border_Pack.md`. One
+  entry, appended per checkpoint, matching the D-029/D-030 precedent.
+- **Audit findings that shaped the design:**
+  - `SalaryCalculator`/`CountryTaxConfig` (`lib/logic/salary_calculator.dart`,
+    `lib/models/tax_config.dart`) is monthly-only — every bracket `upTo`
+    and contribution `minBase`/`maxBase` is a monthly local-currency
+    figure. There is no annual-bracket variant anywhere in the codebase.
+  - `kCountries` (`lib/models/country.dart`) has exactly 9 entries; Bosnia
+    is one country row with two legally separate entities (FBiH,
+    Republika Srpska) requiring their own tax config, same as every other
+    screen that touches Bosnia (`SalaryCalculatorProvider`,
+    `FreelanceTaxScreen`).
+  - Of the 9 countries' native currencies (RSD, EUR×4 [HR/ME/SI/BG],
+    BAM, MKD, ALL, RON), `supportedCurrencies`
+    (`lib/models/currency.dart`) — the *existing* currency converter's
+    picker list — only covers RSD and EUR directly. BAM, MKD, ALL, RON
+    have never been fetched or cached by any existing code path.
+  - `ExchangeRateService.getRate` (`lib/services/exchange_rate_service.dart`)
+    always attempts a live fetch first and only falls back to
+    `RateCacheService` on failure — unusable as-is under this item's
+    "no network call" constraint. `RateCacheService.load(provider, base)`
+    keys strictly by (provider id, the `from` currency last queried), and
+    the `open_er_api` provider (open.er-api.com) returns a *full* rates
+    table for its base currency, not just the one pair requested — so a
+    cache entry from any ordinary RSD-involving conversion the user has
+    already run (the currency converter's own default is EUR→RSD, which
+    routes to `open_er_api` with base `EUR`) already contains rates for
+    every other world currency that provider covers, incidentally
+    including BAM/MKD/ALL/RON if that provider quotes them — without this
+    feature ever fetching anything itself.
+- **"Same gross" semantics:** the user enters one gross figure **denominated
+  in EUR** (no input-currency picker — avoids a second unresolved-currency
+  axis on top of the comparison-currency one). For each country, that EUR
+  figure is converted to the country's own local currency using a
+  **cache-only** rate lookup, then run through that country's real,
+  unmodified `SalaryCalculator`. Comparing the literal number (e.g. "1000")
+  across countries without FX conversion was rejected — it would compare
+  wildly different purchasing power as if equivalent, which the prompt
+  explicitly forbids.
+- **Comparison currency: EUR**, fixed (not user-selectable this item) —
+  4 of 9 countries already use EUR natively, RSD↔EUR is always resolvable
+  from the app's own default converter usage, and it avoids a second
+  currency-picker. Every result is shown in local currency plus an EUR
+  equivalent computed by re-using the *same* single rate looked up for the
+  input conversion (`localAmount / rate`), rather than a second cache
+  read — guarantees the input and output conversions never use
+  inconsistently-aged snapshots.
+- **Rate lookup — new `ExchangeRateService.getCachedRateOnly(from, to)`:**
+  additive method, never calls a provider's `fetchLatest`. Same-currency
+  pairs return an identity rate instantly (no cache needed — covers HR,
+  ME, SI, BG directly). Other pairs try each read-only provider cache
+  bucket keyed at `EUR` base (`frankfurter` then `open_er_api` — RSD-only
+  pairs skip straight to `open_er_api` since Frankfurter never quotes
+  RSD, matching `_providerFor`'s existing rule) and return the first
+  cached snapshot that actually contains the target code. No existing
+  method or the shared `_providerFor` routing was changed — this is a
+  pure addition, zero risk to the currency converter's existing, already
+  live-tested behavior. If nothing is cached, returns `null` — the UI
+  must show this as an explicit "no cached rate yet" state per country,
+  never a guessed number. In practice this means: RSD and all-EUR
+  countries are reliably available from a first app run's own default
+  converter screen; BAM/MKD/ALL/RON are available only if the user has
+  separately triggered a live conversion (on the ordinary currency
+  converter screen, outside this feature) that happened to cache them —
+  disclosed honestly per-row, not hidden.
+- **Pay period:** Monthly (native to the engine) or Annual. Annual mode
+  divides the entered annual EUR gross by 12, computes the ordinary
+  monthly breakdown, then multiplies every resulting figure by 12 for
+  display — explicitly labelled as such in the UI. A true annual-bracket
+  calculation was rejected: no modeled country's config expresses annual
+  bracket thresholds, and inventing one would be a payroll-engine change,
+  which this item's constraints forbid.
+- **Employer total cost:** every modeled country's `SalaryCalculator`
+  already produces `bruto2`/`employerContributionsTotal` uniformly from
+  its own sourced config — no "not available" employer-cost case exists
+  for any of the 9 countries under this design (unlike per-diem/mileage,
+  below). Shown as its own column, clearly separate from gross and net.
+- **Per-diem/mileage: excluded this item, all 9 countries, both rate
+  types** — see `OPEN_QUESTIONS.md` QUESTION-010. Rigorously sourcing
+  effective-dated official per-diem and mileage figures for 9 separate
+  jurisdictions (10 regimes counting Bosnia's two entities) to this
+  project's established evidence standard is not achievable to a
+  trustworthy standard within one session; per the prompt's own
+  instruction this must not block the core comparison/employer-cost
+  feature, so it's excluded and logged rather than approximated.
+- **Rounding:** every displayed amount (local and EUR-equivalent) is
+  rounded through the existing `lib/utils/money.dart` `roundToMinorUnits`
+  helper (introduced in D-030) — no new rounding logic.
+- **Checkpoint 1 (design + pure models/service + tests) — done:**
+  `lib/models/cross_border_comparison.dart` (`CrossBorderRegimeResult`,
+  `CrossBorderRegimeError`, `CrossBorderRateInfo`,
+  `CrossBorderComparisonResult`, `scaleBreakdownForPeriod`),
+  `lib/services/cross_border_comparison_service.dart`
+  (`CrossBorderComparisonService.compare`), and
+  `ExchangeRateService.getCachedRateOnly` (additive, doesn't touch
+  `getRate`/`_providerFor`, zero risk to the live currency converter).
+  33 new tests (`test/cross_border_comparison_test.dart`,
+  `test/cross_border_comparison_service_test.dart`, plus 9 added to
+  `test/exchange_rate_service_test.dart`) covering: cache-only lookup
+  never reaching a live provider, all-nine-country inclusion/ordering,
+  explicit unavailable rows (never a guessed rate), same-gross FX
+  semantics, propagation parity against `SalaryCalculator` invoked
+  directly, employer-cost decomposition, Bosnia entity selection
+  isolation, and annual-period scaling without float artifacts.
+  `flutter analyze`: clean (same 3 pre-existing cosmetic notes as before,
+  none new). `flutter test -j 1`: **425/425** (was 402).
+
 ## D-030 — PROMPT-003 Stage C item 12: Invoice PDF + NBS IPS QR (in progress)
 
 - **Date:** started 2026-08-08. Implements

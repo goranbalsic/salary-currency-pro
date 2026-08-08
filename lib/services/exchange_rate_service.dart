@@ -103,6 +103,82 @@ class ExchangeRateService {
     }
   }
 
+  /// Cache-only lookup — never performs a network call, unlike [getRate].
+  /// For fully-offline features (the Cross-Border Pack, see DECISIONS.md
+  /// D-031) that must never trigger a live fetch themselves. Returns null
+  /// if no previously-cached snapshot happens to cover this pair — e.g. the
+  /// user has never run a live conversion that included it. Never guesses
+  /// or interpolates a rate.
+  ///
+  /// [RateCacheService] keys strictly by (provider id, the `from` currency
+  /// last queried with that provider), and each provider's API returns a
+  /// full rates table for its base — not just the requested pair — so a
+  /// cache entry from any ordinary conversion the user already ran may
+  /// incidentally cover [to] even if this exact pair was never explicitly
+  /// converted before. [from] and [to] are tried against both providers'
+  /// caches (RSD pairs only ever check `open_er_api`, matching
+  /// [_providerFor]'s live-fetch routing, since Frankfurter never quotes
+  /// RSD) and the first cache hit that actually contains [to] wins.
+  Future<RateResult?> getCachedRateOnly(String from, String to) async {
+    if (from == to) {
+      final now = DateTime.now();
+      return RateResult(
+        from: from,
+        to: to,
+        rate: 1.0,
+        asOf: now,
+        fetchedAt: now,
+        source: 'Same currency',
+        isLive: false,
+      );
+    }
+
+    if (from == bgnCode && to == 'EUR') {
+      final now = DateTime.now();
+      return RateResult(
+        from: from,
+        to: to,
+        rate: 1 / bgnPerEurPeg,
+        asOf: now,
+        fetchedAt: now,
+        source: _bgnPegSource,
+        isLive: false,
+      );
+    }
+    if (from == 'EUR' && to == bgnCode) {
+      final now = DateTime.now();
+      return RateResult(
+        from: from,
+        to: to,
+        rate: bgnPerEurPeg,
+        asOf: now,
+        fetchedAt: now,
+        source: _bgnPegSource,
+        isLive: false,
+      );
+    }
+
+    final candidateProviders =
+        (from == rsdCode || to == rsdCode) ? [_openErApi] : [_frankfurter, _openErApi];
+
+    for (final provider in candidateProviders) {
+      final cached = await _cache.load(provider.id, from);
+      final rate = cached?.rates[to];
+      if (cached != null && rate != null) {
+        return RateResult(
+          from: from,
+          to: to,
+          rate: rate,
+          asOf: cached.asOf,
+          fetchedAt: cached.fetchedAt,
+          source: cached.source,
+          isLive: false,
+        );
+      }
+    }
+    return null;
+  }
+
   static const _bgnPegSource = 'Fixed peg (Bulgaria euro adoption, 1 Jan 2026)';
 
   /// BGN is legacy-only (see [bgnCode]'s doc comment) — never fetched live.

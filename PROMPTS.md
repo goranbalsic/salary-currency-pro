@@ -18,6 +18,8 @@ Archived.
 | PROMPT-005 | Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation | Large standing instruction | Parts 0–5 complete, own STOP condition reached — awaiting approval | Closes the three gaps PROMPT-004 disclosed (git repo missing, Bulgaria still BGN, two overlapping Serbia freelancer tools) plus verifies two PROMPT-004 claims (cliff test coverage, all 10 regimes actually wired in) before building on them |
 | PROMPT-003D | Stage C Go-Ahead — Balkan Differentiators | Large standing instruction | Active | Explicit go-ahead for PROMPT-003 Stage C (items 10–13), order 11→12→13→10; housekeeping first (per-ABI size re-check, device-unverified checklist); own STOP condition after item 10's offline shell (Stage D needs separate go-ahead) |
 | PROMPT-003E | Stage C Item 11 — Serbia Compliance Pack | Large standing instruction | Done — item complete, D-029 | Sourced-figure narrowing of Stage C item 11: paušal turnover tracker (dual-window, threshold states, honest rate-history design), monthly reminder lead-time + assessed-amount extension, Model A vs Model B quarterly comparator; found and fixed a real health-contribution bug in the RS strategy along the way |
+| PROMPT-003F | Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced) | Large standing instruction | Done — item complete, D-030 | Quality-raising prompt for item 12: fully offline professional invoice PDF (business profile, itemization, bundled fonts) with embedded NBS IPS QR payment code for eligible Serbian RSD invoices; deterministic money rounding mandated before any invoice money-math change |
+| PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | In progress | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
 
 ## Active Prompts
 
@@ -162,7 +164,33 @@ PROMPT-003E, for this item specifically; see that entry below and
 `DECISIONS.md` D-029. **Item 12 done** — the user supplied a
 scope-raising prompt, PROMPT-003F, for this item specifically; see that
 entry below and `DECISIONS.md` D-030. Stopped per that prompt's own
-instruction, awaiting approval before item 13.
+instruction, awaiting approval before item 13. **Item 13 (Cross-Border
+Pack) approved and in progress** — the user supplied PROMPT-003G; see
+that entry below. Per PROMPT-003G's own explicit instruction, item 10 is
+NOT started this session — order stays 13 → 10.
+
+### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
+
+Status: **In progress, started 2026-08-08** — user supplied
+`_userprompts/PROMPT-003G_StageC_Item13_Cross_Border_Pack.md`, explicit
+authorization for Stage C item 13 only, baselined at `b16cf52`(item 12's
+final commit). Explicitly forbids revisiting item 12 except for a
+narrowly necessary regression fix, and explicitly forbids starting item
+10 this session (Stage D still needs its own separate go-ahead after
+item 10).
+
+Purpose: an offline, local-first cross-border salary comparison — same
+gross-salary scenario run through all 9 countries' real payroll engines,
+with employer total-cost and (only if officially sourced) per-diem/
+mileage support. No live rate fetching, network calls, analytics, or new
+online dependency permitted; must reuse existing salary engines, country
+config, stored currency-rate architecture, and service/model boundaries
+(paywall-ready, but no paywall wiring now).
+
+Required sequence: Checkpoint 1 (audit + design + pure models/service +
+tests) → Checkpoint 2 (comparison UI) → Checkpoint 3 (employer cost +
+optional rates) → Checkpoint 4 (final regression + release evidence +
+push). See `DECISIONS.md` for the per-checkpoint record as it lands.
 
 ### PROMPT-003F: Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced)
 

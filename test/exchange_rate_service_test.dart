@@ -206,4 +206,85 @@ void main() {
       expect(result.rate, closeTo((1 / 1.1) * 1.95583, 0.0001));
     });
   });
+
+  group('getCachedRateOnly — never touches a provider (PROMPT-003G, D-031)', () {
+    ExchangeRateService serviceWithProvidersThatMustNotBeCalled(RateCacheService cache) {
+      return ExchangeRateService(
+        frankfurter: _FakeProvider(
+          'frankfurter',
+          (_) => throw StateError('getCachedRateOnly must never call a live provider'),
+        ),
+        openErApi: _FakeProvider(
+          'open_er_api',
+          (_) => throw StateError('getCachedRateOnly must never call a live provider'),
+        ),
+        cache: cache,
+      );
+    }
+
+    test('same-currency short-circuits to identity without touching the cache', () async {
+      final service = serviceWithProvidersThatMustNotBeCalled(RateCacheService());
+      final result = await service.getCachedRateOnly('EUR', 'EUR');
+      expect(result!.rate, 1.0);
+      expect(result.isLive, isFalse);
+    });
+
+    test('returns null (never a guessed rate) when nothing has ever been cached', () async {
+      final service = serviceWithProvidersThatMustNotBeCalled(RateCacheService());
+      final result = await service.getCachedRateOnly('EUR', 'RSD');
+      expect(result, isNull);
+    });
+
+    test('reads a real prior cache entry for EUR -> RSD (routed to open_er_api only)', () async {
+      final cache = RateCacheService();
+      await cache.save('open_er_api', _snapshot(base: 'EUR', rates: {'RSD': 117.3, 'USD': 1.08}));
+      final service = serviceWithProvidersThatMustNotBeCalled(cache);
+
+      final result = await service.getCachedRateOnly('EUR', 'RSD');
+      expect(result!.rate, 117.3);
+      expect(result.isLive, isFalse);
+    });
+
+    test('an RSD pair never checks the frankfurter cache bucket, even if it exists', () async {
+      final cache = RateCacheService();
+      // Frankfurter cache happens to also carry an (incorrect, for this test)
+      // RSD figure — must never be read for an RSD pair.
+      await cache.save('frankfurter', _snapshot(base: 'EUR', rates: {'RSD': 999.0}));
+      final service = serviceWithProvidersThatMustNotBeCalled(cache);
+
+      final result = await service.getCachedRateOnly('EUR', 'RSD');
+      expect(result, isNull);
+    });
+
+    test(
+        'a non-RSD currency incidentally present in the open_er_api cache (from an '
+        'unrelated RSD conversion) is still found — the whole point of D-031\'s design',
+        () async {
+      final cache = RateCacheService();
+      await cache.save(
+        'open_er_api',
+        _snapshot(base: 'EUR', rates: {'RSD': 117.3, 'RON': 4.98, 'BAM': 1.96, 'MKD': 61.5}),
+      );
+      final service = serviceWithProvidersThatMustNotBeCalled(cache);
+
+      expect((await service.getCachedRateOnly('EUR', 'RON'))!.rate, 4.98);
+      expect((await service.getCachedRateOnly('EUR', 'BAM'))!.rate, 1.96);
+      expect((await service.getCachedRateOnly('EUR', 'MKD'))!.rate, 61.5);
+    });
+
+    test('falls back to the frankfurter cache bucket for a non-RSD currency it holds', () async {
+      final cache = RateCacheService();
+      await cache.save('frankfurter', _snapshot(base: 'EUR', rates: {'RON': 4.97}));
+      final service = serviceWithProvidersThatMustNotBeCalled(cache);
+
+      final result = await service.getCachedRateOnly('EUR', 'RON');
+      expect(result!.rate, 4.97);
+    });
+
+    test('BGN <-> EUR peg is available offline without any cache entry', () async {
+      final service = serviceWithProvidersThatMustNotBeCalled(RateCacheService());
+      expect((await service.getCachedRateOnly('BGN', 'EUR'))!.rate, closeTo(1 / 1.95583, 0.00001));
+      expect((await service.getCachedRateOnly('EUR', 'BGN'))!.rate, closeTo(1.95583, 0.00001));
+    });
+  });
 }
