@@ -149,6 +149,48 @@ void main() {
     expect(looksLikeAValidPdf(bytes), isTrue);
   });
 
+  test('a validated NBS IPS QR payload generates a valid, larger PDF (the '
+      'QR code was actually drawn, not silently skipped)', () async {
+    final withoutQr = buildInvoicePdfContent(
+      invoice: _invoice(currencyCode: 'RSD'),
+      profile: const BusinessProfile(businessName: 'Čigra doo'),
+      localeCode: 'en',
+      statusLabels: _labels,
+      tableLabels: _table,
+    );
+    final withQr = buildInvoicePdfContent(
+      invoice: _invoice(currencyCode: 'RSD'),
+      profile: const BusinessProfile(businessName: 'Čigra doo'),
+      localeCode: 'en',
+      statusLabels: _labels,
+      tableLabels: _table,
+      qrPayload: 'K:PR|V:01|C:1|R:840000000095584510|N:Čigra doo|I:RSD500,00|SF:289',
+    );
+
+    final bytesWithoutQr = await service.generate(withoutQr);
+    final bytesWithQr = await service.generate(withQr);
+
+    expect(looksLikeAValidPdf(bytesWithoutQr), isTrue);
+    expect(looksLikeAValidPdf(bytesWithQr), isTrue);
+    expect(bytesWithQr.length, greaterThan(bytesWithoutQr.length));
+  });
+
+  test('a non-eligible invoice never receives a QR payload from the content '
+      'builder, so InvoicePdfService never has one to draw', () async {
+    final content = buildInvoicePdfContent(
+      invoice: _invoice(currencyCode: 'EUR'),
+      profile: const BusinessProfile(),
+      localeCode: 'en',
+      statusLabels: _labels,
+      tableLabels: _table,
+      // No qrPayload passed — mirrors InvoiceDetailScreen only ever
+      // passing one when NbsIpsEligibility.isEligible is true.
+    );
+    expect(content.qrPayload, isNull);
+    final bytes = await service.generate(content);
+    expect(looksLikeAValidPdf(bytes), isTrue);
+  });
+
   test('generate() never mutates its input content', () async {
     final content = buildInvoicePdfContent(
       invoice: _invoice(description: 'Website redesign'),

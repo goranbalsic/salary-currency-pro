@@ -1578,6 +1578,14 @@ class AppLocalizationsRo extends AppLocalizations {
       'Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Această factură va include un cod QR NBS IPS de plată.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Adăugați numărul de cont bancar și codul de plată în Setări → Profil de afaceri pentru a include un cod QR de plată pe această factură.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Monitor impozit forfetar (Serbia)';
 
   @override

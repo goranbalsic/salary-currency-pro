@@ -180,14 +180,17 @@ an approved multi-checkpoint plan; checkpoint 1 (Foundation:
 `InvoiceLineItem` model additions, the `lib/utils/money.dart`
 rounding helper), checkpoint 2 (Journey, 12.1: `InvoiceDetailScreen`
 with the Generate PDF → edit → mark paid/unpaid → delete action
-hierarchy, itemization in the add/edit sheet), and checkpoint 3 (PDF
+hierarchy, itemization in the add/edit sheet), checkpoint 3 (PDF
 rendering, 12.2: `pdf`+`printing` dependencies, a content/layout split
 between `InvoicePdfContent` and `InvoicePdfService` so PDF content rules
-stay unit-testable, Generate PDF now does real generate-then-share/print)
-are done. Full detail: `DECISIONS.md` D-030. `flutter analyze` clean,
-`flutter test -j 1` 345/345, l10n in lockstep across 9 languages.
-Remaining checkpoints: NBS IPS QR, fonts/i18n/accessibility (fixes a
-known, already-planned Cyrillic/Latin-Extended glyph gap in the PDF),
+stay unit-testable, Generate PDF now does real generate-then-share/print),
+and checkpoint 4 (NBS IPS QR, 12.3: `NbsIpsPayloadBuilder` validated
+directly against the sourced spec's own worked examples,
+`NbsIpsEligibility`, wired into the detail screen's eligibility banner and
+the PDF's QR embedding) are done. Full detail: `DECISIONS.md` D-030.
+`flutter analyze` clean, `flutter test -j 1` 391/391, l10n in lockstep
+across 9 languages. Remaining checkpoints: fonts/i18n/accessibility (fixes
+a known, already-planned Cyrillic/Latin-Extended glyph gap in the PDF),
 final regression + completion report.
 
 ### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack

@@ -1577,6 +1577,14 @@ class AppLocalizationsSq extends AppLocalizations {
       'Krijimi i PDF-së dështoi. Fatura nuk është ndryshuar — provoni përsëri.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Kjo faturë do të përfshijë një kod NBS IPS QR për pagesë.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Shtoni numrin e llogarisë bankare dhe kodin e pagesës te Cilësimet → Profili i biznesit për të përfshirë një kod QR pagese në këtë faturë.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Ndjekësi i tarifës fikse (Serbi)';
 
   @override

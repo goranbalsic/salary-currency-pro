@@ -520,6 +520,8 @@
   "invoiceItemSubtotal": "Iznos",
   "invoiceGeneratePdf": "Generiraj PDF",
   "invoicePdfError": "Generiranje PDF-a nije uspjelo. Račun nije promijenjen — pokušajte ponovno.",
+  "invoiceQrEligibleBody": "Ovaj račun će sadržavati NBS IPS QR kôd za plaćanje.",
+  "invoiceQrIneligibleBody": "Dodajte broj računa i šifru plaćanja u Postavke → Poslovni profil kako biste uključili QR kôd za plaćanje na ovom računu.",
 
   "toolsPausalTrackerTitle": "Praćenje paušala (Srbija)",
   "toolsPausalTrackerSubtitle": "Pratite promet u odnosu na paušalni cenzus i prag za PDV",

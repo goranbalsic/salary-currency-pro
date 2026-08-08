@@ -7,13 +7,17 @@ import 'package:printing/printing.dart';
 import '../pdf/invoice_pdf_content.dart';
 
 /// Builds and shares/prints a professional invoice PDF entirely offline —
-/// no network, no external font/PDF/QR service (PROMPT-003 Stage C item
-/// 12.2). Deliberately separate from [InvoicePdfContent] (the content
-/// model): this file owns layout only, so content logic stays testable
-/// without the `pdf`/`printing` dependency, and layout can change without
-/// touching content rules. NBS IPS QR embedding (12.3) reads
-/// [InvoicePdfContent.qrPayload] once that lands — this checkpoint never
-/// sets it, so no QR code is drawn yet.
+/// no network, no external font/PDF/QR service (PROMPT-003 Stage C items
+/// 12.2/12.3). Deliberately separate from [InvoicePdfContent] (the
+/// content model): this file owns layout only, so content logic stays
+/// testable without the `pdf`/`printing` dependency, and layout can
+/// change without touching content rules. The NBS IPS QR itself
+/// ([InvoicePdfContent.qrPayload], when set) is drawn as vector directly
+/// into the page via `pdf`'s own `Barcode.qrCode()` (re-exported from
+/// `package:barcode`, already a transitive dependency of `pdf` — no
+/// separate raster round-trip, no extra dependency needed) — fully
+/// offline, deterministic, and only ever drawn from an already-validated
+/// payload (see `lib/logic/nbs_ips_payload_builder.dart`), never guessed.
 class InvoicePdfService {
   /// Builds the PDF and returns its raw bytes. Pure/offline — never
   /// touches the stored invoice, never contacts a network. A caller that
@@ -39,6 +43,10 @@ class InvoicePdfService {
           _buildLinesTable(content),
           pw.SizedBox(height: 12),
           _buildTotal(content),
+          if (content.qrPayload != null) ...[
+            pw.SizedBox(height: 20),
+            _buildQrSection(content),
+          ],
         ],
       ),
     );
@@ -114,6 +122,18 @@ class InvoicePdfService {
         2: pw.Alignment.centerRight,
         3: pw.Alignment.centerRight,
       },
+    );
+  }
+
+  pw.Widget _buildQrSection(InvoicePdfContent content) {
+    return pw.Center(
+      child: pw.BarcodeWidget(
+        data: content.qrPayload!,
+        barcode: pw.Barcode.qrCode(),
+        width: 120,
+        height: 120,
+        drawText: false,
+      ),
     );
   }
 

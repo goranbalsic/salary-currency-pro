@@ -1565,6 +1565,14 @@ class AppLocalizationsHr extends AppLocalizations {
       'Generiranje PDF-a nije uspjelo. Račun nije promijenjen — pokušajte ponovno.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Ovaj račun će sadržavati NBS IPS QR kôd za plaćanje.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Dodajte broj računa i šifru plaćanja u Postavke → Poslovni profil kako biste uključili QR kôd za plaćanje na ovom računu.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Praćenje paušala (Srbija)';
 
   @override

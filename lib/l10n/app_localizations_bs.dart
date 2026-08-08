@@ -1565,6 +1565,14 @@ class AppLocalizationsBs extends AppLocalizations {
       'Nije uspjelo generisanje PDF-a. Faktura nije promijenjena — pokušajte ponovo.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Ova faktura će sadržavati NBS IPS QR kod za plaćanje.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Dodajte broj računa i šifru plaćanja u Postavke → Poslovni profil kako biste uključili QR kod za plaćanje na ovoj fakturi.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Praćenje paušala (Srbija)';
 
   @override

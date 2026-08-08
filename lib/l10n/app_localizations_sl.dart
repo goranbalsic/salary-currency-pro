@@ -1567,6 +1567,14 @@ class AppLocalizationsSl extends AppLocalizations {
       'Ustvarjanje PDF-ja ni uspelo. Račun se ni spremenil — poskusite znova.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Ta račun bo vseboval NBS IPS QR kodo za plačilo.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Dodajte številko računa in plačilno šifro v Nastavitve → Poslovni profil, da vključite QR kodo za plačilo na tem računu.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Sledilnik pavšala (Srbija)';
 
   @override

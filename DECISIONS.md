@@ -166,12 +166,65 @@
   - `flutter analyze` clean, `flutter test -j 1` 345/345, l10n net +1 key
     (added `invoiceItemSubtotal`/`invoicePdfError`, removed
     `invoicePdfComingSoon`) × 9 languages in lockstep.
-- **Remaining checkpoints (not started):** 12.3 NBS IPS QR (payload
-  builder — official source already identified: NBS "Preporuke" PDF,
-  © 2020 Narodna banka Srbije,
-  `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
-  fonts/i18n/accessibility (Noto Sans, fixes the Cyrillic/Latin-Extended
-  gap above), final regression + completion report.
+- **Checkpoint 4 (NBS IPS QR, 12.3) — done:**
+  - `lib/logic/nbs_ips_payload_builder.dart` (`NbsIpsPayloadBuilder`) —
+    pure, stateless, no I/O, modeled structurally on
+    `FreelancerPayoutCalculator` but synchronous. Built and validated
+    directly against the sourced field rules (cited at the top of
+    checkpoint 1's entry above): `K:PR|V:01|C:1|R:...|N:...|I:...`
+    mandatory, `P:`/`S:`/`RO:` optional and only ever emitted when
+    non-empty. Returns a typed `NbsIpsPayloadResult` (success + payload,
+    or failure + a full list of every field error found, not just the
+    first) — never throws, never guesses a field.
+  - **Account-number normalization is a direct transcription of the
+    source document's own three worked examples**, not an invented rule:
+    `840-955845-10 → 840000000095584510`,
+    `165-55-74 → 165000000000005574`,
+    `310-1234567891211-86 → 310123456789121186` — i.e. bank code (3
+    digits) + account number zero-padded left to 13 digits + control
+    number (2 digits). `test/nbs_ips_payload_builder_test.dart` asserts
+    all three verbatim, plus a full exact-payload-string assertion
+    (`K:PR|V:01|C:1|R:840000000095584510|N:Čigra doo|I:RSD1025,12|SF:289`)
+    to catch any field-ordering or delimiter regression, 36 tests total.
+  - **The amount field reuses the same `lib/utils/money.dart` rounding
+    guarantee end to end** — `formatMinorUnits(minorUnits,
+    decimalSeparator: ',')` — so the QR "I" tag can never carry a
+    floating-point artifact any more than the PDF/UI can (explicitly
+    tested with a 3×0.1 case, per the user's original rounding-rule
+    guard).
+  - **"N"/"P"/"S" character-set validation is deliberately narrower than
+    the source document's own table**, which PDF text-extraction garbled
+    beyond reliable reconstruction (documented in the file's own doc
+    comment and `OPEN_QUESTIONS.md` QUESTION-009) — enforces length/line
+    limits and rejects the reserved `|` delimiter (which would otherwise
+    corrupt the payload's own field structure), not an exact charset
+    whitelist. Honest simplification, not a silent gap.
+  - `lib/logic/nbs_ips_eligibility.dart` (`NbsIpsEligibility`) — the
+    detail-screen-facing evaluator. Operationally defines "Serbian RSD
+    invoice" as `currencyCode == 'RSD'`, since `Invoice` has no separate
+    country field and RSD is specifically Serbia's currency (the honest
+    reading of what the model actually tracks, not an invented proxy).
+    Three states: `notRsd` (no QR messaging shown at all, per the
+    product standard's "no suggestion a non-Serbian invoice is
+    deficient"), `missingOrInvalidData` (RSD but the business profile/
+    amount doesn't validate), `eligible` (real payload attached).
+  - **Wired end to end**: `InvoiceDetailScreen` now loads the business
+    profile alongside the invoice, shows a `_QrEligibilityBanner` (plain
+    text + icon, never color/icon alone, never shown for non-RSD) between
+    the header and the action buttons, and `_generatePdf` passes
+    `eligibility.payload` into the content model only when
+    `eligibility.isEligible`. `InvoicePdfService` draws it via `pdf`'s own
+    `Barcode.qrCode()`/`pw.BarcodeWidget` (from `package:barcode`, already
+    a transitive dependency of `pdf` — confirms the plan's assumption
+    that no separate `barcode` dependency would be needed) directly into
+    the page as vector, fully offline, only ever from an
+    already-validated payload.
+  - `flutter analyze` clean, `flutter test -j 1` 391/391 (36 payload-
+    builder + 5 eligibility + 3 QR-embedding smoke + 3 eligibility-banner
+    UI tests added this checkpoint), l10n net +2 keys × 9 languages.
+- **Remaining checkpoints (not started):** 12.4 fonts/i18n/accessibility
+  (Noto Sans, fixes the Cyrillic/Latin-Extended glyph gap noted in
+  checkpoint 3), final regression + completion report.
 
 ## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
 

@@ -1561,6 +1561,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t generate the PDF. The invoice itself hasn\'t changed — try again.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'This invoice will include a scannable NBS IPS payment code.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Add your bank account and payment code in Settings → Business profile to include a scannable payment QR code on this invoice.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Paušal Tracker (Serbia)';
 
   @override

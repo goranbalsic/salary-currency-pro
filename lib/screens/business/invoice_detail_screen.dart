@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../logic/nbs_ips_eligibility.dart';
+import '../../models/business_profile.dart';
 import '../../models/invoice.dart';
 import '../../pdf/invoice_pdf_content.dart';
 import '../../services/business_profile_service.dart';
@@ -11,15 +13,12 @@ import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import 'invoices_screen.dart' show InvoiceFormSheet;
 
-/// The invoice detail journey (PROMPT-003 Stage C item 12.1): a scannable
-/// identity/status header, then a clear, limited action hierarchy —
-/// Generate/Share PDF first (the document action this whole feature is
-/// for), then edit and mark paid/unpaid, then delete last and visually
-/// separated as the one destructive action.
-///
-/// NBS IPS QR eligibility text and PDF generation itself land in later
-/// checkpoints (12.2/12.3); this checkpoint establishes the journey and
-/// action hierarchy around a still-stubbed Generate PDF action.
+/// The invoice detail journey (PROMPT-003 Stage C item 12.1-12.3): a
+/// scannable identity/status header, an NBS IPS QR eligibility
+/// explanation for Serbian RSD invoices, then a clear, limited action
+/// hierarchy — Generate/Share PDF first (the document action this whole
+/// feature is for), then edit and mark paid/unpaid, then delete last and
+/// visually separated as the one destructive action.
 class InvoiceDetailScreen extends StatefulWidget {
   final String invoiceId;
   const InvoiceDetailScreen({super.key, required this.invoiceId});
@@ -34,6 +33,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
   final _businessProfileService = BusinessProfileService();
   final _pdfService = InvoicePdfService();
   Invoice? _invoice;
+  BusinessProfile _profile = const BusinessProfile();
   bool _loaded = false;
   bool _pdfInFlight = false;
 
@@ -42,11 +42,13 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
     super.initState();
     _load();
     InvoiceService.changes.addListener(_load);
+    BusinessProfileService.changes.addListener(_loadProfile);
   }
 
   @override
   void dispose() {
     InvoiceService.changes.removeListener(_load);
+    BusinessProfileService.changes.removeListener(_loadProfile);
     super.dispose();
   }
 
@@ -59,10 +61,19 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
       Navigator.of(context).maybePop();
       return;
     }
+    final profile = await _businessProfileService.load();
+    if (!mounted) return;
     setState(() {
       _invoice = matches.first;
+      _profile = profile;
       _loaded = true;
     });
+  }
+
+  Future<void> _loadProfile() async {
+    final profile = await _businessProfileService.load();
+    if (!mounted) return;
+    setState(() => _profile = profile);
   }
 
   Future<void> _togglePaid(AppLocalizations l10n) async {
@@ -127,6 +138,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
     try {
       final profile = await _businessProfileService.load();
       if (!mounted) return;
+      final eligibility = NbsIpsEligibility.evaluate(invoice, profile);
       final content = buildInvoicePdfContent(
         invoice: invoice,
         profile: profile,
@@ -142,8 +154,10 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
           unitPrice: l10n.invoiceItemUnitPrice,
           subtotal: l10n.invoiceItemSubtotal,
         ),
-        // NBS IPS QR payload isn't built until checkpoint 4 (12.3) — every
-        // invoice gets a full, professional PDF without one until then.
+        // Only an eligible Serbian RSD invoice with fully valid payment
+        // data gets a payload — every other invoice still gets a full,
+        // professional PDF, just without a QR code.
+        qrPayload: eligibility.isEligible ? eligibility.payload : null,
       );
       final bytes = await _pdfService.generate(content);
       if (!mounted) return;
@@ -189,6 +203,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
         : (overdue ? l10n.invoiceStatusOverdue : l10n.invoiceStatusUnpaid);
     final amountFmt = NumberFormat.currency(symbol: '', decimalDigits: 2);
     final dateFmt = DateFormat.yMMMd(Localizations.localeOf(context).languageCode);
+    final eligibility = NbsIpsEligibility.evaluate(invoice, _profile);
 
     return Scaffold(
       appBar: AppBar(
@@ -283,6 +298,10 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
               ),
             ),
           ),
+          if (eligibility.reason != NbsIpsEligibilityReason.notRsd) ...[
+            const SizedBox(height: 12),
+            _QrEligibilityBanner(eligible: eligibility.isEligible, l10n: l10n),
+          ],
           const SizedBox(height: 20),
           ElevatedButton.icon(
             onPressed: _pdfInFlight ? null : () => _generatePdf(l10n),
@@ -316,6 +335,48 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
 
   static String _plainQuantity(double v) =>
       v == v.truncateToDouble() ? v.toInt().toString() : v.toString();
+}
+
+/// Eligibility transparency for the NBS IPS QR code (item 12.1's own
+/// requirement): never a disabled/mysterious control, always plain text
+/// explaining availability — and never shown at all for non-RSD invoices,
+/// so non-Serbian users see nothing suggesting their invoice is deficient.
+class _QrEligibilityBanner extends StatelessWidget {
+  final bool eligible;
+  final AppLocalizations l10n;
+
+  const _QrEligibilityBanner({required this.eligible, required this.l10n});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = eligible ? AppColors.moneyGreen : Theme.of(context).colorScheme.outline;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              eligible ? Icons.qr_code_2 : Icons.info_outline,
+              size: 18,
+              color: color,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                eligible ? l10n.invoiceQrEligibleBody : l10n.invoiceQrIneligibleBody,
+                style: TextStyle(fontSize: 12.5, color: color),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _DetailRow extends StatelessWidget {

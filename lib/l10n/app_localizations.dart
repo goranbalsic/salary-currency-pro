@@ -2876,6 +2876,18 @@ abstract class AppLocalizations {
   /// **'Couldn\'t generate the PDF. The invoice itself hasn\'t changed — try again.'**
   String get invoicePdfError;
 
+  /// No description provided for @invoiceQrEligibleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice will include a scannable NBS IPS payment code.'**
+  String get invoiceQrEligibleBody;
+
+  /// No description provided for @invoiceQrIneligibleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your bank account and payment code in Settings → Business profile to include a scannable payment QR code on this invoice.'**
+  String get invoiceQrIneligibleBody;
+
   /// No description provided for @toolsPausalTrackerTitle.
   ///
   /// In en, this message translates to:

@@ -417,19 +417,28 @@ checkpoints (not yet built as of checkpoint 1):
    themselves is responsible for getting the checksum right — the app
    will validate "RO" for format/length only (≤25 chars, leading 2-digit
    model), not verify or compute a mod-97 check digit.
-3. **PDF content-assertion API for automated tests is unconfirmed.**
-   Which parts of a `pw.Document` (from the planned `pdf` package) can be
-   inspected for text/structure in a widget/unit test, versus only
-   producible as raw bytes, hasn't been spiked yet.
+3. ~~**PDF content-assertion API for automated tests is unconfirmed.**~~
+   **Resolved in checkpoint 3 (2026-08-08):** the `pdf` package exposes
+   no text-content introspection API at all — only raw bytes. Resolved by
+   splitting content from layout: `lib/pdf/invoice_pdf_content.dart`
+   builds a plain-Dart content model with zero `pdf` dependency (so
+   `test/invoice_pdf_content_test.dart` can assert real content rules —
+   itemization, pagination-worthy line counts, status labels, money
+   rounding — without touching the `pdf` package at all), while
+   `lib/services/invoice_pdf_service.dart`'s own tests
+   (`test/invoice_pdf_service_test.dart`) are an honest smoke suite only
+   (valid-PDF-bytes magic-number check), never claiming rendered-text
+   verification.
 
-Current assumptions: (1) ship the "SF" field as validated free-text (3
-digits, required) with the sourced example codes shown as in-app help
-text, not a hardcoded exhaustive dropdown, until/unless the full Annex 3
-is sourced; (2) implement no model-97 computation/validation, only the
-documented format/length rule; (3) confirm the `pdf` package's content-
-introspection capability before writing PDF content tests, and if it
-can't support text-presence assertions, say so explicitly in the
-completion report rather than claiming coverage the tests don't have.
+Current assumptions (1 and 2 both confirmed still in effect as of
+checkpoint 4, which built `lib/logic/nbs_ips_payload_builder.dart`
+against them): (1) ship the "SF" field as validated free-text (3 digits,
+required) with the sourced example codes shown as in-app help text, not a
+hardcoded exhaustive dropdown, until/unless the full Annex 3 is sourced;
+(2) implement no model-97 computation/validation, only the documented
+format/length rule (confirmed: `NbsIpsPayloadBuilder` rejects a dash in a
+model-97 reference per the source doc's own note, but never computes or
+verifies the check digit itself).
 
 Possible answers: (a) proceed with the current assumptions (recommended —
 none of the three block a correct, honest implementation, they only bound

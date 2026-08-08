@@ -520,6 +520,8 @@
   "invoiceItemSubtotal": "Subtotal",
   "invoiceGeneratePdf": "Generează PDF",
   "invoicePdfError": "Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.",
+  "invoiceQrEligibleBody": "Această factură va include un cod QR NBS IPS de plată.",
+  "invoiceQrIneligibleBody": "Adăugați numărul de cont bancar și codul de plată în Setări → Profil de afaceri pentru a include un cod QR de plată pe această factură.",
 
   "toolsPausalTrackerTitle": "Monitor impozit forfetar (Serbia)",
   "toolsPausalTrackerSubtitle": "Urmărește cifra de afaceri față de plafonul forfetar și pragul de TVA",

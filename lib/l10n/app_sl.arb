@@ -520,6 +520,8 @@
   "invoiceItemSubtotal": "Znesek",
   "invoiceGeneratePdf": "Ustvari PDF",
   "invoicePdfError": "Ustvarjanje PDF-ja ni uspelo. Račun se ni spremenil — poskusite znova.",
+  "invoiceQrEligibleBody": "Ta račun bo vseboval NBS IPS QR kodo za plačilo.",
+  "invoiceQrIneligibleBody": "Dodajte številko računa in plačilno šifro v Nastavitve → Poslovni profil, da vključite QR kodo za plačilo na tem računu.",
 
   "toolsPausalTrackerTitle": "Sledilnik pavšala (Srbija)",
   "toolsPausalTrackerSubtitle": "Spremljajte promet glede na prag pavšala in prag za DDV",

@@ -1580,6 +1580,14 @@ class AppLocalizationsBg extends AppLocalizations {
       'Генерирането на PDF не бе успешно. Фактурата не е променена — опитайте отново.';
 
   @override
+  String get invoiceQrEligibleBody =>
+      'Тази фактура ще съдържа сканируем NBS IPS код за плащане.';
+
+  @override
+  String get invoiceQrIneligibleBody =>
+      'Добавете номер на банкова сметка и код за плащане в Настройки → Бизнес профил, за да включите QR код за плащане на тази фактура.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Проследяване на патента (Сърбия)';
 
   @override

@@ -520,6 +520,8 @@
   "invoiceItemSubtotal": "Износ",
   "invoiceGeneratePdf": "Генерирај PDF",
   "invoicePdfError": "Генерирањето на PDF не успеа. Фактурата не е променета — обидете се повторно.",
+  "invoiceQrEligibleBody": "Оваа фактура ќе содржи NBS IPS QR код за плаќање.",
+  "invoiceQrIneligibleBody": "Додајте број на сметка и шифра за плаќање во Поставки → Деловен профил за да вклучите QR код за плаќање на оваа фактура.",
 
   "toolsPausalTrackerTitle": "Следење на паушал (Србија)",
   "toolsPausalTrackerSubtitle": "Следете го прометот во однос на паушалниот цензус и прагот за ДДВ",
