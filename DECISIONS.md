@@ -276,9 +276,13 @@
     PDF" over a now-disabled control.
   - `flutter analyze` clean, `flutter test -j 1` 402/402, l10n net +1 key
     (`invoiceGeneratingPdf`) × 9 languages, parity now automated.
-- **Remaining work:** final regression + quality-gate + completion report
-  (checkpoint 6), then stop for approval per the prompt's own instruction
-  — do not start Stage C item 13.
+- **Checkpoint 6 (final regression + quality gate) — done, 2026-08-08.**
+  Full `flutter analyze` clean (only the 3 pre-existing, unrelated
+  `unintended_html_in_doc_comment` infos), full `flutter test -j 1`
+  402/402 including every pre-existing invoice CRUD/status/notification
+  test, unaffected by this item's additive model changes. Item 12 is
+  **done** for this prompt's scope. Per PROMPT-003F's own instruction:
+  stopped here, awaiting approval before Stage C item 13.
 
 ## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
 

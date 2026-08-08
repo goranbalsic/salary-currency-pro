@@ -159,13 +159,14 @@ STOP — Stage D (monetization) needs a separate explicit go-ahead.
 
 **Item 11 done** — the user supplied a sourced-figure narrowing prompt,
 PROMPT-003E, for this item specifically; see that entry below and
-`DECISIONS.md` D-029. **Item 12 in progress** — the user supplied a
+`DECISIONS.md` D-029. **Item 12 done** — the user supplied a
 scope-raising prompt, PROMPT-003F, for this item specifically; see that
-entry below and `DECISIONS.md` D-030.
+entry below and `DECISIONS.md` D-030. Stopped per that prompt's own
+instruction, awaiting approval before item 13.
 
 ### PROMPT-003F: Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced)
 
-Status: **In progress, started 2026-08-08** — user supplied
+Status: **Done, 2026-08-08** — user supplied
 `_userprompts/PROMPT-003F_StageC_Item12_Invoice_PDF_NBS_IPS_QR_Enhanced.md`,
 raising the quality bar for item 12 (fully offline, professional invoice
 PDF with an embedded NBS IPS QR payment code for eligible Serbian RSD
@@ -191,11 +192,12 @@ the PDF's QR embedding), and checkpoint 5 (fonts/i18n/accessibility,
 12.4: bundled Noto Sans Regular+Bold, instanced and subset locally with
 fonttools to ~275 KB total, fixing the Cyrillic/Latin-Extended glyph gap;
 a new automated l10n parity test; accessible loading-state semantics on
-the Generate PDF button) are done. Full detail: `DECISIONS.md` D-030.
-`flutter analyze` clean, `flutter test -j 1` 402/402, l10n in lockstep
-across 9 languages (now automatically verified). Remaining: final
-regression + quality gate + completion report (checkpoint 6), then stop
-for approval — do not start Stage C item 13.
+the Generate PDF button), and checkpoint 6 (final regression + quality
+gate) are all done. Full detail: `DECISIONS.md` D-030. `flutter analyze`
+clean, `flutter test -j 1` 402/402, l10n in lockstep across 9 languages
+(now automatically verified). **Per this prompt's own report-then-stop
+instruction: stopped here, awaiting approval before Stage C item 13**
+(Cross-border pack).
 
 ### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack
 
