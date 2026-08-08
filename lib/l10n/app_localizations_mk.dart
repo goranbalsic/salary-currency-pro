@@ -1074,6 +1074,31 @@ class AppLocalizationsMk extends AppLocalizations {
   String get recurringReviewSkip => 'Прескокни';
 
   @override
+  String get toolsRadarTitle => 'Радар за фиксни трошоци';
+
+  @override
+  String get toolsRadarSubtitle =>
+      'Погледнете ги вкупните повторливи трошоци на едно место';
+
+  @override
+  String get radarScreenTitle => 'Радар за фиксни трошоци';
+
+  @override
+  String get radarEmptyState =>
+      'Сè уште нема активни повторливи трошоци. Додадете еден во Повторливи трансакции за да го видите вкупниот фиксен трошок овде.';
+
+  @override
+  String get radarMonthlyTotal => 'Месечно вкупно';
+
+  @override
+  String get radarWeeklyTotal => 'Неделно вкупно';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Следно: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Буџети и цели';
 
   @override

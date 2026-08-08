@@ -382,6 +382,15 @@
   "recurringReviewPost": "Post",
   "recurringReviewSkip": "Skip",
 
+  "toolsRadarTitle": "Fixed-Cost Radar",
+  "toolsRadarSubtitle": "See your total recurring costs at a glance",
+  "radarScreenTitle": "Fixed-Cost Radar",
+  "radarEmptyState": "No active recurring expenses yet. Add one from Recurring Transactions to see your fixed-cost total here.",
+  "radarMonthlyTotal": "Monthly total",
+  "radarWeeklyTotal": "Weekly total",
+  "radarNextDue": "Next: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Budgets & Goals",
   "toolsBudgetsGoalsSubtitle": "Set monthly spending limits and track savings goals",
   "budgetsScreenTitle": "Budgets & Goals",

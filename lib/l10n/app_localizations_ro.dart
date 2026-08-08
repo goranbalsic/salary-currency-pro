@@ -1078,6 +1078,31 @@ class AppLocalizationsRo extends AppLocalizations {
   String get recurringReviewSkip => 'Omite';
 
   @override
+  String get toolsRadarTitle => 'Radar costuri fixe';
+
+  @override
+  String get toolsRadarSubtitle =>
+      'Vezi costurile recurente totale dintr-o privire';
+
+  @override
+  String get radarScreenTitle => 'Radar costuri fixe';
+
+  @override
+  String get radarEmptyState =>
+      'Nu există încă cheltuieli recurente active. Adaugă una din Tranzacții recurente pentru a vedea aici costul fix total.';
+
+  @override
+  String get radarMonthlyTotal => 'Total lunar';
+
+  @override
+  String get radarWeeklyTotal => 'Total săptămânal';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Următoarea: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Bugete și obiective';
 
   @override

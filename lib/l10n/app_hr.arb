@@ -365,6 +365,15 @@
   "recurringReviewPost": "Knjiži",
   "recurringReviewSkip": "Preskoči",
 
+  "toolsRadarTitle": "Radar fiksnih troškova",
+  "toolsRadarSubtitle": "Pogledajte ukupne ponavljajuće troškove na jednom mjestu",
+  "radarScreenTitle": "Radar fiksnih troškova",
+  "radarEmptyState": "Još nema aktivnih ponavljajućih troškova. Dodajte jedan u Ponavljajućim transakcijama da biste ovdje vidjeli ukupan fiksni trošak.",
+  "radarMonthlyTotal": "Mjesečno ukupno",
+  "radarWeeklyTotal": "Tjedno ukupno",
+  "radarNextDue": "Sljedeće: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Proračuni i ciljevi",
   "toolsBudgetsGoalsSubtitle": "Postavite mjesečne limite potrošnje i pratite ciljeve štednje",
   "budgetsScreenTitle": "Proračuni i ciljevi",

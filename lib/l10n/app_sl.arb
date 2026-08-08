@@ -365,6 +365,15 @@
   "recurringReviewPost": "Knjiži",
   "recurringReviewSkip": "Preskoči",
 
+  "toolsRadarTitle": "Radar stalnih stroškov",
+  "toolsRadarSubtitle": "Preglejte skupne ponavljajoče stroške na enem mestu",
+  "radarScreenTitle": "Radar stalnih stroškov",
+  "radarEmptyState": "Še ni aktivnih ponavljajočih stroškov. Dodajte enega v Ponavljajočih transakcijah, da tukaj vidite skupni stalni strošek.",
+  "radarMonthlyTotal": "Mesečno skupaj",
+  "radarWeeklyTotal": "Tedensko skupaj",
+  "radarNextDue": "Naslednje: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Proračuni in cilji",
   "toolsBudgetsGoalsSubtitle": "Nastavite mesečne omejitve porabe in spremljajte cilje varčevanja",
   "budgetsScreenTitle": "Proračuni in cilji",

@@ -365,6 +365,15 @@
   "recurringReviewPost": "Запиши",
   "recurringReviewSkip": "Пропусни",
 
+  "toolsRadarTitle": "Радар за фиксни разходи",
+  "toolsRadarSubtitle": "Вижте общите си повтарящи се разходи на едно място",
+  "radarScreenTitle": "Радар за фиксни разходи",
+  "radarEmptyState": "Все още няма активни повтарящи се разходи. Добавете такъв в Повтарящи се транзакции, за да видите тук общия си фиксен разход.",
+  "radarMonthlyTotal": "Месечно общо",
+  "radarWeeklyTotal": "Седмично общо",
+  "radarNextDue": "Следващо: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Бюджети и цели",
   "toolsBudgetsGoalsSubtitle": "Задайте месечни лимити за разходи и следете целите си за спестяване",
   "budgetsScreenTitle": "Бюджети и цели",

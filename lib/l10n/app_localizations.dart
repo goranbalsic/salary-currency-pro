@@ -2032,6 +2032,48 @@ abstract class AppLocalizations {
   /// **'Skip'**
   String get recurringReviewSkip;
 
+  /// No description provided for @toolsRadarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed-Cost Radar'**
+  String get toolsRadarTitle;
+
+  /// No description provided for @toolsRadarSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See your total recurring costs at a glance'**
+  String get toolsRadarSubtitle;
+
+  /// No description provided for @radarScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed-Cost Radar'**
+  String get radarScreenTitle;
+
+  /// No description provided for @radarEmptyState.
+  ///
+  /// In en, this message translates to:
+  /// **'No active recurring expenses yet. Add one from Recurring Transactions to see your fixed-cost total here.'**
+  String get radarEmptyState;
+
+  /// No description provided for @radarMonthlyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly total'**
+  String get radarMonthlyTotal;
+
+  /// No description provided for @radarWeeklyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly total'**
+  String get radarWeeklyTotal;
+
+  /// No description provided for @radarNextDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {date}'**
+  String radarNextDue(String date);
+
   /// No description provided for @toolsBudgetsGoalsTitle.
   ///
   /// In en, this message translates to:

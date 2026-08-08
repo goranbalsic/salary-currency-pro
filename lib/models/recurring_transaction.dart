@@ -79,6 +79,20 @@ class RecurringTransaction {
     return candidate;
   }
 
+  /// The next occurrence date on or after [asOf] — unlike
+  /// [dueOccurrenceAsOf] (which returns `null` until something is
+  /// actually due), this always returns a real future-or-today date, for
+  /// "Next: {date}" display purposes (PROMPT-003 Stage B item 6's
+  /// subscription/fixed-cost radar) regardless of whether [checkDue] has
+  /// run recently.
+  DateTime nextOccurrenceOnOrAfter(DateTime asOf) {
+    var candidate = lastResolvedDate == null ? startDate : _advance(lastResolvedDate!, frequency);
+    while (candidate.isBefore(asOf)) {
+      candidate = _advance(candidate, frequency);
+    }
+    return candidate;
+  }
+
   RecurringTransaction copyWith({
     TransactionType? type,
     String? categoryId,

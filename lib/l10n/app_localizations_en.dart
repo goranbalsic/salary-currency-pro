@@ -1071,6 +1071,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recurringReviewSkip => 'Skip';
 
   @override
+  String get toolsRadarTitle => 'Fixed-Cost Radar';
+
+  @override
+  String get toolsRadarSubtitle => 'See your total recurring costs at a glance';
+
+  @override
+  String get radarScreenTitle => 'Fixed-Cost Radar';
+
+  @override
+  String get radarEmptyState =>
+      'No active recurring expenses yet. Add one from Recurring Transactions to see your fixed-cost total here.';
+
+  @override
+  String get radarMonthlyTotal => 'Monthly total';
+
+  @override
+  String get radarWeeklyTotal => 'Weekly total';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Next: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Budgets & Goals';
 
   @override

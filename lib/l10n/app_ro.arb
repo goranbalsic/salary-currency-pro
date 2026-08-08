@@ -365,6 +365,15 @@
   "recurringReviewPost": "Înregistrează",
   "recurringReviewSkip": "Omite",
 
+  "toolsRadarTitle": "Radar costuri fixe",
+  "toolsRadarSubtitle": "Vezi costurile recurente totale dintr-o privire",
+  "radarScreenTitle": "Radar costuri fixe",
+  "radarEmptyState": "Nu există încă cheltuieli recurente active. Adaugă una din Tranzacții recurente pentru a vedea aici costul fix total.",
+  "radarMonthlyTotal": "Total lunar",
+  "radarWeeklyTotal": "Total săptămânal",
+  "radarNextDue": "Următoarea: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Bugete și obiective",
   "toolsBudgetsGoalsSubtitle": "Stabilește limite lunare de cheltuieli și urmărește obiectivele de economisire",
   "budgetsScreenTitle": "Bugete și obiective",

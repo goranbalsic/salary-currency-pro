@@ -105,4 +105,26 @@ void main() {
     expect(t.dueOccurrenceAsOf(DateTime(2026, 3, 15)), isNull);
     expect(t.dueOccurrenceAsOf(DateTime(2026, 4, 1)), DateTime(2026, 4, 1));
   });
+
+  group('nextOccurrenceOnOrAfter (for radar "Next: {date}" display)', () {
+    test('before anything is due, returns the upcoming occurrence, not null', () {
+      final t = template(frequency: RecurrenceFrequency.monthly, startDate: DateTime(2026, 5, 1));
+      expect(t.nextOccurrenceOnOrAfter(DateTime(2026, 4, 1)), DateTime(2026, 5, 1));
+    });
+
+    test('when overdue, skips forward past every missed occurrence to the next real one', () {
+      final t = template(
+        frequency: RecurrenceFrequency.monthly,
+        startDate: DateTime(2026, 1, 1),
+        lastResolvedDate: DateTime(2026, 1, 1),
+      );
+      // Unresolved since January; "now" is June — next real occurrence is July.
+      expect(t.nextOccurrenceOnOrAfter(DateTime(2026, 6, 15)), DateTime(2026, 7, 1));
+    });
+
+    test('returns today itself when today is exactly the occurrence date', () {
+      final t = template(frequency: RecurrenceFrequency.weekly, startDate: DateTime(2026, 3, 2));
+      expect(t.nextOccurrenceOnOrAfter(DateTime(2026, 3, 2)), DateTime(2026, 3, 2));
+    });
+  });
 }

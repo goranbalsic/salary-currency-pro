@@ -1069,6 +1069,31 @@ class AppLocalizationsSr extends AppLocalizations {
   String get recurringReviewSkip => 'Preskoči';
 
   @override
+  String get toolsRadarTitle => 'Radar fiksnih troškova';
+
+  @override
+  String get toolsRadarSubtitle =>
+      'Pogledajte ukupne ponavljajuće troškove na jednom mestu';
+
+  @override
+  String get radarScreenTitle => 'Radar fiksnih troškova';
+
+  @override
+  String get radarEmptyState =>
+      'Još nema aktivnih ponavljajućih troškova. Dodajte jedan u Ponavljajućim transakcijama da biste ovde videli ukupan fiksni trošak.';
+
+  @override
+  String get radarMonthlyTotal => 'Mesečno ukupno';
+
+  @override
+  String get radarWeeklyTotal => 'Nedeljno ukupno';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Sledeće: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Budžeti i ciljevi';
 
   @override

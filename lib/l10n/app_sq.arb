@@ -365,6 +365,15 @@
   "recurringReviewPost": "Regjistro",
   "recurringReviewSkip": "Kapërce",
 
+  "toolsRadarTitle": "Radari i kostove fikse",
+  "toolsRadarSubtitle": "Shiko koston totale të përsëritur në një vend",
+  "radarScreenTitle": "Radari i kostove fikse",
+  "radarEmptyState": "Ende nuk ka shpenzime të përsëritura aktive. Shto një nga Transaksionet e Përsëritura për ta parë koston totale fikse këtu.",
+  "radarMonthlyTotal": "Total mujor",
+  "radarWeeklyTotal": "Total javor",
+  "radarNextDue": "Tjetra: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Buxhetet dhe objektivat",
   "toolsBudgetsGoalsSubtitle": "Vendosni kufij mujorë të shpenzimeve dhe ndiqni objektivat e kursimit",
   "budgetsScreenTitle": "Buxhetet dhe objektivat",

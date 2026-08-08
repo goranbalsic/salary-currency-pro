@@ -1075,6 +1075,31 @@ class AppLocalizationsSq extends AppLocalizations {
   String get recurringReviewSkip => 'Kapërce';
 
   @override
+  String get toolsRadarTitle => 'Radari i kostove fikse';
+
+  @override
+  String get toolsRadarSubtitle =>
+      'Shiko koston totale të përsëritur në një vend';
+
+  @override
+  String get radarScreenTitle => 'Radari i kostove fikse';
+
+  @override
+  String get radarEmptyState =>
+      'Ende nuk ka shpenzime të përsëritura aktive. Shto një nga Transaksionet e Përsëritura për ta parë koston totale fikse këtu.';
+
+  @override
+  String get radarMonthlyTotal => 'Total mujor';
+
+  @override
+  String get radarWeeklyTotal => 'Total javor';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Tjetra: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Buxhetet dhe objektivat';
 
   @override

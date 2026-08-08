@@ -365,6 +365,15 @@
   "recurringReviewPost": "Внеси",
   "recurringReviewSkip": "Прескокни",
 
+  "toolsRadarTitle": "Радар за фиксни трошоци",
+  "toolsRadarSubtitle": "Погледнете ги вкупните повторливи трошоци на едно место",
+  "radarScreenTitle": "Радар за фиксни трошоци",
+  "radarEmptyState": "Сè уште нема активни повторливи трошоци. Додадете еден во Повторливи трансакции за да го видите вкупниот фиксен трошок овде.",
+  "radarMonthlyTotal": "Месечно вкупно",
+  "radarWeeklyTotal": "Неделно вкупно",
+  "radarNextDue": "Следно: {date}",
+  "@radarNextDue": {"placeholders": {"date": {"type": "String"}}},
+
   "toolsBudgetsGoalsTitle": "Буџети и цели",
   "toolsBudgetsGoalsSubtitle": "Поставете месечни лимити за трошење и следете ги целите за штедење",
   "budgetsScreenTitle": "Буџети и цели",

@@ -1,5 +1,34 @@
 # DECISIONS.md
 
+## D-025 — PROMPT-003 Stage B item 6: subscription/fixed-cost radar screen
+
+- **Date:** 2026-08-08 (same day, right after D-024).
+- **Design:** a read-only `SubscriptionRadarScreen` (Tools hub) over the
+  same `RecurringTransactionService` data D-024 built — no new storage,
+  purely a different view: active, expense-type templates only (income
+  and paused templates excluded — this screen answers "what am I
+  committed to paying right now"), sorted by amount descending, with
+  per-(currency, frequency) totals at the top.
+- **Deliberate non-conversion:** weekly and monthly totals are shown
+  separately, never blended into one "monthly-equivalent" number via an
+  average-weeks-per-month factor. That conversion is legitimate math, but
+  presenting it as a single total risks reading as a promise about any
+  specific month this app doesn't make — kept the two totals honestly
+  separate instead.
+- **New model method**, `RecurringTransaction.nextOccurrenceOnOrAfter`:
+  distinct from D-024's `dueOccurrenceAsOf` (which returns `null` until
+  something is actually due) — this always returns a real upcoming date,
+  needed for "Next: {date}" display regardless of whether `checkDue` has
+  run recently.
+- **Verification:** 3 new date-math tests for the new method (upcoming-
+  but-not-yet-due, skip-forward-past-missed-occurrences, exact-match-
+  today), 1 end-to-end widget test (add an expense template → open the
+  radar → monthly total and next-due date both render). 7 new l10n keys
+  × 9 languages (417/locale). Full suite 242/242, `flutter analyze`
+  clean.
+- **Confidence:** High. **Reversibility:** Fully reversible — one new
+  read-only screen, one new Tools-hub entry, one new pure model method.
+
 ## D-024 — PROMPT-003 Stage B item 5: recurring transactions
 
 - **Date:** 2026-08-08 (later same day). User gave explicit go-ahead

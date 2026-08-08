@@ -1081,6 +1081,31 @@ class AppLocalizationsBg extends AppLocalizations {
   String get recurringReviewSkip => 'Пропусни';
 
   @override
+  String get toolsRadarTitle => 'Радар за фиксни разходи';
+
+  @override
+  String get toolsRadarSubtitle =>
+      'Вижте общите си повтарящи се разходи на едно място';
+
+  @override
+  String get radarScreenTitle => 'Радар за фиксни разходи';
+
+  @override
+  String get radarEmptyState =>
+      'Все още няма активни повтарящи се разходи. Добавете такъв в Повтарящи се транзакции, за да видите тук общия си фиксен разход.';
+
+  @override
+  String get radarMonthlyTotal => 'Месечно общо';
+
+  @override
+  String get radarWeeklyTotal => 'Седмично общо';
+
+  @override
+  String radarNextDue(String date) {
+    return 'Следващо: $date';
+  }
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Бюджети и цели';
 
   @override

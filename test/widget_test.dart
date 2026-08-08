@@ -515,6 +515,41 @@ void main() {
   });
 
   testWidgets(
+      'Fixed-Cost Radar shows the monthly total and next-due date for an active recurring expense',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('Tools'),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Recurring Transactions'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add expense'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).first, '25');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Fixed-Cost Radar'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Fixed-Cost Radar'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Monthly total'), findsOneWidget);
+    expect(find.textContaining('25.00 EUR'), findsWidgets);
+    expect(find.textContaining('Next:'), findsOneWidget);
+  });
+
+  testWidgets(
       'Budgets & Goals: a savings goal can be created and progressed, and a '
       'category budget shows spend-vs-limit once set',
       (WidgetTester tester) async {
