@@ -467,6 +467,54 @@ void main() {
   });
 
   testWidgets(
+      'Recurring transactions: a review-required template queues a review item that, '
+      'once posted, appears as a real transaction and clears the banner',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('Tools'),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Recurring Transactions'));
+    await tester.pumpAndSettle();
+    expect(find.text('No recurring transactions yet. Add rent, subscriptions, or other regular '
+        'payments once — they\'ll post automatically or wait for your review, your choice.'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add expense'));
+    await tester.pumpAndSettle();
+
+    // autoPost defaults to false (review-required) — leave it as-is, and
+    // startDate defaults to today, so it's immediately due once checked.
+    await tester.enterText(find.byType(TextField).first, '15');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    // Back on the (now non-empty) recurring list.
+    expect(find.textContaining('15.00 EUR'), findsOneWidget);
+
+    // Navigate to the Expense Tracker — its initState re-runs checkDue(),
+    // which queues this due, review-required occurrence.
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Expense Tracker'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('1 recurring transactions to review'), findsOneWidget);
+
+    await tester.tap(find.text('Post'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('1 recurring transactions to review'), findsNothing);
+    expect(find.textContaining('15.00'), findsWidgets);
+  });
+
+  testWidgets(
       'Budgets & Goals: a savings goal can be created and progressed, and a '
       'category budget shows spend-vs-limit once set',
       (WidgetTester tester) async {

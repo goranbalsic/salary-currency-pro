@@ -1011,6 +1011,73 @@ class AppLocalizationsRo extends AppLocalizations {
   String get expenseSpendingByCategory => 'Cheltuieli pe categorii';
 
   @override
+  String get toolsRecurringTitle => 'Tranzacții recurente';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Chirie, abonamente și alte plăți regulate — definește o singură dată';
+
+  @override
+  String get recurringScreenTitle => 'Tranzacții recurente';
+
+  @override
+  String get recurringEmptyState =>
+      'Nu există încă tranzacții recurente. Adaugă chiria, abonamentele sau alte plăți regulate o singură dată — se vor înregistra automat sau vor aștepta confirmarea ta, la alegere.';
+
+  @override
+  String get recurringAddTitle => 'Tranzacție recurentă nouă';
+
+  @override
+  String get recurringEditTitle => 'Editează tranzacția recurentă';
+
+  @override
+  String get recurringFrequencyLabel => 'Se repetă';
+
+  @override
+  String get recurringFrequencyWeekly => 'Săptămânal';
+
+  @override
+  String get recurringFrequencyMonthly => 'Lunar';
+
+  @override
+  String get recurringStartDateLabel => 'Începe';
+
+  @override
+  String get recurringAutoPostLabel => 'Înregistrare automată';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Dezactivat: confirmă fiecare apariție înainte de a fi adăugată';
+
+  @override
+  String get recurringPausedLabel => 'În pauză';
+
+  @override
+  String get recurringPauseAction => 'Pauzează';
+
+  @override
+  String get recurringResumeAction => 'Reia';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Ștergi această tranzacție recurentă?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'Aceasta oprește aparițiile viitoare. Tranzacțiile deja înregistrate nu sunt afectate.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count tranzacții recurente de confirmat';
+  }
+
+  @override
+  String get recurringReviewPost => 'Înregistrează';
+
+  @override
+  String get recurringReviewSkip => 'Omite';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Bugete și obiective';
 
   @override

@@ -10,6 +10,7 @@ import '../../theme/app_theme.dart';
 import '../budgets/budgets_screen.dart';
 import '../business/invoices_screen.dart';
 import '../expenses/expense_tracker_screen.dart';
+import '../expenses/recurring_transactions_screen.dart';
 import '../scenarios/my_scenarios_screen.dart';
 import 'budget_screen.dart';
 import 'freelance_tax_screen.dart';
@@ -127,6 +128,14 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         subtitle: l10n.toolsBudgetsGoalsSubtitle,
         category: _ToolCategory.tracking,
         builder: (_) => const BudgetsScreen(),
+      ),
+      _ToolEntry(
+        id: 'recurring_transactions',
+        icon: Icons.repeat,
+        title: l10n.toolsRecurringTitle,
+        subtitle: l10n.toolsRecurringSubtitle,
+        category: _ToolCategory.tracking,
+        builder: (_) => const RecurringTransactionsScreen(),
       ),
       _ToolEntry(
         id: HistoryToolIds.loan,

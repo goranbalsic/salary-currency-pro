@@ -141,6 +141,14 @@ Structure — five staged sections, in priority order:
   Access Framework) with a monthly reminder — doubles as the future sync
   migration path.
 
+### PROMPT-003 Stage B: Retention Mechanics — Started
+
+Status: **Started 2026-08-08** — user gave explicit go-ahead ("start
+PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition. Working
+through items 5–9 in order, one increment at a time, audit-first per
+item, same discipline as Stage A. See `DECISIONS.md` for per-item
+records as they land.
+
 ### PROMPT-003A: Stage A Closure — Consent Flow + App Icon
 
 Status: Done, per this prompt's own explicit stop condition ("report per

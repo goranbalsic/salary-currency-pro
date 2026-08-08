@@ -1002,6 +1002,73 @@ class AppLocalizationsHr extends AppLocalizations {
   String get expenseSpendingByCategory => 'Potrošnja po kategoriji';
 
   @override
+  String get toolsRecurringTitle => 'Ponavljajuće transakcije';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Najamnina, pretplate i druga redovna plaćanja — definirajte jednom';
+
+  @override
+  String get recurringScreenTitle => 'Ponavljajuće transakcije';
+
+  @override
+  String get recurringEmptyState =>
+      'Još nema ponavljajućih transakcija. Dodajte najamninu, pretplate ili druga redovna plaćanja jednom — bit će automatski knjižene ili će čekati vaš pregled, po vašem izboru.';
+
+  @override
+  String get recurringAddTitle => 'Nova ponavljajuća transakcija';
+
+  @override
+  String get recurringEditTitle => 'Uređivanje ponavljajuće transakcije';
+
+  @override
+  String get recurringFrequencyLabel => 'Ponavlja se';
+
+  @override
+  String get recurringFrequencyWeekly => 'Tjedno';
+
+  @override
+  String get recurringFrequencyMonthly => 'Mjesečno';
+
+  @override
+  String get recurringStartDateLabel => 'Počinje';
+
+  @override
+  String get recurringAutoPostLabel => 'Automatsko knjiženje';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Isključeno: pregledajte svako pojavljivanje prije dodavanja';
+
+  @override
+  String get recurringPausedLabel => 'Pauzirano';
+
+  @override
+  String get recurringPauseAction => 'Pauziraj';
+
+  @override
+  String get recurringResumeAction => 'Nastavi';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Izbrisati ovu ponavljajuću transakciju?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'Ovo zaustavlja buduća pojavljivanja. Već knjižene transakcije ostaju netaknute.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count ponavljajućih transakcija za pregled';
+  }
+
+  @override
+  String get recurringReviewPost => 'Knjiži';
+
+  @override
+  String get recurringReviewSkip => 'Preskoči';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Proračuni i ciljevi';
 
   @override

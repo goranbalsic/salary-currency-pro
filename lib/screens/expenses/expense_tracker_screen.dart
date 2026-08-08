@@ -8,7 +8,9 @@ import '../../l10n/l10n_lookups.dart';
 import '../../models/country.dart';
 import '../../models/currency.dart';
 import '../../models/expense_entry.dart';
+import '../../models/recurring_transaction.dart';
 import '../../services/expense_service.dart';
+import '../../services/recurring_transaction_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
 
@@ -27,10 +29,12 @@ enum _SortMode { dateDesc, amountDesc }
 
 class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
   final _service = ExpenseService();
+  final _recurringService = RecurringTransactionService();
   final _searchCtrl = TextEditingController();
   DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
   List<ExpenseEntry> _entries = const [];
   List<MonthlySummary> _summaries = const [];
+  List<RecurringReviewItem> _reviewQueue = const [];
 
   /// Previous calendar month's total expense in the primary (first) summary
   /// currency — Unknown (null) rather than 0 when there's no prior data, so
@@ -45,8 +49,13 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
   @override
   void initState() {
     super.initState();
+    // Re-check on every screen open (not just app start, see app.dart) so
+    // an occurrence that came due while the app was already running shows
+    // up immediately rather than waiting for the next full restart.
+    _recurringService.checkDue().then((_) => _loadReviewQueue());
     _load();
     ExpenseService.changes.addListener(_load);
+    RecurringTransactionService.changes.addListener(_loadReviewQueue);
     _searchCtrl.addListener(() {
       setState(() => _query = _searchCtrl.text.trim().toLowerCase());
     });
@@ -55,8 +64,15 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
   @override
   void dispose() {
     ExpenseService.changes.removeListener(_load);
+    RecurringTransactionService.changes.removeListener(_loadReviewQueue);
     _searchCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadReviewQueue() async {
+    final queue = await _recurringService.loadReviewQueue();
+    if (!mounted) return;
+    setState(() => _reviewQueue = queue);
   }
 
   /// Expense-only totals per category, grouped by currency — the basis for
@@ -264,6 +280,14 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
                   ],
                 ),
                 const SizedBox(height: 8),
+                if (_reviewQueue.isNotEmpty) ...[
+                  _RecurringReviewBanner(
+                    items: _reviewQueue,
+                    recurringService: _recurringService,
+                    l10n: l10n,
+                  ),
+                  const SizedBox(height: 12),
+                ],
                 for (final s in _summaries) ...[
                   _SummaryCard(summary: s, l10n: l10n),
                   const SizedBox(height: 12),
@@ -414,6 +438,75 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
 }
 
 String _capitalize(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+/// Surfaces due occurrences of review-required (`autoPost: false`)
+/// recurring transactions — PROMPT-003 Stage B item 5's "review-before-
+/// post option". Auto-post templates never appear here; they're already
+/// posted as real [ExpenseEntry] rows by the time this screen loads.
+class _RecurringReviewBanner extends StatelessWidget {
+  final List<RecurringReviewItem> items;
+  final RecurringTransactionService recurringService;
+  final AppLocalizations l10n;
+
+  const _RecurringReviewBanner({
+    required this.items,
+    required this.recurringService,
+    required this.l10n,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final fmt = NumberFormat.currency(symbol: '', decimalDigits: 2);
+    return Card(
+      color: AppColors.gold.withValues(alpha: 0.10),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.repeat, size: 18, color: AppColors.navy),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    l10n.recurringReviewBannerTitle(items.length),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+            ),
+            for (final item in items)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    Icon(categoryIcon(item.categoryId), size: 18),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        '${localizedCategoryLabel(l10n, item.categoryId)} · '
+                        '${fmt.format(item.amount)} ${item.currencyCode}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => recurringService.skipReview(item.id),
+                      child: Text(l10n.recurringReviewSkip),
+                    ),
+                    FilledButton(
+                      onPressed: () => recurringService.confirmReview(item.id),
+                      child: Text(l10n.recurringReviewPost),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class _SummaryCard extends StatelessWidget {
   final MonthlySummary summary;

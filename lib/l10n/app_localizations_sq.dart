@@ -1008,6 +1008,73 @@ class AppLocalizationsSq extends AppLocalizations {
   String get expenseSpendingByCategory => 'Shpenzimet sipas kategorisë';
 
   @override
+  String get toolsRecurringTitle => 'Transaksione të përsëritura';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Qiraja, abonimet dhe pagesa të tjera të rregullta — përcaktoje një herë';
+
+  @override
+  String get recurringScreenTitle => 'Transaksione të përsëritura';
+
+  @override
+  String get recurringEmptyState =>
+      'Ende nuk ka transaksione të përsëritura. Shto qiranë, abonimet ose pagesa të tjera të rregullta një herë — do të regjistrohen automatikisht ose do të presin shqyrtimin tënd, sipas zgjedhjes.';
+
+  @override
+  String get recurringAddTitle => 'Transaksion i ri i përsëritur';
+
+  @override
+  String get recurringEditTitle => 'Redakto transaksionin e përsëritur';
+
+  @override
+  String get recurringFrequencyLabel => 'Përsëritet';
+
+  @override
+  String get recurringFrequencyWeekly => 'Javore';
+
+  @override
+  String get recurringFrequencyMonthly => 'Mujore';
+
+  @override
+  String get recurringStartDateLabel => 'Fillon';
+
+  @override
+  String get recurringAutoPostLabel => 'Regjistrim automatik';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Off: shqyrto çdo shfaqje para se të shtohet';
+
+  @override
+  String get recurringPausedLabel => 'Pauzuar';
+
+  @override
+  String get recurringPauseAction => 'Pauzo';
+
+  @override
+  String get recurringResumeAction => 'Vazhdo';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Të fshihet ky transaksion i përsëritur?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'Kjo ndalon shfaqjet e ardhshme. Transaksionet e regjistruara tashmë nuk preken.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count transaksione të përsëritura për shqyrtim';
+  }
+
+  @override
+  String get recurringReviewPost => 'Regjistro';
+
+  @override
+  String get recurringReviewSkip => 'Kapërce';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Buxhetet dhe objektivat';
 
   @override

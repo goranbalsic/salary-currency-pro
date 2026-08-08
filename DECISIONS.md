@@ -1,5 +1,62 @@
 # DECISIONS.md
 
+## D-024 — PROMPT-003 Stage B item 5: recurring transactions
+
+- **Date:** 2026-08-08 (later same day). User gave explicit go-ahead
+  ("start PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition.
+- **Audit first:** no recurring-transaction concept existed anywhere in
+  the codebase (`ExpenseEntry`/`Budget`/`Invoice` all one-off records) —
+  a genuine gap, not a rebuild.
+- **Design:** `RecurringTransaction` (define-once template: type,
+  category, amount, currency, frequency [weekly/monthly], start date,
+  `autoPost` flag, active/paused, `lastResolvedDate`) +
+  `RecurringReviewItem` (a frozen snapshot of one due, review-required
+  occurrence awaiting the user's decision). `RecurringTransactionService`
+  owns both storage keys and `checkDue()`, which auto-posts `autoPost:
+  true` templates as real `ExpenseEntry` rows via the existing
+  `ExpenseService`, and queues review items for `autoPost: false` ones.
+- **Deliberate scope calls:**
+  - Only weekly/monthly frequencies — covers the vast majority of real
+    recurring expenses (rent/subscriptions, allowances) without the
+    complexity of a full RRULE-style recurrence grammar the prompt never
+    asked for.
+  - If the app wasn't opened for several missed occurrences, only the
+    single most recent one is surfaced — no backfilling a flood of
+    backdated entries. Matches this app's existing "no polling, no
+    surprises" philosophy (stated for Stage B item 8 but applied here
+    too, since the same failure mode applies).
+  - Monthly day-of-month overflow (e.g. the 31st in February) clamps to
+    the real last day of the target month rather than skipping or
+    rolling into the next month.
+  - `checkDue()` is idempotent by construction (`lastResolvedDate`
+    advances only on auto-post or explicit user confirm/skip) — safe to
+    call on every app start (`app.dart`) and every time the Expense
+    Tracker screen opens (catches occurrences that came due while the
+    app was already running, without needing background scheduling).
+  - Skipping a review item still advances `lastResolvedDate` — it must
+    not be re-queued next check, exactly like a posted one.
+- **UI:** new `RecurringTransactionsScreen` (Tools hub, Track & Plan
+  category) for template CRUD, reusing the existing amount/currency/
+  category-chip/note pattern from the Expense Tracker's own add sheet
+  for visual consistency. A new `_RecurringReviewBanner` inside the
+  Expense Tracker surfaces pending review items with Post/Skip actions —
+  deliberately not a separate screen, since review items exist to become
+  expense-tracker rows.
+- **Verification:** 9 pure date-math tests (`RecurringTransaction
+  .dueOccurrenceAsOf`, including month-end clamping, year rollover, the
+  single-most-recent-occurrence rule, pause behavior), 10 service tests
+  (idempotent checkDue, review queue dedup, confirm/skip semantics,
+  delete cascading to the review queue), 1 end-to-end widget test (add →
+  due → review banner → post → appears as a real transaction, banner
+  clears). 20 new l10n keys × 9 languages (410/locale, lockstep
+  verified). Full suite 238/238, `flutter analyze` clean.
+- **Confidence:** High — every date-math edge case (month-end clamp, year
+  rollover, missed-occurrence handling) is independently tested, not
+  just eyeballed.
+- **Reversibility:** Fully reversible via git — entirely new files plus
+  additive integration points (one new Tools-hub entry, one banner
+  insertion, two `changes` listeners, two `checkDue()` call sites).
+
 ## D-023 — Repo pushed to GitHub; public rules repo created, closing QUESTION-005; open-questions sweep
 
 - **Date:** 2026-08-08 (later same day as D-020/D-021/D-022).

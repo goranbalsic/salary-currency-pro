@@ -1005,6 +1005,73 @@ class AppLocalizationsSl extends AppLocalizations {
   String get expenseSpendingByCategory => 'Poraba po kategorijah';
 
   @override
+  String get toolsRecurringTitle => 'Ponavljajoče transakcije';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Najemnina, naročnine in druga redna plačila — določite enkrat';
+
+  @override
+  String get recurringScreenTitle => 'Ponavljajoče transakcije';
+
+  @override
+  String get recurringEmptyState =>
+      'Še ni ponavljajočih transakcij. Dodajte najemnino, naročnine ali druga redna plačila enkrat — samodejno se bodo beležila ali počakala na vaš pregled, po vaši izbiri.';
+
+  @override
+  String get recurringAddTitle => 'Nova ponavljajoča transakcija';
+
+  @override
+  String get recurringEditTitle => 'Urejanje ponavljajoče transakcije';
+
+  @override
+  String get recurringFrequencyLabel => 'Se ponavlja';
+
+  @override
+  String get recurringFrequencyWeekly => 'Tedensko';
+
+  @override
+  String get recurringFrequencyMonthly => 'Mesečno';
+
+  @override
+  String get recurringStartDateLabel => 'Začne se';
+
+  @override
+  String get recurringAutoPostLabel => 'Samodejno beleženje';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Izklopljeno: pred dodajanjem preglejte vsako pojavitev';
+
+  @override
+  String get recurringPausedLabel => 'V premoru';
+
+  @override
+  String get recurringPauseAction => 'Premor';
+
+  @override
+  String get recurringResumeAction => 'Nadaljuj';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Izbrišem to ponavljajočo transakcijo?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'To ustavi prihodnje pojavitve. Že knjižene transakcije ostanejo nespremenjene.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count ponavljajočih transakcij za pregled';
+  }
+
+  @override
+  String get recurringReviewPost => 'Knjiži';
+
+  @override
+  String get recurringReviewSkip => 'Preskoči';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Proračuni in cilji';
 
   @override

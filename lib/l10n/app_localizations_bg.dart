@@ -1014,6 +1014,73 @@ class AppLocalizationsBg extends AppLocalizations {
   String get expenseSpendingByCategory => 'Разходи по категория';
 
   @override
+  String get toolsRecurringTitle => 'Повтарящи се транзакции';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Наем, абонаменти и други редовни плащания — задайте веднъж';
+
+  @override
+  String get recurringScreenTitle => 'Повтарящи се транзакции';
+
+  @override
+  String get recurringEmptyState =>
+      'Все още няма повтарящи се транзакции. Добавете наем, абонаменти или други редовни плащания веднъж — те ще се записват автоматично или ще чакат вашия преглед, по ваш избор.';
+
+  @override
+  String get recurringAddTitle => 'Нова повтаряща се транзакция';
+
+  @override
+  String get recurringEditTitle => 'Редактиране на повтаряща се транзакция';
+
+  @override
+  String get recurringFrequencyLabel => 'Повтаря се';
+
+  @override
+  String get recurringFrequencyWeekly => 'Седмично';
+
+  @override
+  String get recurringFrequencyMonthly => 'Месечно';
+
+  @override
+  String get recurringStartDateLabel => 'Започва';
+
+  @override
+  String get recurringAutoPostLabel => 'Автоматично записване';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Изключено: прегледайте всяко повторение преди добавяне';
+
+  @override
+  String get recurringPausedLabel => 'На пауза';
+
+  @override
+  String get recurringPauseAction => 'Пауза';
+
+  @override
+  String get recurringResumeAction => 'Възобнови';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Да се изтрие ли тази повтаряща се транзакция?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'Това спира бъдещите повторения. Вече записаните транзакции не се засягат.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count повтарящи се транзакции за преглед';
+  }
+
+  @override
+  String get recurringReviewPost => 'Запиши';
+
+  @override
+  String get recurringReviewSkip => 'Пропусни';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Бюджети и цели';
 
   @override

@@ -1912,6 +1912,126 @@ abstract class AppLocalizations {
   /// **'Spending by category'**
   String get expenseSpendingByCategory;
 
+  /// No description provided for @toolsRecurringTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring Transactions'**
+  String get toolsRecurringTitle;
+
+  /// No description provided for @toolsRecurringSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent, subscriptions, and other regular payments — define once'**
+  String get toolsRecurringSubtitle;
+
+  /// No description provided for @recurringScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring Transactions'**
+  String get recurringScreenTitle;
+
+  /// No description provided for @recurringEmptyState.
+  ///
+  /// In en, this message translates to:
+  /// **'No recurring transactions yet. Add rent, subscriptions, or other regular payments once — they\'ll post automatically or wait for your review, your choice.'**
+  String get recurringEmptyState;
+
+  /// No description provided for @recurringAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New recurring transaction'**
+  String get recurringAddTitle;
+
+  /// No description provided for @recurringEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit recurring transaction'**
+  String get recurringEditTitle;
+
+  /// No description provided for @recurringFrequencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get recurringFrequencyLabel;
+
+  /// No description provided for @recurringFrequencyWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get recurringFrequencyWeekly;
+
+  /// No description provided for @recurringFrequencyMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get recurringFrequencyMonthly;
+
+  /// No description provided for @recurringStartDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get recurringStartDateLabel;
+
+  /// No description provided for @recurringAutoPostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Post automatically'**
+  String get recurringAutoPostLabel;
+
+  /// No description provided for @recurringAutoPostSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off: review each occurrence before it\'s added'**
+  String get recurringAutoPostSubtitle;
+
+  /// No description provided for @recurringPausedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get recurringPausedLabel;
+
+  /// No description provided for @recurringPauseAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get recurringPauseAction;
+
+  /// No description provided for @recurringResumeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get recurringResumeAction;
+
+  /// No description provided for @recurringDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this recurring transaction?'**
+  String get recurringDeleteConfirmTitle;
+
+  /// No description provided for @recurringDeleteConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This stops future occurrences. Transactions already posted are not affected.'**
+  String get recurringDeleteConfirmBody;
+
+  /// No description provided for @recurringReviewBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recurring transactions to review'**
+  String recurringReviewBannerTitle(int count);
+
+  /// No description provided for @recurringReviewPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get recurringReviewPost;
+
+  /// No description provided for @recurringReviewSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get recurringReviewSkip;
+
   /// No description provided for @toolsBudgetsGoalsTitle.
   ///
   /// In en, this message translates to:

@@ -1004,6 +1004,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseSpendingByCategory => 'Spending by category';
 
   @override
+  String get toolsRecurringTitle => 'Recurring Transactions';
+
+  @override
+  String get toolsRecurringSubtitle =>
+      'Rent, subscriptions, and other regular payments — define once';
+
+  @override
+  String get recurringScreenTitle => 'Recurring Transactions';
+
+  @override
+  String get recurringEmptyState =>
+      'No recurring transactions yet. Add rent, subscriptions, or other regular payments once — they\'ll post automatically or wait for your review, your choice.';
+
+  @override
+  String get recurringAddTitle => 'New recurring transaction';
+
+  @override
+  String get recurringEditTitle => 'Edit recurring transaction';
+
+  @override
+  String get recurringFrequencyLabel => 'Repeats';
+
+  @override
+  String get recurringFrequencyWeekly => 'Weekly';
+
+  @override
+  String get recurringFrequencyMonthly => 'Monthly';
+
+  @override
+  String get recurringStartDateLabel => 'Starts';
+
+  @override
+  String get recurringAutoPostLabel => 'Post automatically';
+
+  @override
+  String get recurringAutoPostSubtitle =>
+      'Off: review each occurrence before it\'s added';
+
+  @override
+  String get recurringPausedLabel => 'Paused';
+
+  @override
+  String get recurringPauseAction => 'Pause';
+
+  @override
+  String get recurringResumeAction => 'Resume';
+
+  @override
+  String get recurringDeleteConfirmTitle =>
+      'Delete this recurring transaction?';
+
+  @override
+  String get recurringDeleteConfirmBody =>
+      'This stops future occurrences. Transactions already posted are not affected.';
+
+  @override
+  String recurringReviewBannerTitle(int count) {
+    return '$count recurring transactions to review';
+  }
+
+  @override
+  String get recurringReviewPost => 'Post';
+
+  @override
+  String get recurringReviewSkip => 'Skip';
+
+  @override
   String get toolsBudgetsGoalsTitle => 'Budgets & Goals';
 
   @override
