@@ -2,6 +2,45 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-08 (later same day). PROMPT-003G Stage C item 13
+  (Cross-Border Pack) done — see `DECISIONS.md` D-031,
+  `OPEN_QUESTIONS.md` QUESTION-010. Built: an offline, local-first
+  cross-border salary/employer-cost comparison across all 9 countries
+  from one "same gross" EUR figure (`lib/models/cross_border_comparison.dart`,
+  `lib/services/cross_border_comparison_service.dart`,
+  `lib/screens/tools/cross_border_screen.dart`), a new cache-only
+  `ExchangeRateService.getCachedRateOnly` (never a live fetch, additive —
+  doesn't touch the existing live currency converter), and a real
+  `DataTable` UI with explicit unavailable-row states (never a guessed
+  rate) plus a full per-country breakdown detail sheet. Per-diem/mileage
+  deliberately excluded for all 9 countries — not sourceable to the
+  project's evidence standard in one session, same "exclude and
+  document" pattern as QUESTION-008/009. 42 new tests, `flutter analyze`
+  clean, `flutter test -j 1` **434/434** (was 402), 20 new l10n keys × 9
+  languages (518/518 lockstep). Release build: split APKs
+  **23.3MB/25.0MB/26.5MB** (armeabi-v7a/arm64-v8a/x86_64), up from item
+  12's 20.7/22.9/24.3MB (new comparison feature, no new native deps),
+  comfortably under the 30MB per-ABI budget. **Per PROMPT-003G's own
+  stop condition: stopped here — Stage C item 10 has not been started
+  and needs its own approved prompt; order stays 13 → 10.**
+- Date: 2026-08-08 (later same day). PROMPT-003F Stage C item 12
+  (Invoice PDF + NBS IPS QR, Enhanced) done — see `DECISIONS.md` D-030,
+  `OPEN_QUESTIONS.md` QUESTION-009. This entry was missing from this
+  file when item 12 actually shipped (its own checkpoints, `PROMPTS.md`,
+  and `DECISIONS.md` D-030 correctly recorded it as done at the time —
+  only this summary file's own "Last Updated" log lagged); added now,
+  during item 13's session-start audit, for an accurate record. Built:
+  `BusinessProfile` model/service/Settings section, invoice line-item
+  itemization, a content/layout-split PDF pipeline
+  (`InvoicePdfContent`/`InvoicePdfService`) with bundled Noto Sans
+  fonts (~275 KB) fixing a Cyrillic/Latin-Extended glyph gap, an
+  `NbsIpsPayloadBuilder` validated against the sourced NBS spec's own
+  worked examples for eligible Serbian RSD invoices, and a new
+  `lib/utils/money.dart` deterministic-rounding helper now shared by
+  invoice math and (as of item 13) the cross-border comparison's
+  derived figures. `flutter test -j 1` 402/402, l10n in lockstep,
+  automated l10n-parity test added. Three genuine sourcing gaps disclosed
+  rather than guessed — `OPEN_QUESTIONS.md` QUESTION-009.
 - Date: 2026-08-08 (later same day). PROMPT-003D Stage C item 11 (Serbia
   paušal & freelancer compliance pack) done, per the user's sourced-figure
   narrowing prompt PROMPT-003E — see `DECISIONS.md` D-029,
@@ -294,6 +333,17 @@ the user explicitly approves it).
     spend-vs-budget and pinned-currency-pair RemoteViews widgets actually
     render, refresh on data change, and survive the hourly WorkManager
     backstop on a real launcher.
+  - Invoice PDF generation/share/print and the embedded NBS IPS QR code
+    (D-030, Stage C item 12) — automated tests prove PDF generation
+    succeeds for every locale's characters and that the bundled font
+    fixes the known Cyrillic/Latin-Extended glyph gap, but not that the
+    rendered PDF/QR actually looks right or scans correctly on a real
+    device/printer/banking app.
+  - The Cross-Border Pack comparison table and per-row detail sheet
+    (D-031, Stage C item 13) — widget-tested at a few fixed viewport
+    sizes (800×2400, 360×1800) with no overflow, but real narrow-phone
+    `DataTable` horizontal-scroll ergonomics and the bottom-sheet detail
+    view haven't been confirmed on an actual device.
   - Stage C will add the fiscal-receipt QR scanner (item 10, offline
     shell only) to this list once built.
   - The user will test everything on a real device once the app is
@@ -311,22 +361,25 @@ the user explicitly approves it).
 ## Current Priorities
 
 1. **PROMPT-003D (Stage C go-ahead) is Active.** Working order per the
-   prompt: **11 → 12 → 13 → 10** (item 10 has a hard network boundary and
-   its own partial-scope stop condition, so it goes last). Housekeeping
-   (per-ABI size re-check, device-unverified checklist confirmation) is
-   done — see the top `Last Updated` entry. One item per increment, full
-   report after each, checkpoint at every session end — same discipline
-   as Stages A and B.
+   prompt: **11 → 12 → 13 → 10** — items 11, 12, and 13 are all now done
+   (see the top three `Last Updated` entries and `DECISIONS.md`
+   D-029/D-030/D-031). **Only item 10 (fiscal-receipt QR scanner, offline
+   shell only) remains, and it has not been started — it needs its own
+   approved prompt, per PROMPT-003G's explicit instruction not to begin
+   it autonomously.**
 2. **This prompt's own stop condition:** after item 10's offline shell is
    done and reported, STOP — Stage D (monetization/paywall wiring) needs
    a separate explicit go-ahead. Nothing in Stage C should be gated
    behind a paywall yet, but each feature stays behind a clean service
-   boundary so gating is a one-line change later.
+   boundary so gating is a one-line change later (item 13's
+   `CrossBorderComparisonService` follows the same convention).
 3. **On-device verification remains open** for consent dialog, app icon,
-   both widgets, and notifications (see the Known Risks checklist above)
-   whenever a real Android device/emulator becomes available — Stage C
-   will add the QR scanner to this list. Not blocking; the user will test
-   everything on a real device once the app is feature-complete.
+   both widgets, notifications, invoice PDF/NBS IPS QR rendering, and the
+   Cross-Border Pack's table/detail-sheet layout (see the Known Risks
+   checklist above) whenever a real Android device/emulator becomes
+   available — Stage C will add the QR scanner to this list too. Not
+   blocking; the user will test everything on a real device once the app
+   is feature-complete.
 4. Phase 11's remaining broader scope (typography, spacing, button
    hierarchy, animations — `PROMPT-002`) remains paused, not abandoned.
 5. **Phase 12: produce the online-readiness report** and **stop** —
@@ -541,15 +594,38 @@ the user explicitly approves it).
   languages in lockstep. **PROMPT-003E's own stop condition applies:
   stopped here, awaiting approval before item 12.**
 
+- **PROMPT-003F (Stage C item 12 — Invoice PDF + NBS IPS QR, Enhanced),
+  complete 2026-08-08 — see `DECISIONS.md` D-030:** `BusinessProfile`
+  model/service/Settings section, invoice itemization, a content/layout-
+  split PDF pipeline with bundled Noto Sans fonts, and an
+  `NbsIpsPayloadBuilder` for eligible Serbian RSD invoices' embedded
+  payment QR, validated against the sourced NBS spec's own worked
+  examples. `flutter test -j 1` 402/402, l10n in lockstep, new automated
+  l10n-parity test. Three sourcing gaps disclosed rather than guessed —
+  `OPEN_QUESTIONS.md` QUESTION-009.
+- **PROMPT-003G (Stage C item 13 — Cross-Border Pack), complete
+  2026-08-08 — see `DECISIONS.md` D-031:** offline, local-first
+  cross-border salary/employer-cost comparison across all 9 countries
+  from one "same gross" EUR figure, run through each country's real,
+  unmodified `SalaryCalculator`. New cache-only
+  `ExchangeRateService.getCachedRateOnly` (additive, never a live
+  fetch). 42 new tests, `flutter test -j 1` 434/434, 20 new l10n keys
+  × 9 languages (518/518 lockstep), split-APK release build
+  23.3/25.0/26.5MB. Per-diem/mileage excluded for all 9 countries —
+  not sourceable to the project's evidence standard this session —
+  `OPEN_QUESTIONS.md` QUESTION-010. **This closes PROMPT-003D's item
+  11→12→13 sequence; only item 10 remains, and it needs its own
+  approved prompt.**
+
 ## Next Recommended Action
 
-0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active; item
-   11 (Serbia paušal/freelancer compliance pack, PROMPT-003E) is **done**
-   — see the top `Last Updated` entry and `DECISIONS.md` D-029. **Per
-   PROMPT-003E's own instruction, this stage stopped after item 11 and is
-   awaiting the user's approval before item 12 (Invoice PDF + NBS IPS QR)
-   — do not start item 12 autonomously.** Once approved, order stays
-   12 → 13 → 10.
+0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active;
+   items 11, 12, and 13 are all **done** — see the top three
+   `Last Updated` entries and `DECISIONS.md` D-029/D-030/D-031. **Per
+   PROMPT-003G's own instruction, this stage stopped after item 13 and
+   item 10 (fiscal-receipt QR scanner, offline shell only) has not been
+   started — it needs its own approved prompt, not autonomous
+   continuation.**
 1. `OPEN_QUESTIONS.md` QUESTION-008 (four figures excluded from item 11 —
    paušal deemed-base coefficients, supplementary annual PIT, an
    ungazetted contribution-base growth cap, other countries' paušal

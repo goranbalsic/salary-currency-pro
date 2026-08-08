@@ -19,7 +19,7 @@ Archived.
 | PROMPT-003D | Stage C Go-Ahead — Balkan Differentiators | Large standing instruction | Active | Explicit go-ahead for PROMPT-003 Stage C (items 10–13), order 11→12→13→10; housekeeping first (per-ABI size re-check, device-unverified checklist); own STOP condition after item 10's offline shell (Stage D needs separate go-ahead) |
 | PROMPT-003E | Stage C Item 11 — Serbia Compliance Pack | Large standing instruction | Done — item complete, D-029 | Sourced-figure narrowing of Stage C item 11: paušal turnover tracker (dual-window, threshold states, honest rate-history design), monthly reminder lead-time + assessed-amount extension, Model A vs Model B quarterly comparator; found and fixed a real health-contribution bug in the RS strategy along the way |
 | PROMPT-003F | Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced) | Large standing instruction | Done — item complete, D-030 | Quality-raising prompt for item 12: fully offline professional invoice PDF (business profile, itemization, bundled fonts) with embedded NBS IPS QR payment code for eligible Serbian RSD invoices; deterministic money rounding mandated before any invoice money-math change |
-| PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | In progress | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
+| PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | Done — item complete, D-031 | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
 
 ## Active Prompts
 
@@ -163,21 +163,37 @@ STOP — Stage D (monetization) needs a separate explicit go-ahead.
 PROMPT-003E, for this item specifically; see that entry below and
 `DECISIONS.md` D-029. **Item 12 done** — the user supplied a
 scope-raising prompt, PROMPT-003F, for this item specifically; see that
-entry below and `DECISIONS.md` D-030. Stopped per that prompt's own
-instruction, awaiting approval before item 13. **Item 13 (Cross-Border
-Pack) approved and in progress** — the user supplied PROMPT-003G; see
-that entry below. Per PROMPT-003G's own explicit instruction, item 10 is
-NOT started this session — order stays 13 → 10.
+entry below and `DECISIONS.md` D-030. **Item 13 done** — the user
+supplied PROMPT-003G; see that entry below and `DECISIONS.md` D-031.
+Per PROMPT-003G's own explicit instruction, item 10 was NOT started this
+session — Stage C's working order (11 → 12 → 13 → 10) is now complete
+through item 13, and item 10 needs its own separately approved prompt.
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 
-Status: **In progress, started 2026-08-08** — user supplied
+Status: **Done, 2026-08-08** — user supplied
 `_userprompts/PROMPT-003G_StageC_Item13_Cross_Border_Pack.md`, explicit
 authorization for Stage C item 13 only, baselined at `b16cf52`(item 12's
-final commit). Explicitly forbids revisiting item 12 except for a
-narrowly necessary regression fix, and explicitly forbids starting item
-10 this session (Stage D still needs its own separate go-ahead after
-item 10).
+final commit). Explicitly forbade revisiting item 12 except for a
+narrowly necessary regression fix (none was needed), and explicitly
+forbade starting item 10 this session (Stage D still needs its own
+separate go-ahead after item 10, which has not been started).
+
+Built an offline, local-first cross-border salary/employer-cost
+comparison across all 9 countries from one "same gross" EUR figure, run
+through each country's real, unmodified `SalaryCalculator`
+(`lib/models/cross_border_comparison.dart`,
+`lib/services/cross_border_comparison_service.dart`,
+`lib/screens/tools/cross_border_screen.dart`), plus an additive
+cache-only `ExchangeRateService.getCachedRateOnly` that never performs a
+live fetch. Per-diem/mileage deliberately excluded for all 9 countries —
+not sourceable to the project's evidence standard within one session —
+see `OPEN_QUESTIONS.md` QUESTION-010. Full detail: `DECISIONS.md` D-031.
+`flutter analyze` clean, `flutter test -j 1` 434/434 (was 402), l10n 20
+new keys × 9 languages (518/518 lockstep), release split APKs
+23.3MB/25.0MB/26.5MB (under the 30MB per-ABI budget). **Per this
+prompt's own report-then-stop instruction: stopped here — item 10 has
+not been started and needs its own approved prompt.**
 
 Purpose: an offline, local-first cross-border salary comparison — same
 gross-salary scenario run through all 9 countries' real payroll engines,

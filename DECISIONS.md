@@ -1,6 +1,6 @@
 # DECISIONS.md
 
-## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (in progress)
+## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (done)
 
 - **Date:** started 2026-08-08. Implements
   `_userprompts/PROMPT-003G_StageC_Item13_Cross_Border_Pack.md`. One
@@ -155,6 +155,20 @@
   `OPEN_QUESTIONS.md` QUESTION-010 — the core comparison/employer-cost
   feature is unaffected either way. `flutter analyze`: clean.
   `flutter test -j 1`: **434/434** (was 431).
+- **Checkpoint 4 (final regression + release evidence) — done:** full
+  `flutter analyze` clean (same 3 pre-existing, unrelated infos), full
+  `flutter test -j 1` **434/434**, l10n **518/518 keys per locale** in
+  lockstep across all 9 `.arb` files (verified via
+  `grep -cE '^\s*"[a-zA-Z]' lib/l10n/app_*.arb`). Real
+  `flutter build apk --release --split-per-abi`:
+  **23.3MB / 25.0MB / 26.5MB** (armeabi-v7a/arm64-v8a/x86_64), up from
+  item 12's 20.7/22.9/24.3MB (new feature, no new native dependency),
+  comfortably under the 30MB per-ABI budget. `PROJECT_CONTEXT.md`'s
+  device-unverified checklist extended for the Cross-Border Pack's
+  table/detail layout, plus a missing item-12 entry backfilled (see
+  `session_logs/2026-08-08-session-05.md`). **Item 13 is complete. Per
+  PROMPT-003G's own instruction: item 10 was not started this session —
+  it needs its own approved prompt.**
 
 ## D-030 — PROMPT-003 Stage C item 12: Invoice PDF + NBS IPS QR (in progress)
 
