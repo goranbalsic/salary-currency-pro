@@ -1794,4 +1794,84 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get crossBorderTapForDetail => 'Prek një rresht për ndarjen e plotë';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Skaneri i kuponëve fiskalë';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Skano kodin QR të kuponit dhe ruaje lokalisht, jashtë linje';
+
+  @override
+  String get receiptScannerScreenTitle => 'Skaneri i kuponëve fiskalë';
+
+  @override
+  String get receiptScannerStarting => 'Duke nisur kamerën…';
+
+  @override
+  String get receiptScannerHint => 'Drejto kamerën te kodi QR i kuponit fiskal';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle => 'Nevojitet qasje në kamerë';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Lejo qasjen në kamerë për të skanuar kodin QR të kuponit, ose vendose manualisht më poshtë. Nëse më parë e ke refuzuar qasjen, mund të duhet ta aktivizosh në cilësimet e sistemit të pajisjes.';
+
+  @override
+  String get receiptScannerUnavailableTitle =>
+      'Kamera nuk është e disponueshme';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'Kamera nuk mundi të niset në këtë pajisje. Prapëseprapë mund të vendosësh kodin e kuponit manualisht më poshtë.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Vendos manualisht';
+
+  @override
+  String get receiptScannerManualEntryTitle =>
+      'Vendosje manuale e kodit të kuponit';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Ngjit ose shkruaj përmbajtjen e kodit QR';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Vendos tekst së pari';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Shto në radhë';
+
+  @override
+  String get receiptScanStatusAwaitingFetch => 'Skanuar, në pritje të marrjes';
+
+  @override
+  String get receiptScannerResultRecognizedTitle => 'U njoh kuponi fiskal serb';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'Kjo duket si kod QR i kuponit fiskal serb sipas formatit lokal (jo verifikim fiskal). Është shtuar në radhën tënde lokale si „$status“.';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Nuk duket si kod i vlefshëm kuponi';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'Kjo i ngjason një kodi kuponi fiskal serb, por nuk përputhet me formatin e pritur. Është ruajtur në mënyrë që ta rishikosh.';
+
+  @override
+  String get receiptScannerResultUnknownTitle => 'Kupon fiskal i panjohur';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'Ky kod QR nuk përputhet me formatin e kuponit fiskal të asnjë vendi të mbështetur. Është ruajtur në mënyrë që ta rishikosh.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Skano një tjetër';
+
+  @override
+  String get receiptScannerResultDone => 'U krye';
 }

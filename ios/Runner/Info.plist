@@ -24,6 +24,11 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<!-- Fiscal Receipt Scanner (PROMPT-003 Stage C item 10) — camera is used
+	     only to scan a QR code locally via mobile_scanner; no image or
+	     video is ever stored or sent anywhere. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Used to scan a fiscal receipt QR code. The scan stays on your device — nothing is uploaded.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

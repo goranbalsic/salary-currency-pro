@@ -98,14 +98,100 @@
     most-starred, most-actively-maintained pure-QR/barcode Flutter plugin
     with local-only processing and no forced Play Services network
     dependency for the on-device API path used here.
+- **Checkpoint 2 — scanner UI, permissions, manual entry:**
+  - `FiscalReceiptScannerScreen` (`lib/screens/tools/fiscal_receipt_scanner_screen.dart`),
+    reachable from the Tools hub's Track & Plan category (new
+    `toolsReceiptScannerTitle`/`Subtitle` entry,
+    `lib/screens/tools/tools_hub_screen.dart`, id `fiscal_receipt_scanner`,
+    not registered in `HistoryToolIds` — same as Expense
+    Tracker/Budgets/Recurring/Subscription Radar, which also aren't
+    tracked in the calculator-only "recently used" history).
+  - Camera permission is requested only when this screen starts its
+    `MobileScannerController` (`autoStart: false`, started explicitly in
+    `initState`) — i.e. only once the user has already navigated here to
+    scan, matching `NotificationService`'s existing "never proactively"
+    permission-timing policy elsewhere in this app.
+  - **mobile_scanner usage pattern:** `MobileScanner` (the plugin's
+    preview widget) is kept permanently mounted once this screen builds,
+    with its own `errorBuilder`/`placeholderBuilder` suppressed
+    (`SizedBox.shrink()`) — the screen's own `_CameraBody` renders every
+    state (starting/running/permission-denied/unavailable) instead, laid
+    over the (invisible) preview. This isn't cosmetic: `MobileScannerController.start()`
+    internally waits (with a timeout) for the `MobileScanner` widget's own
+    `initState` to call `controller.attach()`; starting the controller
+    before that widget exists in the tree at all — the naive
+    "conditionally render `MobileScanner` only once running" structure —
+    always fails with `controllerNotAttached`. Confirmed by reading
+    mobile_scanner 7.4.0's own source
+    (`mobile_scanner_controller.dart`/`mobile_scanner.dart`), not
+    guessed.
+  - **Robustness fix found by testing, not by inspection:** `MobileScannerController.start()`
+    only resets its own `isStarting`/`error` state inside an `on
+    MobileScannerException catch` block. Any other thrown object (e.g. no
+    platform implementation registered at all, which is exactly what
+    happens for every widget test in this suite, and would also happen on
+    a real device with a broken/missing plugin registration) is left
+    uncaught by the controller, leaving `isStarting: true` forever — an
+    indeterminate `CircularProgressIndicator` that never resolves. Fixed
+    in `_FiscalReceiptScannerScreenState._startCamera()` by catching that
+    case and explicitly writing a definite errored `MobileScannerState`
+    back onto the controller, so the camera-unavailable message is always
+    reachable rather than an infinite spinner. This is a real offline/
+    reliability fix (satisfies "no crash when camera startup fails"), not
+    just a test workaround — it was caught by `pumpAndSettle` timing out
+    in the widget tests below, and would have shipped as a genuine
+    stuck-spinner bug on any device without the plugin properly linked.
+  - **Manual-entry fallback:** always visible below the camera area
+    (`OutlinedButton.icon`, `receiptScannerManualEntryButton`), regardless
+    of camera state, opening a bottom sheet (`_ManualEntrySheet`) whose
+    `TextEditingController` is created and disposed by that sheet's own
+    `State` — not by the caller. An earlier version disposed the
+    controller in the parent immediately after the sheet's route popped,
+    which crashed ("used after being disposed") because the sheet's exit
+    animation was still holding a live `TextField` attached to it;
+    letting the sheet own its own controller lifecycle fixed this.
+  - **Duplicate-scan suppression:** a `_processingDetection` guard plus an
+    immediate `controller.stop()` on first detection — verified by a test
+    that fires the same barcode twice in a row and asserts exactly one
+    scan is persisted.
+  - **Lifecycle:** `dispose()` calls `_controller.dispose()`
+    (deliberately not awaited, since `State.dispose()` must stay
+    synchronous) so no camera session outlives this screen.
+  - **Widget tests** (`test/fiscal_receipt_scanner_screen_test.dart`, 10
+    tests): built a `FakeMobileScannerPlatform extends MobileScannerPlatform`
+    test double (mobile_scanner's own `PlatformInterface`-based
+    testability seam — the same pattern `shared_preferences` and other
+    federated plugins use) so every state is exercised with zero real
+    camera/platform-channel dependency: initial/running, permission
+    denied, unsupported, unexpected-platform-failure (camera
+    unavailable), manual entry × (recognized/malformed/unknown/empty-
+    validation), live-detection duplicate suppression, and screen-leave
+    disposal. No hardware, mocked platform channel, or device required.
+  - **Localization:** 23 new keys (`toolsReceiptScanner*`,
+    `receiptScanner*`, `receiptScanStatusAwaitingFetch`) added to all 9
+    locale `.arb` files and regenerated via `flutter gen-l10n`; both
+    `test/l10n_parity_test.dart` checks pass (541 keys × 9 locales in
+    lockstep).
+  - **Permissions declared:** Android `android.permission.CAMERA` +
+    `<uses-feature android:name="android.hardware.camera"
+    android:required="false"/>` (explicit in the app's own manifest,
+    documented with a comment, even though mobile_scanner's own manifest
+    would merge the same entries — `required="false"` keeps the app
+    installable on camera-less devices). iOS `NSCameraUsageDescription`
+    added to `Info.plist` with a privacy-honest description ("stays on
+    your device — nothing is uploaded").
+  - `flutter analyze` clean on all new/changed files (3 pre-existing
+    unrelated `unintended_html_in_doc_comment` info-level issues only).
+    Full suite 477/477 (was 467 after checkpoint 1).
 - **Reversibility:** Fully reversible — this is a new, additive feature
   behind its own models/services/screens; nothing existing is modified
   except `pubspec.yaml`/`pubspec.lock` (new dependency),
-  `AndroidManifest.xml`/iOS `Info.plist` (camera permission, checkpoint
-  2), and the Tools hub's entry list (checkpoint 2).
-- **Confidence:** High for checkpoint 1 (pure local logic, fully unit
-  tested). Camera/permission behavior (checkpoint 2) is build-verified,
-  not device-verified — see `PROJECT_CONTEXT.md`.
+  `AndroidManifest.xml`/iOS `Info.plist` (camera permission), and the
+  Tools hub's entry list.
+- **Confidence:** High for checkpoints 1–2 (pure local logic and camera/
+  permission/manual-entry UI states are all covered by real, hardware-free
+  automated tests). Real-device camera/permission behavior is
+  build-verified only, not device-verified — see `PROJECT_CONTEXT.md`.
 
 ## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (done)
 

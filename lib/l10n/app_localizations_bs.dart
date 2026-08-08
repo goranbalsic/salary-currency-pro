@@ -1781,4 +1781,86 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get crossBorderTapForDetail => 'Dodirnite red za potpuni obračun';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Skener fiskalnih računa';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Skenirajte QR kod računa i sačuvajte ga lokalno, van mreže';
+
+  @override
+  String get receiptScannerScreenTitle => 'Skener fiskalnih računa';
+
+  @override
+  String get receiptScannerStarting => 'Pokretanje kamere…';
+
+  @override
+  String get receiptScannerHint =>
+      'Usmjerite kameru na QR kod fiskalnog računa';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle =>
+      'Potreban je pristup kameri';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Dozvolite pristup kameri da biste skenirali QR kod računa, ili ga unesite ručno ispod. Ako ste ranije odbili pristup, možda ćete morati omogućiti ga u sistemskim postavkama uređaja.';
+
+  @override
+  String get receiptScannerUnavailableTitle => 'Kamera nije dostupna';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'Kamera se nije mogla pokrenuti na ovom uređaju. I dalje možete ručno unijeti kod računa ispod.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Unesi ručno';
+
+  @override
+  String get receiptScannerManualEntryTitle => 'Ručni unos koda računa';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Zalijepite ili unesite sadržaj QR koda';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Prvo unesite tekst';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Dodaj u red';
+
+  @override
+  String get receiptScanStatusAwaitingFetch => 'Skenirano, čeka preuzimanje';
+
+  @override
+  String get receiptScannerResultRecognizedTitle =>
+      'Prepoznat srpski fiskalni račun';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'Ovo liči na QR kod srpskog fiskalnog računa prema lokalnom formatu (nije fiskalna provjera). Dodano je u vaš lokalni red kao „$status“.';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Ne liči na validan kod računa';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'Ovo podsjeća na kod srpskog fiskalnog računa, ali ne odgovara očekivanom formatu. Sačuvano je da biste ga mogli pregledati.';
+
+  @override
+  String get receiptScannerResultUnknownTitle =>
+      'Nije prepoznat fiskalni račun';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'Ovaj QR kod ne odgovara formatu fiskalnog računa nijedne podržane zemlje. Sačuvano je da biste ga mogli pregledati.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Skeniraj još jedan';
+
+  @override
+  String get receiptScannerResultDone => 'Gotovo';
 }

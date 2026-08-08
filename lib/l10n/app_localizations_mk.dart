@@ -1787,4 +1787,86 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get crossBorderTapForDetail => 'Допрете ред за целосна пресметка';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Скенер за фискални сметки';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Скенирајте QR код на сметка и зачувајте го локално, офлајн';
+
+  @override
+  String get receiptScannerScreenTitle => 'Скенер за фискални сметки';
+
+  @override
+  String get receiptScannerStarting => 'Стартување на камерата…';
+
+  @override
+  String get receiptScannerHint =>
+      'Насочете ја камерата кон QR кодот на фискалната сметка';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle =>
+      'Потребен е пристап до камерата';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Дозволете пристап до камерата за да скенирате QR код на сметка, или внесете го рачно подолу. Ако претходно сте одбиле пристап, можеби ќе треба да го овозможите во системските поставки на уредот.';
+
+  @override
+  String get receiptScannerUnavailableTitle => 'Камерата не е достапна';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'Камерата не можеше да се стартува на овој уред. Сепак можете рачно да внесете код на сметка подолу.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Внеси рачно';
+
+  @override
+  String get receiptScannerManualEntryTitle => 'Рачно внесување код на сметка';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Залепете или внесете ја содржината на QR кодот';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Прво внесете текст';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Додади во редот';
+
+  @override
+  String get receiptScanStatusAwaitingFetch => 'Скенирано, чека преземање';
+
+  @override
+  String get receiptScannerResultRecognizedTitle =>
+      'Препознаена српска фискална сметка';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'Ова личи на QR код на српска фискална сметка според локалниот формат (не е фискална верификација). Додадено е во вашиот локален ред како „$status“.';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Не личи на валиден код на сметка';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'Ова потсетува на код на српска фискална сметка, но не одговара на очекуваниот формат. Зачувано е за да можете да го прегледате.';
+
+  @override
+  String get receiptScannerResultUnknownTitle =>
+      'Непрепознаена фискална сметка';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'Овој QR код не одговара на форматот на фискална сметка на ниту една поддржана земја. Зачувано е за да можете да го прегледате.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Скенирај уште еден';
+
+  @override
+  String get receiptScannerResultDone => 'Готово';
 }

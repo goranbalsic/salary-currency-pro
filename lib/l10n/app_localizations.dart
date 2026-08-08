@@ -3241,6 +3241,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a row for the full breakdown'**
   String get crossBorderTapForDetail;
+
+  /// No description provided for @toolsReceiptScannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal Receipt Scanner'**
+  String get toolsReceiptScannerTitle;
+
+  /// No description provided for @toolsReceiptScannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a receipt QR code and save it locally, offline'**
+  String get toolsReceiptScannerSubtitle;
+
+  /// No description provided for @receiptScannerScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal Receipt Scanner'**
+  String get receiptScannerScreenTitle;
+
+  /// No description provided for @receiptScannerStarting.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting camera…'**
+  String get receiptScannerStarting;
+
+  /// No description provided for @receiptScannerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at a fiscal receipt QR code'**
+  String get receiptScannerHint;
+
+  /// No description provided for @receiptScannerPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access needed'**
+  String get receiptScannerPermissionDeniedTitle;
+
+  /// No description provided for @receiptScannerPermissionDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow camera access to scan a receipt QR code, or enter it manually below. If you previously denied access, you may need to enable it in your device\'s system settings.'**
+  String get receiptScannerPermissionDeniedBody;
+
+  /// No description provided for @receiptScannerUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera unavailable'**
+  String get receiptScannerUnavailableTitle;
+
+  /// No description provided for @receiptScannerUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera couldn\'t be started on this device. You can still enter a receipt code manually below.'**
+  String get receiptScannerUnavailableBody;
+
+  /// No description provided for @receiptScannerManualEntryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manually'**
+  String get receiptScannerManualEntryButton;
+
+  /// No description provided for @receiptScannerManualEntryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter receipt code manually'**
+  String get receiptScannerManualEntryTitle;
+
+  /// No description provided for @receiptScannerManualEntryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste or type the QR code content'**
+  String get receiptScannerManualEntryHint;
+
+  /// No description provided for @receiptScannerManualEntryEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter some text first'**
+  String get receiptScannerManualEntryEmptyError;
+
+  /// No description provided for @receiptScannerManualEntrySubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to queue'**
+  String get receiptScannerManualEntrySubmit;
+
+  /// No description provided for @receiptScanStatusAwaitingFetch.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned, awaiting fetch'**
+  String get receiptScanStatusAwaitingFetch;
+
+  /// No description provided for @receiptScannerResultRecognizedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Serbian fiscal receipt recognized'**
+  String get receiptScannerResultRecognizedTitle;
+
+  /// No description provided for @receiptScannerResultRecognizedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This looks like a Serbian fiscal-receipt QR code by its local format (not a fiscal verification). It\'s been added to your local queue as \"{status}.\"'**
+  String receiptScannerResultRecognizedBody(String status);
+
+  /// No description provided for @receiptScannerResultMalformedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Doesn\'t look like a valid receipt code'**
+  String get receiptScannerResultMalformedTitle;
+
+  /// No description provided for @receiptScannerResultMalformedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This resembles a Serbian fiscal-receipt code but doesn\'t match the expected format. It\'s been saved so you can review it.'**
+  String get receiptScannerResultMalformedBody;
+
+  /// No description provided for @receiptScannerResultUnknownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a recognized fiscal receipt'**
+  String get receiptScannerResultUnknownTitle;
+
+  /// No description provided for @receiptScannerResultUnknownBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code doesn\'t match a supported country\'s fiscal-receipt format. It\'s been saved so you can review it.'**
+  String get receiptScannerResultUnknownBody;
+
+  /// No description provided for @receiptScannerResultScanAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan another'**
+  String get receiptScannerResultScanAnother;
+
+  /// No description provided for @receiptScannerResultDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get receiptScannerResultDone;
 }
 
 class _AppLocalizationsDelegate

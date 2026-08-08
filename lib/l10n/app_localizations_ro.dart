@@ -1796,4 +1796,87 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get crossBorderTapForDetail =>
       'Atinge un rând pentru detalierea completă';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Scaner de bonuri fiscale';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Scanează codul QR al unui bon și salvează-l local, offline';
+
+  @override
+  String get receiptScannerScreenTitle => 'Scaner de bonuri fiscale';
+
+  @override
+  String get receiptScannerStarting => 'Se pornește camera…';
+
+  @override
+  String get receiptScannerHint =>
+      'Îndreaptă camera spre codul QR al bonului fiscal';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle =>
+      'Este necesar accesul la cameră';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Permite accesul la cameră pentru a scana codul QR al unui bon, sau introdu-l manual mai jos. Dacă ai refuzat anterior accesul, s-ar putea să fie nevoie să-l activezi din setările de sistem ale dispozitivului.';
+
+  @override
+  String get receiptScannerUnavailableTitle => 'Camera nu este disponibilă';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'Camera nu a putut fi pornită pe acest dispozitiv. Poți în continuare introduce manual codul bonului mai jos.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Introdu manual';
+
+  @override
+  String get receiptScannerManualEntryTitle =>
+      'Introducere manuală a codului bonului';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Lipește sau tastează conținutul codului QR';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Introdu mai întâi un text';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Adaugă în coadă';
+
+  @override
+  String get receiptScanStatusAwaitingFetch =>
+      'Scanat, în așteptarea preluării';
+
+  @override
+  String get receiptScannerResultRecognizedTitle =>
+      'Bon fiscal sârbesc recunoscut';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'Acesta seamănă cu un cod QR de bon fiscal sârbesc după formatul local (nu este o verificare fiscală). A fost adăugat în coada ta locală ca „$status”.';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Nu pare un cod de bon valid';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'Acesta seamănă cu un cod de bon fiscal sârbesc, dar nu corespunde formatului așteptat. A fost salvat pentru a-l putea revizui.';
+
+  @override
+  String get receiptScannerResultUnknownTitle => 'Bon fiscal nerecunoscut';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'Acest cod QR nu corespunde formatului de bon fiscal al niciunei țări acceptate. A fost salvat pentru a-l putea revizui.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Scanează altul';
+
+  @override
+  String get receiptScannerResultDone => 'Gata';
 }

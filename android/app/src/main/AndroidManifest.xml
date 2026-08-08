@@ -11,6 +11,14 @@
          neither permission. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- Fiscal Receipt Scanner (PROMPT-003 Stage C item 10) — requested
+         only when the user opens the scanner and taps to scan, via
+         mobile_scanner's local on-device ML Kit barcode detection. No
+         image/frame is ever stored or sent anywhere. required="false" so
+         the app remains installable on camera-less devices; the scanner
+         screen falls back to manual entry in that case. -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <application
         android:label="Salary &amp; Currency Pro"
         android:name="${applicationName}"

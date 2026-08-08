@@ -1776,4 +1776,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crossBorderTapForDetail => 'Tap a row for the full breakdown';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Fiscal Receipt Scanner';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Scan a receipt QR code and save it locally, offline';
+
+  @override
+  String get receiptScannerScreenTitle => 'Fiscal Receipt Scanner';
+
+  @override
+  String get receiptScannerStarting => 'Starting camera…';
+
+  @override
+  String get receiptScannerHint =>
+      'Point your camera at a fiscal receipt QR code';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle => 'Camera access needed';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Allow camera access to scan a receipt QR code, or enter it manually below. If you previously denied access, you may need to enable it in your device\'s system settings.';
+
+  @override
+  String get receiptScannerUnavailableTitle => 'Camera unavailable';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'The camera couldn\'t be started on this device. You can still enter a receipt code manually below.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Enter manually';
+
+  @override
+  String get receiptScannerManualEntryTitle => 'Enter receipt code manually';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Paste or type the QR code content';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Enter some text first';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Add to queue';
+
+  @override
+  String get receiptScanStatusAwaitingFetch => 'Scanned, awaiting fetch';
+
+  @override
+  String get receiptScannerResultRecognizedTitle =>
+      'Serbian fiscal receipt recognized';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'This looks like a Serbian fiscal-receipt QR code by its local format (not a fiscal verification). It\'s been added to your local queue as \"$status.\"';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Doesn\'t look like a valid receipt code';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'This resembles a Serbian fiscal-receipt code but doesn\'t match the expected format. It\'s been saved so you can review it.';
+
+  @override
+  String get receiptScannerResultUnknownTitle =>
+      'Not a recognized fiscal receipt';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'This QR code doesn\'t match a supported country\'s fiscal-receipt format. It\'s been saved so you can review it.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Scan another';
+
+  @override
+  String get receiptScannerResultDone => 'Done';
 }

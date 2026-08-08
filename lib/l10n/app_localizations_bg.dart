@@ -1797,4 +1797,85 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get crossBorderTapForDetail => 'Натиснете ред за пълната разбивка';
+
+  @override
+  String get toolsReceiptScannerTitle => 'Скенер за фискални бонове';
+
+  @override
+  String get toolsReceiptScannerSubtitle =>
+      'Сканирайте QR код на бон и го запазете локално, офлайн';
+
+  @override
+  String get receiptScannerScreenTitle => 'Скенер за фискални бонове';
+
+  @override
+  String get receiptScannerStarting => 'Стартиране на камерата…';
+
+  @override
+  String get receiptScannerHint =>
+      'Насочете камерата към QR кода на фискалния бон';
+
+  @override
+  String get receiptScannerPermissionDeniedTitle =>
+      'Необходим е достъп до камерата';
+
+  @override
+  String get receiptScannerPermissionDeniedBody =>
+      'Разрешете достъп до камерата, за да сканирате QR код на бон, или го въведете ръчно по-долу. Ако преди сте отказали достъп, може да се наложи да го разрешите в системните настройки на устройството.';
+
+  @override
+  String get receiptScannerUnavailableTitle => 'Камерата не е налична';
+
+  @override
+  String get receiptScannerUnavailableBody =>
+      'Камерата не можа да се стартира на това устройство. Все пак можете да въведете код на бон ръчно по-долу.';
+
+  @override
+  String get receiptScannerManualEntryButton => 'Въведи ръчно';
+
+  @override
+  String get receiptScannerManualEntryTitle => 'Ръчно въвеждане на код на бон';
+
+  @override
+  String get receiptScannerManualEntryHint =>
+      'Поставете или въведете съдържанието на QR кода';
+
+  @override
+  String get receiptScannerManualEntryEmptyError => 'Първо въведете текст';
+
+  @override
+  String get receiptScannerManualEntrySubmit => 'Добави в опашката';
+
+  @override
+  String get receiptScanStatusAwaitingFetch => 'Сканирано, чака извличане';
+
+  @override
+  String get receiptScannerResultRecognizedTitle =>
+      'Разпознат сръбски фискален бон';
+
+  @override
+  String receiptScannerResultRecognizedBody(String status) {
+    return 'Това прилича на QR код на сръбски фискален бон по локалния формат (не е фискална проверка). Добавено е към локалната ви опашка като „$status“.';
+  }
+
+  @override
+  String get receiptScannerResultMalformedTitle =>
+      'Не прилича на валиден код на бон';
+
+  @override
+  String get receiptScannerResultMalformedBody =>
+      'Това наподобява код на сръбски фискален бон, но не съответства на очаквания формат. Запазено е, за да можете да го прегледате.';
+
+  @override
+  String get receiptScannerResultUnknownTitle => 'Непризнат фискален бон';
+
+  @override
+  String get receiptScannerResultUnknownBody =>
+      'Този QR код не съответства на формата на фискален бон на нито една поддържана държава. Запазено е, за да можете да го прегледате.';
+
+  @override
+  String get receiptScannerResultScanAnother => 'Сканирай друг';
+
+  @override
+  String get receiptScannerResultDone => 'Готово';
 }
