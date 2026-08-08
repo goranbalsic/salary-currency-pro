@@ -1,5 +1,112 @@
 # DECISIONS.md
 
+## D-032 — PROMPT-003H Stage C item 10: Offline Fiscal-Receipt QR Scanner Shell (in progress)
+
+- **Date:** started 2026-08-08. Implements
+  `_userprompts/PROMPT-003H_StageC_Item10_Offline_Fiscal_Receipt_QR_Scanner.md`.
+  One entry, appended per checkpoint, matching the D-029/D-030/D-031
+  precedent. This is Stage C's final item, run last per PROMPT-003D's own
+  working order (11 → 12 → 13 → 10).
+- **Hard network boundary (the point of this item):** no code in this
+  feature performs network I/O. The scanner classifies a QR payload
+  locally (string/URL shape only), stores it locally, and lets the user
+  create a manual expense from it. It never calls `suf.purs.gov.rs` or any
+  other endpoint, never resolves a receipt URL, and never claims fiscal
+  verification. See the single future-fetch boundary below.
+- **Checkpoint 1 — audit, data model, offline boundary:**
+  - Audited `ExpenseEntry`/`ExpenseService` (`lib/models/expense_entry.dart`,
+    `lib/services/expense_service.dart`) as the persistence/model pattern
+    to mirror: `SharedPreferences` JSON blob under one key, a
+    `ValueNotifier<int> changes` counter for live refresh, try/catch
+    degrade-to-empty on corrupt data, a `maxEntries` cap, tolerant
+    `fromJson` defaults for forward migration safety. `FiscalReceiptScan`
+    (`lib/models/fiscal_receipt_scan.dart`) and
+    `FiscalReceiptScanService` (`lib/services/fiscal_receipt_scan_service.dart`)
+    follow this exactly (key `fiscal_receipt_scans_v1`, cap 500).
+  - Audited `ToolsHubScreen` (`lib/screens/tools/tools_hub_screen.dart`)
+    and `HistoryToolIds` (`lib/models/history_entry.dart`) as the
+    established pattern for a new discoverable tool entry point +
+    recent-activity id; the scanner entry point will follow this in
+    checkpoint 2.
+  - Audited the destructive-action confirmation pattern
+    (`ExpenseTrackerScreen._confirmDelete`: `AlertDialog` with
+    cancel/delete actions, then a snackbar with an undo action) to reuse
+    for scan deletion in checkpoint 3.
+  - Audited `android/app/src/main/AndroidManifest.xml` (only
+    `POST_NOTIFICATIONS`/`RECEIVE_BOOT_COMPLETED` today, no camera
+    permission yet) and confirmed `minSdk = flutter.minSdkVersion`.
+  - **Adapter architecture:** `ReceiptCountryAdapter`
+    (`lib/logic/receipt_scan/receipt_country_adapter.dart`) is a one-method
+    interface (`classify(payload) -> ReceiptScanOutcome?`, null = "not
+    this country's format, try the next adapter"). `SerbiaReceiptAdapter`
+    (`lib/logic/receipt_scan/serbia_receipt_adapter.dart`) recognizes the
+    documented `https://suf.purs.gov.rs/v/?vl=<payload>` shape by parsing
+    the URL and checking scheme/host/path/non-empty `vl` param — pure
+    string/URL inspection, no network call, not fiscal verification.
+    `ReceiptAdapterRegistry` (`lib/logic/receipt_scan/receipt_adapter_registry.dart`)
+    holds a single ordered `List<ReceiptCountryAdapter>`; adding a country
+    later is implement-and-append, nothing else. A lookalike host (e.g.
+    `suf.purs.gov.rs.evil.example`) is deliberately treated as
+    not-applicable (null), not a Serbia near-match, so a phishing-style
+    domain can never be misclassified as a broken Serbian receipt.
+  - **Queue state machine:** `ScanQueueStatus` has exactly two values —
+    `awaitingFetch` (the permanent default; this app never transitions a
+    scan to a "fetched"/"verified" state, because it never fetches) and
+    `expenseCreated` (set only by `FiscalReceiptScanService.linkExpense`
+    after the user manually creates an expense from the scan). No status
+    value exists that could imply automatic or completed retrieval.
+  - **Future-fetch boundary (exact location):**
+    `FiscalReceiptFetchService` (abstract) and its only implementation,
+    `UnavailableFiscalReceiptFetchService`, both in
+    `lib/services/fiscal_receipt_fetch_service.dart`. The implementation
+    always returns `FiscalReceiptFetchStatus.unavailable` and performs no
+    network I/O; the file carries exactly one `TODO(Phase 12 online
+    review)` comment directly above the class, stating that real network
+    retrieval requires separate, explicit Phase 12 online-review approval.
+  - **Manual-expense handoff:** reuses `ExpenseEntry`/`ExpenseService`
+    unchanged (per PROMPT-003H's "no parallel expense system" rule). The
+    link back to the originating scan is one-directional and
+    non-authoritative: `FiscalReceiptScan.linkedExpenseId` (additive field
+    on the scan record only) is set by
+    `FiscalReceiptScanService.linkExpense` after
+    `ExpenseService.add(...)` succeeds in the checkpoint-3 UI flow.
+    `ExpenseEntry` itself gains no new field — its existing semantics are
+    untouched.
+  - Unit tests added: `test/receipt_adapter_registry_test.dart` (Serbia
+    format recognition, malformed near-matches, lookalike-host rejection,
+    deterministic registry selection), `test/fiscal_receipt_scan_model_test.dart`
+    (serialization round-trip, tolerant-migration defaults, `copyWith`),
+    `test/fiscal_receipt_scan_service_test.dart` (record/load/delete/
+    link-expense, newest-first ordering, corrupt-data degrade, `changes`
+    notifier), `test/fiscal_receipt_fetch_service_test.dart` (always
+    unavailable, completes well within a short timeout — proving no
+    pending network call — and the status enum has exactly one value).
+    33/33 new tests pass; `flutter analyze` clean on all new files.
+  - **Dependency chosen for checkpoint 2 (recorded now since the audit
+    happened in checkpoint 1):** `mobile_scanner` 7.4.0 (BSD-3-Clause,
+    actively maintained, `github.com/juliansteenbakker/mobile_scanner`).
+    Uses `com.google.mlkit:barcode-scanning:17.3.0` on Android — Google
+    ML Kit's *bundled* on-device barcode API (`BarcodeScanning.getClient()`
+    in the plugin's `MobileScanner.kt`), which ships its model in the app
+    and does not perform a network model download at scan time — and
+    AVFoundation/Apple Vision on iOS, ZXing on web. Requires
+    `android.permission.CAMERA` (auto-merged into the manifest by the
+    plugin) and iOS `NSCameraUsageDescription`; min Android SDK 21, this
+    project's `minSdk` already resolves to that floor or higher. No
+    required cloud account, no analytics, no network operation for the
+    scanning function itself. Chosen over alternatives because it's the
+    most-starred, most-actively-maintained pure-QR/barcode Flutter plugin
+    with local-only processing and no forced Play Services network
+    dependency for the on-device API path used here.
+- **Reversibility:** Fully reversible — this is a new, additive feature
+  behind its own models/services/screens; nothing existing is modified
+  except `pubspec.yaml`/`pubspec.lock` (new dependency),
+  `AndroidManifest.xml`/iOS `Info.plist` (camera permission, checkpoint
+  2), and the Tools hub's entry list (checkpoint 2).
+- **Confidence:** High for checkpoint 1 (pure local logic, fully unit
+  tested). Camera/permission behavior (checkpoint 2) is build-verified,
+  not device-verified — see `PROJECT_CONTEXT.md`.
+
 ## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (done)
 
 - **Date:** started 2026-08-08. Implements

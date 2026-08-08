@@ -165,9 +165,33 @@ PROMPT-003E, for this item specifically; see that entry below and
 scope-raising prompt, PROMPT-003F, for this item specifically; see that
 entry below and `DECISIONS.md` D-030. **Item 13 done** — the user
 supplied PROMPT-003G; see that entry below and `DECISIONS.md` D-031.
-Per PROMPT-003G's own explicit instruction, item 10 was NOT started this
-session — Stage C's working order (11 → 12 → 13 → 10) is now complete
-through item 13, and item 10 needs its own separately approved prompt.
+**Item 10 in progress** — the user supplied a hard-boundary prompt,
+PROMPT-003H, for this final item specifically; see that entry below and
+`DECISIONS.md` D-032. Once item 10 is done and reported, this prompt's
+own stop condition applies: Stage D (monetization) needs a separate
+explicit go-ahead.
+
+### PROMPT-003H: Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell
+
+Status: **In progress, started 2026-08-08** — user supplied
+`_userprompts/PROMPT-003H_StageC_Item10_Offline_Fiscal_Receipt_QR_Scanner.md`,
+explicit authorization for Stage C item 10 only (the final Stage C item),
+baselined at `947ceb4` (item 13's final commit). Explicit hard boundary:
+no network request that retrieves fiscal-receipt content — no call to
+`suf.purs.gov.rs` or any tax-authority endpoint, no browser/webview, no
+implying a scan was fiscally verified. The scanner may only capture,
+classify, and persist a QR payload locally, queue it as "Scanned,
+awaiting fetch," and let the user create a manual expense from it. Exactly
+one future-fetch service interface is required, unavailable/offline, with
+one TODO stating real retrieval needs separate Phase 12 approval. After
+this item, report and stop — no Stage D, no online receipt retrieval, no
+monetization, no other follow-up this session.
+
+Required sequence: Checkpoint 1 (audit + data model + Serbia adapter +
+persistence + future-fetch boundary + tests) → Checkpoint 2 (scanner UI +
+permissions + manual entry) → Checkpoint 3 (queue screen + manual expense
+handoff) → Checkpoint 4 (final regression + release evidence + push). See
+`DECISIONS.md` D-032 for the per-checkpoint record as it lands.
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 
