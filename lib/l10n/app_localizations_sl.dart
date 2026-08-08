@@ -1535,6 +1535,35 @@ class AppLocalizationsSl extends AppLocalizations {
   String get invoiceDueDate => 'Rok plačila';
 
   @override
+  String get invoiceNumberLabel => 'Številka računa (neobvezno)';
+
+  @override
+  String get invoiceAddItem => 'Dodaj postavko';
+
+  @override
+  String get invoiceItemDescription => 'Opis';
+
+  @override
+  String get invoiceItemQuantity => 'Kol.';
+
+  @override
+  String get invoiceItemUnitPrice => 'Cena/enoto';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Izračunano na podlagi spodnjih postavk';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Odstrani postavko';
+
+  @override
+  String get invoiceGeneratePdf => 'Ustvari PDF';
+
+  @override
+  String get invoicePdfComingSoon =>
+      'Izvoz v PDF bo na voljo v prihodnji posodobitvi.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Sledilnik pavšala (Srbija)';
 
   @override

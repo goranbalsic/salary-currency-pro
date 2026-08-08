@@ -2816,6 +2816,60 @@ abstract class AppLocalizations {
   /// **'Due date'**
   String get invoiceDueDate;
 
+  /// No description provided for @invoiceNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number (optional)'**
+  String get invoiceNumberLabel;
+
+  /// No description provided for @invoiceAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get invoiceAddItem;
+
+  /// No description provided for @invoiceItemDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get invoiceItemDescription;
+
+  /// No description provided for @invoiceItemQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get invoiceItemQuantity;
+
+  /// No description provided for @invoiceItemUnitPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get invoiceItemUnitPrice;
+
+  /// No description provided for @invoiceAmountFromItemsHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated from the items below'**
+  String get invoiceAmountFromItemsHelper;
+
+  /// No description provided for @invoiceRemoveItemTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get invoiceRemoveItemTooltip;
+
+  /// No description provided for @invoiceGeneratePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get invoiceGeneratePdf;
+
+  /// No description provided for @invoicePdfComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF export is coming in a future update.'**
+  String get invoicePdfComingSoon;
+
   /// No description provided for @toolsPausalTrackerTitle.
   ///
   /// In en, this message translates to:

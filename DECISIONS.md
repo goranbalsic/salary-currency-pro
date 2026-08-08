@@ -71,11 +71,49 @@
   - `flutter analyze` clean (3 pre-existing unrelated info-level
     `unintended_html_in_doc_comment` hints only), `flutter test -j 1`
     322/322 passing.
-- **Remaining checkpoints (not started):** 12.1 journey/detail screen,
-  12.2 PDF rendering (`pdf`+`printing`), 12.3 NBS IPS QR (`barcode` +
-  payload builder — official source already identified: NBS "Preporuke"
-  PDF, © 2020 Narodna banka Srbije,
-  `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
+- **Checkpoint 2 (Journey, 12.1) — done:**
+  - New `InvoiceDetailScreen` (`lib/screens/business/invoice_detail_screen.dart`):
+    scannable header (client, invoice number if set, total, status,
+    issue/due dates, itemized lines or description), then the action
+    hierarchy the prompt asks for — Generate PDF (primary, `ElevatedButton`),
+    mark paid/unpaid (`OutlinedButton`), delete last and visually separated
+    (a plain `TextButton` in `alertRed`, not styled like the actions above
+    it). `InvoicesScreen`'s tile `onTap` now pushes this screen instead of
+    opening the edit sheet directly; the edit sheet (renamed from private
+    `_InvoiceFormSheet` to public `InvoiceFormSheet` so the new file can
+    reuse it) is reached from the detail screen's app-bar edit action.
+    Quick mark-paid/delete icon buttons on the list tile itself were left
+    untouched, per "preserve existing behavior unless a change is required."
+  - **Generate PDF is a real, wired action with real in-flight feedback,
+    but its actual PDF work is a placeholder until checkpoint 3** (`pdf`/
+    `printing` aren't dependencies yet) — tapping disables the button,
+    shows a spinner, and reports "PDF export is coming in a future
+    update." rather than a dead/fake-looking control, and a rapid second
+    tap while in-flight is a no-op (covered by
+    `test/invoice_detail_screen_test.dart`). Never touches the stored
+    invoice either way.
+  - **NBS IPS QR eligibility text is deliberately deferred to checkpoint 4**,
+    not built here — the plan originally scoped it into this checkpoint,
+    but with no `NbsIpsEligibility` evaluator yet there was nothing honest
+    to show; adding it once the real evaluator lands in 12.3 avoids a
+    placeholder eligibility message that could read as a real answer.
+  - **Itemization added to the add/edit sheet**, additive only: an empty
+    item list leaves the original single amount field exactly as it was;
+    adding one or more items switches that same field to read-only,
+    showing `Invoice.totalFromItems` (via `lib/utils/money.dart`, so the
+    same rounding guarantee applies here as everywhere else), with an
+    "Add item"/remove-row UI beneath it. `InvoiceService.add` gained
+    optional `invoiceNumber`/`items`/`purpose`/`paymentReference`
+    parameters to carry this through. Covered by
+    `test/invoice_itemization_test.dart`, including the specific
+    floating-point case (3 × 0.1 → the field shows `0.3`, not a raw-double
+    artifact).
+  - `flutter analyze` clean, `flutter test -j 1` 328/328, l10n 10 new keys
+    × 9 languages in lockstep.
+- **Remaining checkpoints (not started):** 12.2 PDF rendering (`pdf`+
+  `printing`), 12.3 NBS IPS QR (`barcode` + payload builder — official
+  source already identified: NBS "Preporuke" PDF, © 2020 Narodna banka
+  Srbije, `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
   fonts/i18n/accessibility (Noto Sans), final regression + completion
   report.
 

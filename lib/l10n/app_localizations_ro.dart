@@ -1546,6 +1546,35 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invoiceDueDate => 'Data scadenței';
 
   @override
+  String get invoiceNumberLabel => 'Număr factură (opțional)';
+
+  @override
+  String get invoiceAddItem => 'Adaugă articol';
+
+  @override
+  String get invoiceItemDescription => 'Descriere';
+
+  @override
+  String get invoiceItemQuantity => 'Cant.';
+
+  @override
+  String get invoiceItemUnitPrice => 'Preț unitar';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Calculat din articolele de mai jos';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Elimină articolul';
+
+  @override
+  String get invoiceGeneratePdf => 'Generează PDF';
+
+  @override
+  String get invoicePdfComingSoon =>
+      'Exportul în PDF va fi disponibil într-o actualizare viitoare.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Monitor impozit forfetar (Serbia)';
 
   @override

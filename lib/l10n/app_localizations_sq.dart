@@ -1545,6 +1545,35 @@ class AppLocalizationsSq extends AppLocalizations {
   String get invoiceDueDate => 'Afati i pagesës';
 
   @override
+  String get invoiceNumberLabel => 'Numri i faturës (opsionale)';
+
+  @override
+  String get invoiceAddItem => 'Shto artikull';
+
+  @override
+  String get invoiceItemDescription => 'Përshkrimi';
+
+  @override
+  String get invoiceItemQuantity => 'Sasia';
+
+  @override
+  String get invoiceItemUnitPrice => 'Çmimi/njësi';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Llogaritur nga artikujt më poshtë';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Hiq artikullin';
+
+  @override
+  String get invoiceGeneratePdf => 'Gjenero PDF';
+
+  @override
+  String get invoicePdfComingSoon =>
+      'Eksportimi në PDF vjen në një përditësim të ardhshëm.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Ndjekësi i tarifës fikse (Serbi)';
 
   @override

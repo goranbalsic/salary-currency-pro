@@ -1548,6 +1548,35 @@ class AppLocalizationsBg extends AppLocalizations {
   String get invoiceDueDate => 'Дата на падеж';
 
   @override
+  String get invoiceNumberLabel => 'Номер на фактура (незадължително)';
+
+  @override
+  String get invoiceAddItem => 'Добави артикул';
+
+  @override
+  String get invoiceItemDescription => 'Описание';
+
+  @override
+  String get invoiceItemQuantity => 'Кол.';
+
+  @override
+  String get invoiceItemUnitPrice => 'Ед. цена';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Изчислено въз основа на артикулите по-долу';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Премахни артикул';
+
+  @override
+  String get invoiceGeneratePdf => 'Генерирай PDF';
+
+  @override
+  String get invoicePdfComingSoon =>
+      'Експортът в PDF ще бъде наличен в бъдеща актуализация.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Проследяване на патента (Сърбия)';
 
   @override

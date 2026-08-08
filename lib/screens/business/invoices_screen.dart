@@ -4,10 +4,13 @@ import 'package:intl/intl.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/currency.dart';
 import '../../models/invoice.dart';
+import '../../models/invoice_line_item.dart';
+import '../../navigation/app_page_route.dart';
 import '../../services/invoice_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import 'invoice_detail_screen.dart';
 
 /// A minimal, offline invoice ledger for freelancers/small businesses:
 /// track what clients owe, mark invoices paid, and see totals at a glance.
@@ -133,7 +136,7 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
         onPressed: () => showModalBottomSheet(
           context: context,
           isScrollControlled: true,
-          builder: (_) => const _InvoiceFormSheet(),
+          builder: (_) => const InvoiceFormSheet(),
         ),
         child: const Icon(Icons.add),
       ),
@@ -205,10 +208,8 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
                       _InvoiceTile(
                         invoice: invoice,
                         l10n: l10n,
-                        onTap: () => showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (_) => _InvoiceFormSheet(existing: invoice),
+                        onTap: () => Navigator.of(context).push(
+                          appPageRoute((_) => InvoiceDetailScreen(invoiceId: invoice.id)),
                         ),
                         onTogglePaid: () => _togglePaid(l10n, invoice),
                         onDelete: () => _confirmDelete(invoice),
@@ -327,19 +328,23 @@ class _InvoiceTile extends StatelessWidget {
   }
 }
 
-class _InvoiceFormSheet extends StatefulWidget {
+/// Public so [InvoiceDetailScreen] (a separate file) can also open it for
+/// editing — the list screen (this file) uses it for both add and, before
+/// item 12's detail screen existed, edit; now only add.
+class InvoiceFormSheet extends StatefulWidget {
   final Invoice? existing;
-  const _InvoiceFormSheet({this.existing});
+  const InvoiceFormSheet({super.key, this.existing});
 
   @override
-  State<_InvoiceFormSheet> createState() => _InvoiceFormSheetState();
+  State<InvoiceFormSheet> createState() => _InvoiceFormSheetState();
 }
 
-class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
+class _InvoiceFormSheetState extends State<InvoiceFormSheet> {
   late final _clientCtrl = TextEditingController(text: widget.existing?.clientName ?? '');
   late final _descriptionCtrl = TextEditingController(text: widget.existing?.description ?? '');
+  late final _invoiceNumberCtrl = TextEditingController(text: widget.existing?.invoiceNumber ?? '');
   late final _amountCtrl =
-      TextEditingController(text: widget.existing == null ? '' : _plain(widget.existing!.amount));
+      TextEditingController(text: widget.existing == null ? '' : _plainNumber(widget.existing!.amount));
   final _service = InvoiceService();
   final _notificationService = NotificationService();
   String _currencyCode = 'EUR';
@@ -348,9 +353,15 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
       widget.existing?.dueDate ?? DateTime.now().add(const Duration(days: 14));
   AmountIssue? _issue;
 
-  bool get _isEditing => widget.existing != null;
+  /// Optional itemized lines — empty by default, preserving the original
+  /// single description/amount flow. Adding one switches the amount field
+  /// to a read-only, auto-computed total (see [_recomputeAmountFromItems]).
+  late final List<_LineItemDraft> _items = [
+    for (final item in widget.existing?.items ?? const <InvoiceLineItem>[])
+      _LineItemDraft.fromItem(item),
+  ];
 
-  static String _plain(double v) => v == v.truncateToDouble() ? v.toInt().toString() : v.toString();
+  bool get _isEditing => widget.existing != null;
 
   @override
   void initState() {
@@ -362,8 +373,33 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
   void dispose() {
     _clientCtrl.dispose();
     _descriptionCtrl.dispose();
+    _invoiceNumberCtrl.dispose();
     _amountCtrl.dispose();
+    for (final item in _items) {
+      item.dispose();
+    }
     super.dispose();
+  }
+
+  void _addItem() {
+    setState(() => _items.add(_LineItemDraft()));
+    _recomputeAmountFromItems();
+  }
+
+  void _removeItem(int index) {
+    setState(() {
+      _items.removeAt(index).dispose();
+    });
+    _recomputeAmountFromItems();
+  }
+
+  void _recomputeAmountFromItems() {
+    if (_items.isEmpty) return;
+    final validItems = _items.map((d) => d.toItem()).whereType<InvoiceLineItem>().toList();
+    setState(() {
+      _amountCtrl.text = _plainNumber(Invoice.totalFromItems(validItems));
+      _issue = null;
+    });
   }
 
   Future<void> _pickDate({required bool isDueDate}) async {
@@ -384,13 +420,22 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
   }
 
   Future<void> _save() async {
-    final result = parseAmountInput(_amountCtrl.text, allowZero: false);
-    if (!result.isValid) {
-      setState(() => _issue = result.issue);
-      return;
+    final validItems = _items.map((d) => d.toItem()).whereType<InvoiceLineItem>().toList();
+
+    final double amount;
+    if (validItems.isNotEmpty) {
+      amount = Invoice.totalFromItems(validItems);
+    } else {
+      final result = parseAmountInput(_amountCtrl.text, allowZero: false);
+      if (!result.isValid) {
+        setState(() => _issue = result.issue);
+        return;
+      }
+      amount = result.value!;
     }
     final client = _clientCtrl.text.trim();
     if (client.isEmpty) return;
+    final invoiceNumber = _invoiceNumberCtrl.text.trim();
 
     String invoiceId;
     bool isPaid;
@@ -402,22 +447,28 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
         schemaVersion: widget.existing!.schemaVersion,
         clientName: client,
         description: _descriptionCtrl.text.trim(),
-        amount: result.value!,
+        amount: amount,
         currencyCode: _currencyCode,
         issueDate: _issueDate,
         dueDate: _dueDate,
         isPaid: isPaid,
         paidDate: widget.existing!.paidDate,
+        invoiceNumber: invoiceNumber,
+        items: validItems,
+        purpose: widget.existing!.purpose,
+        paymentReference: widget.existing!.paymentReference,
       ));
     } else {
       isPaid = false;
       final created = await _service.add(
         clientName: client,
         description: _descriptionCtrl.text.trim(),
-        amount: result.value!,
+        amount: amount,
         currencyCode: _currencyCode,
         issueDate: _issueDate,
         dueDate: _dueDate,
+        invoiceNumber: invoiceNumber,
+        items: validItems,
       );
       invoiceId = created.id;
     }
@@ -433,7 +484,7 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
         title: l10n.notifInvoiceDueNotifTitle,
         body: l10n.notifInvoiceDueNotifBody(
           client,
-          NumberFormat.currency(symbol: '', decimalDigits: 2).format(result.value!),
+          NumberFormat.currency(symbol: '', decimalDigits: 2).format(amount),
           _currencyCode,
         ),
       );
@@ -484,6 +535,11 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
               decoration: InputDecoration(labelText: l10n.invoiceDescription),
             ),
             const SizedBox(height: 16),
+            TextField(
+              controller: _invoiceNumberCtrl,
+              decoration: InputDecoration(labelText: l10n.invoiceNumberLabel),
+            ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -491,10 +547,12 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
                   child: TextField(
                     key: const Key('invoice_amount_field'),
                     controller: _amountCtrl,
+                    readOnly: _items.isNotEmpty,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: l10n.invoiceAmount,
                       errorText: _issue == null ? null : _issueText(l10n, _issue!),
+                      helperText: _items.isNotEmpty ? l10n.invoiceAmountFromItemsHelper : null,
                     ),
                     onChanged: (_) {
                       if (_issue != null) setState(() => _issue = null);
@@ -518,6 +576,21 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
                 ),
               ],
             ),
+            for (int i = 0; i < _items.length; i++)
+              _LineItemRow(
+                draft: _items[i],
+                l10n: l10n,
+                onChanged: _recomputeAmountFromItems,
+                onRemove: () => _removeItem(i),
+              ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _addItem,
+                icon: const Icon(Icons.add),
+                label: Text(l10n.invoiceAddItem),
+              ),
+            ),
             const SizedBox(height: 8),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -537,6 +610,101 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
             ElevatedButton(onPressed: _save, child: Text(l10n.commonSave)),
           ],
         ),
+      ),
+    );
+  }
+}
+
+String _plainNumber(double v) =>
+    v == v.truncateToDouble() ? v.toInt().toString() : v.toString();
+
+/// One in-progress itemized line in the add/edit sheet. Holds its own
+/// controllers so each row can be edited independently without rebuilding
+/// text state on every keystroke.
+class _LineItemDraft {
+  final descriptionCtrl = TextEditingController();
+  final quantityCtrl = TextEditingController(text: '1');
+  final unitPriceCtrl = TextEditingController();
+
+  _LineItemDraft();
+
+  factory _LineItemDraft.fromItem(InvoiceLineItem item) {
+    final draft = _LineItemDraft();
+    draft.descriptionCtrl.text = item.description;
+    draft.quantityCtrl.text = _plainNumber(item.quantity);
+    draft.unitPriceCtrl.text = _plainNumber(item.unitPrice);
+    return draft;
+  }
+
+  void dispose() {
+    descriptionCtrl.dispose();
+    quantityCtrl.dispose();
+    unitPriceCtrl.dispose();
+  }
+
+  /// `null` for a row with no description yet — those are dropped rather
+  /// than saved as a blank line.
+  InvoiceLineItem? toItem() {
+    final description = descriptionCtrl.text.trim();
+    if (description.isEmpty) return null;
+    final quantity = double.tryParse(quantityCtrl.text.trim().replaceAll(',', '.')) ?? 1;
+    final unitPrice = double.tryParse(unitPriceCtrl.text.trim().replaceAll(',', '.')) ?? 0;
+    return InvoiceLineItem(description: description, quantity: quantity, unitPrice: unitPrice);
+  }
+}
+
+class _LineItemRow extends StatelessWidget {
+  final _LineItemDraft draft;
+  final AppLocalizations l10n;
+  final VoidCallback onChanged;
+  final VoidCallback onRemove;
+
+  const _LineItemRow({
+    required this.draft,
+    required this.l10n,
+    required this.onChanged,
+    required this.onRemove,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 3,
+            child: TextField(
+              controller: draft.descriptionCtrl,
+              decoration: InputDecoration(labelText: l10n.invoiceItemDescription),
+              onChanged: (_) => onChanged(),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: draft.quantityCtrl,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(labelText: l10n.invoiceItemQuantity),
+              onChanged: (_) => onChanged(),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: draft.unitPriceCtrl,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(labelText: l10n.invoiceItemUnitPrice),
+              onChanged: (_) => onChanged(),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close, size: 20),
+            tooltip: l10n.invoiceRemoveItemTooltip,
+            onPressed: onRemove,
+          ),
+        ],
       ),
     );
   }

@@ -1533,6 +1533,34 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invoiceDueDate => 'Rok plaćanja';
 
   @override
+  String get invoiceNumberLabel => 'Broj računa (neobavezno)';
+
+  @override
+  String get invoiceAddItem => 'Dodaj stavku';
+
+  @override
+  String get invoiceItemDescription => 'Opis';
+
+  @override
+  String get invoiceItemQuantity => 'Kol.';
+
+  @override
+  String get invoiceItemUnitPrice => 'Jed. cijena';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Izračunato na temelju stavki ispod';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Ukloni stavku';
+
+  @override
+  String get invoiceGeneratePdf => 'Generiraj PDF';
+
+  @override
+  String get invoicePdfComingSoon => 'Izvoz u PDF stiže u budućoj nadogradnji.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Praćenje paušala (Srbija)';
 
   @override

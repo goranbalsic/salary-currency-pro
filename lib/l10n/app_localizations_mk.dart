@@ -1538,6 +1538,34 @@ class AppLocalizationsMk extends AppLocalizations {
   String get invoiceDueDate => 'Рок на плаќање';
 
   @override
+  String get invoiceNumberLabel => 'Број на фактура (опционално)';
+
+  @override
+  String get invoiceAddItem => 'Додај ставка';
+
+  @override
+  String get invoiceItemDescription => 'Опис';
+
+  @override
+  String get invoiceItemQuantity => 'Кол.';
+
+  @override
+  String get invoiceItemUnitPrice => 'Ед. цена';
+
+  @override
+  String get invoiceAmountFromItemsHelper =>
+      'Пресметано врз основа на ставките подолу';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Отстрани ставка';
+
+  @override
+  String get invoiceGeneratePdf => 'Генерирај PDF';
+
+  @override
+  String get invoicePdfComingSoon => 'Извозот во PDF доаѓа во идно ажурирање.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Следење на паушал (Србија)';
 
   @override

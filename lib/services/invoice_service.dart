@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/invoice.dart';
+import '../models/invoice_line_item.dart';
 
 /// Local, on-device-only invoice ledger — the offline-only start of a
 /// "business mode." No client accounts, no payment processing, no sending
@@ -36,6 +37,10 @@ class InvoiceService {
     required String currencyCode,
     required DateTime issueDate,
     required DateTime dueDate,
+    String invoiceNumber = '',
+    List<InvoiceLineItem> items = const [],
+    String? purpose,
+    String? paymentReference,
   }) async {
     final all = await loadAll();
     final invoice = Invoice(
@@ -46,6 +51,10 @@ class InvoiceService {
       currencyCode: currencyCode,
       issueDate: issueDate,
       dueDate: dueDate,
+      invoiceNumber: invoiceNumber,
+      items: items,
+      purpose: purpose,
+      paymentReference: paymentReference,
     );
     all.insert(0, invoice);
     await _save(all);

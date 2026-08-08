@@ -1530,6 +1530,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceDueDate => 'Due date';
 
   @override
+  String get invoiceNumberLabel => 'Invoice number (optional)';
+
+  @override
+  String get invoiceAddItem => 'Add item';
+
+  @override
+  String get invoiceItemDescription => 'Description';
+
+  @override
+  String get invoiceItemQuantity => 'Qty';
+
+  @override
+  String get invoiceItemUnitPrice => 'Unit price';
+
+  @override
+  String get invoiceAmountFromItemsHelper => 'Calculated from the items below';
+
+  @override
+  String get invoiceRemoveItemTooltip => 'Remove item';
+
+  @override
+  String get invoiceGeneratePdf => 'Generate PDF';
+
+  @override
+  String get invoicePdfComingSoon => 'PDF export is coming in a future update.';
+
+  @override
   String get toolsPausalTrackerTitle => 'Paušal Tracker (Serbia)';
 
   @override
