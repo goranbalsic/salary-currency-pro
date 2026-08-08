@@ -292,6 +292,73 @@ class AppLocalizationsBg extends AppLocalizations {
   String get settingsSystemDefault => 'По подразбиране от системата';
 
   @override
+  String get settingsNotificationsTitle => 'Известия';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Записвай разходите си';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Ежедневно вечерно напомняне да въведете днешните приходи и разходи';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Да въведете днешните разходи?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Добавете днешните приходи и разходи, преди да забравите.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Известия за бюджет';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Известявай при достигане на 80% или 100% от бюджета на категория';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% от бюджета';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Изхарчили сте $percent% от бюджета за $category този месец.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Напомняния за фактури';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Известявай ден преди падежа на фактура';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Фактура с падеж утре';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency с падеж утре.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Напомняне за патент (Сърбия)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Месечно напомняне на 15-о число за подаване на патентната декларация';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Напомняне за подаване на патент';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Не забравяйте месечната декларация и плащане на патента.';
+
+  @override
   String get countryRs => 'Сърбия';
 
   @override

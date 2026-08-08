@@ -286,6 +286,72 @@ class AppLocalizationsSr extends AppLocalizations {
   String get settingsSystemDefault => 'Sistemski podrazumevano';
 
   @override
+  String get settingsNotificationsTitle => 'Obaveštenja';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Evidentiraj potrošnju';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Svakodnevni večernji podsetnik da unesete današnje prihode i troškove';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Unesite današnju potrošnju?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Dodajte današnje prihode i troškove pre nego što zaboravite.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Upozorenja o budžetu';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Obavesti kada budžet kategorije dostigne 80% ili 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% budžeta';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Potrošili ste $percent% budžeta za $category ovog meseca.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Podsetnici za fakture';
+
+  @override
+  String get notifInvoiceDueSubtitle => 'Obavesti dan pre roka dospeća fakture';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Faktura dospeva sutra';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency dospeva sutra.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Podsetnik za paušal (Srbija)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Mesečni podsetnik 15-og da prijavite paušalne obaveze';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Podsetnik za prijavu paušala';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Ne zaboravite mesečnu prijavu i uplatu paušala.';
+
+  @override
   String get countryRs => 'Srbija';
 
   @override

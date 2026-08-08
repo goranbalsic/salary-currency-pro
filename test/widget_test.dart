@@ -177,6 +177,33 @@ void main() {
     expect(find.text('Freelance'), findsOneWidget);
   });
 
+  testWidgets(
+      'Settings: notification toggles default off and can be switched on without crashing',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('Settings'),
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notifications'), findsOneWidget);
+    final expenseNudgeSwitch = find.widgetWithText(SwitchListTile, 'Log your spending');
+    expect(expenseNudgeSwitch, findsOneWidget);
+    expect(tester.widget<SwitchListTile>(expenseNudgeSwitch).value, isFalse);
+
+    // Toggling on exercises the real NotificationService -> scheduler path
+    // end to end (best-effort, per notification_service_test.dart, so this
+    // must not throw even though no real platform channel exists here).
+    await tester.tap(expenseNudgeSwitch);
+    await tester.pumpAndSettle();
+
+    expect(tester.widget<SwitchListTile>(find.widgetWithText(SwitchListTile, 'Log your spending')).value,
+        isTrue);
+  });
+
   testWidgets('Settings clear history removes the Tools "Recently used" section',
       (WidgetTester tester) async {
     await tester.pumpWidget(const SalaryCurrencyProApp());

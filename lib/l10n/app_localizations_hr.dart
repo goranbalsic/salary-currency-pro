@@ -286,6 +286,73 @@ class AppLocalizationsHr extends AppLocalizations {
   String get settingsSystemDefault => 'Zadano sustava';
 
   @override
+  String get settingsNotificationsTitle => 'Obavijesti';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Evidentiraj potrošnju';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Svakodnevni večernji podsjetnik da unesete današnje prihode i troškove';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Unesite današnju potrošnju?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Dodajte današnje prihode i troškove prije nego što zaboravite.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Upozorenja o proračunu';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Obavijesti kada proračun kategorije dosegne 80% ili 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% proračuna';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Potrošili ste $percent% proračuna za $category ovog mjeseca.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Podsjetnici za račune';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Obavijesti dan prije roka dospijeća računa';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Račun dospijeva sutra';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency dospijeva sutra.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Podsjetnik za paušal (Srbija)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Mjesečni podsjetnik 15-og za prijavu paušalnih obveza';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Podsjetnik za prijavu paušala';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Ne zaboravite mjesečnu prijavu i uplatu paušala.';
+
+  @override
   String get countryRs => 'Srbija';
 
   @override

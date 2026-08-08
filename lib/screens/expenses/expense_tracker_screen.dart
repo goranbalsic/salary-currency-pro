@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:intl/intl.dart';
@@ -9,7 +11,9 @@ import '../../models/country.dart';
 import '../../models/currency.dart';
 import '../../models/expense_entry.dart';
 import '../../models/recurring_transaction.dart';
+import '../../services/budget_service.dart';
 import '../../services/expense_service.dart';
+import '../../services/notification_service.dart';
 import '../../services/recurring_transaction_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
@@ -30,6 +34,8 @@ enum _SortMode { dateDesc, amountDesc }
 class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
   final _service = ExpenseService();
   final _recurringService = RecurringTransactionService();
+  final _budgetService = BudgetService();
+  final _notificationService = NotificationService();
   final _searchCtrl = TextEditingController();
   DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
   List<ExpenseEntry> _entries = const [];
@@ -125,6 +131,44 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
       _previousMonthExpense = previousExpense;
       _loaded = true;
     });
+    unawaited(_checkBudgetThresholds());
+  }
+
+  /// Fire-and-forget: checks every category budget against this month's
+  /// real spend and notifies (at most once per category/month/threshold —
+  /// see NotificationService.checkBudgetThreshold) if 80% or 100% was
+  /// just crossed. Runs whenever this screen reloads, which covers a
+  /// manually-added expense immediately; an expense auto-posted by a
+  /// recurring transaction while the user is elsewhere in the app is
+  /// caught the next time either this screen or Budgets & Goals reloads,
+  /// not the instant it posts — a deliberate, disclosed scope limit (see
+  /// DECISIONS.md) rather than the heavier background-execution machinery
+  /// true instant delivery would need.
+  Future<void> _checkBudgetThresholds() async {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    final budgets = await _budgetService.loadCategoryBudgets();
+    final spentByCurrency = await _service.categoryTotalsForMonth(
+      _month,
+      type: TransactionType.expense,
+    );
+    for (final budget in budgets) {
+      final spent = spentByCurrency[budget.currencyCode]?[budget.categoryId] ?? 0;
+      await _notificationService.checkBudgetThreshold(
+        categoryId: budget.categoryId,
+        month: _month,
+        spent: spent,
+        limit: budget.monthlyLimit,
+        titleBuilder: (percent) => l10n.notifBudgetThresholdNotifTitle(
+          localizedCategoryLabel(l10n, budget.categoryId),
+          percent,
+        ),
+        bodyBuilder: (percent) => l10n.notifBudgetThresholdNotifBody(
+          localizedCategoryLabel(l10n, budget.categoryId),
+          percent,
+        ),
+      );
+    }
   }
 
   String _csvFor(AppLocalizations l10n) {

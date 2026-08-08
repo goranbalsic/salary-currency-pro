@@ -287,6 +287,72 @@ class AppLocalizationsSl extends AppLocalizations {
   String get settingsSystemDefault => 'Privzeto sistemsko';
 
   @override
+  String get settingsNotificationsTitle => 'Obvestila';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Beleži porabo';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Dnevni večerni opomnik za vnos današnjih prihodkov in odhodkov';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Vnesete današnjo porabo?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Dodajte današnje prihodke in odhodke, preden pozabite.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Opozorila o proračunu';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Obvesti, ko proračun kategorije doseže 80 % ali 100 %';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent % proračuna';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Porabili ste $percent % proračuna za $category ta mesec.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Opomniki za račune';
+
+  @override
+  String get notifInvoiceDueSubtitle => 'Obvesti dan pred zapadlostjo računa';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Račun zapade jutri';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency zapade jutri.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Opomnik za pavšal (Srbija)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Mesečni opomnik 15. za oddajo pavšalne prijave';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Opomnik za oddajo pavšala';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Ne pozabite na mesečno prijavo in plačilo pavšala.';
+
+  @override
   String get countryRs => 'Srbija';
 
   @override

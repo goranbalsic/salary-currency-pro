@@ -14,6 +14,7 @@ import '../../services/budget_service.dart';
 import '../../services/consent_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
+import '../../services/notification_service.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
 import '../paywall/paywall_screen.dart';
@@ -119,6 +120,8 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          const _NotificationsSection(),
           const SizedBox(height: 16),
           _SectionCard(
             title: l10n.settingsPrivacyTitle,
@@ -361,6 +364,111 @@ class SettingsScreen extends StatelessWidget {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(l10n.settingsDeleteAllDataDone)));
+  }
+}
+
+/// Four independent reminder toggles — PROMPT-003 Stage B item 7. Every
+/// one is off by default and stays off until the user flips it here;
+/// flipping one on is also the first moment OS notification permission is
+/// requested (never proactively at app start). Budget-threshold alerts
+/// and invoice-due reminders don't get scheduled directly from this
+/// screen — enabling just requests permission; the actual scheduling
+/// happens at the natural trigger point (an expense crossing a budget
+/// threshold, an invoice being added/edited) in
+/// `budgets_screen.dart`/`invoices_screen.dart`, which check the
+/// preference themselves via `NotificationService`.
+class _NotificationsSection extends StatefulWidget {
+  const _NotificationsSection();
+
+  @override
+  State<_NotificationsSection> createState() => _NotificationsSectionState();
+}
+
+class _NotificationsSectionState extends State<_NotificationsSection> {
+  final _service = NotificationService();
+  bool _expenseNudge = false;
+  bool _budgetThreshold = false;
+  bool _invoiceDue = false;
+  bool _pausalReminder = false;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final expenseNudge = await _service.isExpenseNudgeEnabled();
+    final budgetThreshold = await _service.isBudgetThresholdEnabled();
+    final invoiceDue = await _service.isInvoiceDueEnabled();
+    final pausalReminder = await _service.isPausalReminderEnabled();
+    if (!mounted) return;
+    setState(() {
+      _expenseNudge = expenseNudge;
+      _budgetThreshold = budgetThreshold;
+      _invoiceDue = invoiceDue;
+      _pausalReminder = pausalReminder;
+      _loaded = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    if (!_loaded) return const SizedBox.shrink();
+
+    return _SectionCard(
+      title: l10n.settingsNotificationsTitle,
+      child: Column(
+        children: [
+          SwitchListTile(
+            title: Text(l10n.notifExpenseNudgeTitle),
+            subtitle: Text(l10n.notifExpenseNudgeSubtitle),
+            value: _expenseNudge,
+            onChanged: (v) async {
+              await _service.setExpenseNudgeEnabled(
+                v,
+                title: l10n.notifExpenseNudgeNotifTitle,
+                body: l10n.notifExpenseNudgeNotifBody,
+              );
+              if (mounted) setState(() => _expenseNudge = v);
+            },
+          ),
+          SwitchListTile(
+            title: Text(l10n.notifBudgetThresholdTitle),
+            subtitle: Text(l10n.notifBudgetThresholdSubtitle),
+            value: _budgetThreshold,
+            onChanged: (v) async {
+              await _service.setBudgetThresholdEnabled(v);
+              if (mounted) setState(() => _budgetThreshold = v);
+            },
+          ),
+          SwitchListTile(
+            title: Text(l10n.notifInvoiceDueTitle),
+            subtitle: Text(l10n.notifInvoiceDueSubtitle),
+            value: _invoiceDue,
+            onChanged: (v) async {
+              await _service.setInvoiceDueEnabled(v);
+              if (mounted) setState(() => _invoiceDue = v);
+            },
+          ),
+          SwitchListTile(
+            title: Text(l10n.notifPausalReminderTitle),
+            subtitle: Text(l10n.notifPausalReminderSubtitle),
+            value: _pausalReminder,
+            onChanged: (v) async {
+              await _service.setPausalReminderEnabled(
+                v,
+                title: l10n.notifPausalReminderNotifTitle,
+                body: l10n.notifPausalReminderNotifBody,
+              );
+              if (mounted) setState(() => _pausalReminder = v);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

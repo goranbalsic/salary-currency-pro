@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/currency.dart';
 import '../../models/invoice.dart';
 import '../../services/invoice_service.dart';
+import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
 
@@ -24,6 +25,7 @@ enum _InvoiceFilter { all, unpaid, overdue, paid }
 
 class _InvoicesScreenState extends State<InvoicesScreen> {
   final _service = InvoiceService();
+  final _notificationService = NotificationService();
   List<Invoice> _invoices = const [];
   bool _loaded = false;
   _InvoiceFilter _filter = _InvoiceFilter.all;
@@ -96,6 +98,28 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
     );
     if (confirmed == true) {
       await _service.delete(invoice.id);
+      await _notificationService.cancelInvoiceReminder(invoice.id);
+    }
+  }
+
+  Future<void> _togglePaid(AppLocalizations l10n, Invoice invoice) async {
+    final nowPaid = !invoice.isPaid;
+    await _service.markPaid(invoice.id, paid: nowPaid);
+    if (nowPaid) {
+      await _notificationService.cancelInvoiceReminder(invoice.id);
+    } else {
+      // Marked unpaid again — re-schedule if the due date still allows it;
+      // scheduleInvoiceReminder itself no-ops for a moment already past.
+      await _notificationService.scheduleInvoiceReminder(
+        invoiceId: invoice.id,
+        dueDate: invoice.dueDate,
+        title: l10n.notifInvoiceDueNotifTitle,
+        body: l10n.notifInvoiceDueNotifBody(
+          invoice.clientName,
+          NumberFormat.currency(symbol: '', decimalDigits: 2).format(invoice.amount),
+          invoice.currencyCode,
+        ),
+      );
     }
   }
 
@@ -186,7 +210,7 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
                           isScrollControlled: true,
                           builder: (_) => _InvoiceFormSheet(existing: invoice),
                         ),
-                        onTogglePaid: () => _service.markPaid(invoice.id, paid: !invoice.isPaid),
+                        onTogglePaid: () => _togglePaid(l10n, invoice),
                         onDelete: () => _confirmDelete(invoice),
                       ),
                 ],
@@ -317,6 +341,7 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
   late final _amountCtrl =
       TextEditingController(text: widget.existing == null ? '' : _plain(widget.existing!.amount));
   final _service = InvoiceService();
+  final _notificationService = NotificationService();
   String _currencyCode = 'EUR';
   late DateTime _issueDate = widget.existing?.issueDate ?? DateTime.now();
   late DateTime _dueDate =
@@ -367,9 +392,13 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
     final client = _clientCtrl.text.trim();
     if (client.isEmpty) return;
 
+    String invoiceId;
+    bool isPaid;
     if (_isEditing) {
+      invoiceId = widget.existing!.id;
+      isPaid = widget.existing!.isPaid;
       await _service.update(Invoice(
-        id: widget.existing!.id,
+        id: invoiceId,
         schemaVersion: widget.existing!.schemaVersion,
         clientName: client,
         description: _descriptionCtrl.text.trim(),
@@ -377,11 +406,12 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
         currencyCode: _currencyCode,
         issueDate: _issueDate,
         dueDate: _dueDate,
-        isPaid: widget.existing!.isPaid,
+        isPaid: isPaid,
         paidDate: widget.existing!.paidDate,
       ));
     } else {
-      await _service.add(
+      isPaid = false;
+      final created = await _service.add(
         clientName: client,
         description: _descriptionCtrl.text.trim(),
         amount: result.value!,
@@ -389,7 +419,26 @@ class _InvoiceFormSheetState extends State<_InvoiceFormSheet> {
         issueDate: _issueDate,
         dueDate: _dueDate,
       );
+      invoiceId = created.id;
     }
+
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    if (isPaid) {
+      await _notificationService.cancelInvoiceReminder(invoiceId);
+    } else {
+      await _notificationService.scheduleInvoiceReminder(
+        invoiceId: invoiceId,
+        dueDate: _dueDate,
+        title: l10n.notifInvoiceDueNotifTitle,
+        body: l10n.notifInvoiceDueNotifBody(
+          client,
+          NumberFormat.currency(symbol: '', decimalDigits: 2).format(result.value!),
+          _currencyCode,
+        ),
+      );
+    }
+
     if (!mounted) return;
     Navigator.of(context).pop();
   }

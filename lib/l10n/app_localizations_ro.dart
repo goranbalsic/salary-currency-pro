@@ -291,6 +291,75 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsSystemDefault => 'Implicit sistem';
 
   @override
+  String get settingsNotificationsTitle => 'Notificări';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Înregistrează cheltuielile';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Un memento zilnic seara pentru a înregistra veniturile și cheltuielile de azi';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Înregistrezi cheltuielile de azi?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Adaugă veniturile și cheltuielile de azi înainte să uiți.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Alerte de buget';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Anunță când bugetul unei categorii atinge 80% sau 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% din buget';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Ai cheltuit $percent% din bugetul pentru $category luna aceasta.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Mementouri pentru facturi';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Anunță cu o zi înainte de scadența unei facturi';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Factură scadentă mâine';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency este scadentă mâine.';
+  }
+
+  @override
+  String get notifPausalReminderTitle =>
+      'Memento pentru impozit forfetar (Serbia)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Memento lunar pe 15 pentru declararea obligațiilor cu impozit forfetar';
+
+  @override
+  String get notifPausalReminderNotifTitle =>
+      'Memento pentru declarația forfetară';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Nu uita declarația și plata lunară a impozitului forfetar.';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

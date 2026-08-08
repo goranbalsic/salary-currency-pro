@@ -288,6 +288,73 @@ class AppLocalizationsMk extends AppLocalizations {
   String get settingsSystemDefault => 'Системско стандардно';
 
   @override
+  String get settingsNotificationsTitle => 'Известувања';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Евидентирај трошоци';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Дневен вечерен потсетник да ги внесете денешните приходи и трошоци';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Внесете ги денешните трошоци?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Додадете ги денешните приходи и трошоци пред да заборавите.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Известувања за буџет';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Известувај кога буџетот на категорија ќе достигне 80% или 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% од буџетот';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Потрошивте $percent% од буџетот за $category овој месец.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Потсетници за фактури';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Известувај еден ден пред рокот на фактура';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Фактура доспева утре';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency доспева утре.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Потсетник за паушал (Србија)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Месечен потсетник на 15-ти за пријавување на паушалните обврски';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Потсетник за пријава на паушал';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Не заборавајте ја месечната пријава и уплата на паушалот.';
+
+  @override
   String get countryRs => 'Србија';
 
   @override

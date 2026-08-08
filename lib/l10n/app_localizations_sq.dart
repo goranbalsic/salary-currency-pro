@@ -289,6 +289,74 @@ class AppLocalizationsSq extends AppLocalizations {
   String get settingsSystemDefault => 'Parazgjedhja e sistemit';
 
   @override
+  String get settingsNotificationsTitle => 'Njoftimet';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Regjistro shpenzimet';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'Kujtesë e përditshme mbrëmjeje për të regjistruar të ardhurat dhe shpenzimet e sotme';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Regjistro shpenzimet e sotme?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Shto të ardhurat dhe shpenzimet e sotme para se të harrosh.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Njoftime buxheti';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Njofto kur buxheti i një kategorie arrin 80% ose 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% e buxhetit';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'Ke shpenzuar $percent% të buxhetit për $category këtë muaj.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Kujtesa për faturat';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Njofto një ditë para afatit të faturës';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Fatura skadon nesër';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency skadon nesër.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Kujtesë për tarifën fikse (Serbi)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Kujtesë mujore më 15 për deklarimin e detyrimeve me tarifë fikse';
+
+  @override
+  String get notifPausalReminderNotifTitle =>
+      'Kujtesë për deklarimin e tarifës fikse';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Mos harro deklarimin dhe pagesën mujore të tarifës fikse.';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

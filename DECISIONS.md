@@ -1,5 +1,81 @@
 # DECISIONS.md
 
+## D-026 — PROMPT-003 Stage B item 7: offline local notifications
+
+- **Date:** 2026-08-08 (same day, right after D-025).
+- **New dependency:** `flutter_local_notifications ^22.3.0` +
+  `timezone ^0.11.1` (required transitively for scheduled/repeating
+  notifications). Version confirmed live from pub.dev before adding, not
+  guessed; its actual named-parameter API (a real recent breaking change
+  from the positional-parameter API of older major versions) was verified
+  by reading the installed package source directly after `flutter
+  analyze` caught 18 signature mismatches from an initial draft written
+  from general knowledge of the package's older API — corrected against
+  the real source, not re-guessed.
+- **Architecture:** a thin `NotificationScheduler` interface
+  (`notification_scheduler.dart`) wraps the plugin; `NotificationService`
+  (`notification_service.dart`) owns all four reminders' preferences and
+  business logic against that interface — same fake-injection testability
+  pattern this app already uses for `RateProviderApi`. Notification text
+  is always supplied by the caller (which has `AppLocalizations` access);
+  the service itself never hardcodes user-facing strings, matching how
+  this app already keeps every other service l10n-agnostic.
+- **All four reminders off by default**, per the prompt's own explicit
+  requirement — verified by a dedicated test. Enabling any one is also
+  the first moment OS permission is requested; never proactively at app
+  start.
+- **Android manifest additions:** `POST_NOTIFICATIONS` (Android 13+
+  runtime permission) and `RECEIVE_BOOT_COMPLETED` (so scheduled
+  reminders survive a reboot), plus the two receivers the plugin
+  documents needing. Deliberately did NOT request `SCHEDULE_EXACT_ALARM`/
+  `USE_EXACT_ALARM` — none of these four reminders need second-precision
+  timing, so `AndroidScheduleMode.inexactAllowWhileIdle` is used
+  throughout, which needs neither permission (a real, disclosed
+  scope-narrowing choice, not an oversight).
+- **A real bug found via a widget test, not a device:** `flutter test`'s
+  default binding has no platform channel registered for
+  `flutter_local_notifications`, so the very first unconditional call
+  into the real scheduler (`cancelInvoiceReminder`, invoked from marking
+  an existing Invoices test's invoice paid) threw
+  `LateInitializationError` and failed a previously-green test. Root
+  cause: `cancelInvoiceReminder` had no error handling, unlike the
+  gated-behind-a-preference-check schedule methods. Fixed by wrapping
+  every scheduler call across the whole service in a `_safely` helper —
+  the right production behavior regardless (a failed
+  schedule/cancel/show must never crash a core feature like deleting an
+  invoice), not merely a test workaround. Covered by 7 new regression
+  tests using a scheduler that always throws.
+- **Real-time delivery scope limit, disclosed:** budget-threshold
+  checking is wired into `ExpenseTrackerScreen._load()` and
+  `BudgetsScreen._load()` (both already reactively reload on every
+  `ExpenseService`/`BudgetService` change), which correctly catches a
+  manually-added expense immediately. An expense auto-posted by a
+  recurring transaction (D-024) while the user is on neither screen —
+  or the app is closed entirely — is only caught the next time either
+  screen reloads, not delivered as a true background push the instant it
+  posts. True instant delivery would need `WorkManager`-based background
+  execution, which is Stage B item 8's own territory — not duplicated
+  here. Every reminder type's dedup/idempotency logic (budget-threshold's
+  per-category-month-threshold flag; invoice reminders keyed by a stable
+  hash of the invoice id) means this limitation is about *timeliness*
+  only, never about a missed or duplicated notification once the check
+  does run.
+- **Verification:** 20 `NotificationService` unit tests (preferences,
+  all four reminder types, dedup logic, the best-effort regression
+  group) + 1 settings-toggle widget test. Full suite 264/264,
+  `flutter analyze` clean, l10n 434/434 across 9 locales. **Not
+  device-verified** — no real Android device/emulator was available
+  this session, so actual on-device notification delivery, permission
+  prompts, and reboot survival are unconfirmed, disclosed here rather
+  than claimed. This is the same honest gap this project already carries
+  for D-014 (UMP consent) and the app icon.
+- **Confidence:** High on the architecture, preference logic, and the
+  best-effort error handling (all independently tested). Medium on
+  real-device behavior (unverified, per above).
+- **Reversibility:** Fully reversible — new files plus additive
+  integration points; the Android manifest additions are also fully
+  reversible (no other feature depends on them).
+
 ## D-025 — PROMPT-003 Stage B item 6: subscription/fixed-cost radar screen
 
 - **Date:** 2026-08-08 (same day, right after D-024).

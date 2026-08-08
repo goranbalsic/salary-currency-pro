@@ -1,4 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Local notifications (PROMPT-003 Stage B item 7) — all off by
+         default, opt-in per reminder type in Settings. POST_NOTIFICATIONS
+         is the Android 13+ runtime permission to show any notification at
+         all; RECEIVE_BOOT_COMPLETED lets already-scheduled reminders
+         survive a device reboot. Deliberately NOT requesting
+         SCHEDULE_EXACT_ALARM/USE_EXACT_ALARM — none of these reminders
+         (a daily nudge, a monthly paušal reminder, a budget-threshold or
+         invoice-due alert) need second-precision timing, so the app uses
+         AndroidScheduleMode.inexactAllowWhileIdle instead, which needs
+         neither permission. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:label="Salary &amp; Currency Pro"
         android:name="${applicationName}"
@@ -37,6 +49,18 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
+        <!-- flutter_local_notifications: required receivers for scheduled
+             (not just immediate) notifications to fire and to survive a
+             device reboot. -->
+        <receiver android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

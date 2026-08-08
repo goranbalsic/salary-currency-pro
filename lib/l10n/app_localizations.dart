@@ -604,6 +604,112 @@ abstract class AppLocalizations {
   /// **'System default'**
   String get settingsSystemDefault;
 
+  /// No description provided for @settingsNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotificationsTitle;
+
+  /// No description provided for @notifExpenseNudgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your spending'**
+  String get notifExpenseNudgeTitle;
+
+  /// No description provided for @notifExpenseNudgeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A daily evening reminder to log today\'s income and expenses'**
+  String get notifExpenseNudgeSubtitle;
+
+  /// No description provided for @notifExpenseNudgeNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log today\'s spending?'**
+  String get notifExpenseNudgeNotifTitle;
+
+  /// No description provided for @notifExpenseNudgeNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add today\'s income and expenses before you forget.'**
+  String get notifExpenseNudgeNotifBody;
+
+  /// No description provided for @notifBudgetThresholdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget alerts'**
+  String get notifBudgetThresholdTitle;
+
+  /// No description provided for @notifBudgetThresholdSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when a category budget reaches 80% or 100%'**
+  String get notifBudgetThresholdSubtitle;
+
+  /// No description provided for @notifBudgetThresholdNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category}: {percent}% of budget'**
+  String notifBudgetThresholdNotifTitle(String category, int percent);
+
+  /// No description provided for @notifBudgetThresholdNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve spent {percent}% of your {category} budget this month.'**
+  String notifBudgetThresholdNotifBody(String category, int percent);
+
+  /// No description provided for @notifInvoiceDueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice reminders'**
+  String get notifInvoiceDueTitle;
+
+  /// No description provided for @notifInvoiceDueSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify the day before an invoice is due'**
+  String get notifInvoiceDueSubtitle;
+
+  /// No description provided for @notifInvoiceDueNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice due tomorrow'**
+  String get notifInvoiceDueNotifTitle;
+
+  /// No description provided for @notifInvoiceDueNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{client}: {amount} {currency} is due tomorrow.'**
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  );
+
+  /// No description provided for @notifPausalReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paušal reminder (Serbia)'**
+  String get notifPausalReminderTitle;
+
+  /// No description provided for @notifPausalReminderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly reminder on the 15th to file your paušal return'**
+  String get notifPausalReminderSubtitle;
+
+  /// No description provided for @notifPausalReminderNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paušal filing reminder'**
+  String get notifPausalReminderNotifTitle;
+
+  /// No description provided for @notifPausalReminderNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget your monthly paušal filing and payment.'**
+  String get notifPausalReminderNotifBody;
+
   /// No description provided for @countryRs.
   ///
   /// In en, this message translates to:

@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,6 +10,7 @@ import '../../models/currency.dart';
 import '../../models/expense_entry.dart';
 import '../../services/budget_service.dart';
 import '../../services/expense_service.dart';
+import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
 
@@ -25,6 +28,7 @@ class BudgetsScreen extends StatefulWidget {
 class _BudgetsScreenState extends State<BudgetsScreen> {
   final _budgetService = BudgetService();
   final _expenseService = ExpenseService();
+  final _notificationService = NotificationService();
   List<CategoryBudget> _budgets = const [];
   List<SavingsGoal> _goals = const [];
   Map<String, Map<String, double>> _spentByCurrency = const {};
@@ -59,6 +63,39 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
       _spentByCurrency = spent;
       _loaded = true;
     });
+    unawaited(_checkBudgetThresholds(budgets, spent));
+  }
+
+  /// Same threshold check as `expense_tracker_screen.dart`'s, kept here
+  /// too since this screen also reactively reloads on every
+  /// ExpenseService/BudgetService change — see that screen's doc comment
+  /// on `_checkBudgetThresholds` for the scope limit both share
+  /// (foreground-only; no true background delivery for an auto-posted
+  /// recurring transaction while neither screen is open).
+  Future<void> _checkBudgetThresholds(
+    List<CategoryBudget> budgets,
+    Map<String, Map<String, double>> spentByCurrency,
+  ) async {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    final now = DateTime.now();
+    for (final budget in budgets) {
+      final spent = spentByCurrency[budget.currencyCode]?[budget.categoryId] ?? 0;
+      await _notificationService.checkBudgetThreshold(
+        categoryId: budget.categoryId,
+        month: now,
+        spent: spent,
+        limit: budget.monthlyLimit,
+        titleBuilder: (percent) => l10n.notifBudgetThresholdNotifTitle(
+          localizedCategoryLabel(l10n, budget.categoryId),
+          percent,
+        ),
+        bodyBuilder: (percent) => l10n.notifBudgetThresholdNotifBody(
+          localizedCategoryLabel(l10n, budget.categoryId),
+          percent,
+        ),
+      );
+    }
   }
 
   double _spentFor(CategoryBudget b) => _spentByCurrency[b.currencyCode]?[b.categoryId] ?? 0;

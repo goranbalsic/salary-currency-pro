@@ -289,6 +289,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSystemDefault => 'System default';
 
   @override
+  String get settingsNotificationsTitle => 'Notifications';
+
+  @override
+  String get notifExpenseNudgeTitle => 'Log your spending';
+
+  @override
+  String get notifExpenseNudgeSubtitle =>
+      'A daily evening reminder to log today\'s income and expenses';
+
+  @override
+  String get notifExpenseNudgeNotifTitle => 'Log today\'s spending?';
+
+  @override
+  String get notifExpenseNudgeNotifBody =>
+      'Add today\'s income and expenses before you forget.';
+
+  @override
+  String get notifBudgetThresholdTitle => 'Budget alerts';
+
+  @override
+  String get notifBudgetThresholdSubtitle =>
+      'Notify when a category budget reaches 80% or 100%';
+
+  @override
+  String notifBudgetThresholdNotifTitle(String category, int percent) {
+    return '$category: $percent% of budget';
+  }
+
+  @override
+  String notifBudgetThresholdNotifBody(String category, int percent) {
+    return 'You\'ve spent $percent% of your $category budget this month.';
+  }
+
+  @override
+  String get notifInvoiceDueTitle => 'Invoice reminders';
+
+  @override
+  String get notifInvoiceDueSubtitle =>
+      'Notify the day before an invoice is due';
+
+  @override
+  String get notifInvoiceDueNotifTitle => 'Invoice due tomorrow';
+
+  @override
+  String notifInvoiceDueNotifBody(
+    String client,
+    String amount,
+    String currency,
+  ) {
+    return '$client: $amount $currency is due tomorrow.';
+  }
+
+  @override
+  String get notifPausalReminderTitle => 'Paušal reminder (Serbia)';
+
+  @override
+  String get notifPausalReminderSubtitle =>
+      'Monthly reminder on the 15th to file your paušal return';
+
+  @override
+  String get notifPausalReminderNotifTitle => 'Paušal filing reminder';
+
+  @override
+  String get notifPausalReminderNotifBody =>
+      'Don\'t forget your monthly paušal filing and payment.';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override
