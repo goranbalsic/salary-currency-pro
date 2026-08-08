@@ -76,3 +76,7 @@ GoogleService-Info.plist
 .env
 .env.*
 *.env
+
+# CTK v3 rollback artifacts: local-only, never committed.
+.ctk-backup/
+CLAUDE.md.v2.*.bak
