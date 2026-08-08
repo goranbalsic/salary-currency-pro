@@ -39,7 +39,14 @@ disclaimer-based approach (option b) — a clearly-labeled partial estimate
 is more honest than a fabricated complete one, and matches this app's own
 "never invent a number" pattern.
 
-Status: Open, non-blocking.
+**Resolved 2026-08-08 (superseded by PROMPT-004/PROMPT-005, option (a)):**
+the new "Freelancer Self-Assessment" tool's Serbia regime computes real,
+sourced social contributions (PIO/health/unemployment) alongside income
+tax — see `DECISIONS.md` D-019. The old contribution-less tool this
+question was about no longer exists (removed in D-022, PROMPT-005 Part
+4). Nothing left to decide.
+
+Status: Resolved.
 
 ## Low Importance
 
@@ -70,8 +77,14 @@ Recommended default if no answer is received: option (a) — proportionate
 to what actually changed, consistent with this app's existing "minimal
 reversible changes" convention.
 
-Status: Open, non-blocking — will be revisited when Phase 11 actually
-starts.
+**Default adopted 2026-08-08:** no user scope decision has arrived, and
+Phase 11 hasn't resumed since it was paused — adopting option (a) (the
+narrow interpretation) as the working assumption for whenever Phase 11
+actually starts, rather than leaving it perpetually open. If the user
+wants a broader visual refresh, say so when Phase 11 resumes.
+
+Status: Resolved (default adopted; revisit if the user's actual intent
+differs when Phase 11 starts).
 
 ### QUESTION-003: What does `memory/` (per the toolkit's SRC-002) mean for this repository, if anything?
 
@@ -98,7 +111,12 @@ Recommended default if no answer is received: option (a) — matches
 `CLAUDE.md` rule 6 ("do not create major new components unless
 required").
 
-Status: Open, non-blocking.
+**Default adopted 2026-08-08:** no concrete need for `memory/` has
+appeared since this was raised; option (a) (leave uncreated) is already
+the status quo and is being formally adopted rather than left open
+indefinitely.
+
+Status: Resolved (default adopted).
 
 ### QUESTION-004: Cold-start timing and list virtualization for the Expense Tracker / Invoices screens
 
@@ -137,7 +155,17 @@ virtualization (wait for real evidence before a behavior-changing
 refactor); option (a) for cold-start whenever a device/emulator becomes
 available in a session.
 
-Status: Open, non-blocking.
+**Checked 2026-08-08, deliberately NOT closed:** still no device/emulator
+or browser tooling available this session (confirmed — same gap as every
+prior session). Closing this would require either inventing a cold-start
+number (violates this app's core "never fabricate a number" rule) or
+pushing the sliver-based refactor blind, with no way to visually confirm
+it didn't break either screen's layout — also unacceptable. Continuing
+option (c): stays as-is until real evidence (a device/emulator session,
+or an actual user report) justifies the refactor.
+
+Status: Open, non-blocking — genuinely cannot be closed honestly without
+device/emulator or browser access.
 
 ### QUESTION-005: No public repo/GitHub Pages exists yet to host `tax_rules.json` for over-the-air updates
 
@@ -176,7 +204,20 @@ Recommended default if no answer is received: option (a) once the user
 is ready — it's the one the prompt itself named first, and matches this
 app's existing zero-backend, zero-cost pattern.
 
-Status: Open, non-blocking.
+**Resolved 2026-08-08 (option (a)):** now that this project has a GitHub
+account connection (PROMPT-005 Part 1), created a separate small public
+repo, https://github.com/goranbalsic/salary-currency-pro-rules,
+containing the publishable `tax_rules.json` + a short README. Live-
+verified the raw URL resolves and serves valid, schema-correct JSON
+(`schema_version: 1`, `rules_version: "2026-08-08"`, all 10 regimes
+present). `kFreelanceTaxRulesRemoteUrl`
+(`lib/services/tax_rules_service.dart`) now points at the real URL
+instead of the `REPLACE_ME` placeholder. The app's freelancer calculator
+will now genuinely receive over-the-air rule updates (≤24h cadence, per
+the existing fetch policy) whenever `tools/rules-publish/README.md`'s
+runbook is followed to publish a change.
+
+Status: Resolved.
 
 ### QUESTION-006: Consolidate the old Serbia-only "Freelancer Tax" tool with the new 9-country "Freelancer Self-Assessment" tool?
 
@@ -237,8 +278,6 @@ scenario translates into the new engine's input shape rather than being
 orphaned. See `DECISIONS.md` D-022.
 
 Status: Resolved.
-
-Status: Open, non-blocking.
 
 ### QUESTION-007: Bulgaria's salary calculator still quotes BGN; PROMPT-004's freelance data says EUR (adopted 1 Jan 2026)
 

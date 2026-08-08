@@ -10,15 +10,16 @@ import '../models/freelance_tax_rules.dart';
 /// static hosting only (GitHub Pages / raw.githubusercontent.com), no
 /// backend, no API key, per PROMPT-004's hard constraints.
 ///
-/// **Placeholder — not a real endpoint yet.** No public repo has been
-/// created for this in this environment (this project itself has no git
-/// remote). Until a real repo exists and this constant points at it, every
-/// fetch attempt below will simply fail (unresolvable host) and be silently
-/// ignored exactly like being offline — the app keeps working correctly on
-/// the bundled copy, it just never receives an over-the-air rules update.
-/// See `DECISIONS.md` / `OPEN_QUESTIONS.md` for this gap.
+/// A separate, small, PUBLIC repo — distinct from this app's own private
+/// repo, since this file must be fetchable by anonymous clients. To
+/// publish a rate change: edit `tools/rules-publish/tax_rules.json` in
+/// the app repo (see that directory's own README for the full runbook),
+/// validate it, then copy it over `tax_rules.json` in
+/// https://github.com/goranbalsic/salary-currency-pro-rules and push.
+/// Live-verified 2026-08-08 (`OPEN_QUESTIONS.md` QUESTION-005, resolved):
+/// this URL resolves and serves valid, schema-correct JSON.
 const String kFreelanceTaxRulesRemoteUrl =
-    'https://raw.githubusercontent.com/REPLACE_ME/salary-currency-pro-rules/main/tax_rules.json';
+    'https://raw.githubusercontent.com/goranbalsic/salary-currency-pro-rules/main/tax_rules.json';
 
 const String _assetPath = 'assets/config/tax_rules.json';
 const Duration _fetchTimeout = Duration(seconds: 5);

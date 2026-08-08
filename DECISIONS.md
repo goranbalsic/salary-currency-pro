@@ -1,5 +1,56 @@
 # DECISIONS.md
 
+## D-023 — Repo pushed to GitHub; public rules repo created, closing QUESTION-005; open-questions sweep
+
+- **Date:** 2026-08-08 (later same day as D-020/D-021/D-022).
+- **Context:** user said "push it," then, after installing/authenticating
+  GitHub CLI (explicit blanket authorization: "you can install it or any
+  dependency you need... no need to ask"), "close the open questions
+  next."
+- **Repo pushed:** `gh repo create salary-currency-pro --private
+  --source=. --remote=origin` + `git push -u origin main`. Live at
+  https://github.com/goranbalsic/salary-currency-pro (private), all 11
+  commits, `main` tracking `origin/main`.
+- **QUESTION-005 closed for real, not just documented:** created a
+  separate small **public** repo,
+  https://github.com/goranbalsic/salary-currency-pro-rules, containing
+  the publishable `tax_rules.json` (byte-copy of `tools/rules-publish/
+  tax_rules.json`) + a short README pointing back at the app repo's own
+  runbook as the single authoring location. Live-verified via a real
+  fetch that the raw URL resolves and serves valid, schema-correct JSON.
+  `kFreelanceTaxRulesRemoteUrl` (`lib/services/tax_rules_service.dart`)
+  now points at the real URL — no longer a placeholder. This is the
+  first of PROMPT-004/005's disclosed gaps that required an actual
+  external account action (repo creation under the user's own GitHub
+  account), which only became possible once gh was installed and
+  authenticated this session.
+- **Full open-questions sweep**, per the user's explicit request:
+  - QUESTION-001 (Serbia contributions) — resolved; superseded by
+    D-019/D-022 (the old contribution-less tool no longer exists).
+  - QUESTION-002 (Phase 11 scope) — no user answer arrived; formally
+    adopted its own recommended default (narrow interpretation) rather
+    than leaving it open indefinitely.
+  - QUESTION-003 (`memory/` directory) — same treatment; default (leave
+    uncreated) adopted, matches the existing status quo.
+  - QUESTION-004 (cold-start timing / list virtualization) —
+    **deliberately left open.** No device/emulator or browser tooling
+    was available this session either. Closing it would require either
+    fabricating a cold-start number or pushing a behavior-changing
+    sliver refactor with no way to visually confirm it didn't break
+    either screen — both violate this project's core discipline more
+    than leaving one low-importance question open does.
+  - QUESTION-006, QUESTION-007 — already resolved earlier this session
+    (D-022, D-020); fixed a leftover duplicate "Status:" line from the
+    QUESTION-006 edit.
+- **Verification:** `flutter analyze` clean, `flutter test -j 1` 218/218
+  (unchanged — this was a config-constant + doc change, no logic
+  touched). Both new repos confirmed live and correctly populated.
+- **Confidence:** High — the raw URL was fetched and its content
+  independently verified, not assumed.
+- **Reversibility:** Fully reversible. The public rules repo can be
+  deleted/renamed independently of the app repo if this URL ever needs
+  to change (still a one-line constant update either way).
+
 ## D-022 — PROMPT-005 Part 4: two overlapping Serbia freelancer tools consolidated into one
 
 - **Date:** 2026-08-08.
