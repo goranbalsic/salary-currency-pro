@@ -222,9 +222,63 @@
   - `flutter analyze` clean, `flutter test -j 1` 391/391 (36 payload-
     builder + 5 eligibility + 3 QR-embedding smoke + 3 eligibility-banner
     UI tests added this checkpoint), l10n net +2 keys × 9 languages.
-- **Remaining checkpoints (not started):** 12.4 fonts/i18n/accessibility
-  (Noto Sans, fixes the Cyrillic/Latin-Extended glyph gap noted in
-  checkpoint 3), final regression + completion report.
+- **Checkpoint 5 (fonts/i18n/accessibility, 12.4) — done:**
+  - **Font: Noto Sans, version 2.015, OFL-1.1 license** (bundled at
+    `assets/fonts/NotoSans-OFL.txt`). Source: the official Google Fonts
+    repository, `https://github.com/google/fonts`, path
+    `ofl/notosans/NotoSans[wdth,wght].ttf` (main branch, fetched
+    2026-08-08) — a variable font. Google Fonts no longer publishes
+    static-weight Noto Sans files directly, so Regular (wght=400) and
+    Bold (wght=700) static instances were produced locally with
+    `fonttools varLib.instancer` (a standard, license-preserving
+    technique — instancing a variable font doesn't alter its OFL terms),
+    then subset with `fonttools subset` to the Unicode ranges the app's 9
+    languages' free-text invoice fields actually need: `U+0020-007E,
+    U+00A0-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
+    U+2122, U+0400-04FF, U+0500-052F` (Basic Latin, Latin-1 Supplement,
+    Latin Extended-A/B — covering Croatian/Bosnian/Serbian-Latin
+    č/ć/š/đ/ž and Romanian ș/ț — General Punctuation, Currency Symbols,
+    Cyrillic + Cyrillic Supplement for mk/bg). This reduced each weight
+    from ~646 KB to ~140 KB (976 glyphs each) — **`assets/fonts/
+    NotoSans-Regular.ttf` (140,604 bytes) + `NotoSans-Bold.ttf`
+    (140,760 bytes), ~275 KB total added to the app bundle**, measured
+    directly, not estimated. Coverage spot-checked programmatically
+    (Č/Đ/ș/ț/€/Cyrillic А/Ш/en-dash/left-quote all present) before
+    bundling.
+  - `pubspec.yaml`'s previously-commented placeholder `fonts:` block
+    (flagged as a ready-made insertion point back in the Phase-0 audit)
+    is now filled in with a `Noto Sans` family (regular + weight-700
+    bold), and `assets/fonts/` added to `assets:`.
+    `InvoicePdfService` loads both TTFs once via `rootBundle` and applies
+    them as the `pw.Document`'s theme (`pw.ThemeData.withFont`) — this is
+    what actually fixes checkpoint 3's known Cyrillic/Latin-Extended
+    glyph gap (the `pdf` package's built-in base font previously logged
+    "Unable to find a font to draw 'Č'"; that warning is gone as of this
+    checkpoint's own test runs).
+  - **Locale coverage tested explicitly**: new
+    `test/invoice_pdf_locale_coverage_test.dart` runs one representative,
+    real-script string per locale (Cyrillic for mk/bg, Latin diacritics
+    for hr/bs/sr/sl/sq, Romanian ș/ț) through actual PDF generation with
+    the bundled font — proves generation succeeds for every locale's
+    characters. Explicitly does **not** claim to verify visual rendering;
+    that needs real device/print verification, not yet done.
+  - **New automated l10n parity check**: `test/l10n_parity_test.dart` —
+    the project had no automated key-parity test before this (parity was
+    manually verified per process). Asserts identical non-`@` key sets
+    across all 9 `.arb` files and that exactly 9 exist. Passed cleanly
+    against every key added across all 5 checkpoints of this item.
+  - **Accessibility**: the NBS QR eligibility banner (checkpoint 4) was
+    already plain text + icon, never color/icon alone. Added this
+    checkpoint: the Generate PDF button is wrapped in `Semantics(button:
+    true, label: ...)` with a distinct "Generating PDF…" label
+    (`invoiceGeneratingPdf`, new key) while in flight, so a screen reader
+    announces the loading state instead of just re-reading "Generate
+    PDF" over a now-disabled control.
+  - `flutter analyze` clean, `flutter test -j 1` 402/402, l10n net +1 key
+    (`invoiceGeneratingPdf`) × 9 languages, parity now automated.
+- **Remaining work:** final regression + quality-gate + completion report
+  (checkpoint 6), then stop for approval per the prompt's own instruction
+  — do not start Stage C item 13.
 
 ## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
 

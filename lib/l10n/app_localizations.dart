@@ -2870,6 +2870,12 @@ abstract class AppLocalizations {
   /// **'Generate PDF'**
   String get invoiceGeneratePdf;
 
+  /// No description provided for @invoiceGeneratingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF…'**
+  String get invoiceGeneratingPdf;
+
   /// No description provided for @invoicePdfError.
   ///
   /// In en, this message translates to:

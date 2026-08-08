@@ -1561,6 +1561,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get invoiceGeneratePdf => 'Generiši PDF';
 
   @override
+  String get invoiceGeneratingPdf => 'Generisanje PDF-a…';
+
+  @override
   String get invoicePdfError =>
       'Nije uspelo generisanje PDF-a. Faktura nije promenjena — pokušajte ponovo.';
 

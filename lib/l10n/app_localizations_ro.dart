@@ -1574,6 +1574,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invoiceGeneratePdf => 'Generează PDF';
 
   @override
+  String get invoiceGeneratingPdf => 'Se generează PDF-ul…';
+
+  @override
   String get invoicePdfError =>
       'Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.';
 

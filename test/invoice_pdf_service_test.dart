@@ -43,6 +43,10 @@ Invoice _invoice({
     );
 
 void main() {
+  // Real asset loading (the bundled Noto Sans font) needs an initialized
+  // binding even in a pure-Dart-style unit test.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   setUpAll(() async {
     await initializeDateFormatting();
   });

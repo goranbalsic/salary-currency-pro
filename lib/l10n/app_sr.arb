@@ -519,6 +519,7 @@
   "invoiceRemoveItemTooltip": "Ukloni stavku",
   "invoiceItemSubtotal": "Iznos",
   "invoiceGeneratePdf": "Generiši PDF",
+  "invoiceGeneratingPdf": "Generisanje PDF-a…",
   "invoicePdfError": "Nije uspelo generisanje PDF-a. Faktura nije promenjena — pokušajte ponovo.",
   "invoiceQrEligibleBody": "Ova faktura će sadržati NBS IPS kod za plaćanje.",
   "invoiceQrIneligibleBody": "Dodajte broj računa i šifru plaćanja u Podešavanja → Poslovni profil da biste uključili QR kod za plaćanje na ovoj fakturi.",

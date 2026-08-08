@@ -1576,6 +1576,9 @@ class AppLocalizationsBg extends AppLocalizations {
   String get invoiceGeneratePdf => 'Генерирай PDF';
 
   @override
+  String get invoiceGeneratingPdf => 'Генериране на PDF…';
+
+  @override
   String get invoicePdfError =>
       'Генерирането на PDF не бе успешно. Фактурата не е променена — опитайте отново.';
 

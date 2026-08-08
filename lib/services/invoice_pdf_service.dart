@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -19,11 +20,31 @@ import '../pdf/invoice_pdf_content.dart';
 /// offline, deterministic, and only ever drawn from an already-validated
 /// payload (see `lib/logic/nbs_ips_payload_builder.dart`), never guessed.
 class InvoicePdfService {
+  /// Loaded once and reused — bundled Noto Sans Regular/Bold (see
+  /// `pubspec.yaml` and `DECISIONS.md` for source/version/license/subset
+  /// method), covering every glyph the app's 9 languages' free-text
+  /// invoice fields (client names, descriptions, issuer/payer names) can
+  /// contain, including Cyrillic and Latin-Extended diacritics that the
+  /// `pdf` package's built-in base font cannot render at all.
+  static pw.Font? _regularFont;
+  static pw.Font? _boldFont;
+
+  static Future<void> _ensureFontsLoaded() async {
+    if (_regularFont != null && _boldFont != null) return;
+    final regularData = await rootBundle.load('assets/fonts/NotoSans-Regular.ttf');
+    final boldData = await rootBundle.load('assets/fonts/NotoSans-Bold.ttf');
+    _regularFont = pw.Font.ttf(regularData);
+    _boldFont = pw.Font.ttf(boldData);
+  }
+
   /// Builds the PDF and returns its raw bytes. Pure/offline — never
   /// touches the stored invoice, never contacts a network. A caller that
   /// wants save/share/print should follow with [shareOrPrint].
   Future<Uint8List> generate(InvoicePdfContent content) async {
-    final doc = pw.Document();
+    await _ensureFontsLoaded();
+    final doc = pw.Document(
+      theme: pw.ThemeData.withFont(base: _regularFont, bold: _boldFont),
+    );
 
     doc.addPage(
       pw.MultiPage(

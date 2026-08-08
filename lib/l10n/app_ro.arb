@@ -519,6 +519,7 @@
   "invoiceRemoveItemTooltip": "Elimină articolul",
   "invoiceItemSubtotal": "Subtotal",
   "invoiceGeneratePdf": "Generează PDF",
+  "invoiceGeneratingPdf": "Se generează PDF-ul…",
   "invoicePdfError": "Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.",
   "invoiceQrEligibleBody": "Această factură va include un cod QR NBS IPS de plată.",
   "invoiceQrIneligibleBody": "Adăugați numărul de cont bancar și codul de plată în Setări → Profil de afaceri pentru a include un cod QR de plată pe această factură.",

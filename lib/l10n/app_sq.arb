@@ -519,6 +519,7 @@
   "invoiceRemoveItemTooltip": "Hiq artikullin",
   "invoiceItemSubtotal": "Nëntotali",
   "invoiceGeneratePdf": "Gjenero PDF",
+  "invoiceGeneratingPdf": "Duke gjeneruar PDF-në…",
   "invoicePdfError": "Krijimi i PDF-së dështoi. Fatura nuk është ndryshuar — provoni përsëri.",
   "invoiceQrEligibleBody": "Kjo faturë do të përfshijë një kod NBS IPS QR për pagesë.",
   "invoiceQrIneligibleBody": "Shtoni numrin e llogarisë bankare dhe kodin e pagesës te Cilësimet → Profili i biznesit për të përfshirë një kod QR pagese në këtë faturë.",

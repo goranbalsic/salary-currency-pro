@@ -184,14 +184,18 @@ hierarchy, itemization in the add/edit sheet), checkpoint 3 (PDF
 rendering, 12.2: `pdf`+`printing` dependencies, a content/layout split
 between `InvoicePdfContent` and `InvoicePdfService` so PDF content rules
 stay unit-testable, Generate PDF now does real generate-then-share/print),
-and checkpoint 4 (NBS IPS QR, 12.3: `NbsIpsPayloadBuilder` validated
+checkpoint 4 (NBS IPS QR, 12.3: `NbsIpsPayloadBuilder` validated
 directly against the sourced spec's own worked examples,
 `NbsIpsEligibility`, wired into the detail screen's eligibility banner and
-the PDF's QR embedding) are done. Full detail: `DECISIONS.md` D-030.
-`flutter analyze` clean, `flutter test -j 1` 391/391, l10n in lockstep
-across 9 languages. Remaining checkpoints: fonts/i18n/accessibility (fixes
-a known, already-planned Cyrillic/Latin-Extended glyph gap in the PDF),
-final regression + completion report.
+the PDF's QR embedding), and checkpoint 5 (fonts/i18n/accessibility,
+12.4: bundled Noto Sans Regular+Bold, instanced and subset locally with
+fonttools to ~275 KB total, fixing the Cyrillic/Latin-Extended glyph gap;
+a new automated l10n parity test; accessible loading-state semantics on
+the Generate PDF button) are done. Full detail: `DECISIONS.md` D-030.
+`flutter analyze` clean, `flutter test -j 1` 402/402, l10n in lockstep
+across 9 languages (now automatically verified). Remaining: final
+regression + quality gate + completion report (checkpoint 6), then stop
+for approval — do not start Stage C item 13.
 
 ### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack
 

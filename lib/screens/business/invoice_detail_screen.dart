@@ -303,16 +303,20 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
             _QrEligibilityBanner(eligible: eligibility.isEligible, l10n: l10n),
           ],
           const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: _pdfInFlight ? null : () => _generatePdf(l10n),
-            icon: _pdfInFlight
-                ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Icon(Icons.picture_as_pdf_outlined),
-            label: Text(l10n.invoiceGeneratePdf),
+          Semantics(
+            label: _pdfInFlight ? l10n.invoiceGeneratingPdf : l10n.invoiceGeneratePdf,
+            button: true,
+            child: ElevatedButton.icon(
+              onPressed: _pdfInFlight ? null : () => _generatePdf(l10n),
+              icon: _pdfInFlight
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.picture_as_pdf_outlined),
+              label: Text(_pdfInFlight ? l10n.invoiceGeneratingPdf : l10n.invoiceGeneratePdf),
+            ),
           ),
           const SizedBox(height: 12),
           OutlinedButton.icon(
