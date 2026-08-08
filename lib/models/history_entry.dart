@@ -11,6 +11,7 @@ class HistoryToolIds {
   static const budget = 'budget';
   static const freelancerPayout = 'freelancer_payout';
   static const freelanceTax = 'freelance_tax';
+  static const pausalTracker = 'pausal_tracker';
 }
 
 /// One entry in the local, automatic "recently used" activity log. This is

@@ -356,6 +356,25 @@ class AppLocalizationsEn extends AppLocalizations {
       'Don\'t forget your monthly paušal filing and payment.';
 
   @override
+  String notifPausalReminderNotifBodyWithAmount(String amount) {
+    return 'Don\'t forget your monthly paušal filing and payment of $amount RSD.';
+  }
+
+  @override
+  String get notifPausalLeadReminderTitle => 'Also remind me 3 days before';
+
+  @override
+  String get notifPausalLeadReminderSubtitle =>
+      'An extra reminder on the 12th, ahead of the main one on the 15th';
+
+  @override
+  String get notifPausalLeadReminderNotifTitle => 'Paušal filing due in 3 days';
+
+  @override
+  String get notifPausalLeadReminderNotifBody =>
+      'Your monthly paušal filing and payment is due in 3 days, on the 15th.';
+
+  @override
   String get settingsWidgetsTitle => 'Home screen widgets';
 
   @override
@@ -807,6 +826,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get freelanceCliffStatusCrossed => 'Crossed';
+
+  @override
+  String get freelanceRsInsuredElsewhereLabel =>
+      'Already insured elsewhere (health contribution waived)';
+
+  @override
+  String freelanceRsMinPioBaseBinds(String amount) {
+    return 'Model B\'s pension contribution is floored at the minimum base ($amount) — this is the case people most often get wrong.';
+  }
+
+  @override
+  String get freelanceComparatorTitle => 'Compare Model A vs Model B';
+
+  @override
+  String get freelanceComparatorQuarterLabel => 'Quarter';
+
+  @override
+  String freelanceComparatorDeadlineHint(String date) {
+    return 'Filing deadline for this quarter: $date';
+  }
+
+  @override
+  String get freelanceComparatorNeedsIncome =>
+      'Enter an income above to compare both models.';
+
+  @override
+  String freelanceComparatorRecommended(String model, String amount) {
+    return 'Recommended: $model — saves $amount in net income.';
+  }
 
   @override
   String get settingsProActive => 'Pro — active';
@@ -1450,6 +1498,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceDueDate => 'Due date';
+
+  @override
+  String get toolsPausalTrackerTitle => 'Paušal Tracker (Serbia)';
+
+  @override
+  String get toolsPausalTrackerSubtitle =>
+      'Track your turnover against the paušal ceiling and VAT threshold';
+
+  @override
+  String get pausalTrackerCeilingCardTitle =>
+      'Paušal ceiling (this calendar year)';
+
+  @override
+  String get pausalTrackerVatCardTitle =>
+      'VAT registration threshold (rolling 12 months)';
+
+  @override
+  String get pausalTrackerStateOk => 'On track';
+
+  @override
+  String get pausalTrackerStateWarning70 => '70% reached — worth watching';
+
+  @override
+  String get pausalTrackerStateWarning85 => '85% reached — get close attention';
+
+  @override
+  String get pausalTrackerStateWarning95 =>
+      '95% reached — action likely needed soon';
+
+  @override
+  String get pausalTrackerStateExceeded => 'Exceeded';
+
+  @override
+  String pausalTrackerProjection(String date) {
+    return 'At the current pace, you\'d reach the paušal ceiling around $date.';
+  }
+
+  @override
+  String pausalTrackerExcludedBanner(int count) {
+    return '$count invoice(s) excluded — exchange rate unavailable';
+  }
+
+  @override
+  String get pausalTrackerSeeBreakdown => 'See the numbers';
+
+  @override
+  String get pausalTrackerBreakdownTitle => 'How this was calculated';
+
+  @override
+  String get pausalTrackerBreakdownExcludedHeader =>
+      'Excluded — rate unavailable';
+
+  @override
+  String pausalTrackerBreakdownRateLabel(String source) {
+    return 'rate: $source';
+  }
+
+  @override
+  String get pausalTrackerBreakdownExcludedReason =>
+      'No exchange rate could be captured for this invoice — excluded from the tracked total rather than guessed.';
+
+  @override
+  String get pausalTrackerAssessedAmountLabel =>
+      'Assessed monthly paušal amount';
+
+  @override
+  String get pausalTrackerAssessedAmountHint =>
+      'Optional — enter the amount from your tax decision (rešenje). This app cannot calculate it for you.';
+
+  @override
+  String get pausalTrackerAssessedAmountSaved => 'Saved';
+
+  @override
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  ) {
+    return '= $tax tax + $pio pension + $health health + $unemployment unemployment = $total of the deemed base set by your ruling.';
+  }
 
   @override
   String get commonClearSearch => 'Clear search';

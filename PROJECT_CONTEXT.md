@@ -2,6 +2,25 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-08 (later same day). PROMPT-003D Stage C item 11 (Serbia
+  paušal & freelancer compliance pack) done, per the user's sourced-figure
+  narrowing prompt PROMPT-003E — see `DECISIONS.md` D-029,
+  `OPEN_QUESTIONS.md` QUESTION-008. Built: the paušal turnover tracker
+  (`PausalTrackerService` + `PausalTrackerScreen`, dual-window
+  calendar-year/rolling-12-month tracking against the sourced 6M/8M RSD
+  limits, 70/85/95/exceeded states, invoices with no capturable exchange
+  rate excluded and counted rather than guessed); the monthly reminder's
+  lead-time + assessed-amount extension (additive to Stage B item 7's
+  existing reminder, `NotificationService`); the Model A vs Model B
+  quarterly comparator in `FreelanceTaxScreen`. Audit-first pass caught
+  and fixed a real pre-existing bug: `RsFreelanceStrategy` charged the
+  health contribution unconditionally, though the sourced formula waives
+  it when the freelancer is insured elsewhere. `flutter analyze` clean,
+  `flutter test -j 1` **304/304** (was 276), l10n **32 new keys × 9
+  languages**, all in lockstep (verified via a real `flutter gen-l10n`
+  run). No release build this item (pure Dart/JSON/l10n change, no native
+  code touched). **Per PROMPT-003E's own instruction: stopped here,
+  awaiting approval before Stage C item 12 (Invoice PDF + NBS IPS QR).**
 - Date: 2026-08-08 (later same day). PROMPT-003 Stage B (retention
   mechanics, items 5–9: recurring transactions, Fixed-Cost Radar, local
   notifications, Android home-screen widgets, one-at-a-time financial
@@ -509,20 +528,37 @@ the user explicitly approves it).
   APK) — 20.7MB/22.9MB/24.3MB per-ABI, comfortably under the 30MB budget;
   device-unverified checklist in this file confirmed current, widgets
   and notifications added to it. Stage C item 11 is next.
+- **PROMPT-003E (Stage C item 11 — Serbia paušal/freelancer compliance
+  pack), 2026-08-08 — see `DECISIONS.md` D-029:** paušal turnover tracker
+  (dual-window, sourced 6M/8M RSD limits, honest exclusion of invoices
+  with no capturable FX rate), monthly reminder lead-time + assessed-
+  amount extension, Model A vs Model B comparator. Fixed a real
+  pre-existing bug found during the required audit: health contribution
+  was charged unconditionally in `RsFreelanceStrategy`, though the
+  sourced formula waives it when insured elsewhere. Four figures excluded
+  and documented rather than approximated — `OPEN_QUESTIONS.md`
+  QUESTION-008. `flutter test -j 1` 304/304, l10n 32 new keys × 9
+  languages in lockstep. **PROMPT-003E's own stop condition applies:
+  stopped here, awaiting approval before item 12.**
 
 ## Next Recommended Action
 
-0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active.
-   Housekeeping is done (per-ABI rebuild: 20.7/22.9/24.3MB, all under
-   30MB; device-unverified checklist confirmed current — see the top
-   `Last Updated` entry and Known Risks above). **Start item 11 (Serbia
-   paušal/freelancer compliance pack)**, then 12, then 13, then 10 in
-   that order, one increment at a time with a full report after each.
-1. QUESTION-005 is resolved (`kFreelanceTaxRulesRemoteUrl` points at the
-   real public `salary-currency-pro-rules` repo, live-verified) — no
-   action needed. QUESTION-004 (cold-start timing/list virtualization) is
-   the one remaining open question, deliberately left open pending a real
-   device/emulator or browser tooling — not blocking Stage C.
+0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active; item
+   11 (Serbia paušal/freelancer compliance pack, PROMPT-003E) is **done**
+   — see the top `Last Updated` entry and `DECISIONS.md` D-029. **Per
+   PROMPT-003E's own instruction, this stage stopped after item 11 and is
+   awaiting the user's approval before item 12 (Invoice PDF + NBS IPS QR)
+   — do not start item 12 autonomously.** Once approved, order stays
+   12 → 13 → 10.
+1. `OPEN_QUESTIONS.md` QUESTION-008 (four figures excluded from item 11 —
+   paušal deemed-base coefficients, supplementary annual PIT, an
+   ungazetted contribution-base growth cap, other countries' paušal
+   equivalents) is open but non-blocking, same "exclude and document"
+   pattern as QUESTION-001. QUESTION-005 is resolved (`kFreelanceTaxRulesRemoteUrl`
+   points at the real public `salary-currency-pro-rules` repo,
+   live-verified) — no action needed. QUESTION-004 (cold-start timing/list
+   virtualization) remains open, deliberately, pending a real device/
+   emulator or browser tooling — not blocking Stage C.
 2. **After item 10's offline shell is done and reported: STOP.** Stage D
    (monetization/paywall wiring) needs a separate explicit go-ahead —
    this is PROMPT-003D's own stop condition, same pattern as every prior

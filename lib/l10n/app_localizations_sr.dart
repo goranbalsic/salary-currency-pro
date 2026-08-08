@@ -352,6 +352,25 @@ class AppLocalizationsSr extends AppLocalizations {
       'Ne zaboravite mesečnu prijavu i uplatu paušala.';
 
   @override
+  String notifPausalReminderNotifBodyWithAmount(String amount) {
+    return 'Ne zaboravite mesečnu prijavu i uplatu paušala u iznosu od $amount RSD.';
+  }
+
+  @override
+  String get notifPausalLeadReminderTitle => 'Podseti me i 3 dana ranije';
+
+  @override
+  String get notifPausalLeadReminderSubtitle =>
+      'Dodatni podsetnik 12-og, pre glavnog 15-og';
+
+  @override
+  String get notifPausalLeadReminderNotifTitle => 'Prijava paušala za 3 dana';
+
+  @override
+  String get notifPausalLeadReminderNotifBody =>
+      'Mesečna prijava i uplata paušala dospeva za 3 dana, 15-og u mesecu.';
+
+  @override
   String get settingsWidgetsTitle => 'Vidžeti na početnom ekranu';
 
   @override
@@ -803,6 +822,35 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get freelanceCliffStatusCrossed => 'Prekoračeno';
+
+  @override
+  String get freelanceRsInsuredElsewhereLabel =>
+      'Već ste osigurani po drugom osnovu (doprinos za zdravstvo se ne plaća)';
+
+  @override
+  String freelanceRsMinPioBaseBinds(String amount) {
+    return 'Doprinos za PIO kod Modela B je ograničen na minimalnu osnovicu ($amount) — ovo je situacija koju ljudi najčešće pogrešno procene.';
+  }
+
+  @override
+  String get freelanceComparatorTitle => 'Uporedi Model A i Model B';
+
+  @override
+  String get freelanceComparatorQuarterLabel => 'Kvartal';
+
+  @override
+  String freelanceComparatorDeadlineHint(String date) {
+    return 'Rok za prijavu za ovaj kvartal: $date';
+  }
+
+  @override
+  String get freelanceComparatorNeedsIncome =>
+      'Unesite prihod iznad da biste uporedili oba modela.';
+
+  @override
+  String freelanceComparatorRecommended(String model, String amount) {
+    return 'Preporuka: $model — ušteda od $amount u neto prihodu.';
+  }
 
   @override
   String get settingsProActive => 'Pro — aktivno';
@@ -1452,6 +1500,88 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get invoiceDueDate => 'Rok plaćanja';
+
+  @override
+  String get toolsPausalTrackerTitle => 'Praćenje paušala (Srbija)';
+
+  @override
+  String get toolsPausalTrackerSubtitle =>
+      'Pratite promet u odnosu na paušalni cenzus i prag za PDV';
+
+  @override
+  String get pausalTrackerCeilingCardTitle =>
+      'Paušalni cenzus (ova kalendarska godina)';
+
+  @override
+  String get pausalTrackerVatCardTitle => 'Prag za PDV (poslednjih 12 meseci)';
+
+  @override
+  String get pausalTrackerStateOk => 'U redu je';
+
+  @override
+  String get pausalTrackerStateWarning70 => 'Dostignuto 70% — vredi pratiti';
+
+  @override
+  String get pausalTrackerStateWarning85 =>
+      'Dostignuto 85% — obratite posebnu pažnju';
+
+  @override
+  String get pausalTrackerStateWarning95 =>
+      'Dostignuto 95% — verovatno je uskoro potrebna akcija';
+
+  @override
+  String get pausalTrackerStateExceeded => 'Prekoračeno';
+
+  @override
+  String pausalTrackerProjection(String date) {
+    return 'Po trenutnom tempu, paušalni cenzus biste dostigli oko $date.';
+  }
+
+  @override
+  String pausalTrackerExcludedBanner(int count) {
+    return '$count faktura(e) isključeno — kurs nije dostupan';
+  }
+
+  @override
+  String get pausalTrackerSeeBreakdown => 'Pogledajte brojke';
+
+  @override
+  String get pausalTrackerBreakdownTitle => 'Kako je ovo izračunato';
+
+  @override
+  String get pausalTrackerBreakdownExcludedHeader =>
+      'Isključeno — kurs nije dostupan';
+
+  @override
+  String pausalTrackerBreakdownRateLabel(String source) {
+    return 'kurs: $source';
+  }
+
+  @override
+  String get pausalTrackerBreakdownExcludedReason =>
+      'Za ovu fakturu nije bilo moguće preuzeti kurs — isključena je iz ukupnog iznosa umesto da bude procenjena.';
+
+  @override
+  String get pausalTrackerAssessedAmountLabel =>
+      'Utvrđeni mesečni iznos paušala';
+
+  @override
+  String get pausalTrackerAssessedAmountHint =>
+      'Opciono — unesite iznos iz vašeg poreskog rešenja. Aplikacija ga ne može sama izračunati.';
+
+  @override
+  String get pausalTrackerAssessedAmountSaved => 'Sačuvano';
+
+  @override
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  ) {
+    return '= $tax porez + $pio PIO + $health zdravstvo + $unemployment nezaposlenost = $total od osnovice utvrđene rešenjem.';
+  }
 
   @override
   String get commonClearSearch => 'Obriši pretragu';

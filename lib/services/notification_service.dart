@@ -23,11 +23,14 @@ class NotificationService {
   static const _prefsBudgetThresholdKey = 'notif_budget_threshold_enabled';
   static const _prefsInvoiceDueKey = 'notif_invoice_due_enabled';
   static const _prefsPausalReminderKey = 'notif_pausal_reminder_enabled';
+  static const _prefsPausalLeadReminderKey = 'notif_pausal_lead_reminder_enabled';
   static const _notifiedThresholdPrefix = 'notif_budget_threshold_notified_';
 
   static const expenseNudgeId = 1001;
   static const pausalReminderId = 1002;
   static const pausalReminderDay = 15;
+  static const pausalLeadReminderId = 1005;
+  static const pausalLeadReminderDay = 12;
 
   /// Bumped on every preference change so Settings can refresh live.
   static final ValueNotifier<int> changes = ValueNotifier<int>(0);
@@ -41,6 +44,7 @@ class NotificationService {
   Future<bool> isBudgetThresholdEnabled() => _getBool(_prefsBudgetThresholdKey);
   Future<bool> isInvoiceDueEnabled() => _getBool(_prefsInvoiceDueKey);
   Future<bool> isPausalReminderEnabled() => _getBool(_prefsPausalReminderKey);
+  Future<bool> isPausalLeadReminderEnabled() => _getBool(_prefsPausalLeadReminderKey);
 
   Future<void> setExpenseNudgeEnabled(
     bool enabled, {
@@ -59,12 +63,23 @@ class NotificationService {
     changes.value++;
   }
 
+  /// [leadReminderEnabled] adds a second, optional reminder
+  /// [pausalLeadReminderDay] (3 days before the 15th) on top of the main
+  /// one — not a replacement for it, per PROMPT-003E 11.2. [leadTitle]/
+  /// [leadBody] are required whenever [leadReminderEnabled] is true, same
+  /// "caller supplies all user-facing text" pattern as every other
+  /// reminder here. Disabling the main reminder cancels both regardless of
+  /// the lead-reminder preference's own state.
   Future<void> setPausalReminderEnabled(
     bool enabled, {
     required String title,
     required String body,
+    bool leadReminderEnabled = false,
+    String? leadTitle,
+    String? leadBody,
   }) async {
     await _setBool(_prefsPausalReminderKey, enabled);
+    await _setBool(_prefsPausalLeadReminderKey, enabled && leadReminderEnabled);
     if (enabled) {
       await _safely(() => _scheduler.requestPermission());
       await _safely(() => _scheduler.scheduleMonthlyOnDay(
@@ -73,8 +88,19 @@ class NotificationService {
             body: body,
             day: pausalReminderDay,
           ));
+      if (leadReminderEnabled && leadTitle != null && leadBody != null) {
+        await _safely(() => _scheduler.scheduleMonthlyOnDay(
+              id: pausalLeadReminderId,
+              title: leadTitle,
+              body: leadBody,
+              day: pausalLeadReminderDay,
+            ));
+      } else {
+        await _safely(() => _scheduler.cancel(pausalLeadReminderId));
+      }
     } else {
       await _safely(() => _scheduler.cancel(pausalReminderId));
+      await _safely(() => _scheduler.cancel(pausalLeadReminderId));
     }
     changes.value++;
   }

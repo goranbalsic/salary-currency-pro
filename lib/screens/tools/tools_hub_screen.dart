@@ -17,6 +17,7 @@ import 'budget_screen.dart';
 import 'freelance_tax_screen.dart';
 import 'freelancer_payout_screen.dart';
 import 'loan_screen.dart';
+import 'pausal_tracker_screen.dart';
 import 'savings_screen.dart';
 import 'vat_screen.dart';
 
@@ -104,6 +105,7 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
     HistoryToolIds.budget,
     HistoryToolIds.freelancerPayout,
     HistoryToolIds.freelanceTax,
+    HistoryToolIds.pausalTracker,
   };
 
   void _openTool(_ToolEntry tool) {
@@ -211,6 +213,15 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         subtitle: l10n.toolsInvoicesSubtitle,
         category: _ToolCategory.freelance,
         builder: (_) => const InvoicesScreen(),
+      ),
+      _ToolEntry(
+        id: HistoryToolIds.pausalTracker,
+        icon: Icons.speed_outlined,
+        title: l10n.toolsPausalTrackerTitle,
+        subtitle: l10n.toolsPausalTrackerSubtitle,
+        category: _ToolCategory.freelance,
+        builder: (_) => const PausalTrackerScreen(),
+        searchKeywords: const ['paušal', 'pausal', 'pdv', 'promet', 'ceiling', 'vat threshold'],
       ),
     ];
 

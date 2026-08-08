@@ -336,6 +336,64 @@ building a toggle for a requirement that's already over. See
 
 Status: Resolved.
 
+### QUESTION-008: PROMPT-003E (Stage C item 11, Serbia paušal/freelancer compliance pack) — four figures deliberately excluded rather than approximated
+
+Date added: 2026-08-08
+
+Why it matters: PROMPT-003E's own instruction is to apply the
+Samooporezivanje precedent (QUESTION-001's original resolution) — exclude
+and document any figure that can't be sourced to this app's standard
+(official source, effective-date label) rather than approximate it. Four
+such figures came up while building the paušal turnover tracker and the
+Model A/B comparator:
+
+1. **Paušal deemed-base coefficients** (activity coefficient 0.15–0.55,
+   zone coefficient 0.6–1.0, and the statutory reductions that combine
+   with the average salary to produce a paušalac's actual monthly tax
+   assessment) — not published anywhere as a complete, citable,
+   machine-readable table. The app does not compute the assessed paušal
+   amount; the Paušal Tracker screen has the user enter it directly from
+   their own tax ruling (rešenje), and only decomposes the entered figure
+   into its sourced 10%/24%/10.3%/0.75% components (all four of which
+   *are* sourced — `tax_rules.json`'s `pausalTaxRatePercentOfDeemedBase`/
+   `pioContributionRate`/`healthContributionRate`/
+   `unemploymentContributionRate`) — it never asserts what the ruling
+   itself should say.
+2. **Supplementary annual PIT** for the OPO-K self-taxation regime (an
+   extra 10% above 3× and 15% above 6× the average annual salary, per
+   PwC's Serbia tax summary) — out of scope for this pass. The
+   freelance-tax calculator (`rs_strategy.dart`) computes only the base
+   quarterly tax/PIO/health/unemployment; a taxpayer who crosses either
+   multiple during the year owes more than this app currently shows.
+   Noted here as a known future addition, not fixed now.
+3. **A reported 10%-per-year cap on paušal contribution-base growth for
+   2026–2027** — several practitioner sites mention this, but it was not
+   traced to an official gazette/PURS text during this session. Excluded
+   from every calculation rather than guessed at.
+4. **Other countries' paušal-equivalent regimes** (Croatia's paušalni
+   obrt, etc.) — deliberately out of scope for this pass, per the
+   prompt's own instruction; Serbia done first and completely.
+
+Current assumptions: the Paušal Tracker and Model A/B comparator are
+fully correct and honest without these — items 1 and 3 have no safe
+approximation (a wrong deemed-base or growth-cap figure would misstate a
+real tax liability), and items 2/4 are additive scope, not correctness
+bugs in what's already built.
+
+Possible answers: (a) leave as documented gaps, matching the
+Samooporezivanje precedent, until a citable official source appears for
+1/3, or until supplementary-PIT/other-country coverage is separately
+requested; (b) reach out to a Serbian accountant/PURS directly for the
+deemed-base coefficient table if this app's paušal coverage needs to go
+beyond "user enters their own ruling."
+
+Does it block current work? No — PROMPT-003E's own scope is satisfied by
+excluding and documenting these, exactly as instructed.
+
+Recommended default if no answer is received: option (a).
+
+Status: Open.
+
 ## Question Template
 
 ### QUESTION-NNN: Title

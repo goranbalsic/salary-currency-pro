@@ -1012,4 +1012,59 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Annual gross income'), findsOneWidget);
   });
+
+  testWidgets(
+      'Serbia Model A vs Model B comparator shows both models side by side and the min-PIO-base note when it binds',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Tools')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Freelancer Self-Assessment');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Freelancer Self-Assessment').last);
+    await tester.pumpAndSettle();
+
+    // Defaults to Serbia. A low quarterly gross keeps Model B's contribution
+    // base floored at the minimum, exercising the min-PIO-base note.
+    await tester.enterText(find.byType(TextField).first, '200000');
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Compare Model A vs Model B'));
+    await tester.tap(find.text('Compare Model A vs Model B'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Fixed expense model'), findsWidgets);
+    expect(find.text('Mixed expense model'), findsWidgets);
+    expect(find.textContaining('this is the case people'), findsOneWidget);
+    expect(find.textContaining('Recommended:'), findsOneWidget);
+  });
+
+  testWidgets('Paušal Tracker (Serbia) shows both limits with no invoices tracked', (WidgetTester tester) async {
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Tools')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Paušal Tracker (Serbia)'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Paušal Tracker (Serbia)'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Paušal ceiling (this calendar year)'), findsOneWidget);
+    expect(find.text('VAT registration threshold (rolling 12 months)'), findsOneWidget);
+    expect(find.text('On track'), findsNWidgets(2));
+    expect(find.textContaining('0 / 6,000,000 RSD'), findsOneWidget);
+    expect(find.textContaining('0 / 8,000,000 RSD'), findsOneWidget);
+
+    // Assessed monthly amount can be entered and saved — the only TextField
+    // on this screen (no search bar here).
+    await tester.ensureVisible(find.text('Assessed monthly paušal amount'));
+    await tester.enterText(find.byType(TextField), '45000');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Saved'), findsOneWidget);
+  });
 }

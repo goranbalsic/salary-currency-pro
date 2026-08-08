@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import '../../l10n/app_localizations.dart';
 import '../../logic/freelance/freelance_tax_registry.dart';
 import '../../logic/freelance/freelance_tax_strategy.dart';
+import '../../logic/freelance/rs_strategy.dart';
+import '../../models/freelance_tax_rules.dart';
 import '../../models/history_entry.dart';
 import '../../models/scenario.dart';
 import '../../services/history_service.dart';
@@ -50,6 +52,9 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
 
   String _regimeId = 'rs';
   String _serbiaModel = 'model1';
+  bool _rsInsuredElsewhere = false;
+  bool _rsShowComparator = false;
+  int _rsQuarter = ((DateTime.now().month - 1) ~/ 3) + 1;
   String _siVariant = 'normirani';
   String _fbihCategory = 'freeProfessions';
   String _baRsCategory = 'standard';
@@ -90,7 +95,7 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
   }
 
   Map<String, dynamic> get _optionsForCurrentRegime => switch (_regimeId) {
-        'rs' => {'model': _serbiaModel},
+        'rs' => {'model': _serbiaModel, 'insuredElsewhere': _rsInsuredElsewhere},
         'si' => {'variant': _siVariant},
         'ba_fbih' => {'activityCategory': _fbihCategory},
         'ba_rs' => {'category': _baRsCategory},
@@ -119,7 +124,7 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
     setState(() {
       _result = result;
       _serbiaCheaperModel = _regimeId == 'rs'
-          ? (strategy as dynamic).cheaperModel(regime, income) as String
+          ? (strategy as dynamic).cheaperModel(regime, income, insuredElsewhere: _rsInsuredElsewhere) as String
           : null;
     });
 
@@ -175,13 +180,25 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
   Widget? _regimeOptionsSelector(AppLocalizations l10n) {
     switch (_regimeId) {
       case 'rs':
-        return SegmentedButton<String>(
-          segments: [
-            ButtonSegment(value: 'model1', label: Text(l10n.samoFixedModel)),
-            ButtonSegment(value: 'model2', label: Text(l10n.samoMixedModel)),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SegmentedButton<String>(
+              segments: [
+                ButtonSegment(value: 'model1', label: Text(l10n.samoFixedModel)),
+                ButtonSegment(value: 'model2', label: Text(l10n.samoMixedModel)),
+              ],
+              selected: {_serbiaModel},
+              onSelectionChanged: (s) => setState(() => _serbiaModel = s.first),
+            ),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+              title: Text(l10n.freelanceRsInsuredElsewhereLabel, style: const TextStyle(fontSize: 13)),
+              value: _rsInsuredElsewhere,
+              onChanged: (v) => setState(() => _rsInsuredElsewhere = v),
+            ),
           ],
-          selected: {_serbiaModel},
-          onSelectionChanged: (s) => setState(() => _serbiaModel = s.first),
         );
       case 'si':
         return SegmentedButton<String>(
@@ -340,6 +357,19 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
+                        if (_result!.extra['minPioBaseBinds'] == true)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              l10n.freelanceRsMinPioBaseBinds(
+                                money(_result!.extra['minPioBase'] as double),
+                              ),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.gold,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
                         if (_result!.cliffFlags.isNotEmpty) ...[
                           const SizedBox(height: 12),
                           for (final flag in _result!.cliffFlags)
@@ -387,6 +417,19 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
                     ),
                     SaveScenarioRow(onSave: () => _onSave(l10n)),
                   ],
+                  if (_regimeId == 'rs') ...[
+                    const SizedBox(height: 16),
+                    _RsComparatorSection(
+                      l10n: l10n,
+                      regime: loaded.rules.regime('rs'),
+                      income: double.tryParse(_incomeCtrl.text.replaceAll(',', '.')),
+                      insuredElsewhere: _rsInsuredElsewhere,
+                      quarter: _rsQuarter,
+                      onQuarterChanged: (q) => setState(() => _rsQuarter = q),
+                      expanded: _rsShowComparator,
+                      onExpandedChanged: (v) => setState(() => _rsShowComparator = v),
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   Card(
                     color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
@@ -417,6 +460,151 @@ class _FreelanceTaxScreenState extends State<FreelanceTaxScreen> {
                 ],
               ),
             ),
+    );
+  }
+}
+
+/// PROMPT-003E item 11.3 — Model A (fixed) vs Model B (mixed) quarterly
+/// comparator for Serbia. Deliberately independent of the main model
+/// selector/result above: it always shows both models side by side for
+/// whatever income is currently typed, regardless of which single model is
+/// selected there, so switching this open never changes the primary result.
+class _RsComparatorSection extends StatelessWidget {
+  final AppLocalizations l10n;
+  final FreelanceRegimeRules regime;
+  final double? income;
+  final bool insuredElsewhere;
+  final int quarter;
+  final ValueChanged<int> onQuarterChanged;
+  final bool expanded;
+  final ValueChanged<bool> onExpandedChanged;
+
+  const _RsComparatorSection({
+    required this.l10n,
+    required this.regime,
+    required this.income,
+    required this.insuredElsewhere,
+    required this.quarter,
+    required this.onQuarterChanged,
+    required this.expanded,
+    required this.onExpandedChanged,
+  });
+
+  static const _strategy = RsFreelanceStrategy();
+
+  DateTime _quarterEnd(int year, int q) => switch (q) {
+        1 => DateTime(year, 3, 31),
+        2 => DateTime(year, 6, 30),
+        3 => DateTime(year, 9, 30),
+        _ => DateTime(year, 12, 31),
+      };
+
+  Widget _row(BuildContext context, String label, String a, String b, {bool bold = false}) {
+    final style = TextStyle(fontWeight: bold ? FontWeight.w700 : FontWeight.w500, fontSize: 13);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Expanded(flex: 3, child: Text(label, style: style)),
+          Expanded(flex: 2, child: Text(a, style: style, textAlign: TextAlign.right)),
+          Expanded(flex: 2, child: Text(b, style: style, textAlign: TextAlign.right)),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final year = DateTime.now().year;
+    final deadlineDays = regime.field('filingDeadlineDaysAfterQuarterEnd').asInt!;
+    final deadline = _quarterEnd(year, quarter).add(Duration(days: deadlineDays));
+    final dateFmt = DateFormat.yMMMd(Localizations.localeOf(context).languageCode);
+    final fmt = NumberFormat.currency(symbol: '', decimalDigits: 2);
+    final currency = regime.currencyCode;
+    String money(double v) => '${fmt.format(v)} $currency';
+
+    FreelanceTaxResult? m1;
+    FreelanceTaxResult? m2;
+    final validIncome = income;
+    if (validIncome != null && validIncome >= 0) {
+      final options1 = {'model': 'model1', 'insuredElsewhere': insuredElsewhere};
+      final options2 = {'model': 'model2', 'insuredElsewhere': insuredElsewhere};
+      m1 = _strategy.compute(regime, FreelanceTaxInput(income: validIncome, options: options1));
+      m2 = _strategy.compute(regime, FreelanceTaxInput(income: validIncome, options: options2));
+    }
+
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.compare_arrows),
+            title: Text(l10n.freelanceComparatorTitle),
+            trailing: Icon(expanded ? Icons.expand_less : Icons.expand_more),
+            onTap: () => onExpandedChanged(!expanded),
+          ),
+          if (expanded)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DropdownButtonFormField<int>(
+                    initialValue: quarter,
+                    decoration: InputDecoration(labelText: l10n.freelanceComparatorQuarterLabel),
+                    items: [1, 2, 3, 4]
+                        .map((q) => DropdownMenuItem(value: q, child: Text('Q$q $year')))
+                        .toList(),
+                    onChanged: (q) {
+                      if (q != null) onQuarterChanged(q);
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      l10n.freelanceComparatorDeadlineHint(dateFmt.format(deadline)),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  if (m1 == null || m2 == null)
+                    Text(l10n.freelanceComparatorNeedsIncome, style: Theme.of(context).textTheme.bodySmall)
+                  else ...[
+                    const Divider(),
+                    _row(context, '', l10n.samoFixedModel, l10n.samoMixedModel, bold: true),
+                    _row(context, l10n.freelanceTaxIncomeTaxRow, money(m1.incomeTax), money(m2.incomeTax)),
+                    _row(context, l10n.freelanceTaxContributionsTotalRow, money(m1.totalContributions),
+                        money(m2.totalContributions)),
+                    _row(context, l10n.freelanceTaxNetIncome, money(m1.netIncome), money(m2.netIncome), bold: true),
+                    if (m2.extra['minPioBaseBinds'] == true)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          l10n.freelanceRsMinPioBaseBinds(money(m2.extra['minPioBase'] as double)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: AppColors.gold, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Text(
+                        l10n.freelanceComparatorRecommended(
+                          m2.netIncome >= m1.netIncome ? l10n.samoMixedModel : l10n.samoFixedModel,
+                          money((m2.netIncome - m1.netIncome).abs()),
+                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(fontWeight: FontWeight.w700, color: AppColors.moneyGreen),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

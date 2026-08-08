@@ -359,6 +359,26 @@ class AppLocalizationsBg extends AppLocalizations {
       'Не забравяйте месечната декларация и плащане на патента.';
 
   @override
+  String notifPausalReminderNotifBodyWithAmount(String amount) {
+    return 'Не забравяйте месечната декларация и плащане на патента в размер на $amount RSD.';
+  }
+
+  @override
+  String get notifPausalLeadReminderTitle => 'Напомни ми и 3 дни по-рано';
+
+  @override
+  String get notifPausalLeadReminderSubtitle =>
+      'Допълнително напомняне на 12-о число, преди основното на 15-о';
+
+  @override
+  String get notifPausalLeadReminderNotifTitle =>
+      'Декларация за патент след 3 дни';
+
+  @override
+  String get notifPausalLeadReminderNotifBody =>
+      'Месечната декларация и плащане на патента изтичат след 3 дни, на 15-о число.';
+
+  @override
   String get settingsWidgetsTitle => 'Джаджи за начален екран';
 
   @override
@@ -817,6 +837,35 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get freelanceCliffStatusCrossed => 'Надвишен';
+
+  @override
+  String get freelanceRsInsuredElsewhereLabel =>
+      'Вече осигурен(а) на друго основание (здравната осигуровка не се начислява)';
+
+  @override
+  String freelanceRsMinPioBaseBinds(String amount) {
+    return 'Пенсионната осигуровка при Модел Б е ограничена до минималната основа ($amount) — това е случаят, който хората най-често подценяват.';
+  }
+
+  @override
+  String get freelanceComparatorTitle => 'Сравни Модел А и Модел Б';
+
+  @override
+  String get freelanceComparatorQuarterLabel => 'Тримесечие';
+
+  @override
+  String freelanceComparatorDeadlineHint(String date) {
+    return 'Краен срок за подаване за това тримесечие: $date';
+  }
+
+  @override
+  String get freelanceComparatorNeedsIncome =>
+      'Въведете доход по-горе, за да сравните двата модела.';
+
+  @override
+  String freelanceComparatorRecommended(String model, String amount) {
+    return 'Препоръка: $model — спестява $amount нетен доход.';
+  }
 
   @override
   String get settingsProActive => 'Pro — активен';
@@ -1465,6 +1514,90 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get invoiceDueDate => 'Дата на падеж';
+
+  @override
+  String get toolsPausalTrackerTitle => 'Проследяване на патента (Сърбия)';
+
+  @override
+  String get toolsPausalTrackerSubtitle =>
+      'Проследявайте оборота спрямо тавана за патент и прага за ДДС';
+
+  @override
+  String get pausalTrackerCeilingCardTitle =>
+      'Таван за патент (тази календарна година)';
+
+  @override
+  String get pausalTrackerVatCardTitle =>
+      'Праг за регистрация по ДДС (последните 12 месеца)';
+
+  @override
+  String get pausalTrackerStateOk => 'В норма';
+
+  @override
+  String get pausalTrackerStateWarning70 =>
+      'Достигнати 70% — заслужава наблюдение';
+
+  @override
+  String get pausalTrackerStateWarning85 =>
+      'Достигнати 85% — обърнете специално внимание';
+
+  @override
+  String get pausalTrackerStateWarning95 =>
+      'Достигнати 95% — вероятно скоро ще е нужно действие';
+
+  @override
+  String get pausalTrackerStateExceeded => 'Надвишено';
+
+  @override
+  String pausalTrackerProjection(String date) {
+    return 'При текущия темп бихте достигнали тавана за патент около $date.';
+  }
+
+  @override
+  String pausalTrackerExcludedBanner(int count) {
+    return '$count фактура(и) изключени — липсва обменен курс';
+  }
+
+  @override
+  String get pausalTrackerSeeBreakdown => 'Вижте изчисленията';
+
+  @override
+  String get pausalTrackerBreakdownTitle => 'Как е изчислено това';
+
+  @override
+  String get pausalTrackerBreakdownExcludedHeader =>
+      'Изключени — липсва обменен курс';
+
+  @override
+  String pausalTrackerBreakdownRateLabel(String source) {
+    return 'курс: $source';
+  }
+
+  @override
+  String get pausalTrackerBreakdownExcludedReason =>
+      'За тази фактура не можа да се получи обменен курс — изключена е от общата сума, вместо да бъде оценена приблизително.';
+
+  @override
+  String get pausalTrackerAssessedAmountLabel =>
+      'Определена месечна сума на патента';
+
+  @override
+  String get pausalTrackerAssessedAmountHint =>
+      'По желание — въведете сумата от данъчното си решение. Приложението не може да я изчисли самостоятелно.';
+
+  @override
+  String get pausalTrackerAssessedAmountSaved => 'Запазено';
+
+  @override
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  ) {
+    return '= $tax данък + $pio пенсия + $health здраве + $unemployment безработица = $total от базата, определена с решението.';
+  }
 
   @override
   String get commonClearSearch => 'Изчисти търсенето';

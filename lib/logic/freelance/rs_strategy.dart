@@ -21,6 +21,7 @@ class RsFreelanceStrategy implements FreelanceTaxStrategy {
   @override
   FreelanceTaxResult compute(FreelanceRegimeRules rules, FreelanceTaxInput input) {
     final model = input.option('model', 'model1');
+    final insuredElsewhere = input.option('insuredElsewhere', false);
     final income = input.income;
 
     final double deduction;
@@ -49,8 +50,13 @@ class RsFreelanceStrategy implements FreelanceTaxStrategy {
     );
 
     final pio = contributionBase * rules.field('pioContributionRate').asDouble!;
-    final health =
-        contributionBase * rules.field('healthContributionRate').asDouble!;
+    // Health contribution is waived when the freelancer is already insured
+    // elsewhere (employed, another business, etc.) — per the sourced
+    // formula (PROMPT-003E), not previously modeled: this field used to be
+    // charged unconditionally.
+    final health = insuredElsewhere
+        ? 0.0
+        : contributionBase * rules.field('healthContributionRate').asDouble!;
     final unemployment = contributionBase *
         rules.field('unemploymentContributionRate').asDouble!;
     final totalContributions = pio + health + unemployment;
@@ -60,6 +66,13 @@ class RsFreelanceStrategy implements FreelanceTaxStrategy {
     final annualizedIncome = income * 4;
     final vatThreshold = rules.field('vatThresholdRolling12m').asDouble!;
     final pausalCeiling = rules.field('pausalCeilingAnnual').asDouble!;
+
+    // Whether the Model B minimum-PIO-base floor actually changed the
+    // contribution base from what the taxable base alone would have given —
+    // exactly the case users get wrong, per PROMPT-003E. Always false for
+    // Model A, which has no such floor applied here.
+    final minPioBaseBinds =
+        model == 'model2' && taxableBase < minMonthly * quarterlyMultiple;
 
     return FreelanceTaxResult(
       grossIncome: income,
@@ -85,16 +98,34 @@ class RsFreelanceStrategy implements FreelanceTaxStrategy {
           crossed: annualizedIncome >= pausalCeiling,
         ),
       ],
-      extra: {'model': model},
+      extra: {
+        'model': model,
+        'insuredElsewhere': insuredElsewhere,
+        'minPioBaseBinds': minPioBaseBinds,
+        'minPioBase': minMonthly * quarterlyMultiple,
+      },
     );
   }
 
   /// Which model produces less total burden (tax + contributions) for a
   /// given quarterly gross — freely mixed quarter to quarter, so this is a
-  /// genuinely useful comparison rather than academic.
-  String cheaperModel(FreelanceRegimeRules rules, double income) {
-    final m1 = compute(rules, FreelanceTaxInput(income: income, options: const {'model': 'model1'}));
-    final m2 = compute(rules, FreelanceTaxInput(income: income, options: const {'model': 'model2'}));
+  /// genuinely useful comparison rather than academic. [insuredElsewhere] is
+  /// passed through to both models so the comparison is apples-to-apples.
+  String cheaperModel(FreelanceRegimeRules rules, double income, {bool insuredElsewhere = false}) {
+    final m1 = compute(
+      rules,
+      FreelanceTaxInput(
+        income: income,
+        options: {'model': 'model1', 'insuredElsewhere': insuredElsewhere},
+      ),
+    );
+    final m2 = compute(
+      rules,
+      FreelanceTaxInput(
+        income: income,
+        options: {'model': 'model2', 'insuredElsewhere': insuredElsewhere},
+      ),
+    );
     final m1Burden = m1.incomeTax + m1.totalContributions;
     final m2Burden = m2.incomeTax + m2.totalContributions;
     return m2Burden <= m1Burden ? 'model2' : 'model1';

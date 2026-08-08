@@ -172,6 +172,78 @@ void main() {
       expect(scheduler.calls.first.day, NotificationService.pausalReminderDay);
       expect(scheduler.calls.first.id, NotificationService.pausalReminderId);
     });
+
+    test('disabling cancels the main reminder', () async {
+      final scheduler = _FakeScheduler();
+      final service = NotificationService(scheduler: scheduler);
+      await service.setPausalReminderEnabled(true, title: 't', body: 'b');
+
+      await service.setPausalReminderEnabled(false, title: 't', body: 'b');
+
+      expect(await service.isPausalReminderEnabled(), isFalse);
+      expect(scheduler.cancelled, contains(NotificationService.pausalReminderId));
+    });
+
+    test('lead reminder is off by default and adds a second schedule on the 12th when enabled', () async {
+      final scheduler = _FakeScheduler();
+      final service = NotificationService(scheduler: scheduler);
+      expect(await service.isPausalLeadReminderEnabled(), isFalse);
+
+      await service.setPausalReminderEnabled(
+        true,
+        title: 't',
+        body: 'b',
+        leadReminderEnabled: true,
+        leadTitle: 'lead t',
+        leadBody: 'lead b',
+      );
+
+      expect(await service.isPausalLeadReminderEnabled(), isTrue);
+      // Both the main (15th) and lead (12th) reminders are scheduled — the
+      // lead reminder is additive, not a replacement.
+      expect(scheduler.calls, hasLength(2));
+      final leadCall = scheduler.calls.firstWhere((c) => c.id == NotificationService.pausalLeadReminderId);
+      expect(leadCall.day, NotificationService.pausalLeadReminderDay);
+      expect(leadCall.title, 'lead t');
+    });
+
+    test('turning the lead reminder off while the main one stays on cancels only the lead id', () async {
+      final scheduler = _FakeScheduler();
+      final service = NotificationService(scheduler: scheduler);
+      await service.setPausalReminderEnabled(
+        true,
+        title: 't',
+        body: 'b',
+        leadReminderEnabled: true,
+        leadTitle: 'lead t',
+        leadBody: 'lead b',
+      );
+
+      await service.setPausalReminderEnabled(true, title: 't', body: 'b', leadReminderEnabled: false);
+
+      expect(await service.isPausalReminderEnabled(), isTrue);
+      expect(await service.isPausalLeadReminderEnabled(), isFalse);
+      expect(scheduler.cancelled, contains(NotificationService.pausalLeadReminderId));
+      expect(scheduler.cancelled, isNot(contains(NotificationService.pausalReminderId)));
+    });
+
+    test('disabling the main reminder cancels the lead reminder too, regardless of its own preference', () async {
+      final scheduler = _FakeScheduler();
+      final service = NotificationService(scheduler: scheduler);
+      await service.setPausalReminderEnabled(
+        true,
+        title: 't',
+        body: 'b',
+        leadReminderEnabled: true,
+        leadTitle: 'lead t',
+        leadBody: 'lead b',
+      );
+
+      await service.setPausalReminderEnabled(false, title: 't', body: 'b');
+
+      expect(scheduler.cancelled, contains(NotificationService.pausalReminderId));
+      expect(scheduler.cancelled, contains(NotificationService.pausalLeadReminderId));
+    });
   });
 
   group('budget threshold — event-triggered, deduplicated per month', () {

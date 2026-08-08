@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -16,6 +17,7 @@ import '../../services/consent_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
 import '../../services/notification_service.dart';
+import '../../services/pausal_tracker_service.dart';
 import '../../services/pinned_pair_service.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
@@ -392,10 +394,13 @@ class _NotificationsSection extends StatefulWidget {
 
 class _NotificationsSectionState extends State<_NotificationsSection> {
   final _service = NotificationService();
+  final _pausalTrackerService = PausalTrackerService();
   bool _expenseNudge = false;
   bool _budgetThreshold = false;
   bool _invoiceDue = false;
   bool _pausalReminder = false;
+  bool _pausalLeadReminder = false;
+  double? _pausalAssessedAmount;
   bool _loaded = false;
 
   @override
@@ -409,14 +414,38 @@ class _NotificationsSectionState extends State<_NotificationsSection> {
     final budgetThreshold = await _service.isBudgetThresholdEnabled();
     final invoiceDue = await _service.isInvoiceDueEnabled();
     final pausalReminder = await _service.isPausalReminderEnabled();
+    final pausalLeadReminder = await _service.isPausalLeadReminderEnabled();
+    final pausalAssessedAmount = await _pausalTrackerService.getAssessedMonthlyAmount();
     if (!mounted) return;
     setState(() {
       _expenseNudge = expenseNudge;
       _budgetThreshold = budgetThreshold;
       _invoiceDue = invoiceDue;
       _pausalReminder = pausalReminder;
+      _pausalLeadReminder = pausalLeadReminder;
+      _pausalAssessedAmount = pausalAssessedAmount;
       _loaded = true;
     });
+  }
+
+  /// Includes the user's stored assessed paušal amount (from their tax
+  /// ruling) in the notification body when it's set — PROMPT-003E 11.2.
+  String _pausalBody(AppLocalizations l10n) {
+    final amount = _pausalAssessedAmount;
+    if (amount == null) return l10n.notifPausalReminderNotifBody;
+    final fmt = NumberFormat.currency(symbol: '', decimalDigits: 0);
+    return l10n.notifPausalReminderNotifBodyWithAmount(fmt.format(amount));
+  }
+
+  Future<void> _applyPausalReminderState(AppLocalizations l10n) async {
+    await _service.setPausalReminderEnabled(
+      _pausalReminder,
+      title: l10n.notifPausalReminderNotifTitle,
+      body: _pausalBody(l10n),
+      leadReminderEnabled: _pausalLeadReminder,
+      leadTitle: l10n.notifPausalLeadReminderNotifTitle,
+      leadBody: l10n.notifPausalLeadReminderNotifBody,
+    );
   }
 
   @override
@@ -464,14 +493,20 @@ class _NotificationsSectionState extends State<_NotificationsSection> {
             subtitle: Text(l10n.notifPausalReminderSubtitle),
             value: _pausalReminder,
             onChanged: (v) async {
-              await _service.setPausalReminderEnabled(
-                v,
-                title: l10n.notifPausalReminderNotifTitle,
-                body: l10n.notifPausalReminderNotifBody,
-              );
-              if (mounted) setState(() => _pausalReminder = v);
+              setState(() => _pausalReminder = v);
+              await _applyPausalReminderState(l10n);
             },
           ),
+          if (_pausalReminder)
+            SwitchListTile(
+              title: Text(l10n.notifPausalLeadReminderTitle),
+              subtitle: Text(l10n.notifPausalLeadReminderSubtitle),
+              value: _pausalLeadReminder,
+              onChanged: (v) async {
+                setState(() => _pausalLeadReminder = v);
+                await _applyPausalReminderState(l10n);
+              },
+            ),
         ],
       ),
     );

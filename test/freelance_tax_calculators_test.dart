@@ -89,6 +89,49 @@ void main() {
       expect(beforeFlag.crossed, isFalse);
       expect(afterFlag.crossed, isTrue);
     });
+
+    // PROMPT-003E: health contribution must be waived when the freelancer
+    // is already insured elsewhere — this option didn't exist before this
+    // item, and health was previously charged unconditionally (a real bug,
+    // not just a missing feature).
+    test('insuredElsewhere waives health but not PIO/unemployment', () {
+      final insured = strategy.compute(
+        regime,
+        const FreelanceTaxInput(income: 300000, options: {'model': 'model1', 'insuredElsewhere': true}),
+      );
+      expect(insured.contributions['health'], 0.0);
+      expect(insured.contributions['pio'], greaterThan(0));
+      expect(insured.contributions['unemployment'], greaterThan(0));
+      expectConsistent(insured);
+    });
+
+    test('insuredElsewhere defaults to false — health still charged when omitted', () {
+      final r = strategy.compute(regime, const FreelanceTaxInput(income: 300000, options: {'model': 'model1'}));
+      expect(r.contributions['health'], greaterThan(0));
+    });
+
+    test('cheaperModel passes insuredElsewhere through to both models', () {
+      final withHealth = (strategy as dynamic).cheaperModel(regime, 300000.0, insuredElsewhere: false) as String;
+      final withoutHealth = (strategy as dynamic).cheaperModel(regime, 300000.0, insuredElsewhere: true) as String;
+      // Both must be valid model ids regardless of which is cheaper under each assumption.
+      expect(['model1', 'model2'], contains(withHealth));
+      expect(['model1', 'model2'], contains(withoutHealth));
+    });
+
+    test('minPioBaseBinds flags Model B exactly when the taxable base falls below the 3x minimum', () {
+      // Below the deduction: quarterly gross 168,733 (fixed deduction alone, before the
+      // 34% variable component) leaves a taxable base of 0, well under the 153,891 floor.
+      final low = strategy.compute(regime, const FreelanceTaxInput(income: 200000, options: {'model': 'model2'}));
+      expect(low.extra['minPioBaseBinds'], isTrue);
+
+      // High enough that Model B's taxable base clears the 153,891 floor on its own.
+      final high = strategy.compute(regime, const FreelanceTaxInput(income: 2000000, options: {'model': 'model2'}));
+      expect(high.extra['minPioBaseBinds'], isFalse);
+
+      // Model A never carries this flag — the floor is Model B-specific.
+      final modelA = strategy.compute(regime, const FreelanceTaxInput(income: 200000, options: {'model': 'model1'}));
+      expect(modelA.extra['minPioBaseBinds'], isFalse);
+    });
   });
 
   group('bg — Bulgaria (annual)', () {

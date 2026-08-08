@@ -17,6 +17,7 @@ Archived.
 | PROMPT-004 | Per-Country Freelancer Calculator + Store Listing De-Serbianisation | Large standing instruction | Parts 1–4 complete, own STOP condition reached — awaiting approval | Extends PROMPT-003 Stage A trust surface: fix Serbia-only store listing bullet in all 9 locales, sweep for similar leaks, then build a remote-updatable (bundled-fallback) tax_rules.json data layer and a real per-country freelancer self-assessment calculator covering all 9 countries (BiH split FBiH/RS) |
 | PROMPT-005 | Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation | Large standing instruction | Parts 0–5 complete, own STOP condition reached — awaiting approval | Closes the three gaps PROMPT-004 disclosed (git repo missing, Bulgaria still BGN, two overlapping Serbia freelancer tools) plus verifies two PROMPT-004 claims (cliff test coverage, all 10 regimes actually wired in) before building on them |
 | PROMPT-003D | Stage C Go-Ahead — Balkan Differentiators | Large standing instruction | Active | Explicit go-ahead for PROMPT-003 Stage C (items 10–13), order 11→12→13→10; housekeeping first (per-ABI size re-check, device-unverified checklist); own STOP condition after item 10's offline shell (Stage D needs separate go-ahead) |
+| PROMPT-003E | Stage C Item 11 — Serbia Compliance Pack | Large standing instruction | Done — item complete, D-029 | Sourced-figure narrowing of Stage C item 11: paušal turnover tracker (dual-window, threshold states, honest rate-history design), monthly reminder lead-time + assessed-amount extension, Model A vs Model B quarterly comparator; found and fixed a real health-contribution bug in the RS strategy along the way |
 
 ## Active Prompts
 
@@ -155,6 +156,33 @@ increment, full report after each, checkpoint at every session end. See
 `DECISIONS.md` for per-item records as they land. **This prompt's own
 stop condition:** after item 10's offline shell is done and reported,
 STOP — Stage D (monetization) needs a separate explicit go-ahead.
+
+**Item 11 done** — the user supplied a sourced-figure narrowing prompt,
+PROMPT-003E, for this item specifically; see that entry below and
+`DECISIONS.md` D-029. Item 12 (Invoice PDF + NBS IPS QR) is next.
+
+### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack
+
+Status: **Done, 2026-08-08** — user supplied
+`_userprompts/PROMPT-003E_StageC_Item11_Serbia_Compliance_Pack.md`,
+narrowing PROMPT-003D's general item 11 with exact sourced figures,
+formulas, and explicit build/testing/exclusion instructions. Built the
+paušal turnover tracker (11.1: dual-window calendar-year/rolling-12-month
+tracking against the sourced 6M/8M limits, 70/85/95/exceeded states,
+honest exclusion of invoices with no capturable exchange rate rather than
+a guessed one), the monthly obligation reminder's lead-time + assessed-
+amount extension (11.2, additive to Stage B item 7's existing reminder),
+and the Model A vs Model B quarterly comparator (11.3, alongside the
+existing single-model calculator). Found and fixed a real pre-existing
+bug during the required audit-first pass: `RsFreelanceStrategy` charged
+the health contribution unconditionally, though the sourced formula
+waives it when the freelancer is insured elsewhere. Four figures
+excluded and documented per the prompt's own instruction rather than
+approximated — see `OPEN_QUESTIONS.md` QUESTION-008. Full detail:
+`DECISIONS.md` D-029. `flutter analyze` clean, `flutter test -j 1`
+304/304, l10n 32 new keys × 9 languages in lockstep. **Per this prompt's
+own report-then-stop instruction: stopped here, awaiting approval before
+item 12 (Invoice PDF + NBS IPS QR).**
 
 ### PROMPT-003 Stage B: Retention Mechanics — Started
 

@@ -27,6 +27,7 @@
         "maxAnnualContributionBase": {"value": 8793840.0, "effectiveFrom": "2026-01-01", "source": "http://www.pio.rs/sr/vesti/nove-osnovice-u-2026-godini-chlan-15-zakona-o-pio"},
         "vatThresholdRolling12m": {"value": 8000000.0, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
         "pausalCeilingAnnual": {"value": 6000000.0, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
+        "pausalTaxRatePercentOfDeemedBase": {"value": 0.10, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
         "pausalTotalBurdenPercentOfDeemedBase": {"value": 0.4505, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"},
         "filingDeadlineDaysAfterQuarterEnd": {"value": 30, "effectiveFrom": "2026-01-01", "source": "https://frilenseri.purs.gov.rs/lat/najcesca-pitanja.html?position=2"},
         "contributionsDeductibleFromTaxBase": {"value": false, "effectiveFrom": "2026-01-01", "source": "https://www.purs.gov.rs/upload/media/2025/3/13/759186/Poreski_informator_za_fizicka_lica_koja_obavljaju_samostalnu_delatnost_mart_2025.pdf"}

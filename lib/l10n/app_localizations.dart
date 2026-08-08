@@ -710,6 +710,36 @@ abstract class AppLocalizations {
   /// **'Don\'t forget your monthly paušal filing and payment.'**
   String get notifPausalReminderNotifBody;
 
+  /// No description provided for @notifPausalReminderNotifBodyWithAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget your monthly paušal filing and payment of {amount} RSD.'**
+  String notifPausalReminderNotifBodyWithAmount(String amount);
+
+  /// No description provided for @notifPausalLeadReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Also remind me 3 days before'**
+  String get notifPausalLeadReminderTitle;
+
+  /// No description provided for @notifPausalLeadReminderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'An extra reminder on the 12th, ahead of the main one on the 15th'**
+  String get notifPausalLeadReminderSubtitle;
+
+  /// No description provided for @notifPausalLeadReminderNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paušal filing due in 3 days'**
+  String get notifPausalLeadReminderNotifTitle;
+
+  /// No description provided for @notifPausalLeadReminderNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your monthly paušal filing and payment is due in 3 days, on the 15th.'**
+  String get notifPausalLeadReminderNotifBody;
+
   /// No description provided for @settingsWidgetsTitle.
   ///
   /// In en, this message translates to:
@@ -1537,6 +1567,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Crossed'**
   String get freelanceCliffStatusCrossed;
+
+  /// No description provided for @freelanceRsInsuredElsewhereLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Already insured elsewhere (health contribution waived)'**
+  String get freelanceRsInsuredElsewhereLabel;
+
+  /// No description provided for @freelanceRsMinPioBaseBinds.
+  ///
+  /// In en, this message translates to:
+  /// **'Model B\'s pension contribution is floored at the minimum base ({amount}) — this is the case people most often get wrong.'**
+  String freelanceRsMinPioBaseBinds(String amount);
+
+  /// No description provided for @freelanceComparatorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare Model A vs Model B'**
+  String get freelanceComparatorTitle;
+
+  /// No description provided for @freelanceComparatorQuarterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter'**
+  String get freelanceComparatorQuarterLabel;
+
+  /// No description provided for @freelanceComparatorDeadlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Filing deadline for this quarter: {date}'**
+  String freelanceComparatorDeadlineHint(String date);
+
+  /// No description provided for @freelanceComparatorNeedsIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an income above to compare both models.'**
+  String get freelanceComparatorNeedsIncome;
+
+  /// No description provided for @freelanceComparatorRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended: {model} — saves {amount} in net income.'**
+  String freelanceComparatorRecommended(String model, String amount);
 
   /// No description provided for @settingsProActive.
   ///
@@ -2689,6 +2761,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due date'**
   String get invoiceDueDate;
+
+  /// No description provided for @toolsPausalTrackerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paušal Tracker (Serbia)'**
+  String get toolsPausalTrackerTitle;
+
+  /// No description provided for @toolsPausalTrackerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your turnover against the paušal ceiling and VAT threshold'**
+  String get toolsPausalTrackerSubtitle;
+
+  /// No description provided for @pausalTrackerCeilingCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paušal ceiling (this calendar year)'**
+  String get pausalTrackerCeilingCardTitle;
+
+  /// No description provided for @pausalTrackerVatCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT registration threshold (rolling 12 months)'**
+  String get pausalTrackerVatCardTitle;
+
+  /// No description provided for @pausalTrackerStateOk.
+  ///
+  /// In en, this message translates to:
+  /// **'On track'**
+  String get pausalTrackerStateOk;
+
+  /// No description provided for @pausalTrackerStateWarning70.
+  ///
+  /// In en, this message translates to:
+  /// **'70% reached — worth watching'**
+  String get pausalTrackerStateWarning70;
+
+  /// No description provided for @pausalTrackerStateWarning85.
+  ///
+  /// In en, this message translates to:
+  /// **'85% reached — get close attention'**
+  String get pausalTrackerStateWarning85;
+
+  /// No description provided for @pausalTrackerStateWarning95.
+  ///
+  /// In en, this message translates to:
+  /// **'95% reached — action likely needed soon'**
+  String get pausalTrackerStateWarning95;
+
+  /// No description provided for @pausalTrackerStateExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Exceeded'**
+  String get pausalTrackerStateExceeded;
+
+  /// No description provided for @pausalTrackerProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'At the current pace, you\'d reach the paušal ceiling around {date}.'**
+  String pausalTrackerProjection(String date);
+
+  /// No description provided for @pausalTrackerExcludedBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} invoice(s) excluded — exchange rate unavailable'**
+  String pausalTrackerExcludedBanner(int count);
+
+  /// No description provided for @pausalTrackerSeeBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'See the numbers'**
+  String get pausalTrackerSeeBreakdown;
+
+  /// No description provided for @pausalTrackerBreakdownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How this was calculated'**
+  String get pausalTrackerBreakdownTitle;
+
+  /// No description provided for @pausalTrackerBreakdownExcludedHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Excluded — rate unavailable'**
+  String get pausalTrackerBreakdownExcludedHeader;
+
+  /// No description provided for @pausalTrackerBreakdownRateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'rate: {source}'**
+  String pausalTrackerBreakdownRateLabel(String source);
+
+  /// No description provided for @pausalTrackerBreakdownExcludedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'No exchange rate could be captured for this invoice — excluded from the tracked total rather than guessed.'**
+  String get pausalTrackerBreakdownExcludedReason;
+
+  /// No description provided for @pausalTrackerAssessedAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessed monthly paušal amount'**
+  String get pausalTrackerAssessedAmountLabel;
+
+  /// No description provided for @pausalTrackerAssessedAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — enter the amount from your tax decision (rešenje). This app cannot calculate it for you.'**
+  String get pausalTrackerAssessedAmountHint;
+
+  /// No description provided for @pausalTrackerAssessedAmountSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get pausalTrackerAssessedAmountSaved;
+
+  /// No description provided for @pausalTrackerAssessedAmountDecomposition.
+  ///
+  /// In en, this message translates to:
+  /// **'= {tax} tax + {pio} pension + {health} health + {unemployment} unemployment = {total} of the deemed base set by your ruling.'**
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  );
 
   /// No description provided for @commonClearSearch.
   ///

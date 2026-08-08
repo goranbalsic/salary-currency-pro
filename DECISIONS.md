@@ -1,5 +1,133 @@
 # DECISIONS.md
 
+## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
+
+- **Date:** 2026-08-08. Implements PROMPT-003E (the sourced-figure narrowing
+  of Stage C item 11 per `_userprompts/PROMPT-003E_StageC_Item11_Serbia_Compliance_Pack.md`),
+  supersedes the general item-11 description in PROMPT-003D.
+- **Audit-first, per the prompt's own instruction:** read the existing
+  invoice tracker (`Invoice`/`InvoiceService`), the stored FX-rate layer
+  (`ExchangeRateService`/`RateCacheService`/`rate_providers.dart`), the
+  local notification system (`NotificationService`), and the existing RS
+  freelance-tax engine (`rs_strategy.dart` + `tax_rules.json`'s `rs`
+  regime) before writing anything. Found: (a) every sourced figure the
+  prompt supplied (110,647/66,733/51,297/732,820/8,000,000/6,000,000, all
+  dated) **already exactly matched** what PROMPT-004 had sourced into
+  `tax_rules.json` — no conflict to report; (b) a real, pre-existing bug:
+  `RsFreelanceStrategy.compute` charged the health contribution
+  unconditionally, but the sourced formula waives it when the freelancer
+  is insured elsewhere — fixed by adding an `insuredElsewhere` option
+  (default `false`, preserving every existing test's behavior) rather than
+  silently changing the default; (c) item 11.2's monthly reminder already
+  existed from Stage B item 7 (`NotificationService.setPausalReminderEnabled`,
+  day 15) — only the lead-time option and the assessed-amount body text
+  were genuinely missing, so only those were added, not a new reminder
+  type; (d) this app has **no historical-by-date FX archive** — see the
+  rate-history design note below, the one real infrastructure gap the
+  prompt's own wording didn't anticipate.
+- **11.1 — Paušal turnover tracker** (`lib/models/pausal_turnover.dart`,
+  `lib/services/pausal_tracker_service.dart`,
+  `lib/screens/tools/pausal_tracker_screen.dart`): fed entirely by the
+  existing `InvoiceService`, no new turnover data-entry surface. Tracks
+  both limits simultaneously with their correct, different windows
+  (calendar-year for the 6M paušal ceiling, rolling-365-days for the 8M
+  VAT threshold) — both threshold values read from `tax_rules.json`'s `rs`
+  regime (`pausalCeilingAnnual`/`vatThresholdRolling12m`), never a literal
+  in Dart, so the tracker and the freelance-tax calculator can never
+  silently disagree if the figures are ever updated. Early-warning states
+  at 70/85/95%/exceeded, always paired with a text label (never color
+  alone). Foreign-currency invoices with no captured rate are excluded
+  and counted, never priced at a guessed/substituted rate.
+  - **Rate-history design decision (the one real judgment call in this
+    item):** the prompt asks to convert "at the invoice-date rate from
+    the stored rate history," but this app has no such history —
+    `ExchangeRateService` only ever fetches the *latest* rate, and
+    `RateCacheService` caches only the most recent snapshot per provider.
+    Building a full date-indexed historical FX archive was judged out of
+    this item's scope (a genuinely new subsystem, not a gap-fill).
+    Instead: the first time `PausalTrackerService` sees a foreign-currency
+    invoice with no stored conversion, it captures a live (or
+    cache-fallback) rate once and persists it permanently against that
+    invoice id — immutable afterward, so totals stay stable across
+    repeat views rather than drifting every time the screen reopens. This
+    is honestly labeled in the UI as "rate: {source}" (the tap-through
+    breakdown), never claimed as an NBS historical rate for the invoice's
+    own issue date. An invoice whose rate could never be captured (no
+    connectivity the first time, and every time since) stays excluded and
+    counted — self-healing the next time a live rate succeeds. This is a
+    disclosed approximation of "invoice-date rate," not a silent one —
+    see the class doc comment on `PausalTrackerService` itself.
+  - Projection: a simple current-pace linear projection
+    (`calendarYearTotal / daysElapsedThisYear`) for the paušal ceiling
+    only, shown only with ≥14 days of data, a positive pace, and a
+    projected date within 10 years — never fabricated from too little
+    data.
+- **11.2 — Monthly obligation reminder extension**
+  (`lib/services/notification_service.dart`,
+  `lib/screens/settings/settings_screen.dart`): added an optional second,
+  additive reminder 3 days before the 15th (`pausalLeadReminderId`, day
+  12) — the existing day-15 reminder is never replaced, only supplemented,
+  per the prompt's explicit wording. The notification body now includes
+  the user's stored assessed monthly amount (`PausalTrackerService.
+  getAssessedMonthlyAmount`) when set, via a new parameterized l10n string
+  rather than string concatenation. Reuses the existing DST/reschedule-on-
+  boot handling in `NotificationScheduler` — no second scheduling path.
+- **11.3 — Model A vs Model B quarterly comparator**
+  (`lib/screens/tools/freelance_tax_screen.dart`'s new
+  `_RsComparatorSection`): deliberately independent of the existing
+  single-model selector/result above it — always shows both models side
+  by side for whatever income is typed, so opening it never changes the
+  primary result. Shows the Model B minimum-PIO-base note whenever it
+  actually binds (`FreelanceTaxResult.extra['minPioBaseBinds']`, new),
+  the recommended model with the net-income delta, and a quarter selector
+  with a filing deadline computed from the sourced
+  `filingDeadlineDaysAfterQuarterEnd` field (30 days) rather than a
+  hardcoded date. "Formula breakdown on tap" is satisfied by the existing
+  row-by-row breakdown this calculator has always shown (deduction →
+  taxable base → tax → contributions → net) — a deliberate scope choice
+  to reuse the established pattern rather than build a second, parallel
+  algebraic-string mechanism just for this comparator (unlike the
+  Insights Card's `calculation` string from D-028, which needed one
+  because it had no existing breakdown at all).
+- **New sourced field:** `pausalTaxRatePercentOfDeemedBase` (0.10,
+  effective 2026-01-01, same PURS informator source as the other three
+  components) added to `tax_rules.json`'s `rs` regime so the paušal
+  screen's 45.05% decomposition (10% tax + 24% PIO + 10.3% health + 0.75%
+  unemployment) is computed from four sourced fields, never a hand-typed
+  percentage in l10n text. Mirrored into `tools/rules-publish/tax_rules.json`
+  to keep the parity test passing.
+- **Four figures excluded, not approximated** — paušal deemed-base
+  coefficients, the supplementary annual PIT bands, a reported (but
+  ungazetted) 10%/year contribution-base growth cap, and every other
+  country's paušal equivalent. See `OPEN_QUESTIONS.md` QUESTION-008.
+- **Testing:** `rs_strategy.dart`'s `insuredElsewhere` option and
+  `minPioBaseBinds` flag covered by new unit tests in
+  `freelance_tax_calculators_test.dart`; `PausalTrackerService` covered by
+  a new `test/pausal_tracker_service_test.dart` (RSD-direct, foreign-
+  currency capture, capture immutability, exclusion + self-healing retry,
+  calendar-year-vs-rolling-window behavior across a year boundary, all
+  four threshold states, projection present/absent/already-exceeded,
+  assessed-amount round-trip); the new lead-reminder scheduling covered in
+  `notification_service_test.dart`; two new widget tests exercise the
+  comparator (income entered, min-PIO-base note renders) and the Paušal
+  Tracker screen (empty state, both limit cards, assessed-amount save)
+  end to end through the real app, not just service-level.
+- **Verification:** `flutter analyze` clean (same 3 pre-existing cosmetic
+  notes). `flutter test -j 1`: 304/304 passing (was 276 before this item).
+  l10n: 32 new keys × 9 languages, all in lockstep (`untranslated.txt`
+  empty after generation) — verified via a real `flutter gen-l10n` run,
+  not just written and assumed correct.
+- **Confidence:** High on the RS strategy fix and tracker/reminder logic
+  (all sourced figures matched the codebase exactly, all new logic
+  test-covered including boundary/window cases). Medium on the rate-
+  history design decision specifically — it is a genuine, disclosed
+  scope judgment call rather than a sourced fact, flagged for the user's
+  awareness rather than silently assumed correct.
+- **Reversibility:** Fully reversible — additive across the board (new
+  files, new optional fields/methods, no existing behavior changed except
+  the health-contribution bug fix, which is a correctness fix with its
+  own default-preserving test).
+
 ## D-028 — PROMPT-003 Stage B item 9: "financial mirror" insights shown one at a time
 
 - **Date:** 2026-08-08 (same day, right after D-027). Closes Stage B

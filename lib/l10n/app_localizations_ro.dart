@@ -360,6 +360,27 @@ class AppLocalizationsRo extends AppLocalizations {
       'Nu uita declarația și plata lunară a impozitului forfetar.';
 
   @override
+  String notifPausalReminderNotifBodyWithAmount(String amount) {
+    return 'Nu uita declarația și plata lunară a impozitului forfetar în sumă de $amount RSD.';
+  }
+
+  @override
+  String get notifPausalLeadReminderTitle =>
+      'Amintește-mi și cu 3 zile înainte';
+
+  @override
+  String get notifPausalLeadReminderSubtitle =>
+      'Un memento suplimentar pe 12, înaintea celui principal de pe 15';
+
+  @override
+  String get notifPausalLeadReminderNotifTitle =>
+      'Declarația impozitului forfetar în 3 zile';
+
+  @override
+  String get notifPausalLeadReminderNotifBody =>
+      'Declarația și plata lunară a impozitului forfetar este scadentă în 3 zile, pe 15 ale lunii.';
+
+  @override
   String get settingsWidgetsTitle => 'Widgeturi pe ecranul de start';
 
   @override
@@ -814,6 +835,35 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get freelanceCliffStatusCrossed => 'Depășit';
+
+  @override
+  String get freelanceRsInsuredElsewhereLabel =>
+      'Deja asigurat pe alt temei (contribuția de sănătate nu se aplică)';
+
+  @override
+  String freelanceRsMinPioBaseBinds(String amount) {
+    return 'Contribuția de pensie (PIO) la Modelul B este plafonată la baza minimă ($amount) — acesta este cazul pe care oamenii îl estimează greșit cel mai des.';
+  }
+
+  @override
+  String get freelanceComparatorTitle => 'Compară Modelul A cu Modelul B';
+
+  @override
+  String get freelanceComparatorQuarterLabel => 'Trimestru';
+
+  @override
+  String freelanceComparatorDeadlineHint(String date) {
+    return 'Termen de depunere pentru acest trimestru: $date';
+  }
+
+  @override
+  String get freelanceComparatorNeedsIncome =>
+      'Introduceți venitul de mai sus pentru a compara ambele modele.';
+
+  @override
+  String freelanceComparatorRecommended(String model, String amount) {
+    return 'Recomandare: $model — economie de $amount la venitul net.';
+  }
 
   @override
   String get settingsProActive => 'Pro — activ';
@@ -1463,6 +1513,89 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get invoiceDueDate => 'Data scadenței';
+
+  @override
+  String get toolsPausalTrackerTitle => 'Monitor impozit forfetar (Serbia)';
+
+  @override
+  String get toolsPausalTrackerSubtitle =>
+      'Urmărește cifra de afaceri față de plafonul forfetar și pragul de TVA';
+
+  @override
+  String get pausalTrackerCeilingCardTitle =>
+      'Plafonul forfetar (acest an calendaristic)';
+
+  @override
+  String get pausalTrackerVatCardTitle =>
+      'Pragul de înregistrare TVA (ultimele 12 luni)';
+
+  @override
+  String get pausalTrackerStateOk => 'În regulă';
+
+  @override
+  String get pausalTrackerStateWarning70 => 'Atins 70% — merită urmărit';
+
+  @override
+  String get pausalTrackerStateWarning85 =>
+      'Atins 85% — acordă atenție deosebită';
+
+  @override
+  String get pausalTrackerStateWarning95 =>
+      'Atins 95% — probabil va fi nevoie de acțiune în curând';
+
+  @override
+  String get pausalTrackerStateExceeded => 'Depășit';
+
+  @override
+  String pausalTrackerProjection(String date) {
+    return 'În ritmul actual, ai atinge plafonul forfetar în jurul datei $date.';
+  }
+
+  @override
+  String pausalTrackerExcludedBanner(int count) {
+    return '$count factură(i) excluse — cursul de schimb nu este disponibil';
+  }
+
+  @override
+  String get pausalTrackerSeeBreakdown => 'Vezi cifrele';
+
+  @override
+  String get pausalTrackerBreakdownTitle => 'Cum a fost calculat acest lucru';
+
+  @override
+  String get pausalTrackerBreakdownExcludedHeader =>
+      'Excluse — cursul de schimb nu este disponibil';
+
+  @override
+  String pausalTrackerBreakdownRateLabel(String source) {
+    return 'curs: $source';
+  }
+
+  @override
+  String get pausalTrackerBreakdownExcludedReason =>
+      'Pentru această factură nu s-a putut obține un curs de schimb — a fost exclusă din total în loc să fie estimată.';
+
+  @override
+  String get pausalTrackerAssessedAmountLabel =>
+      'Suma lunară forfetară stabilită';
+
+  @override
+  String get pausalTrackerAssessedAmountHint =>
+      'Opțional — introdu suma din decizia ta fiscală. Aplicația nu o poate calcula singură.';
+
+  @override
+  String get pausalTrackerAssessedAmountSaved => 'Salvat';
+
+  @override
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  ) {
+    return '= $tax impozit + $pio pensie + $health sănătate + $unemployment șomaj = $total din baza stabilită prin decizie.';
+  }
 
   @override
   String get commonClearSearch => 'Șterge căutarea';

@@ -357,6 +357,26 @@ class AppLocalizationsSq extends AppLocalizations {
       'Mos harro deklarimin dhe pagesën mujore të tarifës fikse.';
 
   @override
+  String notifPausalReminderNotifBodyWithAmount(String amount) {
+    return 'Mos harro deklarimin dhe pagesën mujore të tarifës fikse në shumën $amount RSD.';
+  }
+
+  @override
+  String get notifPausalLeadReminderTitle => 'Më kujto edhe 3 ditë më parë';
+
+  @override
+  String get notifPausalLeadReminderSubtitle =>
+      'Një kujtesë shtesë më 12, para asaj kryesore më 15';
+
+  @override
+  String get notifPausalLeadReminderNotifTitle =>
+      'Deklarimi i tarifës fikse pas 3 ditësh';
+
+  @override
+  String get notifPausalLeadReminderNotifBody =>
+      'Deklarimi dhe pagesa mujore e tarifës fikse skadon pas 3 ditësh, më 15 të muajit.';
+
+  @override
   String get settingsWidgetsTitle => 'Miniaplikacione në ekranin kryesor';
 
   @override
@@ -812,6 +832,35 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get freelanceCliffStatusCrossed => 'Kaluar';
+
+  @override
+  String get freelanceRsInsuredElsewhereLabel =>
+      'Tashmë i/e siguruar në një bazë tjetër (kontributi shëndetësor nuk aplikohet)';
+
+  @override
+  String freelanceRsMinPioBaseBinds(String amount) {
+    return 'Kontributi për PIO (pensionin) te Modeli B kufizohet në bazën minimale ($amount) — kjo është rasti që njerëzit e vlerësojnë më shpesh gabimisht.';
+  }
+
+  @override
+  String get freelanceComparatorTitle => 'Krahaso Modelin A me Modelin B';
+
+  @override
+  String get freelanceComparatorQuarterLabel => 'Tremujori';
+
+  @override
+  String freelanceComparatorDeadlineHint(String date) {
+    return 'Afati i deklarimit për këtë tremujor: $date';
+  }
+
+  @override
+  String get freelanceComparatorNeedsIncome =>
+      'Vendos të ardhurat më sipër për të krahasuar të dy modelet.';
+
+  @override
+  String freelanceComparatorRecommended(String model, String amount) {
+    return 'Rekomandim: $model — kursim prej $amount në të ardhurat neto.';
+  }
 
   @override
   String get settingsProActive => 'Pro — aktiv';
@@ -1462,6 +1511,89 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get invoiceDueDate => 'Afati i pagesës';
+
+  @override
+  String get toolsPausalTrackerTitle => 'Ndjekësi i tarifës fikse (Serbi)';
+
+  @override
+  String get toolsPausalTrackerSubtitle =>
+      'Ndiq xhiron kundrejt kufirit të tarifës fikse dhe pragut të TVSH-së';
+
+  @override
+  String get pausalTrackerCeilingCardTitle =>
+      'Kufiri i tarifës fikse (këtë vit kalendarik)';
+
+  @override
+  String get pausalTrackerVatCardTitle =>
+      'Pragu i regjistrimit në TVSH (12 muajt e fundit)';
+
+  @override
+  String get pausalTrackerStateOk => 'Në rregull';
+
+  @override
+  String get pausalTrackerStateWarning70 => 'Arritur 70% — ia vlen të ndiqet';
+
+  @override
+  String get pausalTrackerStateWarning85 =>
+      'Arritur 85% — kushtoji vëmendje të veçantë';
+
+  @override
+  String get pausalTrackerStateWarning95 =>
+      'Arritur 95% — ka gjasa të nevojitet veprim së shpejti';
+
+  @override
+  String get pausalTrackerStateExceeded => 'Tejkaluar';
+
+  @override
+  String pausalTrackerProjection(String date) {
+    return 'Me ritmin aktual, do ta arrije kufirin e tarifës fikse rreth $date.';
+  }
+
+  @override
+  String pausalTrackerExcludedBanner(int count) {
+    return '$count faturë(a) të përjashtuara — kursi i këmbimit nuk është i disponueshëm';
+  }
+
+  @override
+  String get pausalTrackerSeeBreakdown => 'Shiko shifrat';
+
+  @override
+  String get pausalTrackerBreakdownTitle => 'Si u llogarit kjo';
+
+  @override
+  String get pausalTrackerBreakdownExcludedHeader =>
+      'Të përjashtuara — kursi i këmbimit nuk është i disponueshëm';
+
+  @override
+  String pausalTrackerBreakdownRateLabel(String source) {
+    return 'kursi: $source';
+  }
+
+  @override
+  String get pausalTrackerBreakdownExcludedReason =>
+      'Për këtë faturë nuk u arrit të merret një kurs këmbimi — u përjashtua nga totali në vend që të vlerësohej.';
+
+  @override
+  String get pausalTrackerAssessedAmountLabel =>
+      'Shuma mujore e vlerësuar e tarifës fikse';
+
+  @override
+  String get pausalTrackerAssessedAmountHint =>
+      'Opsionale — vendos shumën nga vendimi yt tatimor. Aplikacioni nuk mund ta llogarisë vetë.';
+
+  @override
+  String get pausalTrackerAssessedAmountSaved => 'U ruajt';
+
+  @override
+  String pausalTrackerAssessedAmountDecomposition(
+    String tax,
+    String pio,
+    String health,
+    String unemployment,
+    String total,
+  ) {
+    return '= $tax taksë + $pio pension + $health shëndetësi + $unemployment papunësi = $total e bazës së përcaktuar nga vendimi.';
+  }
 
   @override
   String get commonClearSearch => 'Pastro kërkimin';
