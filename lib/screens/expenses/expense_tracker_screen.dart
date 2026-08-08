@@ -685,7 +685,17 @@ class _CategoryBreakdownCard extends StatelessWidget {
 /// support the specific claim, and every number is computed live from
 /// [ExpenseEntry] records already loaded for the screen (no separate,
 /// possibly-stale computation path).
-class _InsightsCard extends StatelessWidget {
+class _Insight {
+  final String headline;
+  final String calculation;
+  const _Insight({required this.headline, required this.calculation});
+}
+
+/// One plain-language observation at a time (PROMPT-003 Stage B item 9,
+/// the "financial mirror"), always tappable to reveal the real numbers
+/// behind it — never just an assertion the user has to take on faith,
+/// matching this app's general sourced/traceable-numbers standard.
+class _InsightsCard extends StatefulWidget {
   final MonthlySummary summary;
   final double? previousMonthExpense;
   final Map<String, double> categoryTotals;
@@ -699,36 +709,67 @@ class _InsightsCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final fmt = NumberFormat.currency(symbol: '${summary.currencyCode} ', decimalDigits: 0);
-    final insights = <String>[];
+  State<_InsightsCard> createState() => _InsightsCardState();
+}
 
-    final previous = previousMonthExpense;
+class _InsightsCardState extends State<_InsightsCard> {
+  int _index = 0;
+  bool _expanded = false;
+
+  List<_Insight> _buildInsights() {
+    final l10n = widget.l10n;
+    final fmt = NumberFormat.currency(symbol: '${widget.summary.currencyCode} ', decimalDigits: 0);
+    final insights = <_Insight>[];
+
+    final previous = widget.previousMonthExpense;
     if (previous != null && previous > 0) {
-      final change = ((summary.totalExpense - previous) / previous * 100).round();
-      if (change > 2) {
-        insights.add(l10n.expenseInsightHigherThanLastMonth(
-            change, fmt.format(summary.totalExpense), fmt.format(previous)));
-      } else if (change < -2) {
-        insights.add(l10n.expenseInsightLowerThanLastMonth(
-            change.abs(), fmt.format(summary.totalExpense), fmt.format(previous)));
-      } else {
-        insights.add(l10n.expenseInsightSameAsLastMonth(fmt.format(summary.totalExpense)));
-      }
+      final currentText = fmt.format(widget.summary.totalExpense);
+      final previousText = fmt.format(previous);
+      final change = ((widget.summary.totalExpense - previous) / previous * 100).round();
+      final headline = change > 2
+          ? l10n.expenseInsightHigherThanLastMonth(change, currentText, previousText)
+          : change < -2
+              ? l10n.expenseInsightLowerThanLastMonth(change.abs(), currentText, previousText)
+              : l10n.expenseInsightSameAsLastMonth(currentText);
+      insights.add(_Insight(
+        headline: headline,
+        calculation: l10n.expenseInsightMonthCalc(currentText, previousText, change),
+      ));
     }
 
-    if (categoryTotals.isNotEmpty) {
-      final sorted = categoryTotals.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    if (widget.categoryTotals.isNotEmpty) {
+      final sorted = widget.categoryTotals.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
       final top = sorted.first;
-      final total = categoryTotals.values.fold<double>(0, (a, b) => a + b);
+      final total = widget.categoryTotals.values.fold<double>(0, (a, b) => a + b);
       if (total > 0) {
         final percent = (top.value / total * 100).round();
-        insights.add(l10n.expenseInsightTopCategory(
-            localizedCategoryLabel(l10n, top.key), percent));
+        insights.add(_Insight(
+          headline: l10n.expenseInsightTopCategory(
+              localizedCategoryLabel(l10n, top.key), percent),
+          calculation: l10n.expenseInsightCategoryCalc(
+              fmt.format(top.value), fmt.format(total), percent),
+        ));
       }
     }
 
+    return insights;
+  }
+
+  void _goTo(int index) {
+    setState(() {
+      _index = index;
+      _expanded = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final insights = _buildInsights();
     if (insights.isEmpty) return const SizedBox.shrink();
+    final index = _index.clamp(0, insights.length - 1);
+    final insight = insights[index];
 
     return Card(
       child: Padding(
@@ -740,14 +781,70 @@ class _InsightsCard extends StatelessWidget {
               children: [
                 const Icon(Icons.insights_outlined, size: 18, color: AppColors.navy),
                 const SizedBox(width: 8),
-                Text(l10n.expenseInsightsTitle, style: const TextStyle(fontWeight: FontWeight.w700)),
+                Expanded(
+                  child: Text(l10n.expenseInsightsTitle,
+                      style: const TextStyle(fontWeight: FontWeight.w700)),
+                ),
+                if (insights.length > 1)
+                  Text(
+                    l10n.expenseInsightCounter(index + 1, insights.length),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
               ],
             ),
             const SizedBox(height: 10),
-            for (final text in insights)
+            Text(insight.headline, style: Theme.of(context).textTheme.bodyMedium),
+            InkWell(
+              onTap: () => setState(() => _expanded = !_expanded),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      _expanded ? Icons.expand_less : Icons.expand_more,
+                      size: 18,
+                      color: AppColors.moneyGreen,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      l10n.expenseInsightHowCalculated,
+                      style: const TextStyle(
+                        color: AppColors.moneyGreen,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (_expanded)
               Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  insight.calculation,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                ),
+              ),
+            if (insights.length > 1)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                // Distinct from this screen's own month-switcher chevrons
+                // (Icons.chevron_left/right, above) so the two controls
+                // stay visually and semantically separate.
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                    onPressed: index == 0 ? null : () => _goTo(index - 1),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onPressed: index == insights.length - 1 ? null : () => _goTo(index + 1),
+                  ),
+                ],
               ),
           ],
         ),

@@ -143,11 +143,12 @@ Structure — five staged sections, in priority order:
 
 ### PROMPT-003 Stage B: Retention Mechanics — Started
 
-Status: **Started 2026-08-08** — user gave explicit go-ahead ("start
-PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition. Working
+Status: **Done, 2026-08-08** — user gave explicit go-ahead ("start
+PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition. Worked
 through items 5–9 in order, one increment at a time, audit-first per
-item, same discipline as Stage A. See `DECISIONS.md` for per-item
-records as they land. Items 5–8 done (D-024–D-027); item 9 in progress.
+item, same discipline as Stage A. See `DECISIONS.md` D-024–D-028 for
+per-item records. Stage C (items 10–13) has not been started — no user
+go-ahead yet, same stop-condition discipline as before Stage B started.
 
 ### PROMPT-003A: Stage A Closure — Consent Flow + App Icon
 

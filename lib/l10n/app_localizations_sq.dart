@@ -1301,6 +1301,28 @@ class AppLocalizationsSq extends AppLocalizations {
   }
 
   @override
+  String get expenseInsightHowCalculated => 'Shiko llogaritjen';
+
+  @override
+  String expenseInsightCounter(int current, int total) {
+    return '$current nga $total';
+  }
+
+  @override
+  String expenseInsightMonthCalc(String current, String previous, int percent) {
+    return '($current − $previous) ÷ $previous × 100 = $percent%';
+  }
+
+  @override
+  String expenseInsightCategoryCalc(
+    String categoryAmount,
+    String total,
+    int percent,
+  ) {
+    return '$categoryAmount ÷ $total gjithsej × 100 = $percent%';
+  }
+
+  @override
   String get expenseExportCsv => 'Eksporto CSV';
 
   @override

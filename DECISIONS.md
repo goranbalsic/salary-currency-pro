@@ -1,5 +1,59 @@
 # DECISIONS.md
 
+## D-028 — PROMPT-003 Stage B item 9: "financial mirror" insights shown one at a time
+
+- **Date:** 2026-08-08 (same day, right after D-027). Closes Stage B
+  (items 5–9 all done).
+- **Audit finding that shaped the whole item:** the existing
+  `_InsightsCard` in `expense_tracker_screen.dart` already computed
+  correct, real insights (month-over-month comparison, top spending
+  category) but rendered all of them at once as a static text list — not
+  "one at a time, always tappable to show the calculation" as the prompt
+  explicitly specifies. This was a real gap to close, not a rebuild: the
+  underlying computation (`categoryTotals`, `previousMonthExpense`,
+  the existing sourced l10n headline strings) was reused unchanged: only
+  the widget shell around it changed, from `StatelessWidget` to
+  `StatefulWidget` with an `_index`/`_expanded` state.
+- **"Always tappable to show the calculation" is a literal, sourced
+  formula, not a hand-wave:** each insight now carries its headline
+  (unchanged, already existed) plus a `calculation` string showing the
+  actual arithmetic — e.g. `(EUR 120 − EUR 100) ÷ EUR 100 × 100 = 20%` for
+  the month-over-month insight, `EUR 3,200 ÷ EUR 10,000 total × 100 = 32%`
+  for the top-category one — collapsed by default, revealed by tapping
+  "See the numbers". This matches the app's existing "never assert a
+  number without letting the user verify it" standard (the same standard
+  behind the freelancer calculator's sourced tax formulas and the "Why
+  trust this app?" Settings section) rather than inventing a new
+  transparency convention just for this card.
+- **One at a time, with a counter and next/previous controls:** when more
+  than one insight exists, a "{n} of {total}" counter appears and
+  `arrow_back_ios_new`/`arrow_forward_ios` icons page between them (first/
+  last button disabled at the ends, standard pattern already used
+  elsewhere in this app). Deliberately NOT `Icons.chevron_left/right` —
+  this same screen already uses that exact icon pair for its own
+  month-switcher above the summary cards; reusing it here would both
+  collide in widget-finder terms and read as the same control doing two
+  different things. Switching insights collapses any expanded calculation
+  rather than carrying it over onto the next insight, since a stale
+  formula for a different claim would be actively misleading.
+- **Verification:** existing "insights show a top-category observation"
+  widget test still passes unmodified in its single-insight assertions,
+  extended in place to also cover the tap-to-reveal/collapse behavior; a
+  new dedicated widget test seeds a real prior-month transaction directly
+  via `ExpenseService` (backdating through the UI isn't possible) to
+  exercise the two-insight case end to end — counter text, both headlines,
+  next/previous enabling/disabling at the bounds, and that navigating away
+  collapses the calculation. Full suite 276/276, `flutter analyze` clean,
+  l10n 444/444 across 9 locales. Pure-Dart UI change — no native code
+  touched, so (unlike D-027) a release-APK compile-check wasn't a
+  meaningful additional verification step here and wasn't run.
+- **Confidence:** High — fully covered by widget tests exercising real
+  user interaction (tapping, paging, reading rendered text), not just
+  unit-level logic.
+- **Reversibility:** Fully reversible — confined to one file
+  (`expense_tracker_screen.dart`'s `_InsightsCard`) plus additive l10n
+  keys; no other feature depends on the new shape.
+
 ## D-027 — PROMPT-003 Stage B item 8: Android home-screen widgets
 
 - **Date:** 2026-08-08 (same day, right after D-026).

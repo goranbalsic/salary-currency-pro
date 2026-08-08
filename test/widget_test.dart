@@ -4,7 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:salary_currency_pro/app.dart';
+import 'package:salary_currency_pro/models/expense_entry.dart';
 import 'package:salary_currency_pro/screens/settings/settings_screen.dart';
+import 'package:salary_currency_pro/services/expense_service.dart';
 
 void main() {
   setUp(() {
@@ -664,12 +666,28 @@ void main() {
     await tester.pumpAndSettle();
 
     // No prior-month data exists, so only the top-category insight shows —
-    // Transport is 100% of this month's (single-entry) spending.
+    // Transport is 100% of this month's (single-entry) spending. With
+    // only one insight, no "X of Y" counter or nav arrows should appear,
+    // and the calculation is hidden until tapped (PROMPT-003 Stage B
+    // item 9: one insight at a time, always tappable to reveal the
+    // calculation).
     expect(find.text('Insights'), findsOneWidget);
     expect(
       find.textContaining('Transport is your largest expense category this month, at 100%'),
       findsOneWidget,
     );
+    expect(find.text('See the numbers'), findsOneWidget);
+    expect(find.textContaining('÷'), findsNothing);
+    expect(find.byIcon(Icons.arrow_forward_ios), findsNothing);
+
+    await tester.tap(find.text('See the numbers'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('÷'), findsOneWidget);
+    expect(find.textContaining('100%'), findsWidgets);
+
+    await tester.tap(find.text('See the numbers'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('÷'), findsNothing);
 
     await tester.tap(find.byIcon(Icons.ios_share));
     await tester.pumpAndSettle();
@@ -678,6 +696,79 @@ void main() {
     final clipboard = await Clipboard.getData(Clipboard.kTextPlain);
     expect(clipboard?.text, contains('Date,Type,Category,Amount,Currency,Note'));
     expect(clipboard?.text, contains('Expense,Transport,80.00,EUR'));
+  });
+
+  testWidgets(
+      'Expense tracker: with both a prior month and multiple categories, '
+      'insights show one at a time with a counter and next/previous arrows',
+      (WidgetTester tester) async {
+    // Seeded directly via the service rather than through the UI (which has
+    // no way to backdate a transaction into a genuinely different month) —
+    // last month's spend must be real, tracked data for the month-over-month
+    // insight to have anything honest to compare against.
+    final now = DateTime.now();
+    final lastMonth = DateTime(now.year, now.month - 1, 10);
+    final service = ExpenseService();
+    await service.add(
+      type: TransactionType.expense,
+      categoryId: 'transport',
+      amount: 100,
+      currencyCode: 'EUR',
+      date: lastMonth,
+    );
+    await service.add(
+      type: TransactionType.expense,
+      categoryId: 'transport',
+      amount: 120,
+      currencyCode: 'EUR',
+      date: now,
+    );
+
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('Tools'),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Expense Tracker'));
+    await tester.pumpAndSettle();
+
+    // Two insights now exist (month-over-month + top-category) — only the
+    // first is shown, with a "1 of 2" counter and a working "next" arrow.
+    // (120 - 100) / 100 * 100 = 20% higher than last month.
+    expect(find.textContaining('20% higher than last month'), findsOneWidget);
+    expect(find.text('1 of 2'), findsOneWidget);
+    expect(
+      find.text('Transport is your largest expense category this month, at 100%'
+          ' of total spending.'),
+      findsNothing,
+    );
+
+    final nextButton = find.widgetWithIcon(IconButton, Icons.arrow_forward_ios);
+    expect(tester.widget<IconButton>(nextButton).onPressed, isNotNull);
+    await tester.tap(nextButton);
+    await tester.pumpAndSettle();
+
+    expect(find.text('2 of 2'), findsOneWidget);
+    expect(
+      find.textContaining('Transport is your largest expense category this month, at 100%'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('20% higher than last month'), findsNothing);
+    // Navigating away collapsed any expanded calculation from the previous
+    // insight rather than carrying it over onto this one.
+    expect(find.textContaining('÷'), findsNothing);
+    expect(
+      tester.widget<IconButton>(find.widgetWithIcon(IconButton, Icons.arrow_forward_ios)).onPressed,
+      isNull,
+    );
+
+    await tester.tap(find.byIcon(Icons.arrow_back_ios_new));
+    await tester.pumpAndSettle();
+    expect(find.text('1 of 2'), findsOneWidget);
+    expect(find.textContaining('20% higher than last month'), findsOneWidget);
   });
 
   testWidgets(

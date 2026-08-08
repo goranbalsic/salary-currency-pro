@@ -1298,6 +1298,28 @@ class AppLocalizationsMk extends AppLocalizations {
   }
 
   @override
+  String get expenseInsightHowCalculated => 'Погледнете ја пресметката';
+
+  @override
+  String expenseInsightCounter(int current, int total) {
+    return '$current од $total';
+  }
+
+  @override
+  String expenseInsightMonthCalc(String current, String previous, int percent) {
+    return '($current − $previous) ÷ $previous × 100 = $percent%';
+  }
+
+  @override
+  String expenseInsightCategoryCalc(
+    String categoryAmount,
+    String total,
+    int percent,
+  ) {
+    return '$categoryAmount ÷ $total вкупно × 100 = $percent%';
+  }
+
+  @override
   String get expenseExportCsv => 'Извези CSV';
 
   @override

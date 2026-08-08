@@ -2404,6 +2404,34 @@ abstract class AppLocalizations {
   /// **'{category} is your largest expense category this month, at {percent}% of total spending.'**
   String expenseInsightTopCategory(String category, int percent);
 
+  /// No description provided for @expenseInsightHowCalculated.
+  ///
+  /// In en, this message translates to:
+  /// **'See the numbers'**
+  String get expenseInsightHowCalculated;
+
+  /// No description provided for @expenseInsightCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {total}'**
+  String expenseInsightCounter(int current, int total);
+
+  /// No description provided for @expenseInsightMonthCalc.
+  ///
+  /// In en, this message translates to:
+  /// **'({current} − {previous}) ÷ {previous} × 100 = {percent}%'**
+  String expenseInsightMonthCalc(String current, String previous, int percent);
+
+  /// No description provided for @expenseInsightCategoryCalc.
+  ///
+  /// In en, this message translates to:
+  /// **'{categoryAmount} ÷ {total} total × 100 = {percent}%'**
+  String expenseInsightCategoryCalc(
+    String categoryAmount,
+    String total,
+    int percent,
+  );
+
   /// No description provided for @expenseExportCsv.
   ///
   /// In en, this message translates to:

@@ -1306,6 +1306,28 @@ class AppLocalizationsBg extends AppLocalizations {
   }
 
   @override
+  String get expenseInsightHowCalculated => 'Вижте изчислението';
+
+  @override
+  String expenseInsightCounter(int current, int total) {
+    return '$current от $total';
+  }
+
+  @override
+  String expenseInsightMonthCalc(String current, String previous, int percent) {
+    return '($current − $previous) ÷ $previous × 100 = $percent%';
+  }
+
+  @override
+  String expenseInsightCategoryCalc(
+    String categoryAmount,
+    String total,
+    int percent,
+  ) {
+    return '$categoryAmount ÷ $total общо × 100 = $percent%';
+  }
+
+  @override
   String get expenseExportCsv => 'Изнеси CSV';
 
   @override
