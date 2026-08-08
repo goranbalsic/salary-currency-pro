@@ -1,5 +1,122 @@
 # DECISIONS.md
 
+## D-027 — PROMPT-003 Stage B item 8: Android home-screen widgets
+
+- **Date:** 2026-08-08 (same day, right after D-026).
+- **New dependencies:** `home_widget ^0.9.3`, `workmanager ^0.10.7`.
+  Versions confirmed live from pub.dev before adding. Every Dart-side API
+  call (`HomeWidget.saveWidgetData`/`updateWidget`, `Workmanager().
+  initialize`/`registerPeriodicTask`) was verified by reading the
+  installed package's own source directly before writing any integration
+  code — a deliberate carry-over of the discipline D-026 learned the hard
+  way (that item's initial draft guessed `flutter_local_notifications`'s
+  API from general knowledge and got 18 analyze errors; this item verified
+  first instead of guessing-then-fixing).
+- **Two widgets, both classic RemoteViews `AppWidgetProvider`s** (not the
+  newer Glance/Compose approach — matched to a real working example found
+  in the installed `home_widget` package's own `example/android/` app,
+  not a blog post): a spend-vs-budget summary and a pinned currency pair.
+  Kotlin providers live under `android/app/.../widgets/`; layouts and
+  `appwidget-provider` XML under the usual `res/` paths. Both open the app
+  on tap via `HomeWidgetLaunchIntent`; neither uses the plugin's
+  background-click callback machinery (`HomeWidgetBackgroundReceiver`),
+  since neither widget has an interactive control that needs to run Dart
+  code from a tap.
+- **A real integration bug caught before it shipped, not after:** both
+  provider classes live in a `.widgets` subpackage
+  (`rs.salarycurrencypro.salary_currency_pro.widgets.*`), but
+  `HomeWidget.updateWidget(androidName: ...)` only resolves
+  `context.packageName + "." + androidName` — it would have silently
+  targeted a nonexistent class in the root package and never refreshed
+  either widget. Caught by reading `HomeWidgetPlugin.kt`'s own
+  `Class.forName` resolution logic, not by trial and error. Fixed by using
+  `qualifiedAndroidName` with the full dotted path everywhere instead —
+  `HomeWidgetGateway.updateWidget`'s doc comment records why.
+- **Pinned currency pair is a new persisted concept**, not reused from the
+  Converter screen (which deliberately resets to EUR/RSD every visit,
+  never remembering a choice). `PinnedPairService` is the first place in
+  this app that persists a currency pair across sessions; configured in a
+  new Settings "Home screen widgets" section, Android-only
+  (`Platform.isAndroid`-gated, since the picker configures a widget that
+  literally cannot exist on other platforms in this app).
+- **Multi-currency budgets, one widget line:** when the user has budgets
+  in more than one currency, the widget can only show one combined
+  spent/limit figure. Deterministic, disclosed choice: the currency group
+  with the highest total monthly limit wins (ties broken alphabetically),
+  rather than fabricating a cross-currency total or picking arbitrarily.
+- **Rate unavailability never fabricates a number:** if
+  `ExchangeRateService` can't produce a rate at all (no live connection
+  and no cache — e.g. first widget refresh, offline), the pinned-pair
+  widget leaves whatever rate/date text was last successfully written in
+  place and flags `pair_available=false`, which the Kotlin side surfaces
+  as a small "couldn't refresh" line pushed from Dart via l10n (not a
+  hardcoded English string in the layout).
+- **No polling — event-driven push + a periodic WorkManager backstop:**
+  `HomeWidgetService` is wired into `RootShell` via
+  `ExpenseService.changes`/`BudgetService.changes`/
+  `PinnedPairService.changes` listeners, so both widgets refresh
+  immediately when their underlying data changes while the app is open.
+  A separate hourly `Workmanager().registerPeriodicTask` (network-
+  constrained) exists purely so the pinned-pair *rate* doesn't go stale
+  while the app is closed — the budget widget has nothing new to say
+  between app sessions since spend only changes via in-app entry. The
+  background task has no `BuildContext`, so it resolves `AppLocalizations`
+  from the same persisted locale preference `app.dart` itself uses
+  (falling back to device locale, then English) rather than needing one.
+- **A second real bug found via the test suite, not a device:** the
+  initial `RootShell` wiring called `AppLocalizations.of(context)`
+  directly from `initState()` to push the first widget refresh, which
+  threw `dependOnInheritedWidgetOfExactType() ... called before
+  _RootShellState.initState() completed` — `RootShell` is built inside
+  the very same pass as `MaterialApp`'s `Localizations` ancestor in
+  `app.dart`, unlike a nested screen like `BudgetsScreen` where the same
+  pattern already works safely. Fixed by moving the *initial* refresh to
+  `didChangeDependencies` (guarded by a one-shot flag); the listener
+  callbacks that fire later, after the tree is fully built, were never
+  the problem. Caught immediately by the full test suite (20 widget tests
+  failed) rather than shipping silently broken.
+- **A real release-build failure found and fixed, not worked around:**
+  `flutter build apk --release` failed at
+  `:app:checkReleaseAarMetadata` — `flutter_local_notifications` (added in
+  D-026) requires core library desugaring, which this project had never
+  actually enabled because no release build had been run since that item
+  landed (only `flutter analyze`/`flutter test`, which don't catch this).
+  Fixed by enabling `isCoreLibraryDesugaringEnabled` and adding
+  `com.android.tools:desugar_jdk_libs:2.1.4` + `multiDexEnabled = true` to
+  `android/app/build.gradle.kts`, matching the plugin's own documented
+  Kotlin DSL setup exactly. This is a D-026 gap being closed here, not a
+  new item-8 requirement — recorded under this entry since this is the
+  first time a release build was actually attempted since D-026 shipped.
+- **Verification:** 8 `HomeWidgetService` unit tests (empty state,
+  single-currency budget math, multi-currency currency-group selection,
+  live-rate success, no-rate-and-no-cache leaves the old value in place,
+  two best-effort/gateway-throws regression tests) + 3 `PinnedPairService`
+  unit tests. Full suite 275/275, `flutter analyze` clean, l10n 440/440
+  across 9 locales. `flutter build apk --release` succeeds (60.8MB
+  universal APK) — the only available compile-check for the new Kotlin/
+  XML, same precedent as D-016's icon integration. **Not device-verified**
+  — no real Android device/emulator was available this session, so actual
+  on-home-screen rendering, tap-to-open behavior, and WorkManager's real
+  firing cadence under Doze/battery restrictions are unconfirmed, not
+  claimed. No widget test exercises the new Settings "Home screen
+  widgets" picker either: it is deliberately Android-only
+  (`Platform.isAndroid`-gated), and this dev machine's `flutter test` host
+  platform is Windows, so the gated code path never executes here —
+  forcing `debugDefaultTargetPlatformOverride` to reach it was considered
+  and rejected as introducing more risk (it would also flip
+  `AdsService`/`PurchaseService`'s own Android-gated startup calls inside
+  the same full-app pump) than the coverage gap it would close, given the
+  service layer underneath is already fully tested.
+- **Confidence:** High on the architecture, data-selection logic, and
+  best-effort error handling (all independently tested). Medium on
+  real-device rendering/timing behavior (unverified, per above) — same
+  honest gap this project already carries for D-014, the app icon, and
+  D-026.
+- **Reversibility:** Fully reversible — new files plus additive
+  integration points (manifest receivers, one Settings section, one
+  RootShell listener block); no other feature depends on the widgets
+  existing.
+
 ## D-026 — PROMPT-003 Stage B item 7: offline local notifications
 
 - **Date:** 2026-08-08 (same day, right after D-025).

@@ -357,6 +357,28 @@ class AppLocalizationsSq extends AppLocalizations {
       'Mos harro deklarimin dhe pagesën mujore të tarifës fikse.';
 
   @override
+  String get settingsWidgetsTitle => 'Miniaplikacione në ekranin kryesor';
+
+  @override
+  String get settingsWidgetsExplainer =>
+      'Shtoni një miniaplikacion nga ekrani kryesor i pajisjes (mbani gishtin gjatë në një hapësirë bosh → Miniaplikacione → Salary & Currency Pro) — aplikacioni nuk mund ta shtojë vetë. Pasi të shtohet, përditësohet automatikisht.';
+
+  @override
+  String get settingsWidgetsPinnedPairTitle =>
+      'Çifti valutor i fiksuar për miniaplikacionin';
+
+  @override
+  String get homeWidgetBudgetLabel => 'Shpenzuar këtë muaj';
+
+  @override
+  String get homeWidgetBudgetEmpty =>
+      'Vendosni një buxhet në aplikacion për ta parë këtu';
+
+  @override
+  String get homeWidgetPairUnavailable =>
+      'Rifreskimi dështoi — po shfaqet kursi i fundit i njohur';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

@@ -147,7 +147,7 @@ Status: **Started 2026-08-08** — user gave explicit go-ahead ("start
 PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition. Working
 through items 5–9 in order, one increment at a time, audit-first per
 item, same discipline as Stage A. See `DECISIONS.md` for per-item
-records as they land.
+records as they land. Items 5–8 done (D-024–D-027); item 9 in progress.
 
 ### PROMPT-003A: Stage A Closure — Consent Flow + App Icon
 

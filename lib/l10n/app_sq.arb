@@ -112,6 +112,13 @@
   "notifPausalReminderNotifTitle": "Kujtesë për deklarimin e tarifës fikse",
   "notifPausalReminderNotifBody": "Mos harro deklarimin dhe pagesën mujore të tarifës fikse.",
 
+  "settingsWidgetsTitle": "Miniaplikacione në ekranin kryesor",
+  "settingsWidgetsExplainer": "Shtoni një miniaplikacion nga ekrani kryesor i pajisjes (mbani gishtin gjatë në një hapësirë bosh → Miniaplikacione → Salary & Currency Pro) — aplikacioni nuk mund ta shtojë vetë. Pasi të shtohet, përditësohet automatikisht.",
+  "settingsWidgetsPinnedPairTitle": "Çifti valutor i fiksuar për miniaplikacionin",
+  "homeWidgetBudgetLabel": "Shpenzuar këtë muaj",
+  "homeWidgetBudgetEmpty": "Vendosni një buxhet në aplikacion për ta parë këtu",
+  "homeWidgetPairUnavailable": "Rifreskimi dështoi — po shfaqet kursi i fundit i njohur",
+
   "countryRs": "Serbia",
   "countryHr": "Kroacia",
   "countryBa": "Bosnja dhe Hercegovina",

@@ -1,6 +1,13 @@
+import 'dart:async' show unawaited;
+
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../services/budget_service.dart';
+import '../../services/expense_service.dart';
+import '../../services/home_widget_service.dart';
+import '../../services/pinned_pair_service.dart';
 import '../currency/currency_converter_screen.dart';
 import '../home/home_screen.dart';
 import '../salary/salary_calculator_screen.dart';
@@ -46,6 +53,60 @@ class _RootShellState extends State<RootShell> {
   // tab that hasn't been opened yet can't trigger its own async work (e.g.
   // the salary calculator's tax config load) in the background.
   late final Set<int> _visited = {widget.initialIndex};
+
+  final _homeWidgetService = HomeWidgetService();
+  final _isWidgetPlatform = defaultTargetPlatform == TargetPlatform.android;
+  bool _didInitialWidgetRefresh = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_isWidgetPlatform) {
+      // Widgets refresh on the data changing, not on a timer — the periodic
+      // WorkManager task (widget_refresh_worker.dart) exists purely so the
+      // pinned-pair rate stays fresh while the app isn't open, not to
+      // replace this event-driven push. The initial refresh itself can't
+      // happen here: `AppLocalizations.of(context)` isn't safe to call
+      // until this element's Localizations ancestor has finished mounting
+      // (this widget is built inside that very same pass in app.dart), so
+      // it's deferred to didChangeDependencies below.
+      ExpenseService.changes.addListener(_refreshBudgetWidget);
+      BudgetService.changes.addListener(_refreshBudgetWidget);
+      PinnedPairService.changes.addListener(_refreshPairWidget);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isWidgetPlatform && !_didInitialWidgetRefresh) {
+      _didInitialWidgetRefresh = true;
+      _refreshBudgetWidget();
+      _refreshPairWidget();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_isWidgetPlatform) {
+      ExpenseService.changes.removeListener(_refreshBudgetWidget);
+      BudgetService.changes.removeListener(_refreshBudgetWidget);
+      PinnedPairService.changes.removeListener(_refreshPairWidget);
+    }
+    super.dispose();
+  }
+
+  void _refreshBudgetWidget() {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    unawaited(_homeWidgetService.refreshBudgetWidget(l10n: l10n));
+  }
+
+  void _refreshPairWidget() {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    unawaited(_homeWidgetService.refreshPinnedPairWidget(l10n: l10n));
+  }
 
   void _goTo(int index) {
     setState(() {

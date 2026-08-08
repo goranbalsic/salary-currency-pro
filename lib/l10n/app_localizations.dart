@@ -710,6 +710,42 @@ abstract class AppLocalizations {
   /// **'Don\'t forget your monthly paušal filing and payment.'**
   String get notifPausalReminderNotifBody;
 
+  /// No description provided for @settingsWidgetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Home screen widgets'**
+  String get settingsWidgetsTitle;
+
+  /// No description provided for @settingsWidgetsExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a widget from your device\'s home screen (long-press an empty area → Widgets → Salary & Currency Pro) — the app can\'t add it for you. Once added, it updates on its own.'**
+  String get settingsWidgetsExplainer;
+
+  /// No description provided for @settingsWidgetsPinnedPairTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned pair for the currency widget'**
+  String get settingsWidgetsPinnedPairTitle;
+
+  /// No description provided for @homeWidgetBudgetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this month'**
+  String get homeWidgetBudgetLabel;
+
+  /// No description provided for @homeWidgetBudgetEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a budget in the app to see it here'**
+  String get homeWidgetBudgetEmpty;
+
+  /// No description provided for @homeWidgetPairUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t refresh — showing last known rate'**
+  String get homeWidgetPairUnavailable;
+
   /// No description provided for @countryRs.
   ///
   /// In en, this message translates to:

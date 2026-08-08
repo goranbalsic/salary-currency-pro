@@ -352,6 +352,27 @@ class AppLocalizationsSr extends AppLocalizations {
       'Ne zaboravite mesečnu prijavu i uplatu paušala.';
 
   @override
+  String get settingsWidgetsTitle => 'Vidžeti na početnom ekranu';
+
+  @override
+  String get settingsWidgetsExplainer =>
+      'Dodajte vidžet sa početnog ekrana uređaja (dugo pritisnite prazan prostor → Vidžeti → Salary & Currency Pro) — aplikacija ne može sama da ga doda. Nakon dodavanja se sam ažurira.';
+
+  @override
+  String get settingsWidgetsPinnedPairTitle => 'Zakačeni valutni par za vidžet';
+
+  @override
+  String get homeWidgetBudgetLabel => 'Potrošeno ovog meseca';
+
+  @override
+  String get homeWidgetBudgetEmpty =>
+      'Podesite budžet u aplikaciji da ga vidite ovde';
+
+  @override
+  String get homeWidgetPairUnavailable =>
+      'Osvežavanje nije uspelo — prikazan je poslednji poznati kurs';
+
+  @override
   String get countryRs => 'Srbija';
 
   @override

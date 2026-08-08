@@ -112,6 +112,13 @@
   "notifPausalReminderNotifTitle": "Напомняне за подаване на патент",
   "notifPausalReminderNotifBody": "Не забравяйте месечната декларация и плащане на патента.",
 
+  "settingsWidgetsTitle": "Джаджи за начален екран",
+  "settingsWidgetsExplainer": "Добавете джаджа от началния екран на устройството (задръжте продължително на празно място → Джаджи → Salary & Currency Pro) — приложението не може да я добави вместо вас. След добавяне тя се обновява автоматично.",
+  "settingsWidgetsPinnedPairTitle": "Закачена валутна двойка за джаджата",
+  "homeWidgetBudgetLabel": "Похарчено този месец",
+  "homeWidgetBudgetEmpty": "Задайте бюджет в приложението, за да го видите тук",
+  "homeWidgetPairUnavailable": "Неуспешно обновяване — показан е последният известен курс",
+
   "countryRs": "Сърбия",
   "countryHr": "Хърватия",
   "countryBa": "Босна и Херцеговина",

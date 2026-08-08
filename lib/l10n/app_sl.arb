@@ -112,6 +112,13 @@
   "notifPausalReminderNotifTitle": "Opomnik za oddajo pavšala",
   "notifPausalReminderNotifBody": "Ne pozabite na mesečno prijavo in plačilo pavšala.",
 
+  "settingsWidgetsTitle": "Pripomočki na začetnem zaslonu",
+  "settingsWidgetsExplainer": "Dodajte pripomoček z začetnega zaslona naprave (dolgo pritisnite prazen prostor → Pripomočki → Salary & Currency Pro) — aplikacija ga ne more dodati namesto vas. Po dodajanju se posodablja samodejno.",
+  "settingsWidgetsPinnedPairTitle": "Pripeti valutni par za pripomoček",
+  "homeWidgetBudgetLabel": "Porabljeno ta mesec",
+  "homeWidgetBudgetEmpty": "Nastavite proračun v aplikaciji, da ga vidite tukaj",
+  "homeWidgetPairUnavailable": "Osvežitev ni uspela — prikazan je zadnji znani tečaj",
+
   "countryRs": "Srbija",
   "countryHr": "Hrvaška",
   "countryBa": "Bosna in Hercegovina",

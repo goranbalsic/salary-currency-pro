@@ -359,6 +359,28 @@ class AppLocalizationsBg extends AppLocalizations {
       'Не забравяйте месечната декларация и плащане на патента.';
 
   @override
+  String get settingsWidgetsTitle => 'Джаджи за начален екран';
+
+  @override
+  String get settingsWidgetsExplainer =>
+      'Добавете джаджа от началния екран на устройството (задръжте продължително на празно място → Джаджи → Salary & Currency Pro) — приложението не може да я добави вместо вас. След добавяне тя се обновява автоматично.';
+
+  @override
+  String get settingsWidgetsPinnedPairTitle =>
+      'Закачена валутна двойка за джаджата';
+
+  @override
+  String get homeWidgetBudgetLabel => 'Похарчено този месец';
+
+  @override
+  String get homeWidgetBudgetEmpty =>
+      'Задайте бюджет в приложението, за да го видите тук';
+
+  @override
+  String get homeWidgetPairUnavailable =>
+      'Неуспешно обновяване — показан е последният известен курс';
+
+  @override
   String get countryRs => 'Сърбия';
 
   @override

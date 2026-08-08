@@ -360,6 +360,28 @@ class AppLocalizationsRo extends AppLocalizations {
       'Nu uita declarația și plata lunară a impozitului forfetar.';
 
   @override
+  String get settingsWidgetsTitle => 'Widgeturi pe ecranul de start';
+
+  @override
+  String get settingsWidgetsExplainer =>
+      'Adaugă un widget de pe ecranul de start al dispozitivului (apasă lung pe un spațiu gol → Widgeturi → Salary & Currency Pro) — aplicația nu îl poate adăuga singură. După adăugare, se actualizează automat.';
+
+  @override
+  String get settingsWidgetsPinnedPairTitle =>
+      'Perechea valutară fixată pentru widget';
+
+  @override
+  String get homeWidgetBudgetLabel => 'Cheltuit luna aceasta';
+
+  @override
+  String get homeWidgetBudgetEmpty =>
+      'Setează un buget în aplicație ca să-l vezi aici';
+
+  @override
+  String get homeWidgetPairUnavailable =>
+      'Actualizarea a eșuat — se afișează ultimul curs cunoscut';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

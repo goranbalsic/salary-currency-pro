@@ -356,6 +356,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Don\'t forget your monthly paušal filing and payment.';
 
   @override
+  String get settingsWidgetsTitle => 'Home screen widgets';
+
+  @override
+  String get settingsWidgetsExplainer =>
+      'Add a widget from your device\'s home screen (long-press an empty area → Widgets → Salary & Currency Pro) — the app can\'t add it for you. Once added, it updates on its own.';
+
+  @override
+  String get settingsWidgetsPinnedPairTitle =>
+      'Pinned pair for the currency widget';
+
+  @override
+  String get homeWidgetBudgetLabel => 'Spent this month';
+
+  @override
+  String get homeWidgetBudgetEmpty => 'Set a budget in the app to see it here';
+
+  @override
+  String get homeWidgetPairUnavailable =>
+      'Couldn\'t refresh — showing last known rate';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

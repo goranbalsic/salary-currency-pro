@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_lookups.dart';
+import '../../models/currency.dart';
 import '../../models/expense_entry.dart';
 import '../../navigation/app_page_route.dart';
 import '../../providers/pro_provider.dart';
@@ -15,6 +16,7 @@ import '../../services/consent_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
 import '../../services/notification_service.dart';
+import '../../services/pinned_pair_service.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
 import '../paywall/paywall_screen.dart';
@@ -122,6 +124,10 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           const _NotificationsSection(),
+          if (!kIsWeb && Platform.isAndroid) ...[
+            const SizedBox(height: 16),
+            const _WidgetsSection(),
+          ],
           const SizedBox(height: 16),
           _SectionCard(
             title: l10n.settingsPrivacyTitle,
@@ -468,6 +474,142 @@ class _NotificationsSectionState extends State<_NotificationsSection> {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Lets the user pick which currency pair the pinned-pair home-screen
+/// widget shows (PROMPT-003 Stage B item 8). The app cannot add the widget
+/// to the home screen itself — that's a system-level, long-press action —
+/// so this section only configures what an already-added widget displays,
+/// and says so explicitly.
+class _WidgetsSection extends StatefulWidget {
+  const _WidgetsSection();
+
+  @override
+  State<_WidgetsSection> createState() => _WidgetsSectionState();
+}
+
+class _WidgetsSectionState extends State<_WidgetsSection> {
+  final _service = PinnedPairService();
+  String _from = PinnedPairService.defaultFrom;
+  String _to = PinnedPairService.defaultTo;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final (from, to) = await _service.loadPair();
+    if (!mounted) return;
+    setState(() {
+      _from = from;
+      _to = to;
+      _loaded = true;
+    });
+  }
+
+  Future<void> _setFrom(String code) async {
+    if (code == _from) return;
+    setState(() => _from = code);
+    await _service.setPair(code, _to);
+  }
+
+  Future<void> _setTo(String code) async {
+    if (code == _to) return;
+    setState(() => _to = code);
+    await _service.setPair(_from, code);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    if (!_loaded) return const SizedBox.shrink();
+
+    return _SectionCard(
+      title: l10n.settingsWidgetsTitle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              l10n.settingsWidgetsExplainer,
+              style: const TextStyle(fontSize: 13, height: 1.4),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.settingsWidgetsPinnedPairTitle,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _PairDropdown(
+                        value: _from,
+                        label: l10n.commonFrom,
+                        onChanged: _setFrom,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Icon(Icons.arrow_forward, size: 18),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _PairDropdown(
+                        value: _to,
+                        label: l10n.commonTo,
+                        onChanged: _setTo,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PairDropdown extends StatelessWidget {
+  final String value;
+  final String label;
+  final ValueChanged<String> onChanged;
+
+  const _PairDropdown({
+    required this.value,
+    required this.label,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      initialValue: value,
+      decoration: InputDecoration(labelText: label),
+      items: supportedCurrencies
+          .map(
+            (c) => DropdownMenuItem(
+              value: c.code,
+              child: Text(c.code, overflow: TextOverflow.ellipsis),
+            ),
+          )
+          .toList(),
+      onChanged: (code) {
+        if (code != null) onChanged(code);
+      },
     );
   }
 }

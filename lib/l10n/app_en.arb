@@ -122,6 +122,13 @@
   "notifPausalReminderNotifTitle": "Paušal filing reminder",
   "notifPausalReminderNotifBody": "Don't forget your monthly paušal filing and payment.",
 
+  "settingsWidgetsTitle": "Home screen widgets",
+  "settingsWidgetsExplainer": "Add a widget from your device's home screen (long-press an empty area → Widgets → Salary & Currency Pro) — the app can't add it for you. Once added, it updates on its own.",
+  "settingsWidgetsPinnedPairTitle": "Pinned pair for the currency widget",
+  "homeWidgetBudgetLabel": "Spent this month",
+  "homeWidgetBudgetEmpty": "Set a budget in the app to see it here",
+  "homeWidgetPairUnavailable": "Couldn't refresh — showing last known rate",
+
   "countryRs": "Serbia",
   "countryHr": "Croatia",
   "countryBa": "Bosnia and Herzegovina",

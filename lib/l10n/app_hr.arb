@@ -112,6 +112,13 @@
   "notifPausalReminderNotifTitle": "Podsjetnik za prijavu paušala",
   "notifPausalReminderNotifBody": "Ne zaboravite mjesečnu prijavu i uplatu paušala.",
 
+  "settingsWidgetsTitle": "Widgeti na početnom zaslonu",
+  "settingsWidgetsExplainer": "Dodajte widget s početnog zaslona uređaja (dugo pritisnite prazan prostor → Widgeti → Salary & Currency Pro) — aplikacija ga ne može dodati umjesto vas. Nakon dodavanja ažurira se sam.",
+  "settingsWidgetsPinnedPairTitle": "Zakačeni valutni par za widget",
+  "homeWidgetBudgetLabel": "Potrošeno ovaj mjesec",
+  "homeWidgetBudgetEmpty": "Postavite proračun u aplikaciji da biste ga vidjeli ovdje",
+  "homeWidgetPairUnavailable": "Osvježavanje nije uspjelo — prikazan je posljednji poznati tečaj",
+
   "countryRs": "Srbija",
   "countryHr": "Hrvatska",
   "countryBa": "Bosna i Hercegovina",
