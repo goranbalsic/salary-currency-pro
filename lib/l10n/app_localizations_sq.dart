@@ -399,6 +399,38 @@ class AppLocalizationsSq extends AppLocalizations {
       'Rifreskimi dështoi — po shfaqet kursi i fundit i njohur';
 
   @override
+  String get settingsBusinessProfileTitle => 'Profili i biznesit';
+
+  @override
+  String get settingsBusinessProfileExplainer =>
+      'Përdoret në faturat PDF të gjeneruara dhe, për faturat e pranueshme në RSD, në kodin NBS IPS QR për pagesë.';
+
+  @override
+  String get businessProfileNameLabel => 'Emri i biznesit / lëshuesit';
+
+  @override
+  String get businessProfileAddressLabel => 'Adresa';
+
+  @override
+  String get businessProfileCityLabel => 'Qyteti';
+
+  @override
+  String get businessProfileBankAccountLabel =>
+      'Numri i llogarisë bankare (Serbi)';
+
+  @override
+  String get businessProfileBankAccountHelper =>
+      'Nevojitet vetëm për kodin NBS IPS QR në faturat në RSD';
+
+  @override
+  String get businessProfilePaymentCodeLabel =>
+      'Kodi i pagesës i parazgjedhur (Serbi)';
+
+  @override
+  String get businessProfilePaymentCodeHelper =>
+      'Kodi NBS 3-shifror i pagesës, p.sh. 289 — nevojitet vetëm për kodin QR';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

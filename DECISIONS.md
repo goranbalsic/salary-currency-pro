@@ -1,5 +1,84 @@
 # DECISIONS.md
 
+## D-030 — PROMPT-003 Stage C item 12: Invoice PDF + NBS IPS QR (in progress)
+
+- **Date:** started 2026-08-08. Implements
+  `_userprompts/PROMPT-003F_StageC_Item12_Invoice_PDF_NBS_IPS_QR_Enhanced.md`.
+  Large item, built across several checkpoints per an approved plan; this
+  entry is appended to as each checkpoint lands rather than split into
+  separate decision records, matching the one-entry-per-item precedent
+  (D-029).
+- **Audit-first finding that shaped the whole plan:** the existing
+  `Invoice`/`InvoiceService`/`InvoicesScreen` only tracked
+  client/description/amount/currency/dates/paid-status — no line items, no
+  invoice-number identity, and critically **no issuer/business identity
+  anywhere in the app**. The app's only prior "export" feature (expense
+  CSV) was `Clipboard.setData`, not a real file/share flow, and no
+  PDF/QR/share/font dependency existed at all. This is a from-scratch
+  build, not a small enhancement — see the full plan for the checkpoint
+  breakdown.
+- **Deliberately not adding VAT/tax fields this item.** The prompt only
+  requires VAT display "if represented by the existing model" — it isn't,
+  and adding it would mean inventing tax-calculation semantics the prompt
+  doesn't ask for and risks the "don't alter the financial calculation/
+  tax-rules path" rule. Generated PDFs show subtotal = total, no tax line.
+- **Checkpoint 1 (Foundation) — done:**
+  - `BusinessProfile` (`lib/models/business_profile.dart`) — new, single
+    global record (one issuer per install, matching `Invoice`'s own
+    single-user-tool philosophy): business name, address lines, optional
+    RS bank account (NBS "R" tag) and default payment code (NBS "SF" tag).
+    Persisted via `BusinessProfileService`
+    (`lib/services/business_profile_service.dart`), same
+    SharedPreferences + `ValueNotifier<int> changes` pattern as every
+    other service in the app. Editable from a new "Business profile"
+    section in Settings (`_BusinessProfileSection` in
+    `lib/screens/settings/settings_screen.dart`).
+  - `Invoice` gained four optional/defaulted fields (no schema-version
+    migration needed, per the codebase's existing convention):
+    `invoiceNumber` (plain editable text, no auto-numbering scheme —
+    deliberately minimal), `items` (`List<InvoiceLineItem>`, new model at
+    `lib/models/invoice_line_item.dart` — empty list falls back to
+    rendering the existing single `description`/`amount` as one line, so
+    today's simple-invoice flow is unaffected), `purpose` (NBS "S" tag
+    source), `paymentReference` (NBS "RO" tag source).
+  - **Deterministic money-rounding rule** (user-mandated guard added at
+    plan approval): `lib/utils/money.dart`. All money summation happens in
+    integer minor units (cents), never raw `double` accumulation. Each
+    line item is rounded to the nearest cent exactly once
+    (`roundToMinorUnits`, with a 1e-9 epsilon to counteract binary
+    floating-point representation error — e.g. the double closest to
+    1.005 is actually ~1.00499999999999989, which would otherwise round
+    down to 100 minor units instead of the intended 101); integer cents
+    are then summed exactly (`sumMinorUnits`), and only converted back to
+    a `double`/formatted string at the storage/display boundary
+    (`minorUnitsToAmount`, `formatMinorUnits`). `formatMinorUnits` takes a
+    `decimalSeparator` so the same function serves both normal display
+    (`.`) and the NBS "I" tag's required decimal comma (`,`) once the QR
+    builder lands. `Invoice.totalFromItems` is the one place that must be
+    used to compute a multi-item invoice's stored `amount`, so every
+    screen reading `amount` directly (e.g. `InvoicesScreen`'s
+    outstanding/overdue totals) stays correct. Covered by
+    `test/money_test.dart`, including the specific representation-error
+    case above and a repeating-decimal line-item case.
+  - Fixed a real, pre-existing test fragility exposed (not caused by a
+    bug, but by the new fields): two `widget_test.dart` cases used
+    `find.descendant(of: find.byType(SettingsScreen), matching:
+    find.byType(Scrollable))` expecting exactly one match; adding
+    `TextField`s to Settings means more than one `Scrollable` now exists
+    there (every `TextField`/`EditableText` has its own internal one).
+    Fixed by taking `.first` (the outer `SingleChildScrollView`'s
+    `Scrollable` is still first in tree order), not by weakening the test.
+  - `flutter analyze` clean (3 pre-existing unrelated info-level
+    `unintended_html_in_doc_comment` hints only), `flutter test -j 1`
+    322/322 passing.
+- **Remaining checkpoints (not started):** 12.1 journey/detail screen,
+  12.2 PDF rendering (`pdf`+`printing`), 12.3 NBS IPS QR (`barcode` +
+  payload builder — official source already identified: NBS "Preporuke"
+  PDF, © 2020 Narodna banka Srbije,
+  `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
+  fonts/i18n/accessibility (Noto Sans), final regression + completion
+  report.
+
 ## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
 
 - **Date:** 2026-08-08. Implements PROMPT-003E (the sourced-figure narrowing

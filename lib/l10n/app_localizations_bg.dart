@@ -401,6 +401,38 @@ class AppLocalizationsBg extends AppLocalizations {
       'Неуспешно обновяване — показан е последният известен курс';
 
   @override
+  String get settingsBusinessProfileTitle => 'Бизнес профил';
+
+  @override
+  String get settingsBusinessProfileExplainer =>
+      'Използва се в генерираните фактури в PDF и, за допустими фактури в RSD, в NBS IPS QR кода за плащане.';
+
+  @override
+  String get businessProfileNameLabel => 'Име на фирма / издател';
+
+  @override
+  String get businessProfileAddressLabel => 'Адрес';
+
+  @override
+  String get businessProfileCityLabel => 'Град';
+
+  @override
+  String get businessProfileBankAccountLabel =>
+      'Номер на банкова сметка (Сърбия)';
+
+  @override
+  String get businessProfileBankAccountHelper =>
+      'Необходимо само за NBS IPS QR кода на фактури в RSD';
+
+  @override
+  String get businessProfilePaymentCodeLabel =>
+      'Код на плащане по подразбиране (Сърбия)';
+
+  @override
+  String get businessProfilePaymentCodeHelper =>
+      'Трицифрен NBS код за плащане, напр. 289 — необходим само за QR кода';
+
+  @override
   String get countryRs => 'Сърбия';
 
   @override

@@ -776,6 +776,60 @@ abstract class AppLocalizations {
   /// **'Couldn\'t refresh — showing last known rate'**
   String get homeWidgetPairUnavailable;
 
+  /// No description provided for @settingsBusinessProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business profile'**
+  String get settingsBusinessProfileTitle;
+
+  /// No description provided for @settingsBusinessProfileExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Used on generated invoice PDFs and, for eligible Serbian RSD invoices, the NBS IPS QR payment code.'**
+  String get settingsBusinessProfileExplainer;
+
+  /// No description provided for @businessProfileNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Business / issuer name'**
+  String get businessProfileNameLabel;
+
+  /// No description provided for @businessProfileAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get businessProfileAddressLabel;
+
+  /// No description provided for @businessProfileCityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get businessProfileCityLabel;
+
+  /// No description provided for @businessProfileBankAccountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank account number (Serbia)'**
+  String get businessProfileBankAccountLabel;
+
+  /// No description provided for @businessProfileBankAccountHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Needed only for the NBS IPS QR code on RSD invoices'**
+  String get businessProfileBankAccountHelper;
+
+  /// No description provided for @businessProfilePaymentCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Default payment code (Serbia)'**
+  String get businessProfilePaymentCodeLabel;
+
+  /// No description provided for @businessProfilePaymentCodeHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'3-digit NBS payment code, e.g. 289 — needed only for the QR code'**
+  String get businessProfilePaymentCodeHelper;
+
   /// No description provided for @countryRs.
   ///
   /// In en, this message translates to:

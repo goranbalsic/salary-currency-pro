@@ -159,7 +159,30 @@ STOP — Stage D (monetization) needs a separate explicit go-ahead.
 
 **Item 11 done** — the user supplied a sourced-figure narrowing prompt,
 PROMPT-003E, for this item specifically; see that entry below and
-`DECISIONS.md` D-029. Item 12 (Invoice PDF + NBS IPS QR) is next.
+`DECISIONS.md` D-029. **Item 12 in progress** — the user supplied a
+scope-raising prompt, PROMPT-003F, for this item specifically; see that
+entry below and `DECISIONS.md` D-030.
+
+### PROMPT-003F: Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced)
+
+Status: **In progress, started 2026-08-08** — user supplied
+`_userprompts/PROMPT-003F_StageC_Item12_Invoice_PDF_NBS_IPS_QR_Enhanced.md`,
+raising the quality bar for item 12 (fully offline, professional invoice
+PDF with an embedded NBS IPS QR payment code for eligible Serbian RSD
+invoices). Approved with three user-mandated guards: a deterministic
+money-rounding rule before any invoice money math changes (no
+floating-point artifacts in the PDF or QR payload), fully-offline runtime
+(the NBS online generator/validator is a manual verification aid only,
+never a runtime call), and — later relaxed by the user mid-session to the
+project's normal no-pause default — per-checkpoint approval. Built across
+an approved multi-checkpoint plan; checkpoint 1 (Foundation:
+`BusinessProfile` model/service/Settings section, `Invoice`/
+`InvoiceLineItem` model additions, the `lib/utils/money.dart`
+rounding helper) is done. Full detail: `DECISIONS.md` D-030.
+`flutter analyze` clean, `flutter test -j 1` 322/322, l10n 9 new keys × 9
+languages in lockstep. Remaining checkpoints: journey/detail screen, PDF
+rendering, NBS IPS QR, fonts/i18n/accessibility, final regression +
+completion report.
 
 ### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack
 

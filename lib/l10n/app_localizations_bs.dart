@@ -393,6 +393,37 @@ class AppLocalizationsBs extends AppLocalizations {
       'Osvježavanje nije uspjelo — prikazan je posljednji poznati kurs';
 
   @override
+  String get settingsBusinessProfileTitle => 'Poslovni profil';
+
+  @override
+  String get settingsBusinessProfileExplainer =>
+      'Koristi se na generisanim PDF fakturama i, za prihvatljive fakture u RSD, NBS IPS QR kodu za plaćanje.';
+
+  @override
+  String get businessProfileNameLabel => 'Naziv firme / izdavaoca';
+
+  @override
+  String get businessProfileAddressLabel => 'Adresa';
+
+  @override
+  String get businessProfileCityLabel => 'Grad';
+
+  @override
+  String get businessProfileBankAccountLabel => 'Broj računa (Srbija)';
+
+  @override
+  String get businessProfileBankAccountHelper =>
+      'Potrebno samo za NBS IPS QR kod na RSD fakturama';
+
+  @override
+  String get businessProfilePaymentCodeLabel =>
+      'Podrazumijevana šifra plaćanja (Srbija)';
+
+  @override
+  String get businessProfilePaymentCodeHelper =>
+      'Trocifrena NBS šifra plaćanja, npr. 289 — potrebna samo za QR kod';
+
+  @override
   String get countryRs => 'Srbija';
 
   @override

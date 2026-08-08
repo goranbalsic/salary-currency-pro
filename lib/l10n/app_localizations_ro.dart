@@ -403,6 +403,37 @@ class AppLocalizationsRo extends AppLocalizations {
       'Actualizarea a eșuat — se afișează ultimul curs cunoscut';
 
   @override
+  String get settingsBusinessProfileTitle => 'Profil de afaceri';
+
+  @override
+  String get settingsBusinessProfileExplainer =>
+      'Utilizat pe facturile PDF generate și, pentru facturile eligibile în RSD, pe codul QR NBS IPS de plată.';
+
+  @override
+  String get businessProfileNameLabel => 'Nume firmă / emitent';
+
+  @override
+  String get businessProfileAddressLabel => 'Adresă';
+
+  @override
+  String get businessProfileCityLabel => 'Oraș';
+
+  @override
+  String get businessProfileBankAccountLabel => 'Număr de cont bancar (Serbia)';
+
+  @override
+  String get businessProfileBankAccountHelper =>
+      'Necesar doar pentru codul QR NBS IPS pe facturile în RSD';
+
+  @override
+  String get businessProfilePaymentCodeLabel =>
+      'Cod de plată implicit (Serbia)';
+
+  @override
+  String get businessProfilePaymentCodeHelper =>
+      'Cod NBS de plată din 3 cifre, ex. 289 — necesar doar pentru codul QR';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override

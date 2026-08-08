@@ -249,10 +249,15 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
+    // .first: SettingsScreen's own outer SingleChildScrollView produces
+    // the first Scrollable in the tree; find.byType(Scrollable) alone
+    // would also match the internal Scrollable every TextField/
+    // EditableText uses for its own text, and the Business profile
+    // section (PROMPT-003F item 12) added several of those.
     final settingsScrollable = find.descendant(
       of: find.byType(SettingsScreen),
       matching: find.byType(Scrollable),
-    );
+    ).first;
     await tester.scrollUntilVisible(
       find.text('Clear history'),
       200,
@@ -802,10 +807,15 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
+    // .first: SettingsScreen's own outer SingleChildScrollView produces
+    // the first Scrollable in the tree; find.byType(Scrollable) alone
+    // would also match the internal Scrollable every TextField/
+    // EditableText uses for its own text, and the Business profile
+    // section (PROMPT-003F item 12) added several of those.
     final settingsScrollable = find.descendant(
       of: find.byType(SettingsScreen),
       matching: find.byType(Scrollable),
-    );
+    ).first;
 
     await tester.scrollUntilVisible(
       find.text('Export all data (CSV)'),

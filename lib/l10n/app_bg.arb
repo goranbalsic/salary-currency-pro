@@ -125,6 +125,16 @@
   "homeWidgetBudgetEmpty": "Задайте бюджет в приложението, за да го видите тук",
   "homeWidgetPairUnavailable": "Неуспешно обновяване — показан е последният известен курс",
 
+  "settingsBusinessProfileTitle": "Бизнес профил",
+  "settingsBusinessProfileExplainer": "Използва се в генерираните фактури в PDF и, за допустими фактури в RSD, в NBS IPS QR кода за плащане.",
+  "businessProfileNameLabel": "Име на фирма / издател",
+  "businessProfileAddressLabel": "Адрес",
+  "businessProfileCityLabel": "Град",
+  "businessProfileBankAccountLabel": "Номер на банкова сметка (Сърбия)",
+  "businessProfileBankAccountHelper": "Необходимо само за NBS IPS QR кода на фактури в RSD",
+  "businessProfilePaymentCodeLabel": "Код на плащане по подразбиране (Сърбия)",
+  "businessProfilePaymentCodeHelper": "Трицифрен NBS код за плащане, напр. 289 — необходим само за QR кода",
+
   "countryRs": "Сърбия",
   "countryHr": "Хърватия",
   "countryBa": "Босна и Херцеговина",

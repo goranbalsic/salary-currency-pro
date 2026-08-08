@@ -125,6 +125,16 @@
   "homeWidgetBudgetEmpty": "Setează un buget în aplicație ca să-l vezi aici",
   "homeWidgetPairUnavailable": "Actualizarea a eșuat — se afișează ultimul curs cunoscut",
 
+  "settingsBusinessProfileTitle": "Profil de afaceri",
+  "settingsBusinessProfileExplainer": "Utilizat pe facturile PDF generate și, pentru facturile eligibile în RSD, pe codul QR NBS IPS de plată.",
+  "businessProfileNameLabel": "Nume firmă / emitent",
+  "businessProfileAddressLabel": "Adresă",
+  "businessProfileCityLabel": "Oraș",
+  "businessProfileBankAccountLabel": "Număr de cont bancar (Serbia)",
+  "businessProfileBankAccountHelper": "Necesar doar pentru codul QR NBS IPS pe facturile în RSD",
+  "businessProfilePaymentCodeLabel": "Cod de plată implicit (Serbia)",
+  "businessProfilePaymentCodeHelper": "Cod NBS de plată din 3 cifre, ex. 289 — necesar doar pentru codul QR",
+
   "countryRs": "Serbia",
   "countryHr": "Croația",
   "countryBa": "Bosnia și Herțegovina",

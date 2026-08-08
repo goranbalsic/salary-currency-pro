@@ -125,6 +125,16 @@
   "homeWidgetBudgetEmpty": "Nastavite proračun v aplikaciji, da ga vidite tukaj",
   "homeWidgetPairUnavailable": "Osvežitev ni uspela — prikazan je zadnji znani tečaj",
 
+  "settingsBusinessProfileTitle": "Poslovni profil",
+  "settingsBusinessProfileExplainer": "Uporablja se na ustvarjenih PDF računih in, za upravičene račune v RSD, na kodi NBS IPS QR za plačilo.",
+  "businessProfileNameLabel": "Naziv podjetja / izdajatelja",
+  "businessProfileAddressLabel": "Naslov",
+  "businessProfileCityLabel": "Kraj",
+  "businessProfileBankAccountLabel": "Številka računa (Srbija)",
+  "businessProfileBankAccountHelper": "Potrebno samo za kodo NBS IPS QR na računih v RSD",
+  "businessProfilePaymentCodeLabel": "Privzeta plačilna šifra (Srbija)",
+  "businessProfilePaymentCodeHelper": "Trimestna NBS plačilna šifra, npr. 289 — potrebna samo za kodo QR",
+
   "countryRs": "Srbija",
   "countryHr": "Hrvaška",
   "countryBa": "Bosna in Hercegovina",

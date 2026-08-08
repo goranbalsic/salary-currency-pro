@@ -125,6 +125,16 @@
   "homeWidgetBudgetEmpty": "Vendosni një buxhet në aplikacion për ta parë këtu",
   "homeWidgetPairUnavailable": "Rifreskimi dështoi — po shfaqet kursi i fundit i njohur",
 
+  "settingsBusinessProfileTitle": "Profili i biznesit",
+  "settingsBusinessProfileExplainer": "Përdoret në faturat PDF të gjeneruara dhe, për faturat e pranueshme në RSD, në kodin NBS IPS QR për pagesë.",
+  "businessProfileNameLabel": "Emri i biznesit / lëshuesit",
+  "businessProfileAddressLabel": "Adresa",
+  "businessProfileCityLabel": "Qyteti",
+  "businessProfileBankAccountLabel": "Numri i llogarisë bankare (Serbi)",
+  "businessProfileBankAccountHelper": "Nevojitet vetëm për kodin NBS IPS QR në faturat në RSD",
+  "businessProfilePaymentCodeLabel": "Kodi i pagesës i parazgjedhur (Serbi)",
+  "businessProfilePaymentCodeHelper": "Kodi NBS 3-shifror i pagesës, p.sh. 289 — nevojitet vetëm për kodin QR",
+
   "countryRs": "Serbia",
   "countryHr": "Kroacia",
   "countryBa": "Bosnja dhe Hercegovina",

@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_lookups.dart';
+import '../../models/business_profile.dart';
 import '../../models/currency.dart';
 import '../../models/expense_entry.dart';
 import '../../navigation/app_page_route.dart';
 import '../../providers/pro_provider.dart';
 import '../../services/budget_service.dart';
+import '../../services/business_profile_service.dart';
 import '../../services/consent_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
@@ -130,6 +132,8 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             const _WidgetsSection(),
           ],
+          const SizedBox(height: 16),
+          const _BusinessProfileSection(),
           const SizedBox(height: 16),
           _SectionCard(
             title: l10n.settingsPrivacyTitle,
@@ -645,6 +649,124 @@ class _PairDropdown extends StatelessWidget {
       onChanged: (code) {
         if (code != null) onChanged(code);
       },
+    );
+  }
+}
+
+/// The invoice issuer's identity — business name, address, and (Serbia
+/// only) a bank account/payment code used for generated PDFs and the NBS
+/// IPS QR code (PROMPT-003 Stage C item 12). One global record, since
+/// this is a single-user offline tool with exactly one issuer per install.
+class _BusinessProfileSection extends StatefulWidget {
+  const _BusinessProfileSection();
+
+  @override
+  State<_BusinessProfileSection> createState() => _BusinessProfileSectionState();
+}
+
+class _BusinessProfileSectionState extends State<_BusinessProfileSection> {
+  final _service = BusinessProfileService();
+  late final _nameCtrl = TextEditingController();
+  late final _address1Ctrl = TextEditingController();
+  late final _address2Ctrl = TextEditingController();
+  late final _accountCtrl = TextEditingController();
+  late final _paymentCodeCtrl = TextEditingController();
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _address1Ctrl.dispose();
+    _address2Ctrl.dispose();
+    _accountCtrl.dispose();
+    _paymentCodeCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    final profile = await _service.load();
+    if (!mounted) return;
+    _nameCtrl.text = profile.businessName;
+    _address1Ctrl.text = profile.addressLine1;
+    _address2Ctrl.text = profile.addressLine2;
+    _accountCtrl.text = profile.bankAccountNumber;
+    _paymentCodeCtrl.text = profile.defaultPaymentCode;
+    setState(() => _loaded = true);
+  }
+
+  Future<void> _save() async {
+    await _service.save(BusinessProfile(
+      businessName: _nameCtrl.text.trim(),
+      addressLine1: _address1Ctrl.text.trim(),
+      addressLine2: _address2Ctrl.text.trim(),
+      bankAccountNumber: _accountCtrl.text.trim(),
+      defaultPaymentCode: _paymentCodeCtrl.text.trim(),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    if (!_loaded) return const SizedBox.shrink();
+
+    return _SectionCard(
+      title: l10n.settingsBusinessProfileTitle,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n.settingsBusinessProfileExplainer,
+              style: const TextStyle(fontSize: 13, height: 1.4),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _nameCtrl,
+              decoration: InputDecoration(labelText: l10n.businessProfileNameLabel),
+              onChanged: (_) => _save(),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _address1Ctrl,
+              decoration: InputDecoration(labelText: l10n.businessProfileAddressLabel),
+              onChanged: (_) => _save(),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _address2Ctrl,
+              decoration: InputDecoration(labelText: l10n.businessProfileCityLabel),
+              onChanged: (_) => _save(),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _accountCtrl,
+              decoration: InputDecoration(
+                labelText: l10n.businessProfileBankAccountLabel,
+                helperText: l10n.businessProfileBankAccountHelper,
+              ),
+              onChanged: (_) => _save(),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _paymentCodeCtrl,
+              keyboardType: TextInputType.number,
+              maxLength: 3,
+              decoration: InputDecoration(
+                labelText: l10n.businessProfilePaymentCodeLabel,
+                helperText: l10n.businessProfilePaymentCodeHelper,
+              ),
+              onChanged: (_) => _save(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

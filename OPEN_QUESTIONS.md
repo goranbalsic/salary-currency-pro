@@ -394,6 +394,56 @@ Recommended default if no answer is received: option (a).
 
 Status: Open.
 
+### QUESTION-009: PROMPT-003F (Stage C item 12, Invoice PDF + NBS IPS QR) — three implementation gaps flagged during planning
+
+Date added: 2026-08-08
+
+Why it matters: the prompt requires citing the official NBS IPS
+specification exactly and never inventing payload/checksum behavior, and
+requires being explicit about what automated tests can and can't verify.
+Three genuine gaps surfaced while planning the NBS QR and PDF-test
+checkpoints (not yet built as of checkpoint 1):
+
+1. **NBS Annex 3 payment-code list is only partially sourced.** The
+   official NBS "Preporuke" (Recommendations) PDF
+   (`https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`, © 2020 NBS)
+   gives the "SF" tag's format (mandatory 3-digit numeric) and a handful
+   of example codes (189/289 for private-individual cash/non-cash;
+   121/122/221/222 for goods/services), but says the full code list is
+   "Prilogom 3" of a separate NBS decision on dinar payment-order forms,
+   which hasn't been independently located/read yet.
+2. **Model-97 reference-number checksum ("RO" tag) is out of scope.**
+   The Preporuke doc explicitly says a payer computing model 97
+   themselves is responsible for getting the checksum right — the app
+   will validate "RO" for format/length only (≤25 chars, leading 2-digit
+   model), not verify or compute a mod-97 check digit.
+3. **PDF content-assertion API for automated tests is unconfirmed.**
+   Which parts of a `pw.Document` (from the planned `pdf` package) can be
+   inspected for text/structure in a widget/unit test, versus only
+   producible as raw bytes, hasn't been spiked yet.
+
+Current assumptions: (1) ship the "SF" field as validated free-text (3
+digits, required) with the sourced example codes shown as in-app help
+text, not a hardcoded exhaustive dropdown, until/unless the full Annex 3
+is sourced; (2) implement no model-97 computation/validation, only the
+documented format/length rule; (3) confirm the `pdf` package's content-
+introspection capability before writing PDF content tests, and if it
+can't support text-presence assertions, say so explicitly in the
+completion report rather than claiming coverage the tests don't have.
+
+Possible answers: (a) proceed with the current assumptions (recommended —
+none of the three block a correct, honest implementation, they only bound
+its scope); (b) source Annex 3's full code list from an official NBS
+decision text before implementing "SF" if a complete dropdown is wanted
+later.
+
+Does it block current work? No — checkpoints 3/4 (PDF rendering, NBS QR)
+can proceed with the current assumptions.
+
+Recommended default if no answer is received: option (a).
+
+Status: Open.
+
 ## Question Template
 
 ### QUESTION-NNN: Title

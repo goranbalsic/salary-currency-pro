@@ -135,6 +135,16 @@
   "homeWidgetBudgetEmpty": "Set a budget in the app to see it here",
   "homeWidgetPairUnavailable": "Couldn't refresh — showing last known rate",
 
+  "settingsBusinessProfileTitle": "Business profile",
+  "settingsBusinessProfileExplainer": "Used on generated invoice PDFs and, for eligible Serbian RSD invoices, the NBS IPS QR payment code.",
+  "businessProfileNameLabel": "Business / issuer name",
+  "businessProfileAddressLabel": "Address",
+  "businessProfileCityLabel": "City",
+  "businessProfileBankAccountLabel": "Bank account number (Serbia)",
+  "businessProfileBankAccountHelper": "Needed only for the NBS IPS QR code on RSD invoices",
+  "businessProfilePaymentCodeLabel": "Default payment code (Serbia)",
+  "businessProfilePaymentCodeHelper": "3-digit NBS payment code, e.g. 289 — needed only for the QR code",
+
   "countryRs": "Serbia",
   "countryHr": "Croatia",
   "countryBa": "Bosnia and Herzegovina",

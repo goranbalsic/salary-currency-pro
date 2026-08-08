@@ -396,6 +396,36 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t refresh — showing last known rate';
 
   @override
+  String get settingsBusinessProfileTitle => 'Business profile';
+
+  @override
+  String get settingsBusinessProfileExplainer =>
+      'Used on generated invoice PDFs and, for eligible Serbian RSD invoices, the NBS IPS QR payment code.';
+
+  @override
+  String get businessProfileNameLabel => 'Business / issuer name';
+
+  @override
+  String get businessProfileAddressLabel => 'Address';
+
+  @override
+  String get businessProfileCityLabel => 'City';
+
+  @override
+  String get businessProfileBankAccountLabel => 'Bank account number (Serbia)';
+
+  @override
+  String get businessProfileBankAccountHelper =>
+      'Needed only for the NBS IPS QR code on RSD invoices';
+
+  @override
+  String get businessProfilePaymentCodeLabel => 'Default payment code (Serbia)';
+
+  @override
+  String get businessProfilePaymentCodeHelper =>
+      '3-digit NBS payment code, e.g. 289 — needed only for the QR code';
+
+  @override
   String get countryRs => 'Serbia';
 
   @override
