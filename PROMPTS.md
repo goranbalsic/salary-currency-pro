@@ -16,6 +16,7 @@ Archived.
 | PROMPT-003C | Checkpoint + Icon Handoff | Large standing instruction | Icon integrated (D-016), verified | Externally-approved icon artwork integrated into branding/; flutter analyze/test/release build re-run and confirmed clean 2026-08-07 |
 | PROMPT-004 | Per-Country Freelancer Calculator + Store Listing De-Serbianisation | Large standing instruction | Parts 1–4 complete, own STOP condition reached — awaiting approval | Extends PROMPT-003 Stage A trust surface: fix Serbia-only store listing bullet in all 9 locales, sweep for similar leaks, then build a remote-updatable (bundled-fallback) tax_rules.json data layer and a real per-country freelancer self-assessment calculator covering all 9 countries (BiH split FBiH/RS) |
 | PROMPT-005 | Version Control, Bulgaria Euro Migration, Serbia Tool Consolidation | Large standing instruction | Parts 0–5 complete, own STOP condition reached — awaiting approval | Closes the three gaps PROMPT-004 disclosed (git repo missing, Bulgaria still BGN, two overlapping Serbia freelancer tools) plus verifies two PROMPT-004 claims (cliff test coverage, all 10 regimes actually wired in) before building on them |
+| PROMPT-003D | Stage C Go-Ahead — Balkan Differentiators | Large standing instruction | Active | Explicit go-ahead for PROMPT-003 Stage C (items 10–13), order 11→12→13→10; housekeeping first (per-ABI size re-check, device-unverified checklist); own STOP condition after item 10's offline shell (Stage D needs separate go-ahead) |
 
 ## Active Prompts
 
@@ -141,14 +142,27 @@ Structure — five staged sections, in priority order:
   Access Framework) with a monthly reminder — doubles as the future sync
   migration path.
 
+### PROMPT-003D: Stage C Go-Ahead — Balkan Differentiators
+
+Status: **Started 2026-08-08** — user supplied
+`_userprompts/PROMPT-003D Stage C Go-Ahead.md`, an explicit go-ahead for
+PROMPT-003 Stage C (items 10–13), satisfying Stage B's own stop
+condition. Working order per the prompt: **11 → 12 → 13 → 10** (item 10
+has a hard network boundary and a partial-scope stop condition of its
+own, so it goes last). Housekeeping (per-ABI size re-check,
+device-unverified checklist confirmation) done first. One item per
+increment, full report after each, checkpoint at every session end. See
+`DECISIONS.md` for per-item records as they land. **This prompt's own
+stop condition:** after item 10's offline shell is done and reported,
+STOP — Stage D (monetization) needs a separate explicit go-ahead.
+
 ### PROMPT-003 Stage B: Retention Mechanics — Started
 
 Status: **Done, 2026-08-08** — user gave explicit go-ahead ("start
 PROMPT-003 Stage B"), satisfying PROMPT-003A's stop condition. Worked
 through items 5–9 in order, one increment at a time, audit-first per
 item, same discipline as Stage A. See `DECISIONS.md` D-024–D-028 for
-per-item records. Stage C (items 10–13) has not been started — no user
-go-ahead yet, same stop-condition discipline as before Stage B started.
+per-item records. Stage C (items 10–13) — see PROMPT-003D above.
 
 ### PROMPT-003A: Stage A Closure — Consent Flow + App Icon
 

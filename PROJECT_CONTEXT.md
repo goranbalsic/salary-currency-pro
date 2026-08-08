@@ -2,6 +2,26 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-08 (later same day). PROMPT-003 Stage B (retention
+  mechanics, items 5–9: recurring transactions, Fixed-Cost Radar, local
+  notifications, Android home-screen widgets, one-at-a-time financial
+  mirror insights) fully implemented and committed (`af64bb4`..`195ccc7`)
+  — see `DECISIONS.md` D-023 through D-028. The user then supplied
+  `_userprompts/PROMPT-003D Stage C Go-Ahead.md`, an explicit go-ahead for
+  Stage C (items 10–13, working order 11→12→13→10), satisfying Stage B's
+  own stop condition; registered as `PROMPT-003D` in `PROMPTS.md`.
+  Housekeeping the go-ahead prompt required before any Stage C code:
+  Stage B's only release build (D-027) was a fat all-ABI APK (60.8MB, not
+  comparable to a per-ABI figure) — re-ran a real
+  `flutter build apk --release --split-per-abi`, got **20.7MB /
+  22.9MB / 24.3MB** (armeabi-v7a/arm64-v8a/x86_64), up slightly from
+  Stage A's 19.4/21.6/23.0MB (new deps: `home_widget`, `workmanager`,
+  `flutter_local_notifications`, `timezone`) but comfortably under the
+  30MB per-ABI budget. `flutter test -j 1`: 276/276 passing, unchanged.
+  Device-unverified checklist below updated to include the two new
+  widgets and notifications alongside the pre-existing consent-dialog/
+  icon gap. **Stage C item 11 (Serbia paušal/freelancer compliance pack)
+  is next.**
 - Date: 2026-08-08 (later same day). PROMPT-005 (Version Control,
   Bulgaria Euro Migration, Serbia Tool Consolidation) fully implemented,
   Parts 0–5, own STOP condition in force. This repository now has a git
@@ -241,6 +261,24 @@ the user explicitly approves it).
   consent form actually renders and behaves correctly, and confirm the
   new icon actually looks right on a real launcher (regular/round/themed
   variants).
+- **Device-unverified checklist (build/test-verified only, no real
+  Android device or emulator available in this environment for any of
+  these):**
+  - UMP/GDPR consent dialog (D-014) — does the EEA consent form actually
+    render and behave correctly.
+  - App icon launcher variants (D-015/D-016) — regular/round/themed
+    icons on a real launcher.
+  - Local notifications (D-026, Stage B item 7) — the four reminder
+    types actually fire and display correctly; permission-denied path
+    degrades gracefully.
+  - Both Android home-screen widgets (D-027, Stage B item 8) —
+    spend-vs-budget and pinned-currency-pair RemoteViews widgets actually
+    render, refresh on data change, and survive the hourly WorkManager
+    backstop on a real launcher.
+  - Stage C will add the fiscal-receipt QR scanner (item 10, offline
+    shell only) to this list once built.
+  - The user will test everything on a real device once the app is
+    feature-complete (per `_userprompts/PROMPT-003D Stage C Go-Ahead.md`).
 
 ## Known Uncertainties
 
@@ -253,29 +291,30 @@ the user explicitly approves it).
 
 ## Current Priorities
 
-1. **PROMPT-003A is complete and its own explicit stop condition applies:
-   "do not start Stage B until [the user says] so."** Do not
-   autonomously begin Stage B — wait for explicit instruction, even
-   though the general working style for this project (once a stage/
-   prompt IS active) is to proceed through its items without asking.
-   This is a documented exception, not a contradiction — see
-   `PROMPTS.md` PROMPT-003A and the auto-memory feedback note on it.
-2. **On-device verification of D-014 (UMP consent) and D-015 (app icon)
-   is the most valuable next action** whenever a real Android device/
-   emulator becomes available — both are implemented and build-verified
-   but not run on real hardware.
-3. Once the user says to proceed, **PROMPT-003 Stage B (retention
-   mechanics)** is next per the plan — see `PROMPTS.md` for the full item
-   list (recurring transactions, subscription tracking, etc.). Each item
-   needs its own audit-first pass like Stage A's items did.
+1. **PROMPT-003D (Stage C go-ahead) is Active.** Working order per the
+   prompt: **11 → 12 → 13 → 10** (item 10 has a hard network boundary and
+   its own partial-scope stop condition, so it goes last). Housekeeping
+   (per-ABI size re-check, device-unverified checklist confirmation) is
+   done — see the top `Last Updated` entry. One item per increment, full
+   report after each, checkpoint at every session end — same discipline
+   as Stages A and B.
+2. **This prompt's own stop condition:** after item 10's offline shell is
+   done and reported, STOP — Stage D (monetization/paywall wiring) needs
+   a separate explicit go-ahead. Nothing in Stage C should be gated
+   behind a paywall yet, but each feature stays behind a clean service
+   boundary so gating is a one-line change later.
+3. **On-device verification remains open** for consent dialog, app icon,
+   both widgets, and notifications (see the Known Risks checklist above)
+   whenever a real Android device/emulator becomes available — Stage C
+   will add the QR scanner to this list. Not blocking; the user will test
+   everything on a real device once the app is feature-complete.
 4. Phase 11's remaining broader scope (typography, spacing, button
-   hierarchy, animations — `PROMPT-002`) remains paused, not abandoned —
-   resume once Stage B is further along.
+   hierarchy, animations — `PROMPT-002`) remains paused, not abandoned.
 5. **Phase 12: produce the online-readiness report** and **stop** —
    explicit user instruction not to implement online functionality until
-   that report is reviewed and approved. PROMPT-003 does not override
-   this gate — any network-dependent item in Stages C/D gets built as an
-   offline shell only, per PROMPT-003's own working rules.
+   that report is reviewed and approved. Item 10's network fetch point is
+   explicitly NOT approved in this stage for the same reason — offline
+   shell only, single documented TODO at the fetch boundary.
 
 ## Completed Milestones
 
@@ -437,39 +476,60 @@ the user explicitly approves it).
   - **PROMPT-004's own explicit stop condition applies: Parts 1–4 are
     complete and verified; do not start further scope (QUESTION-005/006/
     007, or PROMPT-003 Stage B) until the user says so.**
+- **PROMPT-005 (Version Control, Bulgaria Euro Migration, Serbia Tool
+  Consolidation), complete 2026-08-08 — see `DECISIONS.md` D-020/D-021/
+  D-022:** git repo stood up (Part 1); `tax_rules.json` publishing
+  tooling added (Part 2); Bulgaria BGN→EUR fixed plus two independent
+  stale-figure bugs caught in the same audit (Part 3, closes
+  QUESTION-007); the two overlapping Serbia freelancer tools consolidated
+  into one, with an idempotent migration for old saved scenarios (Part 4,
+  closes QUESTION-006). 218/218 tests, clean analyze, 390/390 l10n. Then
+  pushed to GitHub (private) and stood up the public
+  `salary-currency-pro-rules` repo, closing QUESTION-005 for real (not
+  just a placeholder fix) — see `session_logs/2026-08-08-session-02.md`
+  and commit `e9a3aa2`.
+- **PROMPT-003 Stage B (retention mechanics, items 5–9), complete
+  2026-08-08 — see `DECISIONS.md` D-023 through D-028:** recurring
+  transactions with idempotent due-date resolution and a review queue
+  (item 5); Fixed-Cost Radar, a read-only per-currency overview of active
+  recurring expenses (item 6); four offline local notification types, all
+  off by default (item 7); two Android home-screen widgets (spend-vs-
+  budget, pinned currency pair) via RemoteViews + WorkManager, plus a new
+  cross-session `PinnedPairService` (item 8); the Expense Tracker's
+  financial-mirror insights reworked to show one at a time with a
+  tap-to-reveal calculation (item 9). 276/276 tests, clean analyze,
+  444/444 l10n across 9 locales. **Closes Stage B; Stage C (items 10–13)
+  was not started in the same session — needed its own explicit
+  go-ahead, same discipline as before Stage B.**
+- **PROMPT-003D (Stage C go-ahead + housekeeping), 2026-08-08:** user
+  supplied `_userprompts/PROMPT-003D Stage C Go-Ahead.md`, satisfying
+  Stage B's stop condition; registered in `PROMPTS.md`. Housekeeping
+  done before any Stage C code: real `flutter build apk --release
+  --split-per-abi` (Stage B's D-027 had only run a fat 60.8MB universal
+  APK) — 20.7MB/22.9MB/24.3MB per-ABI, comfortably under the 30MB budget;
+  device-unverified checklist in this file confirmed current, widgets
+  and notifications added to it. Stage C item 11 is next.
 
 ## Next Recommended Action
 
-0. **NEWEST, READ FIRST:** PROMPT-005 (git + Bulgaria BGN→EUR + Serbia
-   tool consolidation) is fully implemented, Parts 0–5, verified
-   218/218 tests + clean analyze + 390/390 l10n lockstep + a real release
-   build (D-020, D-021, D-022). **This repo now has git** — 10 commits on
-   `main`, nothing pushed, no remote created. To push:
-   `gh repo create salary-currency-pro --private --source=. --remote=origin`
-   then `git push -u origin main` (or create the private repo on
-   github.com first and `git remote add origin ...`). **PROMPT-005's own
-   explicit stop condition is in force — do not start any further scope
-   without the user's go-ahead**, including:
-   - `OPEN_QUESTIONS.md` QUESTION-005 (still open: set up a real public
-     repo/GitHub Pages URL for `tax_rules.json` over-the-air updates —
-     `kFreelanceTaxRulesRemoteUrl` in
-     `lib/services/tax_rules_service.dart` is still a placeholder; once a
-     real URL exists, repointing it is a one-line change).
-   - PROMPT-003 Stage B (still blocked by PROMPT-003A's own separate
-     stop condition, item 1 below — unrelated to PROMPT-004/005, still
-     open, unchanged from before this session).
-   QUESTION-006 (Serbia tool overlap) and QUESTION-007 (Bulgaria BGN)
-   are now **resolved** — see `DECISIONS.md` D-022 and D-020.
-1. **Do not start PROMPT-003 Stage B** — PROMPT-003A's explicit stop
-   condition applies until the user says otherwise. (D-014/D-015's real
-   Android icon swap is verified per D-016's addendum; on-device
-   consent-dialog/launcher verification is still the one open item under
-   this heading, unchanged from before this session — still needs a real
-   device/emulator, as does the Bulgaria BGN→EUR fix, which was only
-   build-verified this session, not device-verified — no browser/device
-   tooling was available.)
-2. Once the user gives the go-ahead, start PROMPT-003 Stage B (retention
-   mechanics) — see `PROMPTS.md` for the full item list. Each item needs
-   its own audit-first pass, same as Stage A.
-3. Phase 11's remaining scope and Phase 12 (online-readiness report)
-   resume once Stage B is substantially done — see Current Priorities.
+0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active.
+   Housekeeping is done (per-ABI rebuild: 20.7/22.9/24.3MB, all under
+   30MB; device-unverified checklist confirmed current — see the top
+   `Last Updated` entry and Known Risks above). **Start item 11 (Serbia
+   paušal/freelancer compliance pack)**, then 12, then 13, then 10 in
+   that order, one increment at a time with a full report after each.
+1. QUESTION-005 is resolved (`kFreelanceTaxRulesRemoteUrl` points at the
+   real public `salary-currency-pro-rules` repo, live-verified) — no
+   action needed. QUESTION-004 (cold-start timing/list virtualization) is
+   the one remaining open question, deliberately left open pending a real
+   device/emulator or browser tooling — not blocking Stage C.
+2. **After item 10's offline shell is done and reported: STOP.** Stage D
+   (monetization/paywall wiring) needs a separate explicit go-ahead —
+   this is PROMPT-003D's own stop condition, same pattern as every prior
+   stage.
+3. On-device verification (consent dialog, icon, both widgets,
+   notifications, and eventually the QR scanner) remains the single most
+   valuable check whenever a real Android device/emulator or working
+   browser tooling becomes available — not blocking Stage C work.
+4. Phase 11's remaining broader visual-polish scope and Phase 12
+   (online-readiness report) resume once Stage C is substantially done.
