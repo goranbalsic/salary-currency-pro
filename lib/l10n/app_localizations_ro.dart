@@ -1723,4 +1723,77 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Alte venituri';
+
+  @override
+  String get toolsCrossBorderTitle => 'Comparație transfrontalieră';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Compară același salariu brut în toate cele 9 țări';
+
+  @override
+  String get crossBorderGrossLabel => 'Salariu brut (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Lunar';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Anual';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Entitatea Bosniei și Herțegovinei';
+
+  @override
+  String get crossBorderColumnCountry => 'Țară';
+
+  @override
+  String get crossBorderColumnGross => 'Brut';
+
+  @override
+  String get crossBorderColumnDeductions => 'Deduceri angajat';
+
+  @override
+  String get crossBorderColumnNet => 'Net';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Cost angajator';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'Nu există un curs salvat pentru $currency — convertește-l o dată în fila Conversie pentru a activa acest rând.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Datele fiscale nu sunt disponibile pentru această țară.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'Această comparație acoperă doar salariul brut-net și costul angajatorului. Diurnele și kilometrajul nu sunt încă incluse — nu sunt disponibile rate oficiale verificate pentru toate țările.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Introdu un singur salariu brut în EUR. Fiecare țară îl convertește în moneda proprie folosind ultimul curs salvat, apoi îl calculează după regulile reale ale acelei țări — cifrele nu sunt niciodată comparate fără conversie valutară. Valorile anuale sunt calculul lunar × 12. Aceasta este o estimare doar pentru comparație, nu un sfat fiscal.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, salvat $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel =>
+      'Deja în EUR — nu este necesară conversia';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Introdu un salariu brut și apasă Calculează pentru a compara toate cele 9 țări.';
+
+  @override
+  String get crossBorderTapForDetail =>
+      'Atinge un rând pentru detalierea completă';
 }

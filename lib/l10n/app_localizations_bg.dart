@@ -1725,4 +1725,76 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Други приходи';
+
+  @override
+  String get toolsCrossBorderTitle => 'Трансгранично сравнение';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Сравни еднаква брутна заплата в 9-те държави';
+
+  @override
+  String get crossBorderGrossLabel => 'Брутна заплата (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Месечно';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Годишно';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Ентитет на Босна и Херцеговина';
+
+  @override
+  String get crossBorderColumnCountry => 'Държава';
+
+  @override
+  String get crossBorderColumnGross => 'Брутно';
+
+  @override
+  String get crossBorderColumnDeductions => 'Удръжки на служителя';
+
+  @override
+  String get crossBorderColumnNet => 'Нето';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Разход на работодателя';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'Няма запазен курс за $currency — конвертирайте го веднъж в раздел Конвертиране, за да активирате този ред.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Данъчните данни не са налични за тази държава.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'Това сравнение обхваща само брутна-нето заплата и разхода на работодателя. Дневни надбавки и километраж все още не са включени — проверени официални ставки не са налични за всички държави.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Въведете една брутна заплата в EUR. Всяка държава я конвертира в своята валута, използвайки последния запазен курс, след което я изчислява по реалните правила на тази държава — числата никога не се сравняват без конвертиране на валута. Годишните стойности са месечното изчисление × 12. Това е приблизителна оценка само за сравнение, не данъчен съвет.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, запазено $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel =>
+      'Вече в EUR — не е необходимо конвертиране';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Въведете брутна заплата и натиснете Изчисли, за да сравните всичките 9 държави.';
+
+  @override
+  String get crossBorderTapForDetail => 'Натиснете ред за пълната разбивка';
 }

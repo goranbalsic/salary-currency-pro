@@ -1715,4 +1715,76 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Други приходи';
+
+  @override
+  String get toolsCrossBorderTitle => 'Прекугранична споредба';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Спореди ја истата бруто плата во сите 9 земји';
+
+  @override
+  String get crossBorderGrossLabel => 'Бруто плата (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Месечно';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Годишно';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Ентитет на Босна и Херцеговина';
+
+  @override
+  String get crossBorderColumnCountry => 'Земја';
+
+  @override
+  String get crossBorderColumnGross => 'Бруто';
+
+  @override
+  String get crossBorderColumnDeductions => 'Одбивки на вработениот';
+
+  @override
+  String get crossBorderColumnNet => 'Нето';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Трошок на работодавачот';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'Нема зачуван курс за $currency — конвертирајте го еднаш во картичката Конверзија за да го овозможите овој ред.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Даночните податоци не се достапни за оваа земја.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'Оваа споредба ги опфаќа само бруто-нето платата и трошокот на работодавачот. Дневниците и километражата сè уште не се вклучени — проверени официјални стапки не се достапни за сите земји.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Внесете една бруто плата во EUR. Секоја земја ја конвертира во својата валута користејќи го последниот зачуван курс, а потоа ја пресметува според вистинските правила на таа земја — бројките никогаш не се споредуваат без конверзија на валута. Годишните вредности се месечната пресметка × 12. Ова е проценка само за споредба, не даночен совет.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, зачувано $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel =>
+      'Веќе во EUR — конверзија не е потребна';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Внесете бруто плата и допрете Пресметај за да ги споредите сите 9 земји.';
+
+  @override
+  String get crossBorderTapForDetail => 'Допрете ред за целосна пресметка';
 }

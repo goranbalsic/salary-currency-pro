@@ -1712,4 +1712,75 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Drugi prihodki';
+
+  @override
+  String get toolsCrossBorderTitle => 'Čezmejna primerjava';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Primerjaj enako bruto plačo v vseh 9 državah';
+
+  @override
+  String get crossBorderGrossLabel => 'Bruto plača (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Mesečno';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Letno';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Entiteta Bosne in Hercegovine';
+
+  @override
+  String get crossBorderColumnCountry => 'Država';
+
+  @override
+  String get crossBorderColumnGross => 'Bruto';
+
+  @override
+  String get crossBorderColumnDeductions => 'Odtegljaji zaposlenega';
+
+  @override
+  String get crossBorderColumnNet => 'Neto';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Strošek delodajalca';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'Ni shranjenega tečaja za $currency — pretvorite ga enkrat v zavihku Pretvorba, da omogočite to vrstico.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Davčni podatki za to državo niso na voljo.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'Ta primerjava zajema samo bruto-neto plačo in strošek delodajalca. Dnevnice in kilometrina še nista vključeni — preverjene uradne stopnje niso na voljo za vse države.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Vnesite eno bruto plačo v EUR. Vsaka država jo pretvori v svojo valuto z zadnjim shranjenim tečajem, nato pa jo izračuna po dejanskih pravilih te države — številke se nikoli ne primerjajo brez pretvorbe valute. Letne vrednosti so mesečni izračun × 12. To je ocena samo za primerjavo, ne davčni nasvet.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, shranjeno $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel => 'Že v EUR — pretvorba ni potrebna';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Vnesite bruto plačo in tapnite Izračunaj za primerjavo vseh 9 držav.';
+
+  @override
+  String get crossBorderTapForDetail => 'Tapnite vrstico za popoln izračun';
 }

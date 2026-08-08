@@ -1722,4 +1722,76 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Të ardhura të tjera';
+
+  @override
+  String get toolsCrossBorderTitle => 'Krahasim ndërkufitar';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Krahaso pagën e njëjtë bruto në të gjitha 9 vendet';
+
+  @override
+  String get crossBorderGrossLabel => 'Paga bruto (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Mujore';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Vjetore';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Entiteti i Bosnjë-Hercegovinës';
+
+  @override
+  String get crossBorderColumnCountry => 'Vendi';
+
+  @override
+  String get crossBorderColumnGross => 'Bruto';
+
+  @override
+  String get crossBorderColumnDeductions => 'Zbritjet e punonjësit';
+
+  @override
+  String get crossBorderColumnNet => 'Neto';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Kostoja e punëdhënësit';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'Nuk ka kurs të ruajtur për $currency — konvertoje njëherë te skeda Konvertim për ta aktivizuar këtë rresht.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Të dhënat tatimore nuk janë të disponueshme për këtë vend.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'Ky krahasim përfshin vetëm pagën bruto-në-neto dhe koston e punëdhënësit. Dietat dhe kilometrazhi ende nuk janë përfshirë — normat zyrtare të verifikuara nuk janë të disponueshme për të gjitha vendet.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Vendos një pagë bruto në EUR. Çdo vend e konverton atë në valutën e vet duke përdorur kursin e fundit të ruajtur, më pas e llogarit sipas rregullave reale të atij vendi — shifrat nuk krahasohen kurrë pa konvertim valute. Vlerat vjetore janë llogaritja mujore × 12. Kjo është një vlerësim vetëm për krahasim, jo këshillë tatimore.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, ruajtur më $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel =>
+      'Tashmë në EUR — nuk nevojitet konvertim';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Vendos një pagë bruto dhe prek Llogarit për të krahasuar të gjitha 9 vendet.';
+
+  @override
+  String get crossBorderTapForDetail => 'Prek një rresht për ndarjen e plotë';
 }

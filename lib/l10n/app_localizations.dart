@@ -3121,6 +3121,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other income'**
   String get catOtherIncome;
+
+  /// No description provided for @toolsCrossBorderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross-Border Comparison'**
+  String get toolsCrossBorderTitle;
+
+  /// No description provided for @toolsCrossBorderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare the same gross salary across all 9 countries'**
+  String get toolsCrossBorderSubtitle;
+
+  /// No description provided for @crossBorderGrossLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross salary (EUR)'**
+  String get crossBorderGrossLabel;
+
+  /// No description provided for @crossBorderPeriodMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get crossBorderPeriodMonthly;
+
+  /// No description provided for @crossBorderPeriodAnnual.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get crossBorderPeriodAnnual;
+
+  /// No description provided for @crossBorderBaEntityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bosnia and Herzegovina entity'**
+  String get crossBorderBaEntityLabel;
+
+  /// No description provided for @crossBorderColumnCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get crossBorderColumnCountry;
+
+  /// No description provided for @crossBorderColumnGross.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross'**
+  String get crossBorderColumnGross;
+
+  /// No description provided for @crossBorderColumnDeductions.
+  ///
+  /// In en, this message translates to:
+  /// **'Employee deductions'**
+  String get crossBorderColumnDeductions;
+
+  /// No description provided for @crossBorderColumnNet.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get crossBorderColumnNet;
+
+  /// No description provided for @crossBorderColumnEmployerCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Employer cost'**
+  String get crossBorderColumnEmployerCost;
+
+  /// No description provided for @crossBorderColumnComparisonSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} ({currency})'**
+  String crossBorderColumnComparisonSuffix(String label, String currency);
+
+  /// No description provided for @crossBorderUnavailableNoRate.
+  ///
+  /// In en, this message translates to:
+  /// **'No cached rate for {currency} yet — convert it once in the Currency Converter to enable this row.'**
+  String crossBorderUnavailableNoRate(String currency);
+
+  /// No description provided for @crossBorderUnavailableConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax data unavailable for this country.'**
+  String get crossBorderUnavailableConfig;
+
+  /// No description provided for @crossBorderScopeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This comparison covers gross-to-net salary and employer cost only. Per-diem and mileage rates aren\'t included yet — verified official rates weren\'t available for all countries.'**
+  String get crossBorderScopeNote;
+
+  /// No description provided for @crossBorderDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter one gross salary in EUR. Each country converts it to its own currency using the last cached exchange rate, then runs it through that country\'s real payroll rules — never a raw currency-blind comparison. Annual figures are the monthly calculation × 12. This is an estimate for comparison only, not tax advice.'**
+  String get crossBorderDisclaimer;
+
+  /// No description provided for @crossBorderRateSourceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{source}, cached {date}'**
+  String crossBorderRateSourceLabel(String source, String date);
+
+  /// No description provided for @crossBorderSameCurrencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Already in EUR — no conversion needed'**
+  String get crossBorderSameCurrencyLabel;
+
+  /// No description provided for @crossBorderInitialEmptyState.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a gross salary and tap Calculate to compare all 9 countries.'**
+  String get crossBorderInitialEmptyState;
+
+  /// No description provided for @crossBorderTapForDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a row for the full breakdown'**
+  String get crossBorderTapForDetail;
 }
 
 class _AppLocalizationsDelegate

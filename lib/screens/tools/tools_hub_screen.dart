@@ -14,6 +14,7 @@ import '../expenses/recurring_transactions_screen.dart';
 import '../expenses/subscription_radar_screen.dart';
 import '../scenarios/my_scenarios_screen.dart';
 import 'budget_screen.dart';
+import 'cross_border_screen.dart';
 import 'freelance_tax_screen.dart';
 import 'freelancer_payout_screen.dart';
 import 'loan_screen.dart';
@@ -106,6 +107,7 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
     HistoryToolIds.freelancerPayout,
     HistoryToolIds.freelanceTax,
     HistoryToolIds.pausalTracker,
+    HistoryToolIds.crossBorder,
   };
 
   void _openTool(_ToolEntry tool) {
@@ -179,6 +181,14 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         subtitle: l10n.toolsBudgetSubtitle,
         category: _ToolCategory.budgetTax,
         builder: (_) => const BudgetScreen(),
+      ),
+      _ToolEntry(
+        id: HistoryToolIds.crossBorder,
+        icon: Icons.compare_arrows_outlined,
+        title: l10n.toolsCrossBorderTitle,
+        subtitle: l10n.toolsCrossBorderSubtitle,
+        category: _ToolCategory.budgetTax,
+        builder: (_) => const CrossBorderScreen(),
       ),
       _ToolEntry(
         id: HistoryToolIds.freelancerPayout,

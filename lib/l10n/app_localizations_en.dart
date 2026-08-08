@@ -1704,4 +1704,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get catOtherIncome => 'Other income';
+
+  @override
+  String get toolsCrossBorderTitle => 'Cross-Border Comparison';
+
+  @override
+  String get toolsCrossBorderSubtitle =>
+      'Compare the same gross salary across all 9 countries';
+
+  @override
+  String get crossBorderGrossLabel => 'Gross salary (EUR)';
+
+  @override
+  String get crossBorderPeriodMonthly => 'Monthly';
+
+  @override
+  String get crossBorderPeriodAnnual => 'Annual';
+
+  @override
+  String get crossBorderBaEntityLabel => 'Bosnia and Herzegovina entity';
+
+  @override
+  String get crossBorderColumnCountry => 'Country';
+
+  @override
+  String get crossBorderColumnGross => 'Gross';
+
+  @override
+  String get crossBorderColumnDeductions => 'Employee deductions';
+
+  @override
+  String get crossBorderColumnNet => 'Net';
+
+  @override
+  String get crossBorderColumnEmployerCost => 'Employer cost';
+
+  @override
+  String crossBorderColumnComparisonSuffix(String label, String currency) {
+    return '$label ($currency)';
+  }
+
+  @override
+  String crossBorderUnavailableNoRate(String currency) {
+    return 'No cached rate for $currency yet — convert it once in the Currency Converter to enable this row.';
+  }
+
+  @override
+  String get crossBorderUnavailableConfig =>
+      'Tax data unavailable for this country.';
+
+  @override
+  String get crossBorderScopeNote =>
+      'This comparison covers gross-to-net salary and employer cost only. Per-diem and mileage rates aren\'t included yet — verified official rates weren\'t available for all countries.';
+
+  @override
+  String get crossBorderDisclaimer =>
+      'Enter one gross salary in EUR. Each country converts it to its own currency using the last cached exchange rate, then runs it through that country\'s real payroll rules — never a raw currency-blind comparison. Annual figures are the monthly calculation × 12. This is an estimate for comparison only, not tax advice.';
+
+  @override
+  String crossBorderRateSourceLabel(String source, String date) {
+    return '$source, cached $date';
+  }
+
+  @override
+  String get crossBorderSameCurrencyLabel =>
+      'Already in EUR — no conversion needed';
+
+  @override
+  String get crossBorderInitialEmptyState =>
+      'Enter a gross salary and tap Calculate to compare all 9 countries.';
+
+  @override
+  String get crossBorderTapForDetail => 'Tap a row for the full breakdown';
 }

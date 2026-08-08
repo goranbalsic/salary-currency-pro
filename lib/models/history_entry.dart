@@ -12,6 +12,7 @@ class HistoryToolIds {
   static const freelancerPayout = 'freelancer_payout';
   static const freelanceTax = 'freelance_tax';
   static const pausalTracker = 'pausal_tracker';
+  static const crossBorder = 'cross_border';
 }
 
 /// One entry in the local, automatic "recently used" activity log. This is

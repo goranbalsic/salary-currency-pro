@@ -109,6 +109,34 @@
   isolation, and annual-period scaling without float artifacts.
   `flutter analyze`: clean (same 3 pre-existing cosmetic notes as before,
   none new). `flutter test -j 1`: **425/425** (was 402).
+- **Checkpoint 2 (comparison UI) — done:** `lib/screens/tools/
+  cross_border_screen.dart` (`CrossBorderScreen`), added to the Tools hub
+  (budget/tax category, alongside VAT and Budget — no dedicated
+  "cross-border" category exists, and the tool isn't freelance-specific)
+  and to `HistoryToolIds`/recently-used tracking, same pattern as every
+  other tool. Gross input (EUR) + Monthly/Annual `SegmentedButton` + a
+  Bosnia entity `DropdownButtonFormField` (reusing `localizedEntityName`)
+  + Calculate button, matching `FreelanceTaxScreen`'s existing input-card
+  shape. Results: a real `DataTable` (table is mandatory per the prompt)
+  inside a horizontally-scrolling `SingleChildScrollView` so it never
+  overflows a narrow phone width, one row per `kCountries` entry in that
+  list's fixed order; unavailable rows show every numeric cell as a
+  `Tooltip`+`Semantics`-labelled "—" carrying the real reason (no cached
+  rate for `<CODE>`, or tax data unavailable) rather than a bare dash.
+  Tapping an available row opens a `DraggableScrollableSheet` reusing
+  `LabeledRow` and the *existing* `salaryBruto`/`salaryNeto`/etc. l10n
+  keys from the Salary Calculator screen — no duplicate breakdown-label
+  keys were added. 20 new l10n keys × 9 languages (**518/518 keys per
+  locale, verified via `grep -cE '^\s*"[a-zA-Z]'`**) — country/entity
+  names and the full breakdown detail reuse `l10n_lookups.dart` and the
+  Salary Calculator's own keys rather than duplicating them.
+  6 new widget tests (`test/cross_border_screen_test.dart`): initial
+  empty state, populated + unavailable-data (Croatia resolves from an
+  empty cache via EUR identity, Serbia shows an explicit "no cached
+  rate" — never a guessed RSD figure), accessible tooltip/semantics
+  label text, narrow-phone-width horizontal scroll with no overflow
+  exception, row-tap detail sheet, and amount-validation error state.
+  `flutter analyze`: clean. `flutter test -j 1`: **431/431** (was 425).
 
 ## D-030 — PROMPT-003 Stage C item 12: Invoice PDF + NBS IPS QR (in progress)
 
