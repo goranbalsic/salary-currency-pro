@@ -181,6 +181,39 @@ void main() {
             reason: '${r.countryId}: employee deductions must be non-negative');
       }
     });
+
+    test('an unavailable row (no cached rate) never carries a partial employer-cost figure — '
+        'the whole row is the explicit unavailable state, not just the comparison-currency column',
+        () async {
+      final service = CrossBorderComparisonService(rateService: serviceWithCache(RateCacheService()));
+      final result = await service.compare(
+        grossComparisonCurrency: 1500,
+        payPeriod: CrossBorderPayPeriod.monthly,
+        baEntityId: 'fbih',
+      );
+
+      final rsError = result.errors.firstWhere((e) => e.countryId == 'rs');
+      expect(rsError.reason, CrossBorderUnavailableReason.noCachedRate);
+      expect(result.regimes.any((r) => r.countryId == 'rs'), isFalse,
+          reason: 'rs must not appear in regimes at all when its rate is unavailable');
+    });
+
+    test('country-specific employer cost differs across countries for the same EUR gross — '
+        'never a uniform/estimated figure forced to match across regimes', () async {
+      final service = CrossBorderComparisonService(rateService: serviceWithCache(RateCacheService()));
+      final result = await service.compare(
+        grossComparisonCurrency: 2000,
+        payPeriod: CrossBorderPayPeriod.monthly,
+        baEntityId: 'fbih',
+      );
+
+      // hr, me, si, bg are all EUR-native with the same 2000 EUR gross, but
+      // each has its own real, independently-sourced employer contribution
+      // rates — the resulting bruto2 figures must not collapse to one value.
+      final costs = result.regimes.map((r) => r.breakdown.bruto2).toSet();
+      expect(costs.length, greaterThan(1),
+          reason: 'each country\'s employer cost must reflect its own real contribution rates');
+    });
   });
 
   group('Bosnia entity selection', () {

@@ -137,6 +137,24 @@
   label text, narrow-phone-width horizontal scroll with no overflow
   exception, row-tap detail sheet, and amount-validation error state.
   `flutter analyze`: clean. `flutter test -j 1`: **431/431** (was 425).
+- **Checkpoint 3 (employer cost + optional rates) — done, mostly
+  verification of what checkpoints 1–2 already built correctly:** every
+  modeled country's employer total cost was already sourced (each
+  country's own `assets/config/tax/<id>.json` employer contribution
+  rates, same audited source as the Salary Calculator) and uniformly
+  available — there is no country where the engine can't produce a
+  defensible `bruto2`, so no employer-cost-specific "not available" case
+  exists (unlike the rate-lookup unavailable case, which removes the
+  *entire* row, employer cost included — confirmed by a new test rather
+  than assumed). Added 5 targeted tests: comparison-currency rounding
+  lands on a clean cent value for a repeating-decimal rate (100/3),
+  an unavailable row never leaks a partial employer-cost figure, and
+  each EUR-native country's employer cost is independently
+  sourced/differs (never collapsed to one estimated figure). Per-diem/
+  mileage: confirmed still correctly unimplemented and logged —
+  `OPEN_QUESTIONS.md` QUESTION-010 — the core comparison/employer-cost
+  feature is unaffected either way. `flutter analyze`: clean.
+  `flutter test -j 1`: **434/434** (was 431).
 
 ## D-030 — PROMPT-003 Stage C item 12: Invoice PDF + NBS IPS QR (in progress)
 

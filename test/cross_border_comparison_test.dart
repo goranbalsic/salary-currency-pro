@@ -81,6 +81,34 @@ void main() {
       expect(result.employerCostInComparisonCurrency, closeTo(1100 / 117.0, 0.01));
     });
 
+    test('comparison-currency conversion rounds to the nearest cent through money.dart, '
+        'never leaving a repeating-decimal or float artifact on screen', () {
+      // 100 / 3 = 33.333... — a classic repeating decimal that must land on
+      // a clean two-decimal figure, not 33.333333333333336 or similar.
+      const roundingBreakdown = SalaryBreakdown(
+        bruto1: 100,
+        allowanceAmount: 0,
+        taxBase: 100,
+        tax: 0,
+        localSurtaxAmount: 0,
+        contributions: [],
+        employeeContributionsTotal: 0,
+        employerContributionsTotal: 0,
+        neto: 100,
+        bruto2: 100,
+      );
+      final result = CrossBorderRegimeResult(
+        countryId: 'ba',
+        entityId: 'fbih',
+        currencyCode: 'BAM',
+        grossLocal: 100,
+        breakdown: roundingBreakdown,
+        rateInfo: CrossBorderRateInfo(rate: 3.0, source: 'Test', asOf: testAsOf),
+      );
+      expect(result.netInComparisonCurrency, 33.33);
+      expect(result.employerCostInComparisonCurrency, 33.33);
+    });
+
     test('rowId is just the country id when there is no entity, else country_entity', () {
       final noEntity = CrossBorderRegimeResult(
         countryId: 'hr',
