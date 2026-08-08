@@ -1561,6 +1561,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invoiceItemUnitPrice => 'Preț unitar';
 
   @override
+  String get invoiceItemSubtotal => 'Subtotal';
+
+  @override
   String get invoiceAmountFromItemsHelper =>
       'Calculat din articolele de mai jos';
 
@@ -1571,8 +1574,8 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invoiceGeneratePdf => 'Generează PDF';
 
   @override
-  String get invoicePdfComingSoon =>
-      'Exportul în PDF va fi disponibil într-o actualizare viitoare.';
+  String get invoicePdfError =>
+      'Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.';
 
   @override
   String get toolsPausalTrackerTitle => 'Monitor impozit forfetar (Serbia)';

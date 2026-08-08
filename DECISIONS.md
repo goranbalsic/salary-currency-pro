@@ -110,12 +110,68 @@
     artifact).
   - `flutter analyze` clean, `flutter test -j 1` 328/328, l10n 10 new keys
     × 9 languages in lockstep.
-- **Remaining checkpoints (not started):** 12.2 PDF rendering (`pdf`+
-  `printing`), 12.3 NBS IPS QR (`barcode` + payload builder — official
-  source already identified: NBS "Preporuke" PDF, © 2020 Narodna banka
-  Srbije, `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
-  fonts/i18n/accessibility (Noto Sans), final regression + completion
-  report.
+- **Checkpoint 3 (PDF rendering, 12.2) — done:**
+  - Added `pdf: ^3.11.3` (resolved 3.13.0) and `printing: ^5.13.4`
+    (resolved 5.15.0) — both by David PhilBrick (DavBfr), MIT-licensed,
+    offline/no-network, actively maintained. `barcode` and `qr` were
+    pulled in transitively via `pdf`, confirming the plan's assumption
+    that a separate `barcode` dependency won't be needed for checkpoint 4.
+  - **Content/layout split**, as planned: `lib/pdf/invoice_pdf_content.dart`
+    (`InvoicePdfContent`/`buildInvoicePdfContent` — a pure Dart content
+    model with no `pdf` package dependency at all) versus
+    `lib/services/invoice_pdf_service.dart` (`InvoicePdfService` — owns
+    the actual `pw.Document`/`pw.MultiPage` layout and
+    `Printing.layoutPdf` share/print call). This resolves
+    `OPEN_QUESTIONS.md` QUESTION-009's item 3: the `pdf` package doesn't
+    expose a text-content introspection API, so
+    `test/invoice_pdf_content_test.dart` asserts real content rules
+    (itemization, pagination-worthy line counts, status-label selection,
+    issuer/recipient data, the money-rounding guarantee end-to-end)
+    against the content model with zero `pdf` dependency, while
+    `test/invoice_pdf_service_test.dart` is an honest smoke suite only
+    (valid-PDF-bytes magic-number check across one-item/multi-item/
+    pagination/long-text/every currency/paid-unpaid/missing-profile
+    cases) — it does not and cannot claim to verify rendered visual
+    content.
+  - **Dropped the planned `InvoicePdfContent.note` field before it
+    shipped**: it would have duplicated the single-line fallback's own
+    description text (which already carries the invoice's `description`
+    when there are no itemized lines), so keeping it would have meant
+    either dead code or the description rendering twice. Caught during
+    this checkpoint's own test-writing, not left in.
+  - `InvoiceDetailScreen._generatePdf` now does the real thing: loads the
+    business profile, builds the content model with localized status/
+    table-header labels resolved from `AppLocalizations`, calls
+    `InvoicePdfService.generate()` then `.shareOrPrint()`, all inside the
+    existing in-flight guard/try-catch — a failure shows `invoicePdfError`
+    and never touches the stored invoice. The checkpoint-2 stub
+    ("PDF export is coming...") and its `invoicePdfComingSoon` l10n key
+    are gone, replaced by `invoicePdfError` + `invoiceItemSubtotal`.
+  - **Known, expected, and already-planned gap**: no custom font is
+    bundled yet (that's checkpoint 5/12.4), so Cyrillic and Latin-Extended
+    characters (Č, Ć, Š, Đ, Ž, mk/bg Cyrillic, Romanian ș/ț, etc.) don't
+    render in the generated PDF yet — `pdf`'s base font logs "Unable to
+    find a font to draw..." for these, visible in this checkpoint's own
+    test output. Every language's *ASCII-range* content renders
+    correctly now; full glyph coverage lands with the bundled font.
+  - **Verification limits, stated explicitly per the prompt's own
+    requirement**: `InvoicePdfService.generate()` (bytes) is
+    automated-tested; `InvoicePdfService.shareOrPrint()` (the OS-native
+    save/share/print dialog via `Printing.layoutPdf`) has no host-side
+    implementation in the widget-test sandbox (`net.nfet.printing`
+    channel), so `test/invoice_detail_screen_test.dart` mocks that
+    channel to fail deterministically and asserts the app's own error
+    handling — it does **not** verify the real share/print dialog, which
+    needs device/emulator verification, not yet done.
+  - `flutter analyze` clean, `flutter test -j 1` 345/345, l10n net +1 key
+    (added `invoiceItemSubtotal`/`invoicePdfError`, removed
+    `invoicePdfComingSoon`) × 9 languages in lockstep.
+- **Remaining checkpoints (not started):** 12.3 NBS IPS QR (payload
+  builder — official source already identified: NBS "Preporuke" PDF,
+  © 2020 Narodna banka Srbije,
+  `https://ips.nbs.rs/PDF/pdfPreporukeValidacijaLat.pdf`), 12.4
+  fonts/i18n/accessibility (Noto Sans, fixes the Cyrillic/Latin-Extended
+  gap above), final regression + completion report.
 
 ## D-029 — PROMPT-003 Stage C item 11: Serbia paušal & freelancer compliance pack
 

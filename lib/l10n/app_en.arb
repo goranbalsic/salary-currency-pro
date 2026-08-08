@@ -536,10 +536,11 @@
   "invoiceItemDescription": "Description",
   "invoiceItemQuantity": "Qty",
   "invoiceItemUnitPrice": "Unit price",
+  "invoiceItemSubtotal": "Subtotal",
   "invoiceAmountFromItemsHelper": "Calculated from the items below",
   "invoiceRemoveItemTooltip": "Remove item",
   "invoiceGeneratePdf": "Generate PDF",
-  "invoicePdfComingSoon": "PDF export is coming in a future update.",
+  "invoicePdfError": "Couldn't generate the PDF. The invoice itself hasn't changed — try again.",
 
   "toolsPausalTrackerTitle": "Paušal Tracker (Serbia)",
   "toolsPausalTrackerSubtitle": "Track your turnover against the paušal ceiling and VAT threshold",

@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Jed. cijena",
   "invoiceAmountFromItemsHelper": "Izračunato na osnovu stavki ispod",
   "invoiceRemoveItemTooltip": "Ukloni stavku",
+  "invoiceItemSubtotal": "Iznos",
   "invoiceGeneratePdf": "Generiši PDF",
-  "invoicePdfComingSoon": "Izvoz u PDF stiže u budućem ažuriranju.",
+  "invoicePdfError": "Nije uspjelo generisanje PDF-a. Faktura nije promijenjena — pokušajte ponovo.",
 
   "toolsPausalTrackerTitle": "Praćenje paušala (Srbija)",
   "toolsPausalTrackerSubtitle": "Pratite promet u odnosu na paušalni cenzus i prag za PDV",

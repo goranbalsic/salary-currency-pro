@@ -2846,6 +2846,12 @@ abstract class AppLocalizations {
   /// **'Unit price'**
   String get invoiceItemUnitPrice;
 
+  /// No description provided for @invoiceItemSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get invoiceItemSubtotal;
+
   /// No description provided for @invoiceAmountFromItemsHelper.
   ///
   /// In en, this message translates to:
@@ -2864,11 +2870,11 @@ abstract class AppLocalizations {
   /// **'Generate PDF'**
   String get invoiceGeneratePdf;
 
-  /// No description provided for @invoicePdfComingSoon.
+  /// No description provided for @invoicePdfError.
   ///
   /// In en, this message translates to:
-  /// **'PDF export is coming in a future update.'**
-  String get invoicePdfComingSoon;
+  /// **'Couldn\'t generate the PDF. The invoice itself hasn\'t changed — try again.'**
+  String get invoicePdfError;
 
   /// No description provided for @toolsPausalTrackerTitle.
   ///

@@ -1560,6 +1560,9 @@ class AppLocalizationsSq extends AppLocalizations {
   String get invoiceItemUnitPrice => 'Çmimi/njësi';
 
   @override
+  String get invoiceItemSubtotal => 'Nëntotali';
+
+  @override
   String get invoiceAmountFromItemsHelper =>
       'Llogaritur nga artikujt më poshtë';
 
@@ -1570,8 +1573,8 @@ class AppLocalizationsSq extends AppLocalizations {
   String get invoiceGeneratePdf => 'Gjenero PDF';
 
   @override
-  String get invoicePdfComingSoon =>
-      'Eksportimi në PDF vjen në një përditësim të ardhshëm.';
+  String get invoicePdfError =>
+      'Krijimi i PDF-së dështoi. Fatura nuk është ndryshuar — provoni përsëri.';
 
   @override
   String get toolsPausalTrackerTitle => 'Ndjekësi i tarifës fikse (Serbi)';

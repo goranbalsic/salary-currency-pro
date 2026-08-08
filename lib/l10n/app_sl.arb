@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Cena/enoto",
   "invoiceAmountFromItemsHelper": "Izračunano na podlagi spodnjih postavk",
   "invoiceRemoveItemTooltip": "Odstrani postavko",
+  "invoiceItemSubtotal": "Znesek",
   "invoiceGeneratePdf": "Ustvari PDF",
-  "invoicePdfComingSoon": "Izvoz v PDF bo na voljo v prihodnji posodobitvi.",
+  "invoicePdfError": "Ustvarjanje PDF-ja ni uspelo. Račun se ni spremenil — poskusite znova.",
 
   "toolsPausalTrackerTitle": "Sledilnik pavšala (Srbija)",
   "toolsPausalTrackerSubtitle": "Spremljajte promet glede na prag pavšala in prag za DDV",

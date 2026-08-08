@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Ед. цена",
   "invoiceAmountFromItemsHelper": "Пресметано врз основа на ставките подолу",
   "invoiceRemoveItemTooltip": "Отстрани ставка",
+  "invoiceItemSubtotal": "Износ",
   "invoiceGeneratePdf": "Генерирај PDF",
-  "invoicePdfComingSoon": "Извозот во PDF доаѓа во идно ажурирање.",
+  "invoicePdfError": "Генерирањето на PDF не успеа. Фактурата не е променета — обидете се повторно.",
 
   "toolsPausalTrackerTitle": "Следење на паушал (Србија)",
   "toolsPausalTrackerSubtitle": "Следете го прометот во однос на паушалниот цензус и прагот за ДДВ",

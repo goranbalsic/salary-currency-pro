@@ -178,13 +178,17 @@ project's normal no-pause default — per-checkpoint approval. Built across
 an approved multi-checkpoint plan; checkpoint 1 (Foundation:
 `BusinessProfile` model/service/Settings section, `Invoice`/
 `InvoiceLineItem` model additions, the `lib/utils/money.dart`
-rounding helper) and checkpoint 2 (Journey, 12.1: `InvoiceDetailScreen`
+rounding helper), checkpoint 2 (Journey, 12.1: `InvoiceDetailScreen`
 with the Generate PDF → edit → mark paid/unpaid → delete action
-hierarchy, itemization in the add/edit sheet) are done. Full detail:
-`DECISIONS.md` D-030. `flutter analyze` clean, `flutter test -j 1`
-328/328, l10n 19 new keys × 9 languages in lockstep. Remaining
-checkpoints: PDF rendering, NBS IPS QR, fonts/i18n/accessibility, final
-regression + completion report.
+hierarchy, itemization in the add/edit sheet), and checkpoint 3 (PDF
+rendering, 12.2: `pdf`+`printing` dependencies, a content/layout split
+between `InvoicePdfContent` and `InvoicePdfService` so PDF content rules
+stay unit-testable, Generate PDF now does real generate-then-share/print)
+are done. Full detail: `DECISIONS.md` D-030. `flutter analyze` clean,
+`flutter test -j 1` 345/345, l10n in lockstep across 9 languages.
+Remaining checkpoints: NBS IPS QR, fonts/i18n/accessibility (fixes a
+known, already-planned Cyrillic/Latin-Extended glyph gap in the PDF),
+final regression + completion report.
 
 ### PROMPT-003E: Stage C Item 11 — Serbia Paušal & Freelancer Compliance Pack
 

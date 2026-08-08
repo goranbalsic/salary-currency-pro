@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Ед. цена",
   "invoiceAmountFromItemsHelper": "Изчислено въз основа на артикулите по-долу",
   "invoiceRemoveItemTooltip": "Премахни артикул",
+  "invoiceItemSubtotal": "Сума",
   "invoiceGeneratePdf": "Генерирай PDF",
-  "invoicePdfComingSoon": "Експортът в PDF ще бъде наличен в бъдеща актуализация.",
+  "invoicePdfError": "Генерирането на PDF не бе успешно. Фактурата не е променена — опитайте отново.",
 
   "toolsPausalTrackerTitle": "Проследяване на патента (Сърбия)",
   "toolsPausalTrackerSubtitle": "Проследявайте оборота спрямо тавана за патент и прага за ДДС",

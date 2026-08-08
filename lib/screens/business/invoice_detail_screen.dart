@@ -3,6 +3,9 @@ import 'package:intl/intl.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../models/invoice.dart';
+import '../../pdf/invoice_pdf_content.dart';
+import '../../services/business_profile_service.dart';
+import '../../services/invoice_pdf_service.dart';
 import '../../services/invoice_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
@@ -28,6 +31,8 @@ class InvoiceDetailScreen extends StatefulWidget {
 class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
   final _service = InvoiceService();
   final _notificationService = NotificationService();
+  final _businessProfileService = BusinessProfileService();
+  final _pdfService = InvoicePdfService();
   Invoice? _invoice;
   bool _loaded = false;
   bool _pdfInFlight = false;
@@ -112,18 +117,48 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
   }
 
   Future<void> _generatePdf(AppLocalizations l10n) async {
-    // Real PDF generation lands in the next checkpoint (item 12.2) — this
-    // action is wired now, with real loading/disabled-while-in-flight
-    // feedback, so the action hierarchy can be reviewed on its own before
-    // PDF rendering exists. Never mutates the stored invoice either way.
-    if (_pdfInFlight) return;
+    final invoice = _invoice;
+    // Guards against a rapid second tap starting a competing export while
+    // one is already in flight — never mutates the stored invoice either
+    // way, so a failed or repeated attempt can't corrupt/duplicate data.
+    if (_pdfInFlight || invoice == null) return;
     setState(() => _pdfInFlight = true);
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    if (!mounted) return;
-    setState(() => _pdfInFlight = false);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(l10n.invoicePdfComingSoon)));
+
+    try {
+      final profile = await _businessProfileService.load();
+      if (!mounted) return;
+      final content = buildInvoicePdfContent(
+        invoice: invoice,
+        profile: profile,
+        localeCode: Localizations.localeOf(context).languageCode,
+        statusLabels: InvoicePdfStatusLabels(
+          paid: l10n.invoiceStatusPaid,
+          unpaid: l10n.invoiceStatusUnpaid,
+          overdue: l10n.invoiceStatusOverdue,
+        ),
+        tableLabels: InvoicePdfTableLabels(
+          description: l10n.invoiceItemDescription,
+          quantity: l10n.invoiceItemQuantity,
+          unitPrice: l10n.invoiceItemUnitPrice,
+          subtotal: l10n.invoiceItemSubtotal,
+        ),
+        // NBS IPS QR payload isn't built until checkpoint 4 (12.3) — every
+        // invoice gets a full, professional PDF without one until then.
+      );
+      final bytes = await _pdfService.generate(content);
+      if (!mounted) return;
+      final filename = invoice.invoiceNumber.isNotEmpty
+          ? '${invoice.invoiceNumber}.pdf'
+          : 'invoice-${invoice.id}.pdf';
+      await _pdfService.shareOrPrint(bytes, filename: filename);
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(l10n.invoicePdfError)));
+    } finally {
+      if (mounted) setState(() => _pdfInFlight = false);
+    }
   }
 
   void _openEditSheet() {

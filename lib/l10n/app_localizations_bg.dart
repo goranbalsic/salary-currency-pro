@@ -1563,6 +1563,9 @@ class AppLocalizationsBg extends AppLocalizations {
   String get invoiceItemUnitPrice => 'Ед. цена';
 
   @override
+  String get invoiceItemSubtotal => 'Сума';
+
+  @override
   String get invoiceAmountFromItemsHelper =>
       'Изчислено въз основа на артикулите по-долу';
 
@@ -1573,8 +1576,8 @@ class AppLocalizationsBg extends AppLocalizations {
   String get invoiceGeneratePdf => 'Генерирай PDF';
 
   @override
-  String get invoicePdfComingSoon =>
-      'Експортът в PDF ще бъде наличен в бъдеща актуализация.';
+  String get invoicePdfError =>
+      'Генерирането на PDF не бе успешно. Фактурата не е променена — опитайте отново.';
 
   @override
   String get toolsPausalTrackerTitle => 'Проследяване на патента (Сърбия)';

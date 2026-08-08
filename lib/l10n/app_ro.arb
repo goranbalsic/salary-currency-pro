@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Preț unitar",
   "invoiceAmountFromItemsHelper": "Calculat din articolele de mai jos",
   "invoiceRemoveItemTooltip": "Elimină articolul",
+  "invoiceItemSubtotal": "Subtotal",
   "invoiceGeneratePdf": "Generează PDF",
-  "invoicePdfComingSoon": "Exportul în PDF va fi disponibil într-o actualizare viitoare.",
+  "invoicePdfError": "Generarea PDF-ului a eșuat. Factura nu s-a modificat — încercați din nou.",
 
   "toolsPausalTrackerTitle": "Monitor impozit forfetar (Serbia)",
   "toolsPausalTrackerSubtitle": "Urmărește cifra de afaceri față de plafonul forfetar și pragul de TVA",

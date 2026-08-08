@@ -1553,6 +1553,9 @@ class AppLocalizationsMk extends AppLocalizations {
   String get invoiceItemUnitPrice => 'Ед. цена';
 
   @override
+  String get invoiceItemSubtotal => 'Износ';
+
+  @override
   String get invoiceAmountFromItemsHelper =>
       'Пресметано врз основа на ставките подолу';
 
@@ -1563,7 +1566,8 @@ class AppLocalizationsMk extends AppLocalizations {
   String get invoiceGeneratePdf => 'Генерирај PDF';
 
   @override
-  String get invoicePdfComingSoon => 'Извозот во PDF доаѓа во идно ажурирање.';
+  String get invoicePdfError =>
+      'Генерирањето на PDF не успеа. Фактурата не е променета — обидете се повторно.';
 
   @override
   String get toolsPausalTrackerTitle => 'Следење на паушал (Србија)';

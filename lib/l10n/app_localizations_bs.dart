@@ -1548,6 +1548,9 @@ class AppLocalizationsBs extends AppLocalizations {
   String get invoiceItemUnitPrice => 'Jed. cijena';
 
   @override
+  String get invoiceItemSubtotal => 'Iznos';
+
+  @override
   String get invoiceAmountFromItemsHelper =>
       'Izračunato na osnovu stavki ispod';
 
@@ -1558,7 +1561,8 @@ class AppLocalizationsBs extends AppLocalizations {
   String get invoiceGeneratePdf => 'Generiši PDF';
 
   @override
-  String get invoicePdfComingSoon => 'Izvoz u PDF stiže u budućem ažuriranju.';
+  String get invoicePdfError =>
+      'Nije uspjelo generisanje PDF-a. Faktura nije promijenjena — pokušajte ponovo.';
 
   @override
   String get toolsPausalTrackerTitle => 'Praćenje paušala (Srbija)';

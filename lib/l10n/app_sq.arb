@@ -517,8 +517,9 @@
   "invoiceItemUnitPrice": "Çmimi/njësi",
   "invoiceAmountFromItemsHelper": "Llogaritur nga artikujt më poshtë",
   "invoiceRemoveItemTooltip": "Hiq artikullin",
+  "invoiceItemSubtotal": "Nëntotali",
   "invoiceGeneratePdf": "Gjenero PDF",
-  "invoicePdfComingSoon": "Eksportimi në PDF vjen në një përditësim të ardhshëm.",
+  "invoicePdfError": "Krijimi i PDF-së dështoi. Fatura nuk është ndryshuar — provoni përsëri.",
 
   "toolsPausalTrackerTitle": "Ndjekësi i tarifës fikse (Serbi)",
   "toolsPausalTrackerSubtitle": "Ndiq xhiron kundrejt kufirit të tarifës fikse dhe pragut të TVSH-së",
