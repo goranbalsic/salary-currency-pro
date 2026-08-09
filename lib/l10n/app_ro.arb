@@ -312,10 +312,6 @@
   "settingsEntitlementPreviewDescription": "Doar o simulare pentru testare — nu are loc nicio achiziție sau taxare reală. Disponibil doar în versiunile de dezvoltare.",
   "settingsTrustTitle": "De ce să ai încredere în această aplicație?",
   "settingsTrustBody": "Cifrele privind salariile, TVA și autoimpozitarea provin din surse guvernamentale și de consultanță fiscală citate, nu din estimări. Fiecare calculator arată anul pentru care sunt valabile cifrele și data la care au intrat în vigoare, astfel încât să poți evalua rapid actualitatea lor. Vezi „Confidențialitate și date” și „Funcționează complet offline” mai jos pentru modul în care sunt gestionate datele tale.",
-  "settingsAdPrivacyTitle": "Confidențialitate și preferințe pentru reclame",
-  "settingsAdPrivacySubtitle": "Revizuiește sau schimbă alegerile tale privind consimțământul pentru reclame",
-  "settingsAdPrivacyUnavailable": "Opțiunile de confidențialitate pentru reclame nu sunt disponibile pe această platformă.",
-  "settingsAdPrivacyNotRequired": "Pentru regiunea ta nu este necesară o alegere privind confidențialitatea reclamelor.",
   "settingsAboutBody": "Salary & Currency Pro acoperă calculul salariilor, conversia valutară și calculatoare financiare zilnice pentru Serbia, Croația, Bosnia și Herțegovina, Muntenegru, Macedonia de Nord, Slovenia, Bulgaria, Albania și România. Toate cifrele sunt cu sursă și dată — vezi avertismentul fiecărui calculator pentru detalii. Această aplicație oferă doar estimări, nu consultanță profesională.",
 
   "paywallTitle": "Devino Pro",

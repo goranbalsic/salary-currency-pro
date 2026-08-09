@@ -37,7 +37,6 @@ dependencies:
   shared_preferences: ^2.3.3
   provider: ^6.1.2
   intl: ^0.20.2
-  google_mobile_ads: ^9.0.0
   in_app_purchase: ^3.2.1
   in_app_purchase_platform_interface: ^1.4.0
   fl_chart: ^0.69.2

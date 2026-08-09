@@ -312,10 +312,6 @@
   "settingsEntitlementPreviewDescription": "Samo simulacija za testiranje — ne dolazi do stvarne kupovine ili naplate. Dostupno samo u razvojnim verzijama.",
   "settingsTrustTitle": "Zašto verovati ovoj aplikaciji?",
   "settingsTrustBody": "Podaci o zaradama, PDV-u i samooporezivanju potiču iz citiranih državnih i stručnih poreskih izvora, a ne procena. Svaki kalkulator prikazuje godinu na koju se brojke odnose i datum stupanja na snagu, tako da odmah možete proceniti ažurnost. Pogledajte „Privatnost i podaci“ i „Radi potpuno bez interneta“ ispod za način na koji se vaši podaci obrađuju.",
-  "settingsAdPrivacyTitle": "Privatnost i reklame",
-  "settingsAdPrivacySubtitle": "Pregledajte ili promenite svoj izbor pristanka za reklame",
-  "settingsAdPrivacyUnavailable": "Opcije privatnosti reklama nisu dostupne na ovoj platformi.",
-  "settingsAdPrivacyNotRequired": "Za vaš region nije potreban izbor privatnosti reklama.",
   "settingsAboutBody": "Salary & Currency Pro obuhvata obračun zarada, konverziju valuta i svakodnevne finansijske kalkulatore za Srbiju, Hrvatsku, Bosnu i Hercegovinu, Crnu Goru, Severnu Makedoniju, Sloveniju, Bugarsku, Albaniju i Rumuniju. Svi podaci su izvorno navedeni i datirani — pogledajte napomenu svakog kalkulatora za detalje. Ova aplikacija pruža samo procene, a ne stručni savet.",
 
   "paywallTitle": "Postani Pro",

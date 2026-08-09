@@ -312,10 +312,6 @@
   "settingsEntitlementPreviewDescription": "Vetëm simulim për testim — nuk ndodh asnjë blerje apo tarifim real. E disponueshme vetëm në versionet zhvillimore.",
   "settingsTrustTitle": "Pse ta besosh këtë aplikacion?",
   "settingsTrustBody": "Shifrat për pagat, TVSH-në dhe vetëtaksimin vijnë nga burime të cituara qeveritare dhe këshillimi tatimor profesional, jo nga vlerësime. Çdo kalkulator tregon vitin për të cilin vlejnë shifrat dhe datën kur hynë në fuqi, që ta vlerësosh menjëherë freskinë e tyre. Shiko „Privatësia dhe të dhënat“ dhe „Funksionon plotësisht offline“ më poshtë për mënyrën si trajtohen të dhënat e tua.",
-  "settingsAdPrivacyTitle": "Privatësia dhe preferencat e reklamave",
-  "settingsAdPrivacySubtitle": "Shiko ose ndrysho zgjedhjet e tua për pëlqimin e reklamave",
-  "settingsAdPrivacyUnavailable": "Opsionet e privatësisë së reklamave nuk janë të disponueshme në këtë platformë.",
-  "settingsAdPrivacyNotRequired": "Për rajonin tënd nuk kërkohet zgjedhje për privatësinë e reklamave.",
   "settingsAboutBody": "Salary & Currency Pro mbulon llogaritjen e pagave, konvertimin e valutave dhe kalkulatorë financiarë të përditshëm për Serbinë, Kroacinë, Bosnjën dhe Hercegovinën, Malin e Zi, Maqedoninë e Veriut, Sllovenínë, Bullgarinë, Shqipërinë dhe Rumaninë. Të gjitha shifrat janë të burimuara dhe të datuara — shiko shënimin e çdo kalkulatori për detaje. Ky aplikacion ofron vetëm vlerësime, jo këshillë profesionale.",
 
   "paywallTitle": "Bëhu Pro",

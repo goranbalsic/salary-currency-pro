@@ -947,22 +947,6 @@ class AppLocalizationsRo extends AppLocalizations {
       'Cifrele privind salariile, TVA și autoimpozitarea provin din surse guvernamentale și de consultanță fiscală citate, nu din estimări. Fiecare calculator arată anul pentru care sunt valabile cifrele și data la care au intrat în vigoare, astfel încât să poți evalua rapid actualitatea lor. Vezi „Confidențialitate și date” și „Funcționează complet offline” mai jos pentru modul în care sunt gestionate datele tale.';
 
   @override
-  String get settingsAdPrivacyTitle =>
-      'Confidențialitate și preferințe pentru reclame';
-
-  @override
-  String get settingsAdPrivacySubtitle =>
-      'Revizuiește sau schimbă alegerile tale privind consimțământul pentru reclame';
-
-  @override
-  String get settingsAdPrivacyUnavailable =>
-      'Opțiunile de confidențialitate pentru reclame nu sunt disponibile pe această platformă.';
-
-  @override
-  String get settingsAdPrivacyNotRequired =>
-      'Pentru regiunea ta nu este necesară o alegere privind confidențialitatea reclamelor.';
-
-  @override
   String get settingsAboutBody =>
       'Salary & Currency Pro acoperă calculul salariilor, conversia valutară și calculatoare financiare zilnice pentru Serbia, Croația, Bosnia și Herțegovina, Muntenegru, Macedonia de Nord, Slovenia, Bulgaria, Albania și România. Toate cifrele sunt cu sursă și dată — vezi avertismentul fiecărui calculator pentru detalii. Această aplicație oferă doar estimări, nu consultanță profesională.';
 

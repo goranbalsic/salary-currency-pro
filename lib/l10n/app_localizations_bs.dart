@@ -934,21 +934,6 @@ class AppLocalizationsBs extends AppLocalizations {
       'Podaci o platama, PDV-u i samooporezivanju potiču iz citiranih državnih i stručnih poreznih izvora, a ne procjena. Svaki kalkulator prikazuje godinu na koju se brojke odnose i datum stupanja na snagu, tako da odmah možete procijeniti ažurnost. Pogledajte „Privatnost i podaci“ i „Radi potpuno bez interneta“ ispod za način na koji se vaši podaci obrađuju.';
 
   @override
-  String get settingsAdPrivacyTitle => 'Privatnost i oglasi';
-
-  @override
-  String get settingsAdPrivacySubtitle =>
-      'Pregledajte ili promijenite svoj izbor pristanka za oglase';
-
-  @override
-  String get settingsAdPrivacyUnavailable =>
-      'Opcije privatnosti oglasa nisu dostupne na ovoj platformi.';
-
-  @override
-  String get settingsAdPrivacyNotRequired =>
-      'Za vaš region nije potreban izbor privatnosti oglasa.';
-
-  @override
   String get settingsAboutBody =>
       'Salary & Currency Pro obuhvata obračun plata, konverziju valuta i svakodnevne finansijske kalkulatore za Srbiju, Hrvatsku, Bosnu i Hercegovinu, Crnu Goru, Sjevernu Makedoniju, Sloveniju, Bugarsku, Albaniju i Rumuniju. Svi podaci su izvorno navedeni i datirani — pogledajte napomenu svakog kalkulatora za detalje. Ova aplikacija pruža samo procjene, a ne stručni savjet.';
 

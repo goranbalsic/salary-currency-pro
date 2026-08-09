@@ -50,13 +50,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- AdMob app ID. This is Google's official TEST ID (safe to ship,
-             shows only test ads, earns no revenue) — see
-             lib/config/monetization_config.dart. Replace with your real
-             AdMob app ID here (and there) before a Play Store release. -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
         <!-- flutter_local_notifications: required receivers for scheduled
              (not just immediate) notifications to fire and to survive a
              device reboot. -->

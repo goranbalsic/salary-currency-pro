@@ -945,21 +945,6 @@ class AppLocalizationsSq extends AppLocalizations {
       'Shifrat për pagat, TVSH-në dhe vetëtaksimin vijnë nga burime të cituara qeveritare dhe këshillimi tatimor profesional, jo nga vlerësime. Çdo kalkulator tregon vitin për të cilin vlejnë shifrat dhe datën kur hynë në fuqi, që ta vlerësosh menjëherë freskinë e tyre. Shiko „Privatësia dhe të dhënat“ dhe „Funksionon plotësisht offline“ më poshtë për mënyrën si trajtohen të dhënat e tua.';
 
   @override
-  String get settingsAdPrivacyTitle => 'Privatësia dhe preferencat e reklamave';
-
-  @override
-  String get settingsAdPrivacySubtitle =>
-      'Shiko ose ndrysho zgjedhjet e tua për pëlqimin e reklamave';
-
-  @override
-  String get settingsAdPrivacyUnavailable =>
-      'Opsionet e privatësisë së reklamave nuk janë të disponueshme në këtë platformë.';
-
-  @override
-  String get settingsAdPrivacyNotRequired =>
-      'Për rajonin tënd nuk kërkohet zgjedhje për privatësinë e reklamave.';
-
-  @override
   String get settingsAboutBody =>
       'Salary & Currency Pro mbulon llogaritjen e pagave, konvertimin e valutave dhe kalkulatorë financiarë të përditshëm për Serbinë, Kroacinë, Bosnjën dhe Hercegovinën, Malin e Zi, Maqedoninë e Veriut, Sllovenínë, Bullgarinë, Shqipërinë dhe Rumaninë. Të gjitha shifrat janë të burimuara dhe të datuara — shiko shënimin e çdo kalkulatori për detaje. Ky aplikacion ofron vetëm vlerësime, jo këshillë profesionale.';
 

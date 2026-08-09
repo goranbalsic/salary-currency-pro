@@ -1,5 +1,85 @@
 # DECISIONS.md
 
+## D-035 — NEXT_ACTION: remove dormant Google Mobile Ads/UMP completely; real signed release (checkpoint 1 done)
+
+- **Date:** 2026-08-09. Implements
+  `_userprompts/NEXT_ACTION_Finish_Signed_App_Test_and_Play_Preparation.md`
+  (no ID collision — a plain "next action" continuation, not renumbered).
+  Directly resolves the open decision D-034 flagged in
+  `PLAY_CONSOLE_CHECKLIST.md`: the dormant Google Mobile Ads SDK was still
+  a compiled dependency (Decision 1 disabled initialization, never
+  deleted it) and Play's automated SDK scanning could detect it
+  regardless. **Decision, made by the user this time, not this session's
+  judgment call: remove the dependency completely**, not just keep it
+  disabled.
+- **Checkpoint 1 — full removal, audited across every layer the prompt
+  named:**
+  - **Dependencies:** `google_mobile_ads` removed from `pubspec.yaml`.
+    `flutter pub get` confirmed a real, load-bearing consequence: removing
+    it also dropped `webview_flutter`/`webview_flutter_android`/
+    `webview_flutter_platform_interface`/`webview_flutter_wkwebview` —
+    all four were only present as `google_mobile_ads`'s own transitive
+    dependency (used for its interstitial/rewarded ad rendering). **This
+    app now has zero WebView dependency of any kind** — a stronger,
+    dependency-level version of the fiscal-receipt scanner's own
+    feature-level "no WebView" boundary (D-032), not just a narrower
+    scoped promise anymore.
+  - **Code:** deleted `lib/services/ads_service.dart`,
+    `lib/services/consent_service.dart` (Google's UMP consent wrapper —
+    it imports `google_mobile_ads` directly for `ConsentInformation`/
+    `ConsentForm`, so it cannot exist independently of the ad SDK; UMP is
+    consent *for ad personalization specifically*, not general app
+    privacy, so removing ads removes UMP's entire reason to exist too),
+    and `lib/widgets/banner_ad_slot.dart`. Removed the "Privacy & ad
+    preferences" Settings row and its handler
+    (`SettingsScreen._openAdPrivacyOptions`) — the only remaining
+    consumer of `ConsentService`.
+  - **Android:** removed the `com.google.android.gms.ads.APPLICATION_ID`
+    meta-data from `AndroidManifest.xml`. `proguard-rules.pro` had no
+    ad-specific rules to remove (was already generic/empty). No manual
+    `splits`/signing changes needed here — see checkpoint 2 for the
+    signing scaffold itself.
+  - **Config:** `MonetizationConfig` (`lib/config/monetization_config.dart`)
+    lost `androidAdMobAppId`/`bannerAdUnitId`; its class doc comment now
+    states plainly that no ad SDK identifier lives there at all.
+  - **l10n:** 4 keys removed (`settingsAdPrivacyTitle`/`Subtitle`/
+    `Unavailable`/`NotRequired`) from all 9 `.arb` files — 584 keys × 9
+    locales (was 588), `test/l10n_parity_test.dart` still passes (no
+    locale left with an orphaned key).
+  - **Docs:** `bootstrap.dart`'s comment updated from "left in place, not
+    deleted" to reflect the actual new state; `MonetizationConfig`'s
+    comment likewise. This Decision 1 (no ads at launch) itself is
+    unchanged in substance — the "not permanent, sequencing" framing from
+    D-033 is superseded by this entry: **re-adding ads later now needs a
+    fresh, explicit product/privacy implementation from scratch,
+    including a new UMP consent flow**, not a re-enable of preserved
+    code, since none remains.
+  - **Real regression tests, all green:** `flutter test -j 1` **525/525**
+    (unchanged — no test ever depended on the removed ad-privacy row).
+    `flutter analyze` clean (same 3 pre-existing, unrelated info-level
+    issues). l10n parity confirmed.
+  - **SDK-absence proof — a real build artifact inspected, not assumed:**
+    built `prodRelease` (`flutter build apk --release --flavor prod -t
+    lib/main_prod.dart`). `aapt dump badging`/`dump xmltree` confirmed the
+    `com.google.android.gms.permission.AD_ID` permission and
+    `com.google.android.gms.ads.APPLICATION_ID` meta-data — both
+    auto-merged into every prior build by the (now-removed) plugin's own
+    manifest — are **absent**. Went further than the manifest check
+    alone: the entire APK's file listing (`unzip -l`) was grepped for
+    `ads`/`gms`/`admob`/`webview` (case-insensitive) — **zero matches**
+    anywhere in the archive, not just in the manifest.
+  - **Reversibility:** the removal is a real, meaningful change (four
+    files deleted, one dependency and its transitive WebView chain gone,
+    manifest/l10n trimmed) — recoverable from git history if ads are ever
+    reintroduced, but not a config flag to flip back.
+  - **Confidence:** High — every claim is a real build, a real `aapt`
+    inspection, a real archive-listing grep, or a real test run.
+- **Next:** checkpoint 2 (verify the owner's real, locally-created
+  `android/key.properties` signing config is picked up correctly — never
+  reading/printing its contents — build and inspect the actual signed
+  production AAB + split APKs, confirm zero dev artifacts, record final
+  size evidence).
+
 ## D-034 — PROMPT-003J Release Readiness: dev/prod build matrix + entitlement simulator (done, checkpoints 1–4)
 
 - **Date:** started 2026-08-09. Implements

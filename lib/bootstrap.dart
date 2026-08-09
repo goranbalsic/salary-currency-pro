@@ -11,12 +11,13 @@ import 'services/widget_refresh_worker.dart';
 /// entrypoints don't duplicate it.
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // PROMPT-003F Stage D go-ahead, Decision 1: launch ad-free — the Mobile
-  // Ads SDK is deliberately not initialized. AdsService/BannerAdSlot/
-  // ConsentService are left in place, not deleted: the decision is
-  // sequencing ("not permanent"), not a removal, and ConsentService's GDPR
-  // consent form is still reachable from Settings for reasons unrelated to
-  // ads. See DECISIONS.md.
+  // PROMPT-003F Stage D Decision 1 (no ads at launch) plus the follow-up
+  // decision to remove the dormant Google Mobile Ads/UMP SDK entirely
+  // rather than keep it disabled-but-compiled: AdsService, BannerAdSlot,
+  // and ConsentService (Google's UMP consent wrapper, which depends on
+  // the same package) are all deleted, not just unused. Re-adding ads
+  // later needs a fresh, explicit product/privacy implementation — see
+  // DECISIONS.md.
   // Home-screen widgets (PROMPT-003 Stage B item 8) are Android-only in
   // this app (see android/app/.../widgets/) — only Android gets the
   // periodic background refresh. Best-effort: a failure here must never

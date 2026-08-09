@@ -1748,30 +1748,6 @@ abstract class AppLocalizations {
   /// **'Payroll, VAT, and self-taxation figures come from cited government and professional tax-advisory sources, not estimates. Each calculator shows the year its numbers apply to and the date they took effect, so you can judge freshness at a glance. See \"Privacy & Data\" and \"Works fully offline\" below for how your information is handled.'**
   String get settingsTrustBody;
 
-  /// No description provided for @settingsAdPrivacyTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy & ad preferences'**
-  String get settingsAdPrivacyTitle;
-
-  /// No description provided for @settingsAdPrivacySubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Review or change your ad consent choices'**
-  String get settingsAdPrivacySubtitle;
-
-  /// No description provided for @settingsAdPrivacyUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Ad privacy options aren\'t available on this platform.'**
-  String get settingsAdPrivacyUnavailable;
-
-  /// No description provided for @settingsAdPrivacyNotRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'No ad privacy choice is required for your region.'**
-  String get settingsAdPrivacyNotRequired;
-
   /// No description provided for @settingsAboutBody.
   ///
   /// In en, this message translates to:

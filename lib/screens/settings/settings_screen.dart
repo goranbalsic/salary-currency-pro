@@ -16,7 +16,6 @@ import '../../models/expense_entry.dart';
 import '../../navigation/app_page_route.dart';
 import '../../services/budget_service.dart';
 import '../../services/business_profile_service.dart';
-import '../../services/consent_service.dart';
 import '../../services/entitlement_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
@@ -167,13 +166,6 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text(l10n.settingsClearHistorySubtitle),
                   onTap: () => _confirmClearHistory(context, l10n),
                 ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: const Icon(Icons.privacy_tip_outlined),
-                  title: Text(l10n.settingsAdPrivacyTitle),
-                  subtitle: Text(l10n.settingsAdPrivacySubtitle),
-                  onTap: () => _openAdPrivacyOptions(context, l10n),
-                ),
               ],
             ),
           ),
@@ -225,24 +217,6 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _openAdPrivacyOptions(BuildContext context, AppLocalizations l10n) async {
-    if (kIsWeb || !(Platform.isAndroid || Platform.isIOS)) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(l10n.settingsAdPrivacyUnavailable)));
-      return;
-    }
-    final required = await ConsentService.isPrivacyOptionsFormRequired();
-    if (!context.mounted) return;
-    if (!required) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(l10n.settingsAdPrivacyNotRequired)));
-      return;
-    }
-    await ConsentService.showPrivacyOptionsForm();
   }
 
   Future<void> _confirmClearHistory(BuildContext context, AppLocalizations l10n) async {

@@ -935,21 +935,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Payroll, VAT, and self-taxation figures come from cited government and professional tax-advisory sources, not estimates. Each calculator shows the year its numbers apply to and the date they took effect, so you can judge freshness at a glance. See \"Privacy & Data\" and \"Works fully offline\" below for how your information is handled.';
 
   @override
-  String get settingsAdPrivacyTitle => 'Privacy & ad preferences';
-
-  @override
-  String get settingsAdPrivacySubtitle =>
-      'Review or change your ad consent choices';
-
-  @override
-  String get settingsAdPrivacyUnavailable =>
-      'Ad privacy options aren\'t available on this platform.';
-
-  @override
-  String get settingsAdPrivacyNotRequired =>
-      'No ad privacy choice is required for your region.';
-
-  @override
   String get settingsAboutBody =>
       'Salary & Currency Pro covers payroll, currency conversion, and everyday financial calculators for Serbia, Croatia, Bosnia & Herzegovina, Montenegro, North Macedonia, Slovenia, Bulgaria, Albania, and Romania. All figures are sourced and dated — see each calculator\'s disclaimer for details. This app provides estimates only, not professional advice.';
 
