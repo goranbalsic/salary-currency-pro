@@ -887,17 +887,38 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsProActive => 'Pro — active';
+  String get settingsEntitlementFreeTitle => 'Free';
 
   @override
-  String get settingsProInactive => 'Pro';
+  String get settingsEntitlementFreeSubtitle =>
+      'Unlock all 9 countries, unlimited comparisons, invoicing, and the compliance pack';
 
   @override
-  String get settingsProSubtitleActive => 'Ads are off across the app';
+  String get settingsEntitlementTrialingTitle => 'Pro — free trial';
 
   @override
-  String get settingsProSubtitleInactive =>
-      'Remove ads with an affordable subscription';
+  String get settingsEntitlementTrialingSubtitle =>
+      'Your 7-day trial is active — manage or cancel anytime in your store account';
+
+  @override
+  String get settingsEntitlementProTitle => 'Pro — active';
+
+  @override
+  String get settingsEntitlementProSubtitle => 'Thanks for supporting the app';
+
+  @override
+  String get settingsEntitlementLifetimeTitle => 'Pro — lifetime';
+
+  @override
+  String get settingsEntitlementLifetimeSubtitle =>
+      'You have permanent access — thank you';
+
+  @override
+  String get settingsEntitlementExpiredTitle => 'Pro — expired';
+
+  @override
+  String get settingsEntitlementExpiredSubtitle =>
+      'Your subscription has ended — tap to renew';
 
   @override
   String get settingsTrustTitle => 'Why trust this app?';
@@ -929,26 +950,89 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paywallTitle => 'Go Pro';
 
   @override
-  String get paywallHeadline => 'Salary & Currency Pro';
+  String get paywallHeadline => 'Unlock the full toolkit';
 
   @override
   String get paywallPitch =>
-      'Remove all ads across every calculator, at an affordable monthly price. Every payroll country, currency conversion, and financial tool stays free either way.';
-
-  @override
-  String get paywallActiveMessage =>
-      'You\'re on Pro — thank you! Ads are off across the app.';
+      'Every payroll country, currency conversion, and core financial tool stays free either way. Pro unlocks the specialized, high-effort differentiators: all 9 countries side by side, unlimited saved comparisons, professional invoicing, and the full compliance pack.';
 
   @override
   String get paywallStoreUnavailable =>
       'The app store isn\'t available right now (this is expected in development builds without a configured Play Console listing). Pro will be purchasable once published.';
 
   @override
-  String get paywallProductUnavailable =>
-      'The Pro subscription isn\'t set up in the store yet — this is a placeholder screen until the real product is created in Play Console.';
+  String get paywallFeaturesTitle => 'What Pro unlocks';
 
   @override
-  String get paywallSubscribe => 'Subscribe';
+  String get paywallFeatureAllCountries =>
+      'All 9 countries\' full calculators, not just your home country';
+
+  @override
+  String get paywallFeatureUnlimitedComparisons =>
+      'Unlimited saved cross-border comparisons';
+
+  @override
+  String get paywallFeatureInvoicePdf =>
+      'Professional invoice PDFs with payment QR codes';
+
+  @override
+  String get paywallFeatureCompliancePack =>
+      'The full paušal & VAT compliance pack';
+
+  @override
+  String get paywallSectionAnnualTitle => 'Annual';
+
+  @override
+  String get paywallAnnualBadge => 'Best value';
+
+  @override
+  String paywallAnnualTrialNote(String price) {
+    return '7-day free trial, then $price/month equivalent. Cancel anytime.';
+  }
+
+  @override
+  String get paywallSectionMonthlyTitle => 'Monthly';
+
+  @override
+  String get paywallLifetimeTitle => 'Lifetime';
+
+  @override
+  String get paywallLifetimeSubtitle => 'Pay once, own it forever';
+
+  @override
+  String get paywallSupportTitle => 'Support the developer';
+
+  @override
+  String get paywallSupportSubtitle =>
+      'A one-time thank-you — doesn\'t change your plan or unlock anything extra';
+
+  @override
+  String paywallPricePerYear(String price) {
+    return '$price/year';
+  }
+
+  @override
+  String paywallPricePerMonth(String price) {
+    return '$price/month';
+  }
+
+  @override
+  String paywallPriceOneTime(String price) {
+    return '$price one-time';
+  }
+
+  @override
+  String get paywallBuySubscription => 'Subscribe';
+
+  @override
+  String get paywallBuyLifetime => 'Buy lifetime';
+
+  @override
+  String get paywallBuySupport => 'Send support';
+
+  @override
+  String get paywallProductComingSoon =>
+      'Not available in this build yet — coming when the app publishes to the store';
 
   @override
   String get paywallProcessing => 'Processing…';
@@ -1903,4 +1987,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String receiptHandoffFromScanNote(String date) {
     return 'From a receipt scanned on $date';
   }
+
+  @override
+  String get gateCountrySwitchTitle => 'Switch countries with Pro';
+
+  @override
+  String get gateCountrySwitchBody =>
+      'The free plan covers your current country\'s full calculator. Upgrade to Pro to unlock all 9 countries.';
+
+  @override
+  String get gateCrossBorderSaveTitle => 'Save more comparisons with Pro';
+
+  @override
+  String get gateCrossBorderSaveBody =>
+      'The free plan keeps one saved cross-border comparison at a time. Upgrade to Pro for unlimited saved comparisons.';
+
+  @override
+  String get gateInvoicePdfTitle => 'Generate invoice PDFs with Pro';
+
+  @override
+  String get gateInvoicePdfBody =>
+      'Professional invoice PDFs with payment QR codes are a Pro feature. Upgrade to generate this invoice as a PDF.';
+
+  @override
+  String get gatePausalTrackerTitle => 'Unlock the compliance pack with Pro';
+
+  @override
+  String get gatePausalTrackerBody =>
+      'The paušal & VAT compliance pack — turnover tracking, monthly reminders, and the Model A/B comparator — is a Pro feature.';
+
+  @override
+  String get toolsProBadge => 'PRO';
 }

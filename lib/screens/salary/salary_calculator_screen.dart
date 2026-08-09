@@ -10,11 +10,13 @@ import '../../models/country.dart';
 import '../../models/history_entry.dart';
 import '../../models/scenario.dart';
 import '../../providers/salary_calculator_provider.dart';
+import '../../services/entitlement_service.dart';
 import '../../services/history_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
 import '../../widgets/labeled_row.dart';
 import '../../widgets/save_scenario_action.dart';
+import '../../widgets/upgrade_prompt.dart';
 
 String _amountIssueMessage(AppLocalizations l10n, AmountIssue issue) {
   switch (issue) {
@@ -292,6 +294,13 @@ class _CountryPickerRow extends StatelessWidget {
 
   void _openPicker(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    // PROMPT-003I Stage D checkpoint 2: the free tier's salary calculator
+    // covers only the country the user is currently on — switching to any
+    // other country is the Pro differentiator ("all 9 countries' full
+    // calculator/adapter set"). Read once per sheet-open rather than
+    // per-tile: entitlement can't change while this modal sheet is open.
+    final hasFullAccess = context.read<EntitlementService>().state.value.hasFullAccess;
+    final homeCountryId = provider.selectedCountry.id;
     showModalBottomSheet(
       context: context,
       showDragHandle: true,
@@ -306,9 +315,20 @@ class _CountryPickerRow extends StatelessWidget {
                 subtitle: Text(country.currencyCode),
                 trailing: country.id == provider.selectedCountry.id
                     ? const Icon(Icons.check, color: AppColors.moneyGreen)
-                    : null,
+                    : (!hasFullAccess && country.id != homeCountryId)
+                        ? Icon(Icons.lock_outline,
+                            color: Theme.of(sheetContext).colorScheme.outline)
+                        : null,
                 onTap: () {
                   Navigator.pop(sheetContext);
+                  if (!hasFullAccess && country.id != homeCountryId) {
+                    showUpgradePrompt(
+                      context,
+                      title: l10n.gateCountrySwitchTitle,
+                      body: l10n.gateCountrySwitchBody,
+                    );
+                    return;
+                  }
                   provider.selectCountry(country);
                 },
               ),

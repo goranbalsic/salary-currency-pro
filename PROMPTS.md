@@ -21,7 +21,7 @@ Archived.
 | PROMPT-003F | Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced) | Large standing instruction | Done — item complete, D-030 | Quality-raising prompt for item 12: fully offline professional invoice PDF (business profile, itemization, bundled fonts) with embedded NBS IPS QR payment code for eligible Serbian RSD invoices; deterministic money rounding mandated before any invoice money-math change |
 | PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | Done — item complete, D-031 | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
 | PROMPT-003H | Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell | Large standing instruction | Done — item complete, closes Stage C, D-032 | Local-only scan/classify/queue/manual-expense-handoff pipeline with a hard network boundary (no call to `suf.purs.gov.rs`, ever); disclosed a real release-size budget overage (arm64-v8a/x86_64) caused by the scanner dependency, accepted rather than fixed |
-| PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoint 1 done, in progress | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support), checkpoint 1 built the entitlement plumbing (`EntitlementService`/`EntitlementState`), D-033 |
+| PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoints 1–2 done, in progress | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support). Checkpoint 1: entitlement plumbing (`EntitlementService`/`EntitlementState`). Checkpoint 2: Pro feature gates (country switch, cross-border saves, invoice PDF, compliance pack) + new 4-product paywall, replacing `ProProvider`/`PurchaseService`. D-033 |
 
 ## Active Prompts
 
@@ -265,9 +265,25 @@ tests (490 → 507), `flutter analyze` clean, no l10n changes (no UI yet).
 Full detail, including a real `in_app_purchase`-plugin testability
 constraint found and worked around: `DECISIONS.md` D-033.
 
-**Next: checkpoint 2 (gate Pro features + paywall, replacing the old
-single-product flow), then checkpoint 3 (regional pricing + release
-evidence + push), then stop per this prompt's own instruction.**
+**Checkpoint 2 done** — gated the Pro feature list and replaced the old
+paywall. Salary Calculator country switching, Cross-Border comparison
+saving (a new feature — 1 free / unlimited Pro), invoice PDF generation,
+and the entire paušal/PDV compliance pack are now Pro differentiators;
+every other tool (including Freelance Tax Screen's own 10-regime picker,
+confirmed out of scope) stays fully free. Old
+`ProProvider`/`PurchaseService`/`PaywallScreen` deleted, replaced
+everywhere by `EntitlementService`. New paywall shows all four products,
+annual visually favored per Decision 2. Two real bugs found and fixed
+along the way: a controller-disposed-during-exit-animation crash in the
+scenario-save dialog (same bug class as D-032's manual-entry sheet fix,
+just not caught until now), and an unbounded `isAvailable()` hang in the
+paywall's own loading state, now capped at 5s. 10 new/changed tests, full
+suite 517/517 (was 507), 586 l10n keys × 9 locales (32 net new/changed),
+`flutter analyze` clean. Full detail: `DECISIONS.md` D-033.
+
+**Next: checkpoint 3 (regional pricing + release evidence + push), then
+stop per this prompt's own instruction — no Stage D scope beyond what's
+already specified.**
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 

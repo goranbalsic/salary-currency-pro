@@ -92,6 +92,17 @@ void main() {
   EntitlementService service({Duration timeout = const Duration(milliseconds: 50)}) =>
       EntitlementService(platform: fake, verifyResponseTimeout: timeout);
 
+  test('constructing a service with no injected platform never touches the '
+      'real platform (would crash on desktop/web dev builds otherwise)', () {
+    // Deliberately does NOT set platform: — this must not throw or hang,
+    // because platform resolution is lazy (only touched by start()/
+    // isAvailable/etc., none of which this test calls). Regression test for
+    // a real bug: an earlier version resolved the real platform eagerly in
+    // the constructor's initializer list, which would have crashed the app
+    // immediately on any platform in_app_purchase doesn't support.
+    expect(() => EntitlementService(), returnsNormally);
+  });
+
   test('default state is free with no access', () async {
     final s = service();
     await s.start();

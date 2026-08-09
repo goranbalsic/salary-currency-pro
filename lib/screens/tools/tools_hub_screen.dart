@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../models/entitlement.dart';
 import '../../models/history_entry.dart';
 import '../../navigation/app_page_route.dart';
+import '../../services/entitlement_service.dart';
 import '../../services/history_service.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/upgrade_prompt.dart';
 import '../budgets/budgets_screen.dart';
 import '../business/invoices_screen.dart';
 import '../expenses/expense_tracker_screen.dart';
@@ -41,6 +45,12 @@ class _ToolEntry {
   /// necessarily generic across 10 regimes. See DECISIONS.md D-022.
   final List<String> searchKeywords;
 
+  /// PROMPT-003I Stage D checkpoint 2: true only for the paušal/VAT
+  /// compliance pack — the one tool gated entirely behind Pro (every other
+  /// tool stays reachable free; individual actions inside them are gated
+  /// instead, e.g. the invoice PDF button).
+  final bool proOnly;
+
   const _ToolEntry({
     required this.id,
     required this.icon,
@@ -49,6 +59,7 @@ class _ToolEntry {
     required this.category,
     required this.builder,
     this.searchKeywords = const [],
+    this.proOnly = false,
   });
 }
 
@@ -113,6 +124,18 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
   };
 
   void _openTool(_ToolEntry tool) {
+    if (tool.proOnly) {
+      final l10n = AppLocalizations.of(context)!;
+      final hasFullAccess = context.read<EntitlementService>().state.value.hasFullAccess;
+      if (!hasFullAccess) {
+        showUpgradePrompt(
+          context,
+          title: l10n.gatePausalTrackerTitle,
+          body: l10n.gatePausalTrackerBody,
+        );
+        return;
+      }
+    }
     Navigator.of(context).push(appPageRoute(tool.builder));
   }
 
@@ -250,6 +273,7 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         category: _ToolCategory.freelance,
         builder: (_) => const PausalTrackerScreen(),
         searchKeywords: const ['paušal', 'pausal', 'pdv', 'promet', 'ceiling', 'vat threshold'],
+        proOnly: true,
       ),
     ];
 
@@ -277,7 +301,9 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
       }
     }
 
-    return ListView(
+    return ValueListenableBuilder<EntitlementState>(
+      valueListenable: context.watch<EntitlementService>().state,
+      builder: (context, entitlement, _) => ListView(
       padding: const EdgeInsets.all(16),
       children: [
         Card(
@@ -341,21 +367,28 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
               Text(categoryLabel(category), style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 8),
               for (final tool in filtered.where((t) => t.category == category))
-                _ToolTile(tool: tool, onTap: () => _openTool(tool)),
+                _ToolTile(
+                  tool: tool,
+                  locked: tool.proOnly && !entitlement.hasFullAccess,
+                  onTap: () => _openTool(tool),
+                ),
             ],
           ],
       ],
+      ),
     );
   }
 }
 
 class _ToolTile extends StatelessWidget {
   final _ToolEntry tool;
+  final bool locked;
   final VoidCallback onTap;
-  const _ToolTile({required this.tool, required this.onTap});
+  const _ToolTile({required this.tool, this.locked = false, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
@@ -366,7 +399,30 @@ class _ToolTile extends StatelessWidget {
         ),
         title: Text(tool.title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(tool.subtitle),
-        trailing: const Icon(Icons.chevron_right),
+        trailing: locked
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: AppColors.gold,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      l10n.toolsProBadge,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.chevron_right),
+                ],
+              )
+            : const Icon(Icons.chevron_right),
         onTap: onTap,
       ),
     );

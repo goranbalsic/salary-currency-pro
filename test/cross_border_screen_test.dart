@@ -148,4 +148,72 @@ void main() {
     expect(find.text('Enter a salary.'), findsOneWidget);
     expect(find.byType(DataTable), findsNothing);
   });
+
+  testWidgets(
+      'a free-tier user can save one comparison, but the second save '
+      'prompts an upgrade instead', (tester) async {
+    final view = tester.view;
+    view.physicalSize = const Size(800, 2400);
+    view.devicePixelRatio = 1.0;
+    addTearDown(view.resetPhysicalSize);
+    addTearDown(view.resetDevicePixelRatio);
+
+    await openCrossBorderScreen(tester);
+    await tester.enterText(find.byKey(const Key('cross_border_gross_field')), '2000');
+    await tester.tap(find.byKey(const Key('cross_border_calculate_button')));
+    await tester.pumpAndSettle();
+
+    // First save succeeds.
+    await tester.ensureVisible(find.text('Save this calculation'));
+    await tester.tap(find.text('Save this calculation'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Scenario saved'), findsOneWidget);
+
+    // Re-run the same comparison (results still present) and try to save
+    // a second one — free tier keeps only one at a time.
+    await tester.tap(find.byKey(const Key('cross_border_calculate_button')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Save this calculation'));
+    await tester.tap(find.text('Save this calculation'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Save more comparisons with Pro'), findsOneWidget);
+  });
+
+  testWidgets('a Pro user can save more than one comparison', (tester) async {
+    SharedPreferences.setMockInitialValues({
+      'onboarding_complete': true,
+      'entitlement_state_v1': '{"schemaVersion":1,"status":"lifetime","productId":"pro_lifetime"}',
+    });
+    final view = tester.view;
+    view.physicalSize = const Size(800, 2400);
+    view.devicePixelRatio = 1.0;
+    addTearDown(view.resetPhysicalSize);
+    addTearDown(view.resetDevicePixelRatio);
+
+    await openCrossBorderScreen(tester);
+    await tester.enterText(find.byKey(const Key('cross_border_gross_field')), '2000');
+    await tester.tap(find.byKey(const Key('cross_border_calculate_button')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Save this calculation'));
+    await tester.tap(find.text('Save this calculation'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Scenario saved'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('cross_border_calculate_button')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Save this calculation'));
+    await tester.tap(find.text('Save this calculation'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Save more comparisons with Pro'), findsNothing);
+    expect(find.text('Scenario saved'), findsOneWidget);
+  });
 }

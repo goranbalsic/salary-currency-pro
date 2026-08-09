@@ -1052,6 +1052,13 @@ void main() {
   });
 
   testWidgets('Paušal Tracker (Serbia) shows both limits with no invoices tracked', (WidgetTester tester) async {
+    // PROMPT-003I checkpoint 2 gated the whole paušal/VAT compliance pack
+    // behind Pro — this test is about the tracker itself, not the gate
+    // (covered separately below), so it seeds a Pro entitlement directly.
+    SharedPreferences.setMockInitialValues({
+      'onboarding_complete': true,
+      'entitlement_state_v1': '{"schemaVersion":1,"status":"lifetime","productId":"pro_lifetime"}',
+    });
     await tester.pumpWidget(const SalaryCurrencyProApp());
     await tester.pumpAndSettle();
 
@@ -1076,5 +1083,28 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
     expect(find.text('Saved'), findsOneWidget);
+  });
+
+  testWidgets(
+      'Tools tab: a free-tier user tapping the Pro-badged Paušal Tracker '
+      'sees an upgrade prompt instead of opening it',
+      (WidgetTester tester) async {
+    // Default setUp() has no entitlement_state_v1 key — free tier.
+    await tester.pumpWidget(const SalaryCurrencyProApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Tools')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('PRO'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Paušal Tracker (Serbia)'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Paušal Tracker (Serbia)'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Unlock the compliance pack with Pro'), findsOneWidget);
+    // Still on the Tools hub, not the tracker itself.
+    expect(find.text('Paušal ceiling (this calendar year)'), findsNothing);
   });
 }

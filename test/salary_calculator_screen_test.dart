@@ -83,4 +83,64 @@ void main() {
       expect(find.text('Neto (take-home)'), findsNothing);
     },
   );
+
+  testWidgets(
+    'Salary tab: a free-tier user switching countries sees an upgrade '
+    'prompt instead, and stays on their current country',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const SalaryCurrencyProApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Salary'),
+      ));
+      await tester.pumpAndSettle();
+
+      // Default country is Serbia — open the picker and lock icons should
+      // mark every other country.
+      await tester.tap(find.text('Serbia'));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.lock_outline), findsWidgets);
+
+      await tester.tap(find.text('Croatia'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Switch countries with Pro'), findsOneWidget);
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+
+      // Still Serbia — the picker sheet closed without switching.
+      expect(find.text('Serbia'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Salary tab: a Pro user can switch countries freely, no lock icons '
+    'or upgrade prompt',
+    (WidgetTester tester) async {
+      SharedPreferences.setMockInitialValues({
+        'onboarding_complete': true,
+        'entitlement_state_v1': '{"schemaVersion":1,"status":"lifetime","productId":"pro_lifetime"}',
+      });
+      await tester.pumpWidget(const SalaryCurrencyProApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Salary'),
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Serbia'));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.lock_outline), findsNothing);
+
+      await tester.tap(find.text('Croatia'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Switch countries with Pro'), findsNothing);
+      expect(find.text('Croatia'), findsOneWidget);
+    },
+  );
 }

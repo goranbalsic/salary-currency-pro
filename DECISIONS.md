@@ -143,10 +143,108 @@
   - **Confidence:** High — every new state transition and the offline-
     grace/expiry-detection contract are covered by real tests against a
     verified plugin API, not guessed.
-- **Next:** checkpoint 2 (gate the Pro feature list + build the new
-  paywall, replacing `ProProvider`/`PurchaseService`/`PaywallScreen`),
-  then checkpoint 3 (regional pricing + release evidence + push), then
-  stop per the prompt's own instruction.
+- **Checkpoint 2 — gate Pro features + paywall:**
+  - **Tier-to-code mapping ambiguities resolved with the user before
+    building, not guessed:** (1) Cross-Border had no save feature at all
+    before this checkpoint — confirmed that running a live comparison
+    stays free/unrestricted for everyone (matching every other tool's
+    live-calculation-is-free precedent) and only *saving* one is capped;
+    (2) Freelance Tax Screen has its own separate 10-regime picker,
+    distinct from the Salary Calculator's — confirmed the "all 9
+    countries" Pro gate applies to the Salary Calculator only, since the
+    prompt names an explicit item number for every other Pro bullet except
+    that one, and retracting a feature PROMPT-004 shipped as free would be
+    a real regression, not a reasonable inference.
+  - **Salary Calculator — home-country-only gate:**
+    `_CountryPickerRow` (`lib/screens/salary/salary_calculator_screen.dart`)
+    now blocks `provider.selectCountry(country)` for any country other
+    than the one currently selected when `!hasFullAccess`, showing a lock
+    icon per locked row and an upgrade dialog on tap instead of switching.
+    "Home country" is deliberately just "whatever `selectedCountry`
+    currently is," not a separately persisted concept — no new state
+    needed.
+  - **Cross-Border — new save feature, 1-for-free / unlimited-for-Pro:**
+    added a `SaveScenarioRow` (previously absent) wired to a new
+    `_saveComparison`, which checks
+    `ScenarioService().loadForTool(HistoryToolIds.crossBorder)` and shows
+    an upgrade prompt before even reaching the shared `saveScenario()`
+    helper's own (looser, generic) 3-scenario cap — a genuinely tighter,
+    tool-specific limit, not a reuse of the existing one.
+  - **Invoice PDF — gated at the single trigger point:**
+    `InvoiceDetailScreen._generatePdf` checks entitlement before doing any
+    work; a free user sees the upgrade dialog and the invoice is
+    untouched. The invoice tracker itself (add/edit/mark-paid/delete)
+    stays fully free.
+  - **Paušal/PDV compliance pack — the one tool gated entirely:**
+    `ToolsHubScreen`'s `pausal_tracker` entry gained `proOnly: true`; a
+    free user tapping it sees the upgrade dialog instead of the screen, and
+    the tile shows a gold "PRO" badge so this is visible before tapping,
+    not a surprise gate. No other tool is gated at the entry-point level —
+    every other Pro differentiator gates a specific action inside an
+    otherwise-free screen.
+  - **`ProProvider`/`PurchaseService`/the old single-product `PaywallScreen`
+    — replaced, not layered:** both old files deleted; every consumer
+    (`app.dart`'s provider wiring, `save_scenario_action.dart`,
+    `settings_screen.dart`, `banner_ad_slot.dart`) now reads
+    `EntitlementService` instead. `BannerAdSlot` (dormant since checkpoint
+    1's ads-off decision) was migrated too rather than left referencing a
+    deleted class, since it's deliberately kept as reactivatable
+    infrastructure, not dead code.
+  - **New paywall** (`lib/screens/paywall/paywall_screen.dart`, full
+    rewrite): a status banner (shared `entitlementStatusCopy` helper in
+    `l10n_lookups.dart`, so Settings and the paywall never drift out of
+    sync), a feature list, then four plan cards — annual visually favored
+    per Decision 2 (bordered, larger, "Best value" badge, per-month
+    equivalent, trial called out), monthly beneath it, lifetime and
+    support below a divider as secondary options. Prices prefer the real
+    `ProductDetails.price` when a product actually exists in the store,
+    falling back to `MonetizationConfig`'s new reference-price constants
+    (the app's own already-decided Decision 2 numbers, not a guess) —
+    labeled as indicative, never presented as a live confirmed price.
+  - **Two real bugs found by testing, not by inspection, both fixed:**
+    - `save_scenario_action.dart`'s name-entry dialog disposed its
+      `TextEditingController` immediately after `showDialog` resolved,
+      the same "controller used after dispose during exit animation"
+      class of bug already fixed once for the fiscal-receipt scanner's
+      manual-entry sheet (checkpoint 2 of D-032) — except this one had
+      shipped earlier, undetected, because no prior test happened to
+      exercise the full save-dialog flow with the exact timing that
+      triggers it. Fixed the same way: the dialog's content is now its
+      own `_SaveScenarioDialog` `State`, owning and disposing its own
+      controller.
+    - `PaywallScreen._load()`'s `service.isAvailable` check could hang
+      indefinitely rather than throw when the store genuinely can't
+      connect (observed directly: a widget test timed out, not merely
+      threw) — fixed with a bounded 5-second timeout that resolves to
+      "unavailable," the same "never let a real plugin boundary hang the
+      UI forever" discipline as `ConsentService`'s own startup-safety
+      timeout and D-032's mobile_scanner stuck-spinner fix.
+  - **Tests:** 10 new/changed across five files —
+    `invoice_detail_screen_test.dart` (seeded Pro for the existing PDF
+    test, added a free-tier-sees-upgrade-prompt case),
+    `widget_test.dart` (seeded Pro for the existing paušal tracker test,
+    added a free-tier-sees-upgrade-prompt case),
+    `salary_calculator_screen_test.dart` (free blocked + shows lock icons;
+    Pro switches freely), `cross_border_screen_test.dart` (free saves one
+    then gets the upgrade prompt; Pro saves more than one),
+    `paywall_screen_test.dart` (new file: free/lifetime/trialing status
+    banners, honest store-unavailable state). Full suite **517/517** (was
+    507 after checkpoint 1).
+  - **Localization:** 586 keys × 9 locales (32 net new/changed:
+    10 `settingsEntitlement*` replacing the 4 stale ad-mentioning
+    `settingsPro*` keys; ~20 new `paywall*` keys plus a rewritten
+    `paywallHeadline`/`paywallPitch`; 9 new `gate*`/`toolsProBadge` keys;
+    3 superseded `paywall*` keys removed). `flutter analyze` clean (same
+    3 pre-existing, unrelated info-level issues).
+  - **Reversibility:** the `ProProvider`/`PurchaseService` deletion is the
+    only non-trivially-reversible part of this checkpoint (recoverable
+    from git history if ever needed); everything else is new code or
+    small, additive gate insertions.
+  - **Confidence:** High — every gate, the paywall's states, and both bug
+    fixes are covered by real widget tests, not just code review.
+- **Next:** checkpoint 3 (regional pricing + release evidence + push),
+  then stop per the prompt's own instruction — no Stage D features beyond
+  what Decisions 1/2 and this tier list already specify.
 
 ## D-032 — PROMPT-003H Stage C item 10: Offline Fiscal-Receipt QR Scanner Shell (done)
 

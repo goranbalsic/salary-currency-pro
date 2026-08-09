@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../models/entitlement.dart';
 import '../models/expense_entry.dart';
 import 'app_localizations.dart';
+
+/// The (title, subtitle) pair describing an [EntitlementStatus] — shared by
+/// `SettingsScreen`'s status row and `PaywallScreen`'s current-plan banner
+/// so the two never drift out of sync.
+(String, String) entitlementStatusCopy(AppLocalizations l10n, EntitlementStatus status) {
+  return switch (status) {
+    EntitlementStatus.free => (l10n.settingsEntitlementFreeTitle, l10n.settingsEntitlementFreeSubtitle),
+    EntitlementStatus.trialing => (l10n.settingsEntitlementTrialingTitle, l10n.settingsEntitlementTrialingSubtitle),
+    EntitlementStatus.pro => (l10n.settingsEntitlementProTitle, l10n.settingsEntitlementProSubtitle),
+    EntitlementStatus.lifetime => (l10n.settingsEntitlementLifetimeTitle, l10n.settingsEntitlementLifetimeSubtitle),
+    EntitlementStatus.expired => (l10n.settingsEntitlementExpiredTitle, l10n.settingsEntitlementExpiredSubtitle),
+  };
+}
 
 /// Maps a [Country.id] to its localized display name. Country/entity ids
 /// are stable identifiers (see lib/models/country.dart); the display text

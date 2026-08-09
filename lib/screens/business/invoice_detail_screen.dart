@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../logic/nbs_ips_eligibility.dart';
@@ -7,10 +8,12 @@ import '../../models/business_profile.dart';
 import '../../models/invoice.dart';
 import '../../pdf/invoice_pdf_content.dart';
 import '../../services/business_profile_service.dart';
+import '../../services/entitlement_service.dart';
 import '../../services/invoice_pdf_service.dart';
 import '../../services/invoice_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/upgrade_prompt.dart';
 import 'invoices_screen.dart' show InvoiceFormSheet;
 
 /// The invoice detail journey (PROMPT-003 Stage C item 12.1-12.3): a
@@ -133,6 +136,19 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
     // one is already in flight — never mutates the stored invoice either
     // way, so a failed or repeated attempt can't corrupt/duplicate data.
     if (_pdfInFlight || invoice == null) return;
+
+    // PROMPT-003I Stage D checkpoint 2: invoice PDF generation is a Pro
+    // differentiator (item 12) — the invoice tracker itself stays free.
+    final isPro = context.read<EntitlementService>().state.value.hasFullAccess;
+    if (!isPro) {
+      await showUpgradePrompt(
+        context,
+        title: l10n.gateInvoicePdfTitle,
+        body: l10n.gateInvoicePdfBody,
+      );
+      return;
+    }
+
     setState(() => _pdfInFlight = true);
 
     try {

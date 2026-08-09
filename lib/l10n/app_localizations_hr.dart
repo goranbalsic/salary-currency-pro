@@ -885,18 +885,39 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get settingsProActive => 'Pro — aktivno';
+  String get settingsEntitlementFreeTitle => 'Besplatno';
 
   @override
-  String get settingsProInactive => 'Pro';
+  String get settingsEntitlementFreeSubtitle =>
+      'Otključajte svih 9 zemalja, neograničene usporedbe, fakturiranje i paket usklađenosti';
 
   @override
-  String get settingsProSubtitleActive =>
-      'Oglasi su isključeni u cijeloj aplikaciji';
+  String get settingsEntitlementTrialingTitle => 'Pro — probno razdoblje';
 
   @override
-  String get settingsProSubtitleInactive =>
-      'Uklonite oglase uz pristupačnu pretplatu';
+  String get settingsEntitlementTrialingSubtitle =>
+      'Vaše 7-dnevno probno razdoblje je aktivno — upravljajte ili otkažite bilo kada u računu trgovine';
+
+  @override
+  String get settingsEntitlementProTitle => 'Pro — aktivno';
+
+  @override
+  String get settingsEntitlementProSubtitle =>
+      'Hvala što podržavate aplikaciju';
+
+  @override
+  String get settingsEntitlementLifetimeTitle => 'Pro — doživotno';
+
+  @override
+  String get settingsEntitlementLifetimeSubtitle =>
+      'Imate trajni pristup — hvala vam';
+
+  @override
+  String get settingsEntitlementExpiredTitle => 'Pro — isteklo';
+
+  @override
+  String get settingsEntitlementExpiredSubtitle =>
+      'Vaša pretplata je istekla — dodirnite za obnovu';
 
   @override
   String get settingsTrustTitle => 'Zašto vjerovati ovoj aplikaciji?';
@@ -928,26 +949,89 @@ class AppLocalizationsHr extends AppLocalizations {
   String get paywallTitle => 'Postani Pro';
 
   @override
-  String get paywallHeadline => 'Salary & Currency Pro';
+  String get paywallHeadline => 'Otključajte kompletan alatni komplet';
 
   @override
   String get paywallPitch =>
-      'Uklonite sve oglase u svakom kalkulatoru, po pristupačnoj mjesečnoj cijeni. Sve zemlje za obračun plaća, konverzija valuta i financijski alati ostaju besplatni u svakom slučaju.';
-
-  @override
-  String get paywallActiveMessage =>
-      'Vi ste Pro korisnik — hvala vam! Oglasi su isključeni u cijeloj aplikaciji.';
+      'Svaki kalkulator plaće, pretvarač valuta i osnovni financijski alat ostaje besplatan u svakom slučaju. Pro otključava specijalizirane razlike koje zahtijevaju najviše truda: svih 9 zemalja jedna pored druge, neograničene spremljene usporedbe, profesionalno fakturiranje i kompletan paket usklađenosti.';
 
   @override
   String get paywallStoreUnavailable =>
       'Trgovina trenutno nije dostupna (ovo je očekivano u razvojnim verzijama bez podešene Play Console liste). Pro će biti moguće kupiti nakon objave.';
 
   @override
-  String get paywallProductUnavailable =>
-      'Pro pretplata još nije podešena u trgovini — ovo je privremeni zaslon dok se pravi proizvod ne kreira u Play Consoleu.';
+  String get paywallFeaturesTitle => 'Što Pro otključava';
 
   @override
-  String get paywallSubscribe => 'Pretplati se';
+  String get paywallFeatureAllCountries =>
+      'Kompletni kalkulatori svih 9 zemalja, ne samo vaše matične zemlje';
+
+  @override
+  String get paywallFeatureUnlimitedComparisons =>
+      'Neograničene spremljene prekogranične usporedbe';
+
+  @override
+  String get paywallFeatureInvoicePdf =>
+      'Profesionalne PDF fakture s QR kodovima za plaćanje';
+
+  @override
+  String get paywallFeatureCompliancePack =>
+      'Kompletan paket usklađenosti za paušal i PDV';
+
+  @override
+  String get paywallSectionAnnualTitle => 'Godišnji';
+
+  @override
+  String get paywallAnnualBadge => 'Najbolja vrijednost';
+
+  @override
+  String paywallAnnualTrialNote(String price) {
+    return '7-dnevno besplatno probno razdoblje, zatim ekvivalent od $price/mjesečno. Otkažite bilo kada.';
+  }
+
+  @override
+  String get paywallSectionMonthlyTitle => 'Mjesečni';
+
+  @override
+  String get paywallLifetimeTitle => 'Doživotni';
+
+  @override
+  String get paywallLifetimeSubtitle => 'Platite jednom, posjedujte zauvijek';
+
+  @override
+  String get paywallSupportTitle => 'Podržite programera';
+
+  @override
+  String get paywallSupportSubtitle =>
+      'Jednokratna zahvala — ne mijenja vaš plan niti otključava bilo što dodatno';
+
+  @override
+  String paywallPricePerYear(String price) {
+    return '$price/godišnje';
+  }
+
+  @override
+  String paywallPricePerMonth(String price) {
+    return '$price/mjesečno';
+  }
+
+  @override
+  String paywallPriceOneTime(String price) {
+    return '$price jednokratno';
+  }
+
+  @override
+  String get paywallBuySubscription => 'Pretplati se';
+
+  @override
+  String get paywallBuyLifetime => 'Kupi doživotni';
+
+  @override
+  String get paywallBuySupport => 'Pošalji podršku';
+
+  @override
+  String get paywallProductComingSoon =>
+      'Još nije dostupno u ovoj verziji — dolazi kada se aplikacija objavi u trgovini';
 
   @override
   String get paywallProcessing => 'Obrada…';
@@ -1909,4 +1993,35 @@ class AppLocalizationsHr extends AppLocalizations {
   String receiptHandoffFromScanNote(String date) {
     return 'Iz računa skeniranog $date';
   }
+
+  @override
+  String get gateCountrySwitchTitle => 'Mijenjajte zemlje uz Pro';
+
+  @override
+  String get gateCountrySwitchBody =>
+      'Besplatni plan pokriva kompletan kalkulator samo vaše trenutne zemlje. Nadogradite na Pro da otključate svih 9 zemalja.';
+
+  @override
+  String get gateCrossBorderSaveTitle => 'Spremite više usporedbi uz Pro';
+
+  @override
+  String get gateCrossBorderSaveBody =>
+      'Besplatni plan čuva jednu spremljenu prekograničnu usporedbu odjednom. Nadogradite na Pro za neograničene spremljene usporedbe.';
+
+  @override
+  String get gateInvoicePdfTitle => 'Generirajte PDF fakture uz Pro';
+
+  @override
+  String get gateInvoicePdfBody =>
+      'Profesionalne PDF fakture s QR kodovima za plaćanje su Pro značajka. Nadogradite da generirate ovu fakturu kao PDF.';
+
+  @override
+  String get gatePausalTrackerTitle => 'Otključajte paket usklađenosti uz Pro';
+
+  @override
+  String get gatePausalTrackerBody =>
+      'Kompletan paket usklađenosti za paušal i PDV — praćenje prometa, mjesečni podsjetnici i usporedba Model A/Model B — je Pro značajka.';
+
+  @override
+  String get toolsProBadge => 'PRO';
 }

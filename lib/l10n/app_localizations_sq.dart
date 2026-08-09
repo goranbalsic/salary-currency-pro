@@ -895,18 +895,39 @@ class AppLocalizationsSq extends AppLocalizations {
   }
 
   @override
-  String get settingsProActive => 'Pro — aktiv';
+  String get settingsEntitlementFreeTitle => 'Falas';
 
   @override
-  String get settingsProInactive => 'Pro';
+  String get settingsEntitlementFreeSubtitle =>
+      'Zhblloko të gjitha 9 vendet, krahasime të pakufizuara, faturim dhe paketën e përputhshmërisë';
 
   @override
-  String get settingsProSubtitleActive =>
-      'Reklamat janë fikur në të gjithë aplikacionin';
+  String get settingsEntitlementTrialingTitle => 'Pro — periudhë provë';
 
   @override
-  String get settingsProSubtitleInactive =>
-      'Hiq reklamat me një abonim të përballueshëm';
+  String get settingsEntitlementTrialingSubtitle =>
+      'Periudha juaj 7-ditore e provës është aktive — menaxhoni ose anuloni në çdo kohë në llogarinë e dyqanit';
+
+  @override
+  String get settingsEntitlementProTitle => 'Pro — aktiv';
+
+  @override
+  String get settingsEntitlementProSubtitle =>
+      'Faleminderit që mbështetni aplikacionin';
+
+  @override
+  String get settingsEntitlementLifetimeTitle => 'Pro — përjetë';
+
+  @override
+  String get settingsEntitlementLifetimeSubtitle =>
+      'Keni akses të përhershëm — faleminderit';
+
+  @override
+  String get settingsEntitlementExpiredTitle => 'Pro — skaduar';
+
+  @override
+  String get settingsEntitlementExpiredSubtitle =>
+      'Abonimi juaj ka skaduar — trokitni për ta rinovuar';
 
   @override
   String get settingsTrustTitle => 'Pse ta besosh këtë aplikacion?';
@@ -938,26 +959,89 @@ class AppLocalizationsSq extends AppLocalizations {
   String get paywallTitle => 'Bëhu Pro';
 
   @override
-  String get paywallHeadline => 'Salary & Currency Pro';
+  String get paywallHeadline => 'Zhblloko grupin e plotë të mjeteve';
 
   @override
   String get paywallPitch =>
-      'Hiq të gjitha reklamat në çdo kalkulator, me një çmim mujor të përballueshëm. Të gjitha vendet për llogaritjen e pagave, konvertimi i valutave dhe mjetet financiare mbeten falas gjithsesi.';
-
-  @override
-  String get paywallActiveMessage =>
-      'Je përdorues Pro — faleminderit! Reklamat janë fikur në të gjithë aplikacionin.';
+      'Çdo llogaritës page, konvertues valutor dhe mjet themelor financiar mbetet falas gjithsesi. Pro zhbllokon veçoritë e specializuara me përpjekje të lartë: të gjitha 9 vendet krah për krah, krahasime të ruajtura të pakufizuara, faturim profesional dhe paketën e plotë të përputhshmërisë.';
 
   @override
   String get paywallStoreUnavailable =>
       'Dyqani nuk është i disponueshëm tani (kjo pritet në versionet zhvillimore pa një listim të konfiguruar në Play Console). Pro do të mund të blihet pas publikimit.';
 
   @override
-  String get paywallProductUnavailable =>
-      'Abonimi Pro nuk është konfiguruar ende në dyqan — ky është një ekran përkohshëm derisa produkti i vërtetë të krijohet në Play Console.';
+  String get paywallFeaturesTitle => 'Çfarë zhbllokon Pro';
 
   @override
-  String get paywallSubscribe => 'Abonohu';
+  String get paywallFeatureAllCountries =>
+      'Llogaritësit e plotë të të gjitha 9 vendeve, jo vetëm vendi juaj';
+
+  @override
+  String get paywallFeatureUnlimitedComparisons =>
+      'Krahasime ndërkufitare të ruajtura të pakufizuara';
+
+  @override
+  String get paywallFeatureInvoicePdf =>
+      'Fatura profesionale PDF me kode QR pagese';
+
+  @override
+  String get paywallFeatureCompliancePack =>
+      'Paketa e plotë e përputhshmërisë për tarifën fikse dhe TVSH-në';
+
+  @override
+  String get paywallSectionAnnualTitle => 'Vjetor';
+
+  @override
+  String get paywallAnnualBadge => 'Vlera më e mirë';
+
+  @override
+  String paywallAnnualTrialNote(String price) {
+    return '7 ditë provë falas, pastaj ekuivalenti $price/muaj. Anulo në çdo kohë.';
+  }
+
+  @override
+  String get paywallSectionMonthlyTitle => 'Mujor';
+
+  @override
+  String get paywallLifetimeTitle => 'Përjetë';
+
+  @override
+  String get paywallLifetimeSubtitle => 'Paguaj një herë, zotëro përgjithmonë';
+
+  @override
+  String get paywallSupportTitle => 'Mbështet zhvilluesin';
+
+  @override
+  String get paywallSupportSubtitle =>
+      'Një falenderim një-herësh — nuk ndryshon planin tuaj as nuk zhbllokon asgjë shtesë';
+
+  @override
+  String paywallPricePerYear(String price) {
+    return '$price/vit';
+  }
+
+  @override
+  String paywallPricePerMonth(String price) {
+    return '$price/muaj';
+  }
+
+  @override
+  String paywallPriceOneTime(String price) {
+    return '$price një herë';
+  }
+
+  @override
+  String get paywallBuySubscription => 'Abonohu';
+
+  @override
+  String get paywallBuyLifetime => 'Bli aksesin përjetë';
+
+  @override
+  String get paywallBuySupport => 'Dërgo mbështetje';
+
+  @override
+  String get paywallProductComingSoon =>
+      'Ende nuk është i disponueshëm në këtë version — do të vijë kur aplikacioni të publikohet në dyqan';
 
   @override
   String get paywallProcessing => 'Duke përpunuar…';
@@ -1920,4 +2004,36 @@ class AppLocalizationsSq extends AppLocalizations {
   String receiptHandoffFromScanNote(String date) {
     return 'Nga një kupon i skanuar më $date';
   }
+
+  @override
+  String get gateCountrySwitchTitle => 'Ndrysho vendet me Pro';
+
+  @override
+  String get gateCountrySwitchBody =>
+      'Plani falas mbulon llogaritësin e plotë vetëm për vendin tuaj aktual. Kalo në Pro për të zhbllokuar të gjitha 9 vendet.';
+
+  @override
+  String get gateCrossBorderSaveTitle => 'Ruaj më shumë krahasime me Pro';
+
+  @override
+  String get gateCrossBorderSaveBody =>
+      'Plani falas mban një krahasim ndërkufitar të ruajtur në një kohë. Kalo në Pro për krahasime të ruajtura të pakufizuara.';
+
+  @override
+  String get gateInvoicePdfTitle => 'Gjenero fatura PDF me Pro';
+
+  @override
+  String get gateInvoicePdfBody =>
+      'Faturat profesionale PDF me kode QR pagese janë një veçori Pro. Kalo në Pro për ta gjeneruar këtë faturë si PDF.';
+
+  @override
+  String get gatePausalTrackerTitle =>
+      'Zhblloko paketën e përputhshmërisë me Pro';
+
+  @override
+  String get gatePausalTrackerBody =>
+      'Paketa e plotë e përputhshmërisë për tarifën fikse dhe TVSH-në — ndjekja e xhiros, kujtesat mujore dhe krahasuesi Modeli A/Modeli B — është një veçori Pro.';
+
+  @override
+  String get toolsProBadge => 'PRO';
 }

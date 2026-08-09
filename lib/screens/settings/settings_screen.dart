@@ -10,12 +10,13 @@ import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_lookups.dart';
 import '../../models/business_profile.dart';
 import '../../models/currency.dart';
+import '../../models/entitlement.dart';
 import '../../models/expense_entry.dart';
 import '../../navigation/app_page_route.dart';
-import '../../providers/pro_provider.dart';
 import '../../services/budget_service.dart';
 import '../../services/business_profile_service.dart';
 import '../../services/consent_service.dart';
+import '../../services/entitlement_service.dart';
 import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
 import '../../services/notification_service.dart';
@@ -99,20 +100,23 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Builder(builder: (context) {
-            final isPro = context.watch<ProProvider>().isPro;
-            return Card(
-              child: ListTile(
-                leading: const Icon(Icons.workspace_premium_outlined, color: AppColors.gold),
-                title: Text(isPro ? l10n.settingsProActive : l10n.settingsProInactive,
-                    style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text(isPro
-                    ? l10n.settingsProSubtitleActive
-                    : l10n.settingsProSubtitleInactive),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context).push(
-                  appPageRoute((_) => const PaywallScreen()),
-                ),
-              ),
+            final entitlementService = context.watch<EntitlementService>();
+            return ValueListenableBuilder<EntitlementState>(
+              valueListenable: entitlementService.state,
+              builder: (context, entitlement, _) {
+                final (title, subtitle) = entitlementStatusCopy(l10n, entitlement.status);
+                return Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.workspace_premium_outlined, color: AppColors.gold),
+                    title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(subtitle),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.of(context).push(
+                      appPageRoute((_) => const PaywallScreen()),
+                    ),
+                  ),
+                );
+              },
             );
           }),
           const SizedBox(height: 16),

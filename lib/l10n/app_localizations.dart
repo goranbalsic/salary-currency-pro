@@ -1664,29 +1664,65 @@ abstract class AppLocalizations {
   /// **'Recommended: {model} — saves {amount} in net income.'**
   String freelanceComparatorRecommended(String model, String amount);
 
-  /// No description provided for @settingsProActive.
+  /// No description provided for @settingsEntitlementFreeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get settingsEntitlementFreeTitle;
+
+  /// No description provided for @settingsEntitlementFreeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock all 9 countries, unlimited comparisons, invoicing, and the compliance pack'**
+  String get settingsEntitlementFreeSubtitle;
+
+  /// No description provided for @settingsEntitlementTrialingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro — free trial'**
+  String get settingsEntitlementTrialingTitle;
+
+  /// No description provided for @settingsEntitlementTrialingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your 7-day trial is active — manage or cancel anytime in your store account'**
+  String get settingsEntitlementTrialingSubtitle;
+
+  /// No description provided for @settingsEntitlementProTitle.
   ///
   /// In en, this message translates to:
   /// **'Pro — active'**
-  String get settingsProActive;
+  String get settingsEntitlementProTitle;
 
-  /// No description provided for @settingsProInactive.
+  /// No description provided for @settingsEntitlementProSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Pro'**
-  String get settingsProInactive;
+  /// **'Thanks for supporting the app'**
+  String get settingsEntitlementProSubtitle;
 
-  /// No description provided for @settingsProSubtitleActive.
+  /// No description provided for @settingsEntitlementLifetimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Ads are off across the app'**
-  String get settingsProSubtitleActive;
+  /// **'Pro — lifetime'**
+  String get settingsEntitlementLifetimeTitle;
 
-  /// No description provided for @settingsProSubtitleInactive.
+  /// No description provided for @settingsEntitlementLifetimeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Remove ads with an affordable subscription'**
-  String get settingsProSubtitleInactive;
+  /// **'You have permanent access — thank you'**
+  String get settingsEntitlementLifetimeSubtitle;
+
+  /// No description provided for @settingsEntitlementExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro — expired'**
+  String get settingsEntitlementExpiredTitle;
+
+  /// No description provided for @settingsEntitlementExpiredSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription has ended — tap to renew'**
+  String get settingsEntitlementExpiredSubtitle;
 
   /// No description provided for @settingsTrustTitle.
   ///
@@ -1739,20 +1775,14 @@ abstract class AppLocalizations {
   /// No description provided for @paywallHeadline.
   ///
   /// In en, this message translates to:
-  /// **'Salary & Currency Pro'**
+  /// **'Unlock the full toolkit'**
   String get paywallHeadline;
 
   /// No description provided for @paywallPitch.
   ///
   /// In en, this message translates to:
-  /// **'Remove all ads across every calculator, at an affordable monthly price. Every payroll country, currency conversion, and financial tool stays free either way.'**
+  /// **'Every payroll country, currency conversion, and core financial tool stays free either way. Pro unlocks the specialized, high-effort differentiators: all 9 countries side by side, unlimited saved comparisons, professional invoicing, and the full compliance pack.'**
   String get paywallPitch;
-
-  /// No description provided for @paywallActiveMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'re on Pro — thank you! Ads are off across the app.'**
-  String get paywallActiveMessage;
 
   /// No description provided for @paywallStoreUnavailable.
   ///
@@ -1760,17 +1790,125 @@ abstract class AppLocalizations {
   /// **'The app store isn\'t available right now (this is expected in development builds without a configured Play Console listing). Pro will be purchasable once published.'**
   String get paywallStoreUnavailable;
 
-  /// No description provided for @paywallProductUnavailable.
+  /// No description provided for @paywallFeaturesTitle.
   ///
   /// In en, this message translates to:
-  /// **'The Pro subscription isn\'t set up in the store yet — this is a placeholder screen until the real product is created in Play Console.'**
-  String get paywallProductUnavailable;
+  /// **'What Pro unlocks'**
+  String get paywallFeaturesTitle;
 
-  /// No description provided for @paywallSubscribe.
+  /// No description provided for @paywallFeatureAllCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'All 9 countries\' full calculators, not just your home country'**
+  String get paywallFeatureAllCountries;
+
+  /// No description provided for @paywallFeatureUnlimitedComparisons.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited saved cross-border comparisons'**
+  String get paywallFeatureUnlimitedComparisons;
+
+  /// No description provided for @paywallFeatureInvoicePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional invoice PDFs with payment QR codes'**
+  String get paywallFeatureInvoicePdf;
+
+  /// No description provided for @paywallFeatureCompliancePack.
+  ///
+  /// In en, this message translates to:
+  /// **'The full paušal & VAT compliance pack'**
+  String get paywallFeatureCompliancePack;
+
+  /// No description provided for @paywallSectionAnnualTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get paywallSectionAnnualTitle;
+
+  /// No description provided for @paywallAnnualBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Best value'**
+  String get paywallAnnualBadge;
+
+  /// No description provided for @paywallAnnualTrialNote.
+  ///
+  /// In en, this message translates to:
+  /// **'7-day free trial, then {price}/month equivalent. Cancel anytime.'**
+  String paywallAnnualTrialNote(String price);
+
+  /// No description provided for @paywallSectionMonthlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get paywallSectionMonthlyTitle;
+
+  /// No description provided for @paywallLifetimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime'**
+  String get paywallLifetimeTitle;
+
+  /// No description provided for @paywallLifetimeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay once, own it forever'**
+  String get paywallLifetimeSubtitle;
+
+  /// No description provided for @paywallSupportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support the developer'**
+  String get paywallSupportTitle;
+
+  /// No description provided for @paywallSupportSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A one-time thank-you — doesn\'t change your plan or unlock anything extra'**
+  String get paywallSupportSubtitle;
+
+  /// No description provided for @paywallPricePerYear.
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/year'**
+  String paywallPricePerYear(String price);
+
+  /// No description provided for @paywallPricePerMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/month'**
+  String paywallPricePerMonth(String price);
+
+  /// No description provided for @paywallPriceOneTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} one-time'**
+  String paywallPriceOneTime(String price);
+
+  /// No description provided for @paywallBuySubscription.
   ///
   /// In en, this message translates to:
   /// **'Subscribe'**
-  String get paywallSubscribe;
+  String get paywallBuySubscription;
+
+  /// No description provided for @paywallBuyLifetime.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy lifetime'**
+  String get paywallBuyLifetime;
+
+  /// No description provided for @paywallBuySupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send support'**
+  String get paywallBuySupport;
+
+  /// No description provided for @paywallProductComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available in this build yet — coming when the app publishes to the store'**
+  String get paywallProductComingSoon;
 
   /// No description provided for @paywallProcessing.
   ///
@@ -3457,6 +3595,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From a receipt scanned on {date}'**
   String receiptHandoffFromScanNote(String date);
+
+  /// No description provided for @gateCountrySwitchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch countries with Pro'**
+  String get gateCountrySwitchTitle;
+
+  /// No description provided for @gateCountrySwitchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The free plan covers your current country\'s full calculator. Upgrade to Pro to unlock all 9 countries.'**
+  String get gateCountrySwitchBody;
+
+  /// No description provided for @gateCrossBorderSaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save more comparisons with Pro'**
+  String get gateCrossBorderSaveTitle;
+
+  /// No description provided for @gateCrossBorderSaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The free plan keeps one saved cross-border comparison at a time. Upgrade to Pro for unlimited saved comparisons.'**
+  String get gateCrossBorderSaveBody;
+
+  /// No description provided for @gateInvoicePdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate invoice PDFs with Pro'**
+  String get gateInvoicePdfTitle;
+
+  /// No description provided for @gateInvoicePdfBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional invoice PDFs with payment QR codes are a Pro feature. Upgrade to generate this invoice as a PDF.'**
+  String get gateInvoicePdfBody;
+
+  /// No description provided for @gatePausalTrackerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock the compliance pack with Pro'**
+  String get gatePausalTrackerTitle;
+
+  /// No description provided for @gatePausalTrackerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The paušal & VAT compliance pack — turnover tracking, monthly reminders, and the Model A/B comparator — is a Pro feature.'**
+  String get gatePausalTrackerBody;
+
+  /// No description provided for @toolsProBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'PRO'**
+  String get toolsProBadge;
 }
 
 class _AppLocalizationsDelegate

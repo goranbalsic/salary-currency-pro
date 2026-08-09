@@ -889,18 +889,39 @@ class AppLocalizationsMk extends AppLocalizations {
   }
 
   @override
-  String get settingsProActive => 'Pro — активно';
+  String get settingsEntitlementFreeTitle => 'Бесплатно';
 
   @override
-  String get settingsProInactive => 'Pro';
+  String get settingsEntitlementFreeSubtitle =>
+      'Отклучете ги сите 9 земји, неограничени споредби, фактурирање и пакетот за усогласеност';
 
   @override
-  String get settingsProSubtitleActive =>
-      'Рекламите се исклучени во целата апликација';
+  String get settingsEntitlementTrialingTitle => 'Pro — пробен период';
 
   @override
-  String get settingsProSubtitleInactive =>
-      'Отстранете ги рекламите со достапна претплата';
+  String get settingsEntitlementTrialingSubtitle =>
+      'Вашиот 7-дневен пробен период е активен — управувајте или откажете во секое време во сметката на продавницата';
+
+  @override
+  String get settingsEntitlementProTitle => 'Pro — активно';
+
+  @override
+  String get settingsEntitlementProSubtitle =>
+      'Ви благодариме што ја поддржувате апликацијата';
+
+  @override
+  String get settingsEntitlementLifetimeTitle => 'Pro — доживотно';
+
+  @override
+  String get settingsEntitlementLifetimeSubtitle =>
+      'Имате постојан пристап — ви благодариме';
+
+  @override
+  String get settingsEntitlementExpiredTitle => 'Pro — истечено';
+
+  @override
+  String get settingsEntitlementExpiredSubtitle =>
+      'Вашата претплата истече — допрете за обновување';
 
   @override
   String get settingsTrustTitle => 'Зошто да се верува на оваа апликација?';
@@ -932,26 +953,89 @@ class AppLocalizationsMk extends AppLocalizations {
   String get paywallTitle => 'Стани Pro';
 
   @override
-  String get paywallHeadline => 'Salary & Currency Pro';
+  String get paywallHeadline => 'Отклучете го целосниот сет алатки';
 
   @override
   String get paywallPitch =>
-      'Отстранете ги сите реклами во секој калкулатор, по достапна месечна цена. Сите земји за пресметка на плата, конверзија на валути и финансиски алатки остануваат бесплатни во секој случај.';
-
-  @override
-  String get paywallActiveMessage =>
-      'Вие сте Pro корисник — ви благодариме! Рекламите се исклучени во целата апликација.';
+      'Секој калкулатор за плата, конвертор на валута и основна финансиска алатка останува бесплатна во секој случај. Pro ги отклучува специјализираните разлики со најмногу вложен труд: сите 9 земји една до друга, неограничени зачувани споредби, професионално фактурирање и целосниот пакет за усогласеност.';
 
   @override
   String get paywallStoreUnavailable =>
       'Продавницата моментално не е достапна (ова е очекувано во развојни верзии без конфигурирана Play Console листа). Pro ќе биде достапен за купување откако ќе биде објавен.';
 
   @override
-  String get paywallProductUnavailable =>
-      'Pro претплатата сè уште не е поставена во продавницата — ова е привремен екран додека вистинскиот производ не се креира во Play Console.';
+  String get paywallFeaturesTitle => 'Што отклучува Pro';
 
   @override
-  String get paywallSubscribe => 'Претплати се';
+  String get paywallFeatureAllCountries =>
+      'Целосните калкулатори на сите 9 земји, не само вашата матична земја';
+
+  @override
+  String get paywallFeatureUnlimitedComparisons =>
+      'Неограничени зачувани прекугранични споредби';
+
+  @override
+  String get paywallFeatureInvoicePdf =>
+      'Професионални PDF фактури со QR кодови за плаќање';
+
+  @override
+  String get paywallFeatureCompliancePack =>
+      'Целосниот пакет за усогласеност со паушал и ДДВ';
+
+  @override
+  String get paywallSectionAnnualTitle => 'Годишен';
+
+  @override
+  String get paywallAnnualBadge => 'Најдобра вредност';
+
+  @override
+  String paywallAnnualTrialNote(String price) {
+    return '7-дневен бесплатен пробен период, потоа еквивалент од $price/месечно. Откажете во секое време.';
+  }
+
+  @override
+  String get paywallSectionMonthlyTitle => 'Месечен';
+
+  @override
+  String get paywallLifetimeTitle => 'Доживотен';
+
+  @override
+  String get paywallLifetimeSubtitle => 'Платете еднаш, поседувајте засекогаш';
+
+  @override
+  String get paywallSupportTitle => 'Поддржете го развивачот';
+
+  @override
+  String get paywallSupportSubtitle =>
+      'Еднократна благодарност — не го менува вашиот план ниту отклучува нешто дополнително';
+
+  @override
+  String paywallPricePerYear(String price) {
+    return '$price/годишно';
+  }
+
+  @override
+  String paywallPricePerMonth(String price) {
+    return '$price/месечно';
+  }
+
+  @override
+  String paywallPriceOneTime(String price) {
+    return '$price еднократно';
+  }
+
+  @override
+  String get paywallBuySubscription => 'Претплати се';
+
+  @override
+  String get paywallBuyLifetime => 'Купи доживотен';
+
+  @override
+  String get paywallBuySupport => 'Испрати поддршка';
+
+  @override
+  String get paywallProductComingSoon =>
+      'Сè уште не е достапно во оваа верзија — доаѓа кога апликацијата ќе се објави во продавницата';
 
   @override
   String get paywallProcessing => 'Обработка…';
@@ -1915,4 +1999,36 @@ class AppLocalizationsMk extends AppLocalizations {
   String receiptHandoffFromScanNote(String date) {
     return 'Од сметка скенирана на $date';
   }
+
+  @override
+  String get gateCountrySwitchTitle => 'Менувајте земји со Pro';
+
+  @override
+  String get gateCountrySwitchBody =>
+      'Бесплатниот план го покрива целосниот калкулатор само на вашата тековна земја. Надградете на Pro за да ги отклучите сите 9 земји.';
+
+  @override
+  String get gateCrossBorderSaveTitle => 'Зачувајте повеќе споредби со Pro';
+
+  @override
+  String get gateCrossBorderSaveBody =>
+      'Бесплатниот план чува една зачувана прекугранична споредба во исто време. Надградете на Pro за неограничени зачувани споредби.';
+
+  @override
+  String get gateInvoicePdfTitle => 'Генерирајте PDF фактури со Pro';
+
+  @override
+  String get gateInvoicePdfBody =>
+      'Професионалните PDF фактури со QR кодови за плаќање се Pro функција. Надградете за да ја генерирате оваа фактура како PDF.';
+
+  @override
+  String get gatePausalTrackerTitle =>
+      'Отклучете го пакетот за усогласеност со Pro';
+
+  @override
+  String get gatePausalTrackerBody =>
+      'Целосниот пакет за усогласеност со паушал и ДДВ — следење на промет, месечни потсетници и споредбата Модел A/Модел Б — е Pro функција.';
+
+  @override
+  String get toolsProBadge => 'PRO';
 }

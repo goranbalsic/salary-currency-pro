@@ -34,7 +34,8 @@ class EntitlementService {
   /// verified" precedent as D-029's invoice-date FX rate.
   static const trialWindow = Duration(days: 7);
 
-  final InAppPurchasePlatform _platform;
+  final InAppPurchasePlatform? _injectedPlatform;
+  InAppPurchasePlatform? _resolvedPlatform;
 
   /// How long [verify] waits for the store to confirm an entitlement via
   /// [InAppPurchasePlatform.restorePurchases] before treating "nothing
@@ -65,17 +66,31 @@ class EntitlementService {
   /// risk of ever touching a real platform channel. Production behavior is
   /// identical either way: every `InAppPurchase` method is a one-line
   /// delegation to `InAppPurchasePlatform.instance` at call time.
+  ///
+  /// [platform] resolution is deliberately lazy (see [_platform]), not done
+  /// here in the constructor: `in_app_purchase`'s real platform registration
+  /// throws on platforms it doesn't support (desktop/web dev builds — see
+  /// `main.dart`'s own Android/iOS-only gate around calling [start]).
+  /// Resolving eagerly here would make constructing an `EntitlementService`
+  /// itself crash the app on those platforms; deferring it to first actual
+  /// use means the app can always safely hold an instance, exactly like the
+  /// `PurchaseService` this supersedes.
   EntitlementService({
     InAppPurchasePlatform? platform,
     this.verifyResponseTimeout = const Duration(seconds: 5),
-  }) : _platform = platform ?? _realPlatform();
+  }) : _injectedPlatform = platform;
 
-  /// Touches `InAppPurchase.instance` once, in production only, so the real
-  /// platform-specific `InAppPurchasePlatform` gets registered — then reads
-  /// it back directly. Never called when a test injects its own [platform].
-  static InAppPurchasePlatform _realPlatform() {
-    InAppPurchase.instance;
-    return InAppPurchasePlatform.instance;
+  /// Resolves to the injected test platform if one was given, otherwise
+  /// touches `InAppPurchase.instance` once (real registration side effect)
+  /// and reads back `InAppPurchasePlatform.instance` — cached after the
+  /// first call so that side effect only ever happens once per instance.
+  InAppPurchasePlatform get _platform {
+    final injected = _injectedPlatform;
+    if (injected != null) return injected;
+    return _resolvedPlatform ??= () {
+      InAppPurchase.instance;
+      return InAppPurchasePlatform.instance;
+    }();
   }
 
   Future<void> start() async {

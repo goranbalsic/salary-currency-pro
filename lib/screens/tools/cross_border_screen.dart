@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_lookups.dart';
@@ -7,10 +8,14 @@ import '../../models/country.dart';
 import '../../models/cross_border_comparison.dart';
 import '../../models/history_entry.dart';
 import '../../services/cross_border_comparison_service.dart';
+import '../../services/entitlement_service.dart';
 import '../../services/history_service.dart';
+import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
 import '../../widgets/labeled_row.dart';
+import '../../widgets/save_scenario_action.dart';
+import '../../widgets/upgrade_prompt.dart';
 
 String _amountIssueMessage(AppLocalizations l10n, AmountIssue issue) {
   switch (issue) {
@@ -44,6 +49,7 @@ class _CrossBorderScreenState extends State<CrossBorderScreen> {
   final _grossCtrl = TextEditingController();
   final _service = CrossBorderComparisonService();
   final _historyService = HistoryService();
+  final _scenarioService = ScenarioService();
 
   CrossBorderPayPeriod _period = CrossBorderPayPeriod.monthly;
   String _baEntityId = 'fbih';
@@ -86,6 +92,46 @@ class _CrossBorderScreenState extends State<CrossBorderScreen> {
         currencyCode: 'EUR',
       );
     }
+  }
+
+  /// Cross-Border comparisons have their own, tighter free-tier save cap
+  /// (1, not the generic `ScenarioService.freeLimit` of 3 every other tool
+  /// shares) — PROMPT-003I Stage D checkpoint 2's "one saved cross-border
+  /// comparison at a time" for free, unlimited for Pro. Running a
+  /// comparison itself (above) is never gated; only saving one is. Checked
+  /// here, before the shared `saveScenario()` helper, so a free user with
+  /// zero saves never even reaches that helper's own (looser) 3-scenario
+  /// ceiling.
+  Future<void> _saveComparison(AppLocalizations l10n) async {
+    final result = _result;
+    if (result == null) return;
+    final isPro = context.read<EntitlementService>().state.value.hasFullAccess;
+    if (!isPro) {
+      final existing = await _scenarioService.loadForTool(HistoryToolIds.crossBorder);
+      if (existing.isNotEmpty) {
+        if (!mounted) return;
+        await showUpgradePrompt(
+          context,
+          title: l10n.gateCrossBorderSaveTitle,
+          body: l10n.gateCrossBorderSaveBody,
+        );
+        return;
+      }
+    }
+    if (!mounted) return;
+    final fmt = NumberFormat.currency(symbol: '', decimalDigits: 0);
+    await saveScenario(
+      context,
+      toolId: HistoryToolIds.crossBorder,
+      defaultName: '${l10n.toolsCrossBorderTitle} · EUR ${fmt.format(result.grossInputComparisonCurrency)}',
+      summary: '${result.regimes.length}/${kCountries.length} · EUR ${fmt.format(result.grossInputComparisonCurrency)}',
+      inputs: {
+        'grossComparisonCurrency': result.grossInputComparisonCurrency,
+        'payPeriod': result.payPeriod.name,
+        'baEntityId': result.selectedBaEntityId,
+      },
+      currencyCode: 'EUR',
+    );
   }
 
   void _openDetail(CrossBorderRegimeResult regime) {
@@ -187,6 +233,7 @@ class _CrossBorderScreenState extends State<CrossBorderScreen> {
               l10n.crossBorderTapForDetail,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
             ),
+            SaveScenarioRow(onSave: () => _saveComparison(l10n)),
           ],
           const SizedBox(height: 16),
           Card(

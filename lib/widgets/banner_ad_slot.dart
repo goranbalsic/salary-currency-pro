@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/pro_provider.dart';
+import '../models/entitlement.dart';
 import '../services/ads_service.dart';
+import '../services/entitlement_service.dart';
 
 /// A banner ad, or nothing at all: for Pro subscribers, on platforms
 /// AdMob doesn't support (web/desktop — this app also runs there via
@@ -50,15 +51,19 @@ class _BannerAdSlotState extends State<BannerAdSlot> {
 
   @override
   Widget build(BuildContext context) {
-    final isPro = context.watch<ProProvider>().isPro;
     final ad = _bannerAd;
-    if (isPro || !_loaded || ad == null) {
-      return const SizedBox.shrink();
-    }
-    return SizedBox(
-      width: ad.size.width.toDouble(),
-      height: ad.size.height.toDouble(),
-      child: AdWidget(ad: ad),
+    return ValueListenableBuilder<EntitlementState>(
+      valueListenable: context.read<EntitlementService>().state,
+      builder: (context, entitlement, _) {
+        if (entitlement.hasFullAccess || !_loaded || ad == null) {
+          return const SizedBox.shrink();
+        }
+        return SizedBox(
+          width: ad.size.width.toDouble(),
+          height: ad.size.height.toDouble(),
+          child: AdWidget(ad: ad),
+        );
+      },
     );
   }
 }

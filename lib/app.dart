@@ -4,11 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/app_localizations.dart';
-import 'providers/pro_provider.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/root/root_shell.dart';
 import 'services/bg_euro_migration_service.dart';
-import 'services/purchase_service.dart';
+import 'services/entitlement_service.dart';
 import 'services/recurring_transaction_service.dart';
 import 'services/samo_to_freelance_tax_migration_service.dart';
 import 'theme/app_theme.dart';
@@ -35,10 +34,7 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
   bool? _onboardingComplete;
   int _homeTabIndex = 0;
 
-  final ProProvider _proProvider = ProProvider();
-  late final PurchaseService _purchaseService = PurchaseService(
-    onProStatusChanged: (isPro) => _proProvider.setPro(isPro),
-  );
+  final EntitlementService _entitlementService = EntitlementService();
 
   @override
   void initState() {
@@ -56,17 +52,18 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
     // in_app_purchase's real purchase stream is Android/iOS-only; starting
     // it elsewhere (desktop/web dev builds) would throw on unsupported
     // platform channels. The service itself is still always provided so
-    // PaywallScreen's context.read<PurchaseService>() never fails to find
-    // one — see PurchaseService.isAvailable's own try/catch for the rest.
+    // PaywallScreen's context.read<EntitlementService>() never fails to
+    // find one — see EntitlementService.isAvailable's own try/catch for
+    // the rest.
     if (defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS) {
-      _purchaseService.start();
+      _entitlementService.start();
     }
   }
 
   @override
   void dispose() {
-    _purchaseService.dispose();
+    _entitlementService.dispose();
     super.dispose();
   }
 
@@ -153,8 +150,7 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ProProvider>.value(value: _proProvider),
-        Provider<PurchaseService>.value(value: _purchaseService),
+        Provider<EntitlementService>.value(value: _entitlementService),
       ],
       child: _buildApp(context),
     );

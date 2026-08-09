@@ -54,4 +54,18 @@ class MonetizationConfig {
     proLifetimePurchaseId,
     supportDeveloperPurchaseId,
   };
+
+  /// Reference USD prices from PROMPT-003I's Decision 2 — the app's own
+  /// already-decided pricing, not a guess. [PaywallScreen] shows these as a
+  /// fallback whenever a real `ProductDetails.price` isn't available (i.e.
+  /// always, until the products above actually exist in Play Console),
+  /// clearly labeled as reference/indicative rather than a live confirmed
+  /// price — Play's regional PPP auto-pricing template will set the real
+  /// per-market price, which these numbers deliberately don't try to
+  /// predict. Never used to process an actual purchase; `buy()` always
+  /// requires a real `ProductDetails` from the store.
+  static const double monthlyReferenceUsd = 3.99;
+  static const double annualReferenceUsd = 19.99;
+  static const double lifetimeReferenceUsd = 49.99;
+  static const double supportReferenceUsd = 2.99;
 }

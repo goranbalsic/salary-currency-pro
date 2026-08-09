@@ -84,10 +84,42 @@ void main() {
   });
 
   testWidgets(
+      'Invoice detail: a free-tier user tapping Generate PDF sees an '
+      'upgrade prompt instead, and the invoice is untouched',
+      (WidgetTester tester) async {
+    // Default shared setUp() has no entitlement_state_v1 key — free tier.
+    await openInvoicesTab(tester);
+    await addInvoiceAndOpenDetail(tester);
+
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Generate PDF'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Generate invoice PDFs with Pro'), findsOneWidget);
+    expect(
+      find.text(
+        'Professional invoice PDFs with payment QR codes are a Pro feature. Upgrade to generate this invoice as a PDF.',
+      ),
+      findsOneWidget,
+    );
+    // Cancel leaves the detail screen exactly as it was.
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Unpaid'), findsOneWidget);
+  });
+
+  testWidgets(
       'Invoice detail: Generate PDF builds real PDF bytes, then fails '
       'gracefully (with feedback, invoice unchanged) because the printing '
       'plugin has no platform implementation in the widget-test sandbox — '
       'and a rapid second tap does not double-fire', (WidgetTester tester) async {
+    // PROMPT-003I checkpoint 2 gated PDF generation behind Pro — this test
+    // is about the PDF pipeline itself, not the gate (that's covered
+    // separately), so it seeds a Pro entitlement directly via the same
+    // SharedPreferences key EntitlementService reads on startup.
+    SharedPreferences.setMockInitialValues({
+      'onboarding_complete': true,
+      'entitlement_state_v1': '{"schemaVersion":1,"status":"lifetime","productId":"pro_lifetime"}',
+    });
     await openInvoicesTab(tester);
     await addInvoiceAndOpenDetail(tester);
 

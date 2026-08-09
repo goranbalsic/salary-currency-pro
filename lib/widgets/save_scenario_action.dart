@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
 import '../navigation/app_page_route.dart';
-import '../providers/pro_provider.dart';
 import '../screens/paywall/paywall_screen.dart';
+import '../services/entitlement_service.dart';
 import '../services/scenario_service.dart';
 
 /// The shared "Save this calculation as a scenario" flow, used by every
@@ -21,33 +21,12 @@ Future<void> saveScenario(
   String? currencyCode,
 }) async {
   final l10n = AppLocalizations.of(context)!;
-  final isPro = context.read<ProProvider>().isPro;
+  final isPro = context.read<EntitlementService>().state.value.hasFullAccess;
 
-  final nameCtrl = TextEditingController(text: defaultName);
   final name = await showDialog<String>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
-      title: Text(l10n.scenarioSaveDialogTitle),
-      content: TextField(
-        controller: nameCtrl,
-        autofocus: true,
-        decoration: InputDecoration(labelText: l10n.scenarioNameLabel),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(dialogContext).pop(),
-          child: Text(l10n.commonCancel),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.of(dialogContext).pop(
-            nameCtrl.text.trim().isEmpty ? defaultName : nameCtrl.text.trim(),
-          ),
-          child: Text(l10n.commonSave),
-        ),
-      ],
-    ),
+    builder: (dialogContext) => _SaveScenarioDialog(l10n: l10n, defaultName: defaultName),
   );
-  nameCtrl.dispose();
   if (name == null) return;
 
   try {
@@ -88,6 +67,60 @@ Future<void> saveScenario(
         appPageRoute((_) => const PaywallScreen()),
       );
     }
+  }
+}
+
+/// The name-entry dialog's content, split into its own `State` (rather
+/// than a `TextEditingController` owned by the calling function and
+/// disposed the instant `showDialog` resolves) so the controller stays
+/// valid for as long as the `TextField` is actually in the tree, including
+/// during the dialog's own close/exit animation. An earlier version
+/// disposed the controller in the caller immediately after the dialog
+/// popped, which crashed ("used after being disposed") because the exit
+/// animation could still be holding a live `TextField` attached to it —
+/// the same class of bug already fixed once in this app for the fiscal
+/// receipt scanner's manual-entry sheet (see DECISIONS.md D-032).
+class _SaveScenarioDialog extends StatefulWidget {
+  final AppLocalizations l10n;
+  final String defaultName;
+
+  const _SaveScenarioDialog({required this.l10n, required this.defaultName});
+
+  @override
+  State<_SaveScenarioDialog> createState() => _SaveScenarioDialogState();
+}
+
+class _SaveScenarioDialogState extends State<_SaveScenarioDialog> {
+  late final _nameCtrl = TextEditingController(text: widget.defaultName);
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.l10n.scenarioSaveDialogTitle),
+      content: TextField(
+        controller: _nameCtrl,
+        autofocus: true,
+        decoration: InputDecoration(labelText: widget.l10n.scenarioNameLabel),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(widget.l10n.commonCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(
+            _nameCtrl.text.trim().isEmpty ? widget.defaultName : _nameCtrl.text.trim(),
+          ),
+          child: Text(widget.l10n.commonSave),
+        ),
+      ],
+    );
   }
 }
 

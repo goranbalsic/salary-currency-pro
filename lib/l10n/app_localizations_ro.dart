@@ -897,18 +897,38 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get settingsProActive => 'Pro — activ';
+  String get settingsEntitlementFreeTitle => 'Gratuit';
 
   @override
-  String get settingsProInactive => 'Pro';
+  String get settingsEntitlementFreeSubtitle =>
+      'Deblochează toate cele 9 țări, comparații nelimitate, facturare și pachetul de conformitate';
 
   @override
-  String get settingsProSubtitleActive =>
-      'Reclamele sunt dezactivate în toată aplicația';
+  String get settingsEntitlementTrialingTitle => 'Pro — perioadă de probă';
 
   @override
-  String get settingsProSubtitleInactive =>
-      'Elimină reclamele cu un abonament accesibil';
+  String get settingsEntitlementTrialingSubtitle =>
+      'Perioada ta de probă de 7 zile este activă — gestionează sau anulează oricând din contul magazinului';
+
+  @override
+  String get settingsEntitlementProTitle => 'Pro — activ';
+
+  @override
+  String get settingsEntitlementProSubtitle => 'Mulțumim că susții aplicația';
+
+  @override
+  String get settingsEntitlementLifetimeTitle => 'Pro — pe viață';
+
+  @override
+  String get settingsEntitlementLifetimeSubtitle =>
+      'Ai acces permanent — mulțumim';
+
+  @override
+  String get settingsEntitlementExpiredTitle => 'Pro — expirat';
+
+  @override
+  String get settingsEntitlementExpiredSubtitle =>
+      'Abonamentul tău a expirat — atinge pentru a reînnoi';
 
   @override
   String get settingsTrustTitle =>
@@ -942,26 +962,90 @@ class AppLocalizationsRo extends AppLocalizations {
   String get paywallTitle => 'Devino Pro';
 
   @override
-  String get paywallHeadline => 'Salary & Currency Pro';
+  String get paywallHeadline => 'Deblochează setul complet de instrumente';
 
   @override
   String get paywallPitch =>
-      'Elimină toate reclamele din fiecare calculator, la un preț lunar accesibil. Toate țările pentru calculul salariilor, conversia valutară și instrumentele financiare rămân gratuite oricum.';
-
-  @override
-  String get paywallActiveMessage =>
-      'Ești utilizator Pro — mulțumim! Reclamele sunt dezactivate în toată aplicația.';
+      'Fiecare calculator de salariu, convertor valutar și instrument financiar de bază rămâne gratuit oricum. Pro deblochează diferențiatorii specializați, cu efort ridicat: toate cele 9 țări una lângă alta, comparații salvate nelimitate, facturare profesională și pachetul complet de conformitate.';
 
   @override
   String get paywallStoreUnavailable =>
       'Magazinul nu este disponibil momentan (acest lucru este așteptat în versiunile de dezvoltare fără o listare Play Console configurată). Pro va putea fi cumpărat după publicare.';
 
   @override
-  String get paywallProductUnavailable =>
-      'Abonamentul Pro nu este încă configurat în magazin — acesta este un ecran temporar până când produsul real este creat în Play Console.';
+  String get paywallFeaturesTitle => 'Ce deblochează Pro';
 
   @override
-  String get paywallSubscribe => 'Abonează-te';
+  String get paywallFeatureAllCountries =>
+      'Calculatoarele complete pentru toate cele 9 țări, nu doar țara ta';
+
+  @override
+  String get paywallFeatureUnlimitedComparisons =>
+      'Comparații transfrontaliere salvate nelimitate';
+
+  @override
+  String get paywallFeatureInvoicePdf =>
+      'Facturi PDF profesionale cu coduri QR de plată';
+
+  @override
+  String get paywallFeatureCompliancePack =>
+      'Pachetul complet de conformitate paušal și TVA';
+
+  @override
+  String get paywallSectionAnnualTitle => 'Anual';
+
+  @override
+  String get paywallAnnualBadge => 'Cea mai bună valoare';
+
+  @override
+  String paywallAnnualTrialNote(String price) {
+    return 'Perioadă de probă gratuită de 7 zile, apoi echivalentul de $price/lună. Anulează oricând.';
+  }
+
+  @override
+  String get paywallSectionMonthlyTitle => 'Lunar';
+
+  @override
+  String get paywallLifetimeTitle => 'Pe viață';
+
+  @override
+  String get paywallLifetimeSubtitle =>
+      'Plătește o dată, deține pentru totdeauna';
+
+  @override
+  String get paywallSupportTitle => 'Susține dezvoltatorul';
+
+  @override
+  String get paywallSupportSubtitle =>
+      'O mulțumire unică — nu îți schimbă planul și nu deblochează nimic în plus';
+
+  @override
+  String paywallPricePerYear(String price) {
+    return '$price/an';
+  }
+
+  @override
+  String paywallPricePerMonth(String price) {
+    return '$price/lună';
+  }
+
+  @override
+  String paywallPriceOneTime(String price) {
+    return '$price o singură dată';
+  }
+
+  @override
+  String get paywallBuySubscription => 'Abonează-te';
+
+  @override
+  String get paywallBuyLifetime => 'Cumpără pe viață';
+
+  @override
+  String get paywallBuySupport => 'Trimite susținere';
+
+  @override
+  String get paywallProductComingSoon =>
+      'Încă nu este disponibil în această versiune — va fi disponibil când aplicația este publicată în magazin';
 
   @override
   String get paywallProcessing => 'Se procesează…';
@@ -1925,4 +2009,36 @@ class AppLocalizationsRo extends AppLocalizations {
   String receiptHandoffFromScanNote(String date) {
     return 'Dintr-un bon scanat pe $date';
   }
+
+  @override
+  String get gateCountrySwitchTitle => 'Schimbă țările cu Pro';
+
+  @override
+  String get gateCountrySwitchBody =>
+      'Planul gratuit acoperă calculatorul complet doar pentru țara ta curentă. Treci la Pro pentru a debloca toate cele 9 țări.';
+
+  @override
+  String get gateCrossBorderSaveTitle => 'Salvează mai multe comparații cu Pro';
+
+  @override
+  String get gateCrossBorderSaveBody =>
+      'Planul gratuit păstrează o singură comparație transfrontalieră salvată o dată. Treci la Pro pentru comparații salvate nelimitate.';
+
+  @override
+  String get gateInvoicePdfTitle => 'Generează facturi PDF cu Pro';
+
+  @override
+  String get gateInvoicePdfBody =>
+      'Facturile PDF profesionale cu coduri QR de plată sunt o funcție Pro. Treci la Pro pentru a genera această factură ca PDF.';
+
+  @override
+  String get gatePausalTrackerTitle =>
+      'Deblochează pachetul de conformitate cu Pro';
+
+  @override
+  String get gatePausalTrackerBody =>
+      'Pachetul complet de conformitate paušal și TVA — urmărirea cifrei de afaceri, memento-uri lunare și comparatorul Model A/Model B — este o funcție Pro.';
+
+  @override
+  String get toolsProBadge => 'PRO';
 }
