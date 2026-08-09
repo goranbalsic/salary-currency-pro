@@ -274,6 +274,94 @@ closest equivalent. As of this update:
   empty-state convention (established in `my_scenarios_screen.dart`) so
   the three newer screens visually match it. No new l10n strings.
 
+## Development Setup — Running dev/prod Builds in Android Studio
+
+PROMPT-003J (checkpoint 1, `DECISIONS.md` D-034) added a real dev/prod
+Gradle flavor split. These are the exact commands/steps verified this
+stage — a real `flutter build` + `aapt dump badging` confirmed each
+claim below, not guessed. **A flavor-less build/run now fails to label
+itself correctly** — always specify a flavor.
+
+### Owner: running the dev build on your own phone from Android Studio
+
+1. Open Android Studio → **Open** → select this repo's root folder (the
+   one containing `pubspec.yaml`), not the `android/` subfolder.
+2. Let Gradle sync finish (first sync after this change may take a few
+   minutes — the flavor split adds two new build variants).
+3. Connect your Android phone via USB with USB debugging enabled (or use
+   any already-configured emulator).
+4. In the Run/Debug configuration dropdown (top toolbar), select
+   **"main_dev.dart (dev)"** — this repo's `.idea/runConfigurations/`
+   ships this config already (committed via a narrow `.gitignore`
+   exception specifically so it reaches you after `git pull`; everything
+   else under `.idea/` stays local-only, as before).
+5. Press **Run** (▶). The installed app will be labeled
+   "Salary & Currency Pro (DEV)" with a red "DEV" ribbon on its icon —
+   installs alongside a real prod install without overwriting it
+   (distinct application ID: `rs.salarycurrencypro.salary_currency_pro.dev`).
+6. On first launch, Settings → the gold-bordered **"Entitlement Preview
+   (Dev)"** card lets you simulate Free/Trialing/Pro/Lifetime/Expired
+   against every real Free/Pro gate in the app — it defaults to fully
+   unlocked Pro. This card only exists in dev builds; it is
+   compile-time absent from `main_prod.dart`/`main.dart` builds.
+
+### Command-line equivalents (verified this stage)
+
+```text
+flutter run --flavor dev -t lib/main_dev.dart
+flutter run --flavor prod -t lib/main_prod.dart
+flutter build apk --debug --flavor dev -t lib/main_dev.dart
+flutter build apk --debug --flavor prod -t lib/main_prod.dart
+flutter build apk --release --flavor prod -t lib/main_prod.dart --split-per-abi
+```
+
+The bare `flutter run`/`flutter build` (no `-t`, using `lib/main.dart`)
+still works, but **requires `--flavor prod` explicitly** now that flavors
+exist — `lib/main.dart` itself always initializes the prod flavor
+internally regardless, but Gradle needs the flag to pick a variant at
+all. The existing `.idea/runConfigurations/main.dart` config was updated
+to pass this automatically; prefer the dedicated
+`main_dev.dart (dev)`/`main_prod.dart (prod)` configs for new use.
+
+### What's still open (see `DEVICE_TEST_CHECKLIST.md`)
+
+Every claim above is either a real build/`aapt` inspection or a widget
+test against a platform double — none of it is a real-device touch/visual
+pass. No physical Android device or emulator exists in the coding
+environment that built this; the owner's own phone run above is the first
+real-device verification this feature gets.
+
+### Release signing — the one owner action still required before Play upload
+
+PROMPT-003J checkpoint 4 added the standard Flutter `key.properties`
+scaffold (`android/app/build.gradle.kts`), but **every release artifact
+built in this environment so far is still signed with the debug
+keystore** — Google Play does not accept that. Real signing needs a real
+keystore this environment cannot generate (it would need to be a secret
+only the owner holds). To finish this:
+
+1. Generate a real upload keystore (run this yourself, not in a shared/
+   AI-assisted terminal, since it prompts for passwords):
+   ```text
+   keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+   ```
+   Store the resulting `upload-keystore.jks` **outside the repo** (e.g.
+   `android/upload-keystore.jks` is fine since `*.jks` is gitignored, but
+   keep an independent backup somewhere safe — a lost upload key means
+   losing the ability to ever update the app on Play again).
+2. Copy `android/key.properties.example` to `android/key.properties`
+   (already gitignored) and fill in the real `storePassword`/
+   `keyPassword`/`keyAlias`/`storeFile` values.
+3. Rebuild: `flutter build appbundle --release --flavor prod -t lib/main_prod.dart`.
+   The build automatically detects `android/key.properties` and signs
+   with it instead of the debug key — no other command changes.
+4. Confirm real signing before uploading:
+   ```text
+   jarsigner -verify -verbose -certs build/app/outputs/bundle/prodRelease/app-prod-release.aab
+   ```
+   (should show your own certificate, not the well-known Android debug
+   one).
+
 ## Current Focus
 
 Phase 11 (final visual polish) is underway — the empty-state icon

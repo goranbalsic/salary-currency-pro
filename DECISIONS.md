@@ -1,6 +1,6 @@
 # DECISIONS.md
 
-## D-034 — PROMPT-003J Release Readiness: dev/prod build matrix + entitlement simulator, checkpoints 1–2 (in progress)
+## D-034 — PROMPT-003J Release Readiness: dev/prod build matrix + entitlement simulator (done, checkpoints 1–4)
 
 - **Date:** started 2026-08-09. Implements
   `_userprompts/PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`.
@@ -108,13 +108,114 @@
     simulated state, live gate propagation, restart persistence) is
     either a real build inspected with `aapt`, or a real automated test,
     not asserted from code review alone.
-- **Next:** checkpoint 3 (phone QA against the approved scope — **no
-  physical Android device is available in this environment**, the same
-  recurring, honestly-disclosed limitation as D-014/D-015/D-026/D-027;
-  will do what's actually verifiable — widget tests and real builds — and
-  disclose the device-testing gap explicitly rather than claim phone
-  verification), then checkpoint 4 (production safety + release
-  evidence + push).
+- **Checkpoint 3 — app-side QA, done honestly (this environment has no
+  physical Android device or emulator, same recurring, disclosed
+  limitation as D-014/D-015/D-026/D-027):**
+  - **Gate audit — every rule re-verified against source, not memory:**
+    Salary Calculator, Cross-Border, Invoice PDF, paušal/VAT pack,
+    Freelance Tax Screen, and the QR scanner were each grepped for their
+    actual entitlement wiring (`hasFullAccess`/`proOnly`/
+    `EntitlementService` usage) and cross-checked against the exact rules
+    this prompt restated. **Zero concrete gaps found** — no fixes were
+    needed; every gate already matches the approved rule exactly as built
+    in D-033/D-034 checkpoints 1–2. The QR scanner's hard network
+    boundary (no `suf.purs.gov.rs` call, no WebView) was independently
+    re-confirmed by a fresh source grep across the whole `lib/` tree, not
+    just trusted from D-032's prior record.
+  - **Static production-leakage audit:** confirmed
+    `EntitlementPreviewSection` has exactly one call site, gated by
+    `AppConfig.isDev`, never constructed for prod; confirmed
+    `setDevSimulatedStatus` no-ops when `devSimulationEnabled` is false;
+    confirmed zero Firebase references anywhere in `pubspec.yaml`/Gradle;
+    confirmed zero `print`/`debugPrint` of personal or billing data in
+    the entitlement/paywall code; confirmed the `.dev` applicationId
+    suffix exists only at the Gradle/Android-resource level, never as a
+    Dart string; confirmed no hidden route/gesture/query-param/mutable
+    preference exists anywhere that changes entitlement outside
+    `EntitlementService` itself.
+  - **New `DEVICE_TEST_CHECKLIST.md`** — three honest sections (Verified
+    here / Pending owner phone or Firebase Test Lab / Pending Google Play
+    Internal Testing) rather than one pass/fail claim.
+  - **New "Development Setup" section in `PROJECT_CONTEXT.md`** — the
+    exact Android Studio steps and CLI commands to run `devDebug` on the
+    owner's own phone, all commands verified this stage via real builds.
+- **Checkpoint 4 — production safety + release evidence:**
+  - **Final regression, all real:** `flutter test -j 1` **525/525**
+    (unchanged from checkpoint 2 — no code changes since, only docs/
+    builds). `flutter analyze` clean (same 3 pre-existing, unrelated
+    info-level issues). l10n parity: 588 keys × 9 locales (586 production
+    + 2 dev-only preview strings, present and translated in all 9 locales
+    regardless of flavor — Flutter's l10n system has no per-flavor key
+    split, so "dev-only" here means unreachable UI, not a missing
+    production key; `test/l10n_parity_test.dart` passes, confirming no
+    locale is missing anything).
+  - **Real release-signing scaffold added** (`android/app/build.gradle.kts`):
+    reads `android/key.properties` (gitignored, was already listed in
+    `.gitignore` before this checkpoint) if present, else falls back to
+    debug signing exactly as before — verified with two real rebuilds
+    (`devDebug`, `prodRelease` appbundle) after the change, both
+    succeeded identically to before. New `android/key.properties.example`
+    (safe to commit, no real secret) documents the exact format; the
+    `keytool` command and full remaining owner steps are now in
+    `PROJECT_CONTEXT.md`. **Every release artifact built in this
+    environment is still debug-signed** — this environment cannot
+    generate a real upload keystore (that's a secret only the owner can
+    hold), so this scaffold is the honest ceiling of what's achievable
+    here, not a claim of upload readiness.
+  - **Real builds, all inspected, not assumed:**
+    - `devDebug` (`flutter build apk --debug --flavor dev -t lib/main_dev.dart`):
+      succeeded; `aapt dump badging` confirmed
+      `rs.salarycurrencypro.salary_currency_pro.dev`, label "Salary &
+      Currency Pro (DEV)".
+    - `prodRelease` split APKs (`flutter build apk --release --flavor prod
+      -t lib/main_prod.dart --split-per-abi`): **armeabi-v7a 28.1MB,
+      arm64-v8a 31.5MB, x86_64 33.8MB** — unchanged from D-032's
+      disclosure (no new native dependency was added anywhere in Stage
+      D), so the same accepted overage on arm64-v8a/x86_64 stands,
+      **still not described as "under budget"** on either ABI.
+    - `prodRelease` AAB (`flutter build appbundle --release --flavor prod
+      -t lib/main_prod.dart`, the actual Play Store upload artifact):
+      **75.3MB** whole-bundle size (not a per-device download figure —
+      Play's dynamic delivery serves a smaller slice per device, same
+      caveat as every prior AAB figure in this project).
+    - `aapt dump badging` on the prod release APK confirmed: package
+      `rs.salarycurrencypro.salary_currency_pro` (no `.dev` suffix),
+      label "Salary & Currency Pro" (no "(DEV)"), versionName `1.0.0`.
+    - **Binary-level no-bypass check, done for real, not assumed:** since
+      `if (AppConfig.isDev)` is a runtime (not `const`) branch, the
+      `EntitlementPreviewSection` class reference is still syntactically
+      present in the compiled release binary's reachable code graph —
+      so rather than assume Dart's tree-shaker eliminated it, the actual
+      `libapp.so` inside the arm64-v8a prod-release APK was extracted and
+      byte-searched for the real user-facing strings. Result: `"Entitlement
+      Preview"` and `"Simulated for testing only"` (the actual displayed
+      copy) — **not found** in the binary at all; a sanity-check string
+      known to be present in every build ("Salary & Currency Pro") — found,
+      confirming the search methodology itself was valid. Two internal,
+      never-displayed identifiers (`dev_simulated`, the
+      `dev_entitlement_override` `SharedPreferences` key name) **are**
+      still present as compiled string literals — harmless, since they're
+      not shown to any user and are only ever written by
+      `setDevSimulatedStatus`, which is a no-op in this build
+      (`devSimulationEnabled` is always false for `main_prod.dart`).
+      Recorded precisely rather than either overclaiming "the strings
+      aren't in the binary at all" or underclaiming "this wasn't checked."
+  - **Reversibility:** the signing-scaffold change is a pure addition
+    (falls back to the exact prior behavior when `key.properties` is
+    absent, verified by rebuild); everything else this checkpoint is
+    documentation or release-artifact generation, nothing existing was
+    changed.
+  - **Confidence:** High — every claim in this checkpoint is a real
+    build, a real `aapt`/binary inspection, or a real test run captured
+    at the time it was made, not inferred from the code alone.
+- **What remains, explicitly not done here:** real Play Console
+  configuration (no console access from this environment — the owner has
+  a verified account but performs all Console clicks/uploads
+  themselves), a real signed release build (needs the owner's own
+  keystore), and every item in `DEVICE_TEST_CHECKLIST.md`'s "Pending
+  owner phone" and "Pending Google Play Internal Testing" sections. See
+  the owner-facing Play Console checklist (delivered separately, not as a
+  DECISIONS.md entry) for the exact next steps.
 
 ## D-033 — PROMPT-003I Stage D go-ahead: Monetization Strategy, checkpoints 1–2 (checkpoint 3 superseded by PROMPT-003J — see D-034)
 

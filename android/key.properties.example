@@ -1,0 +1,12 @@
+# Copy this file to android/key.properties (already gitignored — never
+# commit the real one) and fill in your own values after generating a
+# real upload keystore. See PROJECT_CONTEXT.md's release-signing section
+# for the exact `keytool` command. PROMPT-003J checkpoint 4.
+#
+# storeFile is relative to android/app/ (where build.gradle.kts resolves
+# it via file(...)) — an absolute path also works.
+
+storePassword=your-keystore-password
+keyPassword=your-key-password
+keyAlias=upload
+storeFile=../upload-keystore.jks

@@ -1,7 +1,28 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+// PROMPT-003J checkpoint 4: real release-signing scaffold. Reads
+// android/key.properties if present (never committed — see .gitignore's
+// existing `android/key.properties`/`*.jks`/`*.keystore` entries, already
+// in place before this checkpoint). Falls back to null when absent so
+// `flutter build`/`flutter run --release` keep working exactly as before
+// for anyone without a real keystore yet — see the release buildType's
+// own signingConfig selection below for the actual fallback-to-debug
+// behavior. No real signing secret is read, generated, or touched by
+// this environment; the owner runs `keytool` themselves (see
+// PROJECT_CONTEXT.md's release-signing section for the exact command)
+// and drops the resulting keystore + key.properties in place locally.
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties = Properties()
+val hasRealSigningConfig = keystorePropertiesFile.exists()
+if (hasRealSigningConfig) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -51,11 +72,30 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasRealSigningConfig) {
+            create("release") {
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = keystoreProperties.getProperty("storeFile")?.let { file(it) }
+                storePassword = keystoreProperties.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Real signing once android/key.properties exists (see the
+            // scaffold above); until then, falls back to the debug keys
+            // so `flutter build`/`flutter run --release` keep working —
+            // this fallback is exactly why every release artifact built
+            // in this environment is explicitly disclosed as debug-signed
+            // rather than upload-ready (see DECISIONS.md D-034).
+            signingConfig = if (hasRealSigningConfig) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

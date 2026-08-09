@@ -22,7 +22,7 @@ Archived.
 | PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | Done — item complete, D-031 | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
 | PROMPT-003H | Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell | Large standing instruction | Done — item complete, closes Stage C, D-032 | Local-only scan/classify/queue/manual-expense-handoff pipeline with a hard network boundary (no call to `suf.purs.gov.rs`, ever); disclosed a real release-size budget overage (arm64-v8a/x86_64) caused by the scanner dependency, accepted rather than fixed |
 | PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoints 1–2 done; checkpoint 3 superseded by PROMPT-003J | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support). Checkpoint 1: entitlement plumbing (`EntitlementService`/`EntitlementState`). Checkpoint 2: Pro feature gates (country switch, cross-border saves, invoice PDF, compliance pack) + new 4-product paywall, replacing `ProProvider`/`PurchaseService`. D-033 |
-| PROMPT-003J | Release Readiness — Dev/Prod Build Matrix + Entitlement Simulator | Large standing instruction | Checkpoints 1–2 done, in progress | **ID note:** the source file is literally named `PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`, but `PROMPT-003G` already identifies item 13 (row above) — referred to as PROMPT-003J everywhere in project records; file not renamed. Supersedes PROMPT-003I's own checkpoint 3 (real Play Console configuration) with a dev/prod Gradle flavor split, distinct dev app ID/label/badged icon, and a dev-only Entitlement Preview simulator wired into the same `EntitlementService`, deferring real Play Billing activation to a later prompt once the owner has console access. D-034 |
+| PROMPT-003J | Release Readiness — Dev/Prod Build Matrix + Entitlement Simulator | Large standing instruction | Done — all 4 checkpoints complete, D-034 | **ID note:** the source file is literally named `PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`, but `PROMPT-003G` already identifies item 13 (row above) — referred to as PROMPT-003J everywhere in project records; file not renamed. Supersedes PROMPT-003I's own checkpoint 3 (real Play Console configuration) with a dev/prod Gradle flavor split, distinct dev app ID/label/badged icon, and a dev-only Entitlement Preview simulator wired into the same `EntitlementService`. Checkpoint 3: zero-gap gate re-audit + static prod-leak scan + `DEVICE_TEST_CHECKLIST.md`. Checkpoint 4: real-signing scaffold, `devDebug`/`prodRelease` AAB+split-APK builds, binary-level no-bypass check, `PLAY_CONSOLE_CHECKLIST.md`. Real Play Billing activation deferred to a future prompt once products exist in Console. |
 
 ## Active Prompts
 
@@ -342,12 +342,36 @@ picker (the real gate), not just the status banner text. 8 new tests,
 full suite 525/525 (was 517), 2 new l10n keys × 9 locales, `flutter
 analyze` clean. Full detail for both checkpoints: `DECISIONS.md` D-034.
 
-**Next: checkpoint 3 (phone QA against approved scope). No physical
-Android device is available in this environment — the same recurring,
-disclosed limitation as every prior on-device-verification gap in this
-project (D-014/D-015/D-026/D-027) — so this will do what's actually
-verifiable (widget tests, real builds) and report the device-testing gap
-honestly rather than claim phone verification.**
+**Checkpoints 3–4 done** — the user supplied a follow-up prompt,
+`_userprompts/NEXT_PROMPT_Finish_App_and_Play_Console_Readiness.md`
+(no ID collision, not renumbered), continuing directly from the verified
+checkpoint-1–2 state. Checkpoint 3: re-audited every Free/Pro gate
+against source (zero concrete gaps found — nothing needed fixing), a
+static production-leakage scan (Entitlement Preview compile-time
+unreachable in prod, no Firebase, no debug logging of personal/billing
+data, no hidden bypass anywhere), `DEVICE_TEST_CHECKLIST.md` (three
+honest sections: verified here / pending phone or Firebase Test Lab /
+pending Play Internal Testing), and an Android Studio dev-build guide in
+`PROJECT_CONTEXT.md`. Checkpoint 4: added the standard `key.properties`
+release-signing scaffold (still debug-signed — this environment cannot
+generate a real upload keystore, that's a secret only the owner can
+hold), built and inspected `devDebug` + `prodRelease` (both split APKs
+and the actual AAB upload artifact), and — rather than assume Dart's
+tree-shaker removed the dev-only UI — extracted and byte-searched the
+real compiled `libapp.so` for the actual "Entitlement Preview"/"Simulated
+for testing only" strings: **not found**, confirming real no-bypass
+production safety, not just structural code-review confidence. Per-ABI
+sizes unchanged from D-032's disclosure (28.1/31.5/33.8MB, arm64-v8a/x86_64
+still over the accepted-and-disclosed budget, never described as "under
+budget"). New `PLAY_CONSOLE_CHECKLIST.md` with real derived values
+(package ID, version code, product IDs) and one flagged open decision
+(the dormant Google Mobile Ads SDK is still a compiled dependency —
+Play's automated SDK scanning may detect it regardless of it never being
+initialized; the owner needs to decide whether to declare it in Data
+Safety or remove the dependency before upload). Full detail:
+`DECISIONS.md` D-034. **Per this prompt's own instruction: STOP and await
+the owner's Firebase Test Lab/physical-phone results and Play Console
+screenshots/errors, if any.**
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 
