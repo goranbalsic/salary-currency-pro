@@ -165,15 +165,15 @@ PROMPT-003E, for this item specifically; see that entry below and
 scope-raising prompt, PROMPT-003F, for this item specifically; see that
 entry below and `DECISIONS.md` D-030. **Item 13 done** — the user
 supplied PROMPT-003G; see that entry below and `DECISIONS.md` D-031.
-**Item 10 in progress** — the user supplied a hard-boundary prompt,
-PROMPT-003H, for this final item specifically; see that entry below and
-`DECISIONS.md` D-032. Once item 10 is done and reported, this prompt's
-own stop condition applies: Stage D (monetization) needs a separate
-explicit go-ahead.
+**Item 10 done** (2026-08-09) — the user supplied a hard-boundary prompt,
+PROMPT-003H, for this final item specifically, across four checkpoints;
+see that entry below and `DECISIONS.md` D-032. **Stage C (items
+11→12→13→10) is now complete. Per this prompt's own stop condition:
+STOP — Stage D (monetization) needs a separate explicit go-ahead.**
 
 ### PROMPT-003H: Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell
 
-Status: **In progress, started 2026-08-08** — user supplied
+Status: **Done, 2026-08-09** — user supplied
 `_userprompts/PROMPT-003H_StageC_Item10_Offline_Fiscal_Receipt_QR_Scanner.md`,
 explicit authorization for Stage C item 10 only (the final Stage C item),
 baselined at `947ceb4` (item 13's final commit). Explicit hard boundary:
@@ -202,9 +202,25 @@ existing `ExpenseService`, links back to the scan via
 13 new l10n keys × 9 locales (554/554 lockstep), `flutter analyze` clean.
 See `DECISIONS.md` D-032 for full detail, including the queue-vs-removal
 decision (stays, marked linked) and the no-network-client regression
-guard. **Next: checkpoint 4 (final regression + release evidence + push),
-which closes item 10 — then this prompt's own stop condition applies: no
-Stage D without a separate explicit go-ahead.**
+guard.
+
+**Checkpoint 4 done, item 10 closed** — the user supplied a
+checkpoint-specific prompt,
+`_userprompts/PROMPT-003H_Checkpoint4_Regression_Release_Close.md`.
+Final regression: `flutter analyze` clean, `flutter test -j 1` 490/490
+(unchanged from checkpoint 3), l10n 554/554 keys × 9 locales, network
+boundary re-confirmed clean across the full item-10 diff. **Real release
+build found and disclosed a size-budget breach: split-APK
+`armeabi-v7a`/`arm64-v8a`/`x86_64` = 28.1MB/31.5MB/33.8MB — the latter two
+now exceed the 30MB-per-ABI budget (D-012), caused by `mobile_scanner`'s
+bundled ML Kit barcode library. Decision (made explicitly by the user,
+not this session's judgment call): accept and disclose, no fix this
+pass — see `DECISIONS.md` D-032 checkpoint 4 for the full numbers, the
+rationale, and the threshold that would force a real fix later.** All
+four checkpoints (`e006c3a`, `cb00aa3`, `a851857`, and this checkpoint's
+commit) are on `main`. **Stage C item 10 is closed. Per this prompt's own
+stop condition: STOP — Stage D (monetization) needs a separate explicit
+go-ahead.**
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 

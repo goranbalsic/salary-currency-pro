@@ -2,6 +2,32 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-09. PROMPT-003H Stage C item 10 (Offline Fiscal-Receipt QR
+  Scanner Shell) done, all four checkpoints — see `DECISIONS.md` D-032.
+  Built: `FiscalReceiptScan` model + `SerbiaReceiptAdapter`/
+  `ReceiptAdapterRegistry` (local URL-shape classification only) +
+  `FiscalReceiptScanService` (checkpoint 1); `FiscalReceiptScannerScreen`
+  using `mobile_scanner` with camera-permission-on-entry, always-available
+  manual entry (checkpoint 2); `FiscalReceiptQueueScreen` + a manual
+  expense handoff sheet that creates a real `ExpenseEntry` via the
+  existing `ExpenseService` and links back to the scan, never removing it
+  from the queue (checkpoint 3). Hard network boundary held across all
+  four checkpoints (verified by diffing the full item-10 range): no code
+  calls `suf.purs.gov.rs` or any network client; the one future-fetch
+  interface (`FiscalReceiptFetchService`) stays unimplemented behind a
+  single Phase-12-approval TODO. 56 new tests this item, `flutter test -j 1`
+  **490/490** (was 434 before item 10), 36 new l10n keys × 9 languages
+  (554/554 lockstep), `flutter analyze` clean.
+  **Release size budget breach, accepted and disclosed, not fixed:** real
+  split-APK build measured **armeabi-v7a 28.1MB, arm64-v8a 31.5MB, x86_64
+  33.8MB** (up from item 13's 23.3/25.0/26.5MB) — arm64-v8a and x86_64 are
+  now **over** the 30MB-per-ABI budget (D-012), caused by
+  `mobile_scanner`'s bundled ML Kit barcode library. Decision: accept this
+  modest (~5–13%) overage as the disclosed cost of on-device, no-forced-
+  network scanning; not a green light for further growth — see D-032
+  checkpoint 4 for the exact threshold that would force a real fix.
+  **Per PROMPT-003D's own stop condition: stopped here — Stage D
+  (monetization) needs a separate explicit go-ahead.**
 - Date: 2026-08-08 (later same day). PROMPT-003G Stage C item 13
   (Cross-Border Pack) done — see `DECISIONS.md` D-031,
   `OPEN_QUESTIONS.md` QUESTION-010. Built: an offline, local-first
@@ -312,6 +338,14 @@ the user explicitly approves it).
   intentionally excludes social security contributions because that
   formula wasn't sourced to the same standard as the rest of the app —
   see `OPEN_QUESTIONS.md`.
+- **Release size budget breach (arm64-v8a, x86_64), accepted and
+  disclosed, not fixed:** item 10's `mobile_scanner` dependency pushed two
+  of three release ABIs over the 30MB-per-ABI budget set in D-012
+  (arm64-v8a 31.5MB, x86_64 33.8MB; armeabi-v7a 28.1MB stays under). See
+  `DECISIONS.md` D-032 checkpoint 4 for the full numbers and the accepted-
+  overage rationale. Not blocking, but real if this ever needs to be
+  revisited (e.g. before a Stage D monetization push that might add its
+  own size cost on top).
 - **UMP/GDPR consent flow and the real app icon are both implemented
   (D-014, D-015) but NOT verified on a real device/emulator** — no
   device/emulator was available in this environment. Before trusting
@@ -344,8 +378,12 @@ the user explicitly approves it).
     sizes (800×2400, 360×1800) with no overflow, but real narrow-phone
     `DataTable` horizontal-scroll ergonomics and the bottom-sheet detail
     view haven't been confirmed on an actual device.
-  - Stage C will add the fiscal-receipt QR scanner (item 10, offline
-    shell only) to this list once built.
+  - The fiscal-receipt QR scanner (D-032, Stage C item 10) — automated
+    tests cover every camera-controller state via a fake platform double
+    and the queue/handoff flow end-to-end, but real-device camera
+    behavior (actual QR detection accuracy/speed, real permission-prompt
+    UX, real-world lighting/receipt conditions) hasn't been confirmed on
+    an actual device.
   - The user will test everything on a real device once the app is
     feature-complete (per `_userprompts/PROMPT-003D Stage C Go-Ahead.md`).
 
@@ -616,16 +654,33 @@ the user explicitly approves it).
   `OPEN_QUESTIONS.md` QUESTION-010. **This closes PROMPT-003D's item
   11→12→13 sequence; only item 10 remains, and it needs its own
   approved prompt.**
+- **PROMPT-003H (Stage C item 10 — Offline Fiscal-Receipt QR Scanner
+  Shell), complete 2026-08-09 — see `DECISIONS.md` D-032:** local-only
+  scan → classify → queue → manual-expense-handoff pipeline across four
+  checkpoints (data model/Serbia adapter/future-fetch boundary; scanner UI
+  + permissions + manual entry; queue screen + handoff; final
+  regression/release evidence). Hard network boundary verified across the
+  full item diff — no call to `suf.purs.gov.rs` or any network client
+  anywhere. `flutter test -j 1` 490/490, 36 new l10n keys × 9 languages
+  (554/554 lockstep). **Real release-size overage found and disclosed,
+  not hidden:** arm64-v8a 31.5MB and x86_64 33.8MB now exceed the 30MB
+  per-ABI budget (armeabi-v7a 28.1MB stays under) — accepted as the cost
+  of `mobile_scanner`'s on-device ML Kit barcode dependency, not fixed
+  this pass. **This closes PROMPT-003D's full item 11→12→13→10 sequence
+  and Stage C. Per PROMPT-003D's own stop condition: Stage D
+  (monetization) needs a separate explicit go-ahead.**
 
 ## Next Recommended Action
 
 0. **NEWEST, READ FIRST:** PROMPT-003D (Stage C go-ahead) is Active;
-   items 11, 12, and 13 are all **done** — see the top three
-   `Last Updated` entries and `DECISIONS.md` D-029/D-030/D-031. **Per
-   PROMPT-003G's own instruction, this stage stopped after item 13 and
-   item 10 (fiscal-receipt QR scanner, offline shell only) has not been
-   started — it needs its own approved prompt, not autonomous
-   continuation.**
+   items 11, 12, 13, and now 10 are all **done** — Stage C is complete.
+   See the `Last Updated` entries and `DECISIONS.md` D-029/D-030/D-031/
+   D-032. **Per PROMPT-003D's own instruction, this stage stops here:
+   Stage D (monetization/paywall wiring) needs its own separate approved
+   prompt, not autonomous continuation.** Note the accepted, disclosed
+   release-size overage (arm64-v8a/x86_64 over the 30MB budget, see
+   `DECISIONS.md` D-032 checkpoint 4) if Stage D scoping ever adds its own
+   size cost on top.
 1. `OPEN_QUESTIONS.md` QUESTION-008 (four figures excluded from item 11 —
    paušal deemed-base coefficients, supplementary annual PIT, an
    ungazetted contribution-base growth cap, other countries' paušal
@@ -635,10 +690,9 @@ the user explicitly approves it).
    live-verified) — no action needed. QUESTION-004 (cold-start timing/list
    virtualization) remains open, deliberately, pending a real device/
    emulator or browser tooling — not blocking Stage C.
-2. **After item 10's offline shell is done and reported: STOP.** Stage D
-   (monetization/paywall wiring) needs a separate explicit go-ahead —
-   this is PROMPT-003D's own stop condition, same pattern as every prior
-   stage.
+2. **Item 10 is done and reported — STOPPED per PROMPT-003D's own stop
+   condition.** Stage D (monetization/paywall wiring) needs a separate
+   explicit go-ahead, same pattern as every prior stage.
 3. On-device verification (consent dialog, icon, both widgets,
    notifications, and eventually the QR scanner) remains the single most
    valuable check whenever a real Android device/emulator or working
