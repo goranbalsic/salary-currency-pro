@@ -16,7 +16,15 @@ migrate_working_dir/
 *.iml
 *.ipr
 *.iws
-.idea/
+# .idea/* (not .idea/ itself) so the negations below can actually re-include
+# specific files — git never descends into a directory excluded outright.
+# Exception: the flavor-specific run configurations are exactly what the
+# repo owner needs after `git pull` to actually use the dev/prod build
+# matrix from Android Studio (PROMPT-003J checkpoint 1) — everything else
+# under .idea/ (caches, workspace.xml, per-machine settings) stays ignored.
+.idea/*
+!.idea/runConfigurations/
+!.idea/runConfigurations/*.xml
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line

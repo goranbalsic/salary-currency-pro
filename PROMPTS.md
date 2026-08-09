@@ -21,7 +21,8 @@ Archived.
 | PROMPT-003F | Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced) | Large standing instruction | Done — item complete, D-030 | Quality-raising prompt for item 12: fully offline professional invoice PDF (business profile, itemization, bundled fonts) with embedded NBS IPS QR payment code for eligible Serbian RSD invoices; deterministic money rounding mandated before any invoice money-math change |
 | PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | Done — item complete, D-031 | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
 | PROMPT-003H | Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell | Large standing instruction | Done — item complete, closes Stage C, D-032 | Local-only scan/classify/queue/manual-expense-handoff pipeline with a hard network boundary (no call to `suf.purs.gov.rs`, ever); disclosed a real release-size budget overage (arm64-v8a/x86_64) caused by the scanner dependency, accepted rather than fixed |
-| PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoints 1–2 done, in progress | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support). Checkpoint 1: entitlement plumbing (`EntitlementService`/`EntitlementState`). Checkpoint 2: Pro feature gates (country switch, cross-border saves, invoice PDF, compliance pack) + new 4-product paywall, replacing `ProProvider`/`PurchaseService`. D-033 |
+| PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoints 1–2 done; checkpoint 3 superseded by PROMPT-003J | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support). Checkpoint 1: entitlement plumbing (`EntitlementService`/`EntitlementState`). Checkpoint 2: Pro feature gates (country switch, cross-border saves, invoice PDF, compliance pack) + new 4-product paywall, replacing `ProProvider`/`PurchaseService`. D-033 |
+| PROMPT-003J | Release Readiness — Dev/Prod Build Matrix + Entitlement Simulator | Large standing instruction | Checkpoints 1–2 done, in progress | **ID note:** the source file is literally named `PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`, but `PROMPT-003G` already identifies item 13 (row above) — referred to as PROMPT-003J everywhere in project records; file not renamed. Supersedes PROMPT-003I's own checkpoint 3 (real Play Console configuration) with a dev/prod Gradle flavor split, distinct dev app ID/label/badged icon, and a dev-only Entitlement Preview simulator wired into the same `EntitlementService`, deferring real Play Billing activation to a later prompt once the owner has console access. D-034 |
 
 ## Active Prompts
 
@@ -226,7 +227,8 @@ go-ahead.**
 
 ### PROMPT-003I: Stage D Go-Ahead — Monetization Strategy
 
-Status: **Checkpoint 1 done, in progress, started 2026-08-09** — user
+Status: **Checkpoints 1–2 done; checkpoint 3 superseded by PROMPT-003J
+(below) — started 2026-08-09** — user
 supplied `_userprompts/PROMPT-003F_StageD_Monetization_Strategy.md`.
 **ID note:** that file's actual name is `PROMPT-003F_StageD_Monetization_Strategy.md`,
 but `PROMPT-003F` already identifies Stage C item 12 in this project's
@@ -281,9 +283,71 @@ paywall's own loading state, now capped at 5s. 10 new/changed tests, full
 suite 517/517 (was 507), 586 l10n keys × 9 locales (32 net new/changed),
 `flutter analyze` clean. Full detail: `DECISIONS.md` D-033.
 
-**Next: checkpoint 3 (regional pricing + release evidence + push), then
-stop per this prompt's own instruction — no Stage D scope beyond what's
-already specified.**
+**Checkpoint 3 (this prompt's own "regional pricing + release evidence +
+push") is superseded, not executed** — the user's next prompt
+(PROMPT-003J, below) redirected this scope entirely: instead of
+configuring real Play Console products now, finish the app as a
+phone-testable dev/prod build first, and defer real Play Billing
+activation to a separate future prompt once console access exists.
+
+### PROMPT-003J: Release Readiness — Dev/Prod Build Matrix + Entitlement Simulator
+
+Status: **Checkpoints 1–2 done, in progress, started 2026-08-09** — user
+supplied `_userprompts/PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`.
+**ID note:** that file's actual name is
+`PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`, but `PROMPT-003G`
+already identifies Stage C item 13 in this project's records
+(`DECISIONS.md` D-031). Referred to as **PROMPT-003J** (next unused
+letter after 003I) instead; the file on disk was not renamed.
+
+Redirects PROMPT-003I's remaining checkpoint 3: instead of real Play
+Console configuration (not yet possible — no verified owner account),
+leave the app finished and phone-testable now via a dev/prod build split,
+deferring real billing activation to a separate future prompt. Four
+checkpoints: (1) Android Studio dev/prod build matrix; (2) a dev-only
+Entitlement Preview simulator; (3) phone QA against approved scope; (4)
+production safety + release evidence + push.
+
+**Checkpoint 1 done** — `dev`/`prod` Gradle product flavors
+(`android/app/build.gradle.kts`): `dev` gets `applicationIdSuffix ".dev"`
+(installs side-by-side with prod, never overwrites it) and a badged "DEV"
+ribbon launcher icon (new `branding/generate_dev_icon.py`, composited
+onto the existing brand icon's already-rendered PNGs — the brand icon's
+own source design is untouched); `prod`'s applicationId is unchanged from
+before the split. New `lib/config/app_flavor.dart`
+(`AppConfig.initialize`, called once as the first line of `main()`, never
+a runtime toggle), `lib/bootstrap.dart` (shared startup body), and three
+entrypoints — `lib/main_dev.dart`, `lib/main_prod.dart`, and `lib/main.dart`
+itself rewritten to explicitly default to **prod** so the bare entrypoint
+can never carry a dev bypass. **A real regression caught by testing:**
+once flavors exist, a flavor-less `flutter build apk --debug` was
+confirmed (by an actual build + `aapt dump badging`) to produce a
+broken app label — fixed the existing Android Studio run config to pass
+`--flavor prod` explicitly, added two new dev/prod-specific run configs.
+Both `devDebug`/`prodDebug` build success and correct
+applicationId/label/version confirmed via real builds, not assumed.
+
+**Checkpoint 2 done** — a dev-only "Entitlement Preview" section in
+Settings (`EntitlementPreviewSection`), compile-time absent from prod
+(the call site simply never constructs it when `!AppConfig.isDev`, not
+just hidden). Added `devSimulationEnabled` directly to the existing
+`EntitlementService` — the *same* single service every gate already
+depends on, so simulated states flow through every real gate with zero
+gate-level changes needed — defaulting to fully unlocked Pro until the
+tester explicitly picks Free/Trialing/Lifetime/Expired, persisted
+separately from the real entitlement cache so a prod build can never
+inherit a stray simulated value. A real widget test confirms switching
+the preview to Free actually locks the Salary Calculator's country
+picker (the real gate), not just the status banner text. 8 new tests,
+full suite 525/525 (was 517), 2 new l10n keys × 9 locales, `flutter
+analyze` clean. Full detail for both checkpoints: `DECISIONS.md` D-034.
+
+**Next: checkpoint 3 (phone QA against approved scope). No physical
+Android device is available in this environment — the same recurring,
+disclosed limitation as every prior on-device-verification gap in this
+project (D-014/D-015/D-026/D-027) — so this will do what's actually
+verifiable (widget tests, real builds) and report the device-testing gap
+honestly rather than claim phone verification.**
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 

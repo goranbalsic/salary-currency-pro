@@ -308,6 +308,8 @@
   "settingsEntitlementLifetimeSubtitle": "Keni akses të përhershëm — faleminderit",
   "settingsEntitlementExpiredTitle": "Pro — skaduar",
   "settingsEntitlementExpiredSubtitle": "Abonimi juaj ka skaduar — trokitni për ta rinovuar",
+  "settingsEntitlementPreviewTitle": "Pamja paraprake e abonimit (Dev)",
+  "settingsEntitlementPreviewDescription": "Vetëm simulim për testim — nuk ndodh asnjë blerje apo tarifim real. E disponueshme vetëm në versionet zhvillimore.",
   "settingsTrustTitle": "Pse ta besosh këtë aplikacion?",
   "settingsTrustBody": "Shifrat për pagat, TVSH-në dhe vetëtaksimin vijnë nga burime të cituara qeveritare dhe këshillimi tatimor profesional, jo nga vlerësime. Çdo kalkulator tregon vitin për të cilin vlejnë shifrat dhe datën kur hynë në fuqi, që ta vlerësosh menjëherë freskinë e tyre. Shiko „Privatësia dhe të dhënat“ dhe „Funksionon plotësisht offline“ më poshtë për mënyrën si trajtohen të dhënat e tua.",
   "settingsAdPrivacyTitle": "Privatësia dhe preferencat e reklamave",

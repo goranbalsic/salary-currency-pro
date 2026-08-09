@@ -924,6 +924,13 @@ class AppLocalizationsMk extends AppLocalizations {
       'Вашата претплата истече — допрете за обновување';
 
   @override
+  String get settingsEntitlementPreviewTitle => 'Преглед на претплатата (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Само симулација за тестирање — нема реална купување или наплата. Достапно само во развојни верзии.';
+
+  @override
   String get settingsTrustTitle => 'Зошто да се верува на оваа апликација?';
 
   @override

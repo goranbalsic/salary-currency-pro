@@ -931,6 +931,14 @@ class AppLocalizationsRo extends AppLocalizations {
       'Abonamentul tău a expirat — atinge pentru a reînnoi';
 
   @override
+  String get settingsEntitlementPreviewTitle =>
+      'Previzualizare abonament (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Doar o simulare pentru testare — nu are loc nicio achiziție sau taxare reală. Disponibil doar în versiunile de dezvoltare.';
+
+  @override
   String get settingsTrustTitle =>
       'De ce să ai încredere în această aplicație?';
 

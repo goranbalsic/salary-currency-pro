@@ -30,6 +30,27 @@ android {
         multiDexEnabled = true
     }
 
+    // PROMPT-003J checkpoint 1: dev/prod build matrix. `dev` is for
+    // owner/local QA only — distinct application ID (via suffix, so it
+    // installs side-by-side with a real prod install on the same phone
+    // rather than overwriting it) and distinct label/icon (see
+    // src/dev/res/) so it can never be mistaken for production. `prod` is
+    // production-equivalent QA and the eventual Play release; its
+    // applicationId is deliberately unchanged from before this flavor
+    // split so it matches whatever, if anything, is already installed
+    // from earlier sessions.
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+        }
+        create("prod") {
+            dimension = "environment"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

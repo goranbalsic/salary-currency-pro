@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Redeclares src/main/res/values/strings.xml's app_name explicitly
+         for prod (rather than relying on silently inheriting main) so the
+         production label is never ambiguous at a glance in the flavor
+         source sets. PROMPT-003J checkpoint 1. -->
+    <string name="app_name">Salary &amp; Currency Pro</string>
+</resources>

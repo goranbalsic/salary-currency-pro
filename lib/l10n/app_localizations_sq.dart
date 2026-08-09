@@ -930,6 +930,14 @@ class AppLocalizationsSq extends AppLocalizations {
       'Abonimi juaj ka skaduar — trokitni për ta rinovuar';
 
   @override
+  String get settingsEntitlementPreviewTitle =>
+      'Pamja paraprake e abonimit (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Vetëm simulim për testim — nuk ndodh asnjë blerje apo tarifim real. E disponueshme vetëm në versionet zhvillimore.';
+
+  @override
   String get settingsTrustTitle => 'Pse ta besosh këtë aplikacion?';
 
   @override

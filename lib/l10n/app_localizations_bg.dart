@@ -935,6 +935,13 @@ class AppLocalizationsBg extends AppLocalizations {
       'Абонаментът ви изтече — докоснете за подновяване';
 
   @override
+  String get settingsEntitlementPreviewTitle => 'Преглед на абонамента (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Само за симулация при тестване — не се извършва реална покупка или таксуване. Достъпно само в разработващи версии.';
+
+  @override
   String get settingsTrustTitle => 'Защо да се доверите на това приложение?';
 
   @override

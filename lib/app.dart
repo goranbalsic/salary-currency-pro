@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'config/app_flavor.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/root/root_shell.dart';
@@ -34,7 +35,9 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
   bool? _onboardingComplete;
   int _homeTabIndex = 0;
 
-  final EntitlementService _entitlementService = EntitlementService();
+  final EntitlementService _entitlementService = EntitlementService(
+    devSimulationEnabled: AppConfig.isDev,
+  );
 
   @override
   void initState() {
@@ -54,8 +57,12 @@ class _SalaryCurrencyProAppState extends State<SalaryCurrencyProApp> {
     // platform channels. The service itself is still always provided so
     // PaywallScreen's context.read<EntitlementService>() never fails to
     // find one — see EntitlementService.isAvailable's own try/catch for
-    // the rest.
-    if (defaultTargetPlatform == TargetPlatform.android ||
+    // the rest. Dev simulation mode never touches that platform channel at
+    // all (see EntitlementService.start's own devSimulationEnabled branch),
+    // so it's safe to start on every platform, including desktop/web dev
+    // builds used for quick UI iteration.
+    if (_entitlementService.devSimulationEnabled ||
+        defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS) {
       _entitlementService.start();
     }

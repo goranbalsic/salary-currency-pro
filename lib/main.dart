@@ -1,35 +1,17 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:workmanager/workmanager.dart';
+import 'bootstrap.dart';
+import 'config/app_flavor.dart';
 
-import 'app.dart';
-import 'services/widget_refresh_worker.dart';
-
+/// The bare/default entrypoint (`flutter run` with no `-t`, and any
+/// existing tooling — VS Code launch configs, `flutter run` from a
+/// terminal — that doesn't yet know about the dev/prod split). Explicitly
+/// initializes the **prod** flavor so this default path can never
+/// accidentally carry the dev entitlement-simulation bypass — see
+/// `main_dev.dart`/`main_prod.dart` for the two flavor-specific
+/// entrypoints PROMPT-003J checkpoint 1 adds, and
+/// `_userprompts/PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`
+/// (recorded as PROMPT-003J — see DECISIONS.md D-033/D-034 for the ID
+/// note) for the full requirement this satisfies.
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // PROMPT-003F Stage D go-ahead, Decision 1: launch ad-free — the Mobile
-  // Ads SDK is deliberately not initialized. AdsService/BannerAdSlot/
-  // ConsentService are left in place, not deleted: the decision is
-  // sequencing ("not permanent"), not a removal, and ConsentService's GDPR
-  // consent form is still reachable from Settings for reasons unrelated to
-  // ads. See DECISIONS.md.
-  // Home-screen widgets (PROMPT-003 Stage B item 8) are Android-only in
-  // this app (see android/app/.../widgets/) — only Android gets the
-  // periodic background refresh. Best-effort: a failure here must never
-  // block app startup.
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    try {
-      await Workmanager().initialize(widgetRefreshCallbackDispatcher);
-      await Workmanager().registerPeriodicTask(
-        widgetRefreshUniqueName,
-        widgetRefreshTaskName,
-        frequency: const Duration(hours: 1),
-        existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
-        constraints: Constraints(networkType: NetworkType.connected),
-      );
-    } catch (_) {
-      // Widget background refresh is best-effort — the app must still start.
-    }
-  }
-  runApp(const SalaryCurrencyProApp());
+  AppConfig.initialize(AppFlavor.prod);
+  await bootstrap();
 }

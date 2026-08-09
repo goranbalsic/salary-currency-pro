@@ -919,6 +919,13 @@ class AppLocalizationsSr extends AppLocalizations {
       'Vaša pretplata je istekla — dodirnite za obnovu';
 
   @override
+  String get settingsEntitlementPreviewTitle => 'Pregled pretplate (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Samo simulacija za testiranje — ne dolazi do stvarne kupovine ili naplate. Dostupno samo u razvojnim verzijama.';
+
+  @override
   String get settingsTrustTitle => 'Zašto verovati ovoj aplikaciji?';
 
   @override

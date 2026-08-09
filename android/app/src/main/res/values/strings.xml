@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default app label, used as-is by the prod flavor (see
+         src/prod/res/values/strings.xml, which redeclares the same value
+         for clarity rather than relying on silently falling back to
+         main). The dev flavor overrides this with a "(DEV)" suffix — see
+         src/dev/res/values/strings.xml. PROMPT-003J checkpoint 1. -->
+    <string name="app_name">Salary &amp; Currency Pro</string>
+</resources>

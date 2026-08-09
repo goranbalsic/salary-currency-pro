@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <!-- PROMPT-003J checkpoint 1: now that dev/prod flavors exist (see
+       android/app/build.gradle.kts), a flavor-less build/run is ambiguous
+       — a real `flutter build apk --debug` with no --flavor was confirmed
+       to produce a build with a broken app label ("salary_currency_pro"
+       instead of "Salary & Currency Pro"), even though main.dart itself
+       still defaults to the prod flavor internally. This config is fixed
+       to pass --flavor prod explicitly so existing "run main.dart" muscle
+       memory keeps working correctly and safely; prefer the dedicated
+       "main_dev.dart (dev)" / "main_prod.dart (prod)" configs for new use. -->
+  <configuration default="false" name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+    <option name="additionalArgs" value="--flavor prod" />
+    <method />
+  </configuration>
+</component>

@@ -308,6 +308,8 @@
   "settingsEntitlementLifetimeSubtitle": "Imate trajni pristup — hvala vam",
   "settingsEntitlementExpiredTitle": "Pro — isteklo",
   "settingsEntitlementExpiredSubtitle": "Vaša pretplata je istekla — dodirnite za obnovu",
+  "settingsEntitlementPreviewTitle": "Pregled pretplate (Dev)",
+  "settingsEntitlementPreviewDescription": "Samo simulacija za testiranje — ne dolazi do stvarne kupovine ili naplate. Dostupno samo u razvojnim verzijama.",
   "settingsTrustTitle": "Zašto verovati ovoj aplikaciji?",
   "settingsTrustBody": "Podaci o zaradama, PDV-u i samooporezivanju potiču iz citiranih državnih i stručnih poreskih izvora, a ne procena. Svaki kalkulator prikazuje godinu na koju se brojke odnose i datum stupanja na snagu, tako da odmah možete proceniti ažurnost. Pogledajte „Privatnost i podaci“ i „Radi potpuno bez interneta“ ispod za način na koji se vaši podaci obrađuju.",
   "settingsAdPrivacyTitle": "Privatnost i reklame",

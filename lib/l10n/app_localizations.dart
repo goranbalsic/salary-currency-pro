@@ -1724,6 +1724,18 @@ abstract class AppLocalizations {
   /// **'Your subscription has ended — tap to renew'**
   String get settingsEntitlementExpiredSubtitle;
 
+  /// No description provided for @settingsEntitlementPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Entitlement Preview (Dev)'**
+  String get settingsEntitlementPreviewTitle;
+
+  /// No description provided for @settingsEntitlementPreviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulated for testing only — no real purchase or charge occurs. Available in developer builds only.'**
+  String get settingsEntitlementPreviewDescription;
+
   /// No description provided for @settingsTrustTitle.
   ///
   /// In en, this message translates to:

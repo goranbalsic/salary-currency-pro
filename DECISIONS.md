@@ -1,6 +1,122 @@
 # DECISIONS.md
 
-## D-033 — PROMPT-003I Stage D go-ahead: Monetization Strategy, checkpoint 1 (in progress)
+## D-034 — PROMPT-003J Release Readiness: dev/prod build matrix + entitlement simulator, checkpoints 1–2 (in progress)
+
+- **Date:** started 2026-08-09. Implements
+  `_userprompts/PROMPT-003G_Release_Readiness_Developer_Builds_v2.md`.
+  **ID note, same pattern as D-033:** that file is literally named
+  `PROMPT-003G`, but `PROMPT-003G` already identifies Stage C item 13
+  (Cross-Border Pack, D-031) in this project's records. Referred to as
+  **PROMPT-003J** everywhere (next unused letter after 003I) to avoid
+  corrupting that existing reference; the file itself was not renamed.
+- **Relationship to PROMPT-003I:** this prompt supersedes PROMPT-003I's
+  own checkpoint 3 ("configure the four products in Play Console... push")
+  with a different, more achievable near-term goal: leave the app
+  finished and phone-testable via a dev/prod build matrix and an
+  in-app entitlement simulator, deferring *real* Play Console
+  configuration to a separate future prompt once the owner has a
+  verified account. PROMPT-003I's checkpoints 1–2 (`EntitlementService`,
+  the four Pro gates, the new paywall — D-033) are the foundation this
+  builds on, unchanged.
+- **Checkpoint 1 — dev/prod build matrix:**
+  - **Audited first** (`android/app/build.gradle.kts`, `lib/main.dart`,
+    `lib/app.dart`, the manifest, `.idea/runConfigurations/`,
+    `pubspec.yaml`'s `flutter_launcher_icons` config, signing setup —
+    confirmed release still signs with the debug key, matching the
+    already-disclosed pre-signing-credentials state) before changing
+    anything.
+  - **Gradle:** added a single `environment` flavor dimension with `dev`
+    (`applicationIdSuffix ".dev"`, `versionNameSuffix "-dev"` — installs
+    side-by-side with a real install rather than overwriting it) and
+    `prod` (applicationId unchanged from before this split). Real builds
+    of both confirmed via `flutter build apk --debug --flavor
+    dev -t lib/main_dev.dart` and `...--flavor prod -t lib/main_prod.dart`
+    — both succeeded, and `aapt dump badging` on each output confirmed
+    the actual application ID, version name, and label differ correctly
+    (`rs.salarycurrencypro.salary_currency_pro.dev` / "Salary & Currency
+    Pro (DEV)" / `1.0.0-dev` vs the unsuffixed prod equivalents).
+  - **Dev branding:** new `branding/generate_dev_icon.py` composites a red
+    "DEV" ribbon onto the *already-rendered* per-density launcher icon
+    PNGs (not a change to the brand icon's own source design in
+    `generate_icon.py`), writing into `android/app/src/dev/res/` —
+    Android's flavor resource merging prefers this over `src/main/res/`
+    for `dev` builds only, `prod`/`src/main` untouched. New
+    `strings.xml` per flavor (`main`/`dev`/`prod`) so
+    `AndroidManifest.xml`'s `android:label` now reads `@string/app_name`
+    instead of a hardcoded literal, letting `dev`'s override append
+    "(DEV)".
+  - **Real regression caught by testing, not guessed:** once flavors
+    exist, a flavor-less `flutter build apk --debug` (no `--flavor`) was
+    confirmed by an actual build to produce an APK with a **broken app
+    label** ("salary_currency_pro" instead of "Salary & Currency Pro"),
+    even though `main.dart` itself still defaults to the prod flavor
+    internally. Fixed the pre-existing `.idea/runConfigurations/main_dart.xml`
+    to pass `--flavor prod` explicitly (documented inline why), and added
+    two new run configs (`main_dev.dart (dev)`, `main_prod.dart (prod)`)
+    so Android Studio's Run menu always specifies a flavor.
+  - **Flutter-side flavor architecture:** new `lib/config/app_flavor.dart`
+    (`AppConfig.initialize(AppFlavor)`, called exactly once as the first
+    line of `main()` — never a Settings toggle or other runtime-editable
+    preference); `lib/bootstrap.dart` (the shared startup body factored
+    out of the old `main.dart`); three entrypoints —
+    `lib/main_dev.dart`, `lib/main_prod.dart`, and `lib/main.dart` itself
+    rewritten to explicitly initialize **prod** — so the bare/default
+    entrypoint can never accidentally carry the dev bypass.
+- **Checkpoint 2 — dev-only Entitlement Preview simulator:**
+  - **One `EntitlementService`, not a parallel truth:** `devSimulationEnabled`
+    (set only by `main_dev.dart`'s flavor, via `AppConfig.isDev`) is a
+    constructor flag on the *same* class every gate already depends on.
+    When true, `start()` never subscribes to the real purchase stream at
+    all — it loads (or, on first run, defaults to) a simulated
+    `EntitlementState` from its own `SharedPreferences` key
+    (`dev_entitlement_override_v1`, deliberately separate from the real
+    `entitlement_state_v1` cache, so a prod build can never pick up a
+    stray simulated value). `setDevSimulatedStatus(status)` writes
+    straight to the same `state` `ValueNotifier` every gate already
+    watches — no gate anywhere needed to change to support this.
+  - **Default is fully unlocked Pro,** per the prompt's own requirement,
+    until the QA tester explicitly picks something else via the preview
+    — verified by a real test asserting default status is `pro` with
+    nothing simulated yet.
+  - **Compile-time absence in prod, not just a hidden route:**
+    `EntitlementPreviewSection` (`lib/screens/settings/entitlement_preview_section.dart`)
+    is only ever *constructed* when `AppConfig.isDev` is checked at the
+    `SettingsScreen` call site (`if (AppConfig.isDev) ... const
+    EntitlementPreviewSection()`) — a prod build's compiled widget tree
+    never contains it, it isn't merely invisible. `setDevSimulatedStatus`
+    is also a no-op when `devSimulationEnabled` is false, as defense in
+    depth beyond the UI gate.
+  - **Persistence + live update verified for real, not assumed:** a
+    widget test switches the preview to Free and confirms the *real*
+    Salary Calculator country-picker gate locks immediately (lock icons
+    appear, tapping a different country shows the upgrade prompt) — not
+    just that the status banner text changed. A separate test confirms a
+    simulated status survives a fresh `EntitlementService` instance
+    (restart).
+  - **Tests:** `test/entitlement_dev_simulation_test.dart` (5),
+    `test/entitlement_preview_settings_test.dart` (3, including the
+    gate-integration test above). 8/8 new tests pass; full suite
+    **525/525** (was 517 after PROMPT-003I checkpoint 2).
+  - **Localization:** 2 new keys (`settingsEntitlementPreviewTitle`,
+    `settingsEntitlementPreviewDescription`) × 9 locales. `flutter
+    analyze` clean (same 3 pre-existing, unrelated info-level issues).
+  - **Reversibility:** fully additive — no existing gate, screen, or
+    service behavior changed for prod; `main.dart`'s prior behavior is
+    preserved exactly, just routed through the new shared `bootstrap()`.
+  - **Confidence:** High for checkpoints 1–2 — every claim above (build
+    success, correct application ID/label/version per flavor, default
+    simulated state, live gate propagation, restart persistence) is
+    either a real build inspected with `aapt`, or a real automated test,
+    not asserted from code review alone.
+- **Next:** checkpoint 3 (phone QA against the approved scope — **no
+  physical Android device is available in this environment**, the same
+  recurring, honestly-disclosed limitation as D-014/D-015/D-026/D-027;
+  will do what's actually verifiable — widget tests and real builds — and
+  disclose the device-testing gap explicitly rather than claim phone
+  verification), then checkpoint 4 (production safety + release
+  evidence + push).
+
+## D-033 — PROMPT-003I Stage D go-ahead: Monetization Strategy, checkpoints 1–2 (checkpoint 3 superseded by PROMPT-003J — see D-034)
 
 - **Date:** started 2026-08-09. Implements
   `_userprompts/PROMPT-003F_StageD_Monetization_Strategy.md`.

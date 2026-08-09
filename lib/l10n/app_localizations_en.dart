@@ -921,6 +921,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your subscription has ended — tap to renew';
 
   @override
+  String get settingsEntitlementPreviewTitle => 'Entitlement Preview (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Simulated for testing only — no real purchase or charge occurs. Available in developer builds only.';
+
+  @override
   String get settingsTrustTitle => 'Why trust this app?';
 
   @override

@@ -22,8 +22,14 @@ import '../models/entitlement.dart';
 /// hard-locking mid-session on a network check — [verify] only ever
 /// downgrades an active entitlement when the store is genuinely reachable
 /// and explicitly confirms the granting product is gone.
+///
+/// PROMPT-003J's dev/prod build matrix adds one more mode, entirely inside
+/// this same class rather than a parallel service: when
+/// [devSimulationEnabled] is true (dev flavor only), [start] never touches
+/// the real store at all — see [_loadDevSimulation]/[setDevSimulatedStatus].
 class EntitlementService {
   static const _prefsKey = 'entitlement_state_v1';
+  static const _devOverrideKey = 'dev_entitlement_override_v1';
 
   /// How long the annual plan's purchase is treated as [EntitlementStatus.trialing]
   /// after its transaction date, per Decision 2's "7-day free trial on the
@@ -75,9 +81,21 @@ class EntitlementService {
   /// itself crash the app on those platforms; deferring it to first actual
   /// use means the app can always safely hold an instance, exactly like the
   /// `PurchaseService` this supersedes.
+  /// PROMPT-003J checkpoint 1/2: when true, this instance never talks to
+  /// the real store at all — [start] loads (or defaults) a locally
+  /// simulated entitlement instead of subscribing to the real purchase
+  /// stream, and [setDevSimulatedStatus] becomes callable. Set only by
+  /// `main_dev.dart`'s bootstrap (via `AppConfig.isDev`), never by
+  /// `main_prod.dart` or the default `main.dart` — this is the one and
+  /// only `EntitlementService` every gate consults either way, so a dev
+  /// build never has two competing entitlement truths, it just has this
+  /// one truth answer differently.
+  final bool devSimulationEnabled;
+
   EntitlementService({
     InAppPurchasePlatform? platform,
     this.verifyResponseTimeout = const Duration(seconds: 5),
+    this.devSimulationEnabled = false,
   }) : _injectedPlatform = platform;
 
   /// Resolves to the injected test platform if one was given, otherwise
@@ -94,12 +112,61 @@ class EntitlementService {
   }
 
   Future<void> start() async {
+    if (devSimulationEnabled) {
+      await _loadDevSimulation();
+      return;
+    }
     await _loadCached();
     _subscription = _platform.purchaseStream.listen(_handlePurchaseUpdates, onError: (_) {});
   }
 
   void dispose() {
     _subscription?.cancel();
+  }
+
+  /// Dev-only: loads whatever simulated status was last explicitly chosen
+  /// via [setDevSimulatedStatus] (persisted separately from the real
+  /// [_prefsKey] cache, so switching back to a prod build never picks up a
+  /// stray simulated value). Defaults to [EntitlementStatus.pro] — "fully
+  /// unlocked" — when nothing has been explicitly simulated yet, per the
+  /// prompt's own "Defaults to fully unlocked Pro" requirement.
+  Future<void> _loadDevSimulation() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_devOverrideKey);
+      if (raw != null && raw.isNotEmpty) {
+        state.value = EntitlementState.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+        return;
+      }
+    } catch (_) {
+      // Falls through to the default below.
+    }
+    state.value = const EntitlementState(
+      status: EntitlementStatus.pro,
+      productId: 'dev_simulated_default',
+    );
+  }
+
+  /// Dev-only: sets the simulated entitlement every gate immediately sees
+  /// (same [state] notifier every gate already watches — no extra wiring
+  /// needed anywhere else), persisted so it survives an app restart. A
+  /// no-op outside [devSimulationEnabled] — defense in depth beyond the
+  /// UI itself being compile-time absent in prod (see
+  /// `EntitlementPreviewSection`, gated on `AppConfig.isDev`).
+  Future<void> setDevSimulatedStatus(EntitlementStatus status) async {
+    if (!devSimulationEnabled) return;
+    final newState = EntitlementState(
+      status: status,
+      productId: 'dev_simulated_${status.name}',
+      lastVerifiedAt: DateTime.now(),
+    );
+    state.value = newState;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_devOverrideKey, jsonEncode(newState.toJson()));
+    } catch (_) {
+      // Best-effort persistence only — in-memory state is already updated.
+    }
   }
 
   Future<bool> get isAvailable => _platform.isAvailable();

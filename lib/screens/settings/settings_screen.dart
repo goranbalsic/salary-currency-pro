@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/app_flavor.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_lookups.dart';
 import '../../models/business_profile.dart';
@@ -25,6 +26,7 @@ import '../../services/pinned_pair_service.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
 import '../paywall/paywall_screen.dart';
+import 'entitlement_preview_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   final ThemeMode themeMode;
@@ -119,6 +121,13 @@ class SettingsScreen extends StatelessWidget {
               },
             );
           }),
+          // PROMPT-003J checkpoint 2: AppConfig.isDev gates this at the
+          // call site — EntitlementPreviewSection is simply never
+          // constructed in a prod build, not merely hidden.
+          if (AppConfig.isDev) ...[
+            const SizedBox(height: 16),
+            const EntitlementPreviewSection(),
+          ],
           const SizedBox(height: 16),
           _SectionCard(
             title: l10n.settingsTrustTitle,

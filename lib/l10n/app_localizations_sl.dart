@@ -923,6 +923,13 @@ class AppLocalizationsSl extends AppLocalizations {
       'Vaša naročnina je potekla — dotaknite se za obnovitev';
 
   @override
+  String get settingsEntitlementPreviewTitle => 'Predogled naročnine (Dev)';
+
+  @override
+  String get settingsEntitlementPreviewDescription =>
+      'Samo simulacija za testiranje — do dejanskega nakupa ali zaračunavanja ne pride. Na voljo samo v razvojnih različicah.';
+
+  @override
   String get settingsTrustTitle => 'Zakaj zaupati tej aplikaciji?';
 
   @override
