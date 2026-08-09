@@ -13,7 +13,6 @@ import '../../providers/salary_calculator_provider.dart';
 import '../../services/history_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
-import '../../widgets/banner_ad_slot.dart';
 import '../../widgets/labeled_row.dart';
 import '../../widgets/save_scenario_action.dart';
 
@@ -281,8 +280,6 @@ class _CalculatorBodyState extends State<_CalculatorBody> {
             SaveScenarioRow(onSave: () => _onSave(l10n)),
           ] else
             _EmptyState(hasError: provider.amountIssue != null),
-          const SizedBox(height: 16),
-          const Center(child: BannerAdSlot()),
         ],
       ),
     );

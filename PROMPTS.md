@@ -20,6 +20,8 @@ Archived.
 | PROMPT-003E | Stage C Item 11 — Serbia Compliance Pack | Large standing instruction | Done — item complete, D-029 | Sourced-figure narrowing of Stage C item 11: paušal turnover tracker (dual-window, threshold states, honest rate-history design), monthly reminder lead-time + assessed-amount extension, Model A vs Model B quarterly comparator; found and fixed a real health-contribution bug in the RS strategy along the way |
 | PROMPT-003F | Stage C Item 12 — Invoice PDF + NBS IPS QR (Enhanced) | Large standing instruction | Done — item complete, D-030 | Quality-raising prompt for item 12: fully offline professional invoice PDF (business profile, itemization, bundled fonts) with embedded NBS IPS QR payment code for eligible Serbian RSD invoices; deterministic money rounding mandated before any invoice money-math change |
 | PROMPT-003G | Stage C Item 13 — Cross-Border Pack | Large standing instruction | Done — item complete, D-031 | Offline, local-first cross-border salary/employer-cost comparison across all 9 countries from one gross figure; per-diem/mileage rates included only if sourced to the project's evidence standard, otherwise excluded and logged |
+| PROMPT-003H | Stage C Item 10 — Offline Fiscal-Receipt QR Scanner Shell | Large standing instruction | Done — item complete, closes Stage C, D-032 | Local-only scan/classify/queue/manual-expense-handoff pipeline with a hard network boundary (no call to `suf.purs.gov.rs`, ever); disclosed a real release-size budget overage (arm64-v8a/x86_64) caused by the scanner dependency, accepted rather than fixed |
+| PROMPT-003I | Stage D Go-Ahead — Monetization Strategy | Large standing instruction | Checkpoint 1 done, in progress | **ID note:** the source file is literally named `PROMPT-003F_StageD_Monetization_Strategy.md`, but `PROMPT-003F` already identifies item 12 (row above) — referred to as PROMPT-003I everywhere in project records to avoid corrupting that reference; the file itself wasn't renamed. Final go-ahead for Stage D: ads off at launch (existing ad code disabled, not deleted), final 4-product pricing (monthly/annual w/ 7-day trial/lifetime/support), checkpoint 1 built the entitlement plumbing (`EntitlementService`/`EntitlementState`), D-033 |
 
 ## Active Prompts
 
@@ -221,6 +223,51 @@ four checkpoints (`e006c3a`, `cb00aa3`, `a851857`, and this checkpoint's
 commit) are on `main`. **Stage C item 10 is closed. Per this prompt's own
 stop condition: STOP — Stage D (monetization) needs a separate explicit
 go-ahead.**
+
+### PROMPT-003I: Stage D Go-Ahead — Monetization Strategy
+
+Status: **Checkpoint 1 done, in progress, started 2026-08-09** — user
+supplied `_userprompts/PROMPT-003F_StageD_Monetization_Strategy.md`.
+**ID note:** that file's actual name is `PROMPT-003F_StageD_Monetization_Strategy.md`,
+but `PROMPT-003F` already identifies Stage C item 12 in this project's
+records (`DECISIONS.md` D-030). To avoid corrupting that existing
+reference, every record — this file, `DECISIONS.md`, memory — refers to
+this prompt as **PROMPT-003I** (next unused letter) instead. The file on
+disk was not renamed.
+
+Explicit Stage D go-ahead, supplied immediately after Stage C closed
+(PROMPT-003H). Makes two final product decisions so implementation isn't
+blocked on further product calls: **no ads at launch** (final — the ad
+infrastructure built in earlier sessions is disabled, not deleted, per
+its own "not permanent, sequencing" framing) and **final pricing**
+(Monthly $3.99, Annual $19.99 with a 7-day free trial, Lifetime $49.99,
+a non-gating Support-the-developer $2.99). Four implementation
+checkpoints: (1) entitlement plumbing, no paywall UI yet; (2) gate the
+Pro feature list + build the new paywall; (3) regional pricing + release
+evidence + push; (4) stop, awaiting real usage data before any ads
+reconsideration.
+
+**Checkpoint 1 done** — built `EntitlementStatus`/`EntitlementState`
+(`lib/models/entitlement.dart`) and `EntitlementService`
+(`lib/services/entitlement_service.dart`), the single boundary to Play
+Billing for the new four-product lineup, `SharedPreferences`-cached with
+an offline-grace contract (cached entitlement holds through
+no-connectivity periods, never hard-locks mid-session) and honest,
+non-authoritative trial-window approximation (no purchase-verification
+backend exists to check a real one against). Deliberately does **not**
+yet touch the old `ProProvider`/`PurchaseService`/`PaywallScreen` —
+checkpoint 1 is explicitly "no paywall UI yet," so the old single-product
+flow keeps working unchanged until checkpoint 2 replaces it. Also
+implemented Decision 1 for real: disabled the three live ad call sites
+(`main.dart`, `SalaryCalculatorScreen`, `CurrencyConverterScreen`) rather
+than only avoiding new ones, since ads were already rendering. 17 new
+tests (490 → 507), `flutter analyze` clean, no l10n changes (no UI yet).
+Full detail, including a real `in_app_purchase`-plugin testability
+constraint found and worked around: `DECISIONS.md` D-033.
+
+**Next: checkpoint 2 (gate Pro features + paywall, replacing the old
+single-product flow), then checkpoint 3 (regional pricing + release
+evidence + push), then stop per this prompt's own instruction.**
 
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 

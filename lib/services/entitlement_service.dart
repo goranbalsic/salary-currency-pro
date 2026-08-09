@@ -1,0 +1,217 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_platform_interface/in_app_purchase_platform_interface.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../config/monetization_config.dart';
+import '../models/entitlement.dart';
+
+/// The single boundary between this app and Play Billing/App Store
+/// purchases (PROMPT-003F's Stage D go-ahead, checkpoint 1 — "entitlement
+/// plumbing," no paywall UI yet). Supersedes the older single-product
+/// `PurchaseService`/`ProProvider` pair for the new four-product lineup;
+/// those two are left wired to the pre-existing paywall until checkpoint 2
+/// replaces it, so this service does not yet touch either.
+///
+/// Same offline-first discipline as every other service in this app: a
+/// [SharedPreferences]-cached [EntitlementState] is the value every screen
+/// actually reads, and it holds through no-connectivity periods rather than
+/// hard-locking mid-session on a network check — [verify] only ever
+/// downgrades an active entitlement when the store is genuinely reachable
+/// and explicitly confirms the granting product is gone.
+class EntitlementService {
+  static const _prefsKey = 'entitlement_state_v1';
+
+  /// How long the annual plan's purchase is treated as [EntitlementStatus.trialing]
+  /// after its transaction date, per Decision 2's "7-day free trial on the
+  /// annual plan only." This is a local approximation for *display* purposes
+  /// only (trialing and pro/lifetime grant identical access) — this app has
+  /// no purchase-verification backend to read the store's actual trial
+  /// state from, the same "approximate, label honestly, never claim
+  /// verified" precedent as D-029's invoice-date FX rate.
+  static const trialWindow = Duration(days: 7);
+
+  final InAppPurchasePlatform _platform;
+
+  /// How long [verify] waits for the store to confirm an entitlement via
+  /// [InAppPurchasePlatform.restorePurchases] before treating "nothing
+  /// arrived" as "confirmed absent." Not private: tests inject a short
+  /// override so offline/expiry cases don't need to wait out the real
+  /// production default.
+  final Duration verifyResponseTimeout;
+
+  /// The current, locally-cached entitlement. Starts at the default (free)
+  /// value; call [start] to load whatever was last persisted and begin
+  /// listening for purchase updates.
+  final ValueNotifier<EntitlementState> state = ValueNotifier(const EntitlementState());
+
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
+
+  /// Talks to [InAppPurchasePlatform] directly rather than through the
+  /// `InAppPurchase` facade class that `PurchaseService` (the older,
+  /// still-active single-product service) uses. This isn't just style: the
+  /// facade's *first* `.instance` access unconditionally self-registers the
+  /// real platform-specific implementation as a side effect (which then
+  /// opens a real platform-channel connection) — harmless in the real app,
+  /// but there's no way to prevent or await that side effect from a plain
+  /// Dart test, where it fails asynchronously and gets misattributed to
+  /// whichever test happens to be running. Depending on
+  /// [InAppPurchasePlatform] instead means a test can inject a fake
+  /// platform (this app's usual `PlatformInterface` test-double pattern —
+  /// see `FakeMobileScannerPlatform`/`FakeInAppPurchasePlatform`) with zero
+  /// risk of ever touching a real platform channel. Production behavior is
+  /// identical either way: every `InAppPurchase` method is a one-line
+  /// delegation to `InAppPurchasePlatform.instance` at call time.
+  EntitlementService({
+    InAppPurchasePlatform? platform,
+    this.verifyResponseTimeout = const Duration(seconds: 5),
+  }) : _platform = platform ?? _realPlatform();
+
+  /// Touches `InAppPurchase.instance` once, in production only, so the real
+  /// platform-specific `InAppPurchasePlatform` gets registered — then reads
+  /// it back directly. Never called when a test injects its own [platform].
+  static InAppPurchasePlatform _realPlatform() {
+    InAppPurchase.instance;
+    return InAppPurchasePlatform.instance;
+  }
+
+  Future<void> start() async {
+    await _loadCached();
+    _subscription = _platform.purchaseStream.listen(_handlePurchaseUpdates, onError: (_) {});
+  }
+
+  void dispose() {
+    _subscription?.cancel();
+  }
+
+  Future<bool> get isAvailable => _platform.isAvailable();
+
+  Future<ProductDetailsResponse> queryProducts() =>
+      _platform.queryProductDetails(MonetizationConfig.entitlementProductIds);
+
+  Future<void> buy(ProductDetails product) async {
+    final purchaseParam = PurchaseParam(productDetails: product);
+    await _platform.buyNonConsumable(purchaseParam: purchaseParam);
+  }
+
+  Future<void> restore() => _platform.restorePurchases();
+
+  /// Re-confirms the current entitlement against the store. See the class
+  /// doc for the offline-grace contract. A [EntitlementStatus.lifetime]
+  /// purchase is never re-verified this way — by definition there is
+  /// nothing for it to lapse from.
+  Future<void> verify() async {
+    bool available;
+    try {
+      available = await _platform.isAvailable();
+    } catch (_) {
+      available = false;
+    }
+    if (!available) return;
+    if (state.value.status == EntitlementStatus.lifetime) return;
+
+    final sawRelevantPurchase = Completer<bool>();
+    final probe = _platform.purchaseStream.listen((purchases) {
+      final relevant = purchases.any((p) =>
+          MonetizationConfig.entitlementProductIds.contains(p.productID) &&
+          (p.status == PurchaseStatus.purchased || p.status == PurchaseStatus.restored));
+      if (relevant && !sawRelevantPurchase.isCompleted) {
+        sawRelevantPurchase.complete(true);
+      }
+    }, onError: (_) {});
+
+    try {
+      await _platform.restorePurchases();
+    } catch (_) {
+      await probe.cancel();
+      return;
+    }
+
+    final confirmed =
+        await sawRelevantPurchase.future.timeout(verifyResponseTimeout, onTimeout: () => false);
+    await probe.cancel();
+
+    if (confirmed) {
+      await _save(state.value.copyWith(lastVerifiedAt: DateTime.now()));
+    } else if (state.value.hasFullAccess) {
+      await _save(state.value.copyWith(
+        status: EntitlementStatus.expired,
+        lastVerifiedAt: DateTime.now(),
+      ));
+    }
+  }
+
+  Future<void> _loadCached() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_prefsKey);
+      if (raw == null || raw.isEmpty) return;
+      state.value = EntitlementState.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    } catch (_) {
+      // Default free state stands if this can't be read.
+    }
+  }
+
+  Future<void> _save(EntitlementState newState) async {
+    state.value = newState;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_prefsKey, jsonEncode(newState.toJson()));
+    } catch (_) {
+      // Best-effort persistence only — in-memory state is already updated.
+    }
+  }
+
+  void _handlePurchaseUpdates(List<PurchaseDetails> purchases) {
+    for (final purchase in purchases) {
+      _applyPurchase(purchase);
+      if (purchase.pendingCompletePurchase) {
+        _platform.completePurchase(purchase);
+      }
+    }
+  }
+
+  void _applyPurchase(PurchaseDetails purchase) {
+    if (purchase.status != PurchaseStatus.purchased &&
+        purchase.status != PurchaseStatus.restored) {
+      return;
+    }
+    // The support purchase never gates anything — deliberately not recorded
+    // into EntitlementState at all (checkpoint 2 can add its own "thank
+    // you" acknowledgment if wanted; not required for entitlement plumbing).
+    if (purchase.productID == MonetizationConfig.supportDeveloperPurchaseId) {
+      return;
+    }
+    if (!MonetizationConfig.entitlementProductIds.contains(purchase.productID)) {
+      return;
+    }
+
+    final purchaseDate = purchase.transactionDate == null
+        ? DateTime.now()
+        : DateTime.fromMillisecondsSinceEpoch(
+            int.tryParse(purchase.transactionDate!) ?? DateTime.now().millisecondsSinceEpoch,
+          );
+
+    unawaited(_save(EntitlementState(
+      status: _statusFor(purchase.productID, purchaseDate),
+      productId: purchase.productID,
+      purchaseDate: purchaseDate,
+      lastVerifiedAt: DateTime.now(),
+    )));
+  }
+
+  EntitlementStatus _statusFor(String productId, DateTime purchaseDate) {
+    if (productId == MonetizationConfig.proLifetimePurchaseId) {
+      return EntitlementStatus.lifetime;
+    }
+    if (productId == MonetizationConfig.proAnnualSubscriptionId) {
+      final inTrial = DateTime.now().difference(purchaseDate) < trialWindow;
+      return inTrial ? EntitlementStatus.trialing : EntitlementStatus.pro;
+    }
+    // Monthly plan: no trial per Decision 2.
+    return EntitlementStatus.pro;
+  }
+}

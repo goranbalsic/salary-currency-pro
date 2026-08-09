@@ -10,7 +10,6 @@ import '../../providers/currency_converter_provider.dart';
 import '../../services/history_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
-import '../../widgets/banner_ad_slot.dart';
 import '../../widgets/rate_status_banner.dart';
 import '../../widgets/save_scenario_action.dart';
 
@@ -62,8 +61,6 @@ class _CurrencyConverterView extends StatelessWidget {
           _AmountAndCurrencyCard(provider: provider),
           const SizedBox(height: 16),
           _ResultArea(provider: provider),
-          const SizedBox(height: 16),
-          const Center(child: BannerAdSlot()),
         ],
       ),
     );

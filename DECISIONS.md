@@ -1,5 +1,153 @@
 # DECISIONS.md
 
+## D-033 — PROMPT-003I Stage D go-ahead: Monetization Strategy, checkpoint 1 (in progress)
+
+- **Date:** started 2026-08-09. Implements
+  `_userprompts/PROMPT-003F_StageD_Monetization_Strategy.md`.
+  **Filename/ID note:** that file is literally named `PROMPT-003F`, but
+  `PROMPT-003F` already identifies Stage C item 12 (Invoice PDF + NBS IPS
+  QR, see D-030) in this project's own history. Reusing the same prompt ID
+  for an unrelated stage would corrupt every existing cross-reference to
+  the real 003F, so this and every other record refers to it as
+  **PROMPT-003I** instead (next unused letter after 003H) — a bookkeeping
+  correction only, not a reinterpretation of its content. Flagged to the
+  user; the file itself was not renamed.
+- **Context:** explicit Stage D go-ahead, supplied immediately after Stage
+  C closed (D-032). Makes two final product decisions (no ads at launch,
+  final pricing) so implementation can proceed without further product
+  calls blocking it. Four implementation checkpoints: (1) entitlement
+  plumbing, no paywall UI yet; (2) gate Pro features + paywall; (3)
+  regional pricing + release evidence + push; (4) stop, awaiting real
+  usage data before any ads reconsideration.
+- **Decision 1 — no ads at launch, implemented now, not just recorded:**
+  the prompt calls this "final" and "not permanent — sequencing." Since
+  ads were already live in the app (`AdsService.initialize()` in
+  `main.dart`, `BannerAdSlot` embedded in `SalaryCalculatorScreen` and
+  `CurrencyConverterScreen`), writing "ad-free" into this file while ads
+  kept rendering would have been dishonest — so this checkpoint disables
+  the three live call sites rather than only avoiding new ones.
+  **Deliberately not deleted:** `AdsService`, `BannerAdSlot`,
+  `MonetizationConfig.bannerAdUnitId`/`androidAdMobAppId`, and
+  `ConsentService` all stay in the codebase unreferenced-by-ads but
+  intact — the prompt's own "revisit only if... needs a soft monetization
+  layer" language treats this as paused infrastructure with a stated
+  future trigger, not dead code to remove. `ConsentService` in particular
+  is *not* ads-only: `SettingsScreen` still uses
+  `ConsentService.isPrivacyOptionsFormRequired`/`showPrivacyOptionsForm`
+  for its GDPR "manage consent" option, untouched by this change.
+- **Decision 2 — pricing:** Monthly $3.99, Annual $19.99 (7-day trial),
+  Lifetime $49.99, Support-the-developer $2.99 (no feature gate). Product
+  ids added to `MonetizationConfig`: `proAnnualSubscriptionId`
+  (`pro_annual`), `proLifetimePurchaseId` (`pro_lifetime`),
+  `supportDeveloperPurchaseId` (`support_developer`) — all placeholders,
+  same as the pre-existing `proMonthlySubscriptionId` (`pro_monthly`,
+  reused unchanged: nothing was ever created against it in Play Console,
+  so no migration concern). None of these four ids has a real Play
+  Console product yet — that's checkpoint 3's job, alongside regional
+  auto-pricing.
+- **Checkpoint 1 — entitlement plumbing:**
+  - **Audit first:** read the existing `ProProvider` (single boolean
+    `isPro`), `PurchaseService` (wraps `in_app_purchase` for the one old
+    `pro_monthly` product), `PaywallScreen`, and every call site
+    (`save_scenario_action.dart`'s scenario-limit gate, `SettingsScreen`'s
+    Pro-status row, `PaywallScreen` itself, `app.dart`'s provider wiring).
+    **Deliberately left untouched this checkpoint** — the prompt is
+    explicit that checkpoint 1 has "no paywall UI yet," and the old
+    single-product flow still needs to keep working exactly as before
+    until checkpoint 2 replaces it alongside the new paywall. New code
+    this checkpoint runs alongside the old, not instead of it.
+  - **New model:** `EntitlementStatus` enum
+    (free/trialing/pro/lifetime/expired — the exact five states the
+    prompt's own report format asks to cover) + `EntitlementState`
+    (`lib/models/entitlement.dart`), `SharedPreferences`-cached
+    (`entitlement_state_v1`) the same way every other model in this app
+    is. `trialing` and `pro`/`lifetime` grant *identical* access
+    (`hasFullAccess`) — the distinction is display-only (e.g. "trial ends
+    in N days" vs "renews on ..."), never a separate feature gate.
+  - **New service:** `EntitlementService` (`lib/services/entitlement_service.dart`),
+    the "single boundary" the prompt asks for. Real-API-verified against
+    the installed `in_app_purchase_platform_interface` 1.4.1 source
+    (`PurchaseDetails`/`PurchaseStatus`/`InAppPurchasePlatform` — this
+    plugin has no trial-status field at all; `PurchaseStatus` is
+    `pending/purchased/error/restored/canceled`), not written from general
+    knowledge — same discipline as Stage B item 7's real API-mismatch
+    catch.
+    - **Trial approximation, honestly labeled, not claimed verified:**
+      the plugin exposes no server-verified trial flag (no backend exists
+      in this app to check one against anyway). The annual product is
+      shown as `trialing` for exactly `EntitlementService.trialWindow`
+      (7 days) from its purchase transaction date, `pro` after — a local
+      approximation for display only, the same "approximate, label
+      honestly, never claim authoritative" precedent as D-029's
+      invoice-date FX rate.
+    - **Offline grace, exactly as specced ("cached entitlement must hold
+      through no-connectivity periods... never hard-lock mid-session on a
+      network check"):** `verify()` leaves the cached state completely
+      untouched whenever the store can't be confirmed reachable —
+      `isAvailable()` returning false or throwing, or `restorePurchases()`
+      throwing. No time-based decay of any kind was introduced (a
+      multi-day "grace window" was considered and deliberately rejected —
+      it would have meant inventing an unsourced business number; "hold
+      indefinitely until the store explicitly says otherwise" needs none).
+    - **Expiry detection — a real plugin constraint, worked around
+      honestly:** `restorePurchases()` returns `Future<void>` and reports
+      results only via the purchase stream; the plugin gives no explicit
+      "restore completed, found nothing" signal. `verify()` listens for a
+      relevant purchase for up to `verifyResponseTimeout` (5s default,
+      test-overridable) after a *successful* `restorePurchases()` call;
+      only if that response window elapses with nothing relevant, and the
+      store was confirmed reachable, does an active
+      trialing/pro entitlement move to `expired`. A `lifetime` purchase is
+      never re-verified this way at all — by definition nothing can lapse.
+    - **Testability:** depends on `InAppPurchasePlatform` directly rather
+      than the `InAppPurchase` facade `PurchaseService` uses. Real,
+      hard-won finding: `InAppPurchase.instance`'s first access
+      unconditionally self-registers the real Android/iOS platform
+      implementation as a side effect and opens a real platform-channel
+      connection — there is no way to prevent or await that from a plain
+      Dart test, and it fails asynchronously, misattributed to whichever
+      test happens to be running at the time. Depending on
+      `InAppPurchasePlatform` instead (same real behavior in production —
+      every `InAppPurchase` method is a one-line delegation to
+      `InAppPurchasePlatform.instance` anyway) lets a test inject
+      `FakeInAppPurchasePlatform` (this app's usual `PlatformInterface`
+      test-double pattern, same approach as `FakeMobileScannerPlatform`)
+      with zero risk of ever touching a real platform channel. Added
+      `in_app_purchase_platform_interface` as an explicit `pubspec.yaml`
+      dependency (previously only transitive) so both the service and its
+      test can import it directly.
+  - **Ads disabled, not just left unbuilt:** see Decision 1 above for the
+    three call sites removed (`main.dart`, `salary_calculator_screen.dart`,
+    `currency_converter_screen.dart`).
+  - **Tests:** `test/entitlement_model_test.dart` (4: `hasFullAccess` per
+    status, JSON round-trip, tolerant unknown-status default, `copyWith`).
+    `test/entitlement_service_test.dart` (13): default free state; fresh
+    annual purchase is trialing; annual purchase past the trial window is
+    pro; monthly is pro immediately with no trial; lifetime purchase
+    grants lifetime; the support purchase never changes entitlement;
+    entitlement persists across a fresh service instance
+    (`SharedPreferences`); three offline-grace cases (unavailable, throws
+    on `isAvailable`, throws on `restorePurchases`) all leave cached state
+    untouched; a reachable-but-empty restore downgrades to expired; a
+    reachable-and-confirmed restore keeps/refreshes the entitlement; a
+    lifetime purchase is never downgraded by `verify()`. 17/17 new tests
+    pass; full suite 507/507 (was 490 after Stage C closed).
+  - `flutter analyze` clean (same 3 pre-existing, unrelated
+    `unintended_html_in_doc_comment` info-level issues; none in this
+    checkpoint's files).
+  - **No l10n changes this checkpoint** — no new user-facing strings yet
+    (no paywall UI). 554 keys × 9 locales, unchanged from Stage C's close.
+  - **Reversibility:** fully additive except the three ads call-site
+    removals (each a one-line/one-block deletion, trivially reversible)
+    and the new `pubspec.yaml` dependency line.
+  - **Confidence:** High — every new state transition and the offline-
+    grace/expiry-detection contract are covered by real tests against a
+    verified plugin API, not guessed.
+- **Next:** checkpoint 2 (gate the Pro feature list + build the new
+  paywall, replacing `ProProvider`/`PurchaseService`/`PaywallScreen`),
+  then checkpoint 3 (regional pricing + release evidence + push), then
+  stop per the prompt's own instruction.
+
 ## D-032 — PROMPT-003H Stage C item 10: Offline Fiscal-Receipt QR Scanner Shell (done)
 
 - **Date:** started 2026-08-08. Implements

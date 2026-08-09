@@ -23,4 +23,35 @@ class MonetizationConfig {
   /// TODO: create this as a real subscription product in Play Console
   /// before release — this ID must match exactly.
   static const String proMonthlySubscriptionId = 'pro_monthly';
+
+  /// PROMPT-003F Stage D go-ahead's four-product lineup. Every id below is
+  /// a placeholder the same way [proMonthlySubscriptionId] is — none of
+  /// these has been created in Play Console yet. See DECISIONS.md for the
+  /// final pricing table (monthly $3.99, annual $19.99 w/ 7-day trial,
+  /// lifetime $49.99, support $2.99) — pricing itself is configured in Play
+  /// Console, not in this app.
+  ///
+  /// TODO: create as a real annual subscription product (with a 7-day free
+  /// trial configured on it) in Play Console before release.
+  static const String proAnnualSubscriptionId = 'pro_annual';
+
+  /// TODO: create as a real one-time (non-consumable) product in Play
+  /// Console before release.
+  static const String proLifetimePurchaseId = 'pro_lifetime';
+
+  /// A non-gating, one-time "support the developer" purchase — never checked
+  /// by any Pro feature gate. TODO: create as a real one-time (non-
+  /// consumable) product in Play Console before release.
+  static const String supportDeveloperPurchaseId = 'support_developer';
+
+  /// The full Stage D product lineup, for a single `queryProductDetails`
+  /// call. [proMonthlySubscriptionId] is deliberately included — Decision 2
+  /// keeps a monthly plan alongside annual/lifetime/support, it's simply
+  /// no longer this app's only product.
+  static const Set<String> entitlementProductIds = {
+    proMonthlySubscriptionId,
+    proAnnualSubscriptionId,
+    proLifetimePurchaseId,
+    supportDeveloperPurchaseId,
+  };
 }
