@@ -3379,6 +3379,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get receiptScannerResultDone;
+
+  /// No description provided for @receiptScannerViewQueueTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'View queue'**
+  String get receiptScannerViewQueueTooltip;
+
+  /// No description provided for @toolsReceiptQueueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Queue'**
+  String get toolsReceiptQueueTitle;
+
+  /// No description provided for @toolsReceiptQueueSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review scanned receipts and turn them into expenses'**
+  String get toolsReceiptQueueSubtitle;
+
+  /// No description provided for @receiptQueueScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Queue'**
+  String get receiptQueueScreenTitle;
+
+  /// No description provided for @receiptQueueEmptyState.
+  ///
+  /// In en, this message translates to:
+  /// **'No scanned receipts yet. Scan a fiscal receipt QR code to add one here.'**
+  String get receiptQueueEmptyState;
+
+  /// No description provided for @receiptQueueStatusLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked to expense'**
+  String get receiptQueueStatusLinked;
+
+  /// No description provided for @receiptQueueUnrecognizedFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Unrecognized format'**
+  String get receiptQueueUnrecognizedFormat;
+
+  /// No description provided for @receiptQueueScannedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned {date}'**
+  String receiptQueueScannedAt(String date);
+
+  /// No description provided for @receiptQueueDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this scan?'**
+  String get receiptQueueDeleteConfirmTitle;
+
+  /// No description provided for @receiptQueueDeleteConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the scanned receipt from your local queue.'**
+  String get receiptQueueDeleteConfirmBody;
+
+  /// No description provided for @receiptQueueDeletedConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan deleted'**
+  String get receiptQueueDeletedConfirmation;
+
+  /// No description provided for @receiptHandoffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create expense from scan'**
+  String get receiptHandoffTitle;
+
+  /// No description provided for @receiptHandoffFromScanNote.
+  ///
+  /// In en, this message translates to:
+  /// **'From a receipt scanned on {date}'**
+  String receiptHandoffFromScanNote(String date);
 }
 
 class _AppLocalizationsDelegate

@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Непрепознаена фискална сметка",
   "receiptScannerResultUnknownBody": "Овој QR код не одговара на форматот на фискална сметка на ниту една поддржана земја. Зачувано е за да можете да го прегледате.",
   "receiptScannerResultScanAnother": "Скенирај уште еден",
-  "receiptScannerResultDone": "Готово"
+  "receiptScannerResultDone": "Готово",
+  "receiptScannerViewQueueTooltip": "Прегледај го редот",
+
+  "toolsReceiptQueueTitle": "Ред на сметки",
+  "toolsReceiptQueueSubtitle": "Прегледајте скенирани сметки и претворете ги во трошоци",
+  "receiptQueueScreenTitle": "Ред на сметки",
+  "receiptQueueEmptyState": "Сè уште нема скенирани сметки. Скенирајте QR код на фискална сметка за да ја додадете тука.",
+  "receiptQueueStatusLinked": "Поврзано со трошок",
+  "receiptQueueUnrecognizedFormat": "Непрепознат формат",
+  "receiptQueueScannedAt": "Скенирано {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Да се избрише ова скенирање?",
+  "receiptQueueDeleteConfirmBody": "Ова го отстранува скенираната сметка од вашиот локален ред.",
+  "receiptQueueDeletedConfirmation": "Скенирањето е избришано",
+  "receiptHandoffTitle": "Создај трошок од скенирање",
+  "receiptHandoffFromScanNote": "Од сметка скенирана на {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

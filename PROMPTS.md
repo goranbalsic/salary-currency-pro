@@ -193,6 +193,19 @@ permissions + manual entry) → Checkpoint 3 (queue screen + manual expense
 handoff) → Checkpoint 4 (final regression + release evidence + push). See
 `DECISIONS.md` D-032 for the per-checkpoint record as it lands.
 
+**Checkpoint 3 done** — the user supplied a checkpoint-specific prompt,
+`_userprompts/PROMPT-003H_Checkpoint3_Queue_Screen_Manual_Expense.md`.
+Built `FiscalReceiptQueueScreen` (queue list, delete-with-undo) and the
+manual expense handoff sheet (creates a real `ExpenseEntry` via the
+existing `ExpenseService`, links back to the scan via
+`FiscalReceiptScanService.linkExpense`). 13 new tests (490/490 total),
+13 new l10n keys × 9 locales (554/554 lockstep), `flutter analyze` clean.
+See `DECISIONS.md` D-032 for full detail, including the queue-vs-removal
+decision (stays, marked linked) and the no-network-client regression
+guard. **Next: checkpoint 4 (final regression + release evidence + push),
+which closes item 10 — then this prompt's own stop condition applies: no
+Stage D without a separate explicit go-ahead.**
+
 ### PROMPT-003G: Stage C Item 13 — Cross-Border Pack
 
 Status: **Done, 2026-08-08** — user supplied

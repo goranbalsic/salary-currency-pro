@@ -103,6 +103,31 @@ void main() {
     expect(FiscalReceiptScanService.changes.value, greaterThan(afterLink));
   });
 
+  test('restore re-inserts a previously-deleted scan unchanged', () async {
+    final service = FiscalReceiptScanService();
+    final scan = await service.recordScan('https://suf.purs.gov.rs/v/?vl=ABC123');
+    await service.delete(scan.id);
+    expect(await service.loadAll(), isEmpty);
+
+    await service.restore(scan);
+
+    final all = await service.loadAll();
+    expect(all, hasLength(1));
+    expect(all.first.id, scan.id);
+    expect(all.first.rawPayload, scan.rawPayload);
+  });
+
+  test('restore is a no-op if a scan with the same id already exists',
+      () async {
+    final service = FiscalReceiptScanService();
+    final scan = await service.recordScan('payload');
+
+    await service.restore(scan);
+
+    final all = await service.loadAll();
+    expect(all, hasLength(1));
+  });
+
   test('loadAll degrades to an empty list on corrupt stored data rather '
       'than crashing', () async {
     SharedPreferences.setMockInitialValues({

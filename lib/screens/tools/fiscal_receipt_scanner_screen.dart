@@ -5,8 +5,10 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../models/fiscal_receipt_scan.dart';
+import '../../navigation/app_page_route.dart';
 import '../../services/fiscal_receipt_scan_service.dart';
 import '../../theme/app_theme.dart';
+import 'fiscal_receipt_queue_screen.dart';
 
 /// Offline QR entry point for PROMPT-003H (Stage C item 10). Captures a
 /// fiscal-receipt QR payload — via the device camera or, always available,
@@ -184,7 +186,17 @@ class _FiscalReceiptScannerScreenState extends State<FiscalReceiptScannerScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.receiptScannerScreenTitle)),
+      appBar: AppBar(
+        title: Text(l10n.receiptScannerScreenTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.inbox_outlined),
+            tooltip: l10n.receiptScannerViewQueueTooltip,
+            onPressed: () => Navigator.of(context)
+                .push(appPageRoute((_) => const FiscalReceiptQueueScreen())),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

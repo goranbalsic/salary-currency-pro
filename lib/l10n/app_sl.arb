@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Fiskalni račun ni prepoznan",
   "receiptScannerResultUnknownBody": "Ta QR koda se ne ujema z obliko fiskalnega računa nobene podprte države. Shranjeno je, da si lahko ogledate podrobnosti.",
   "receiptScannerResultScanAnother": "Skeniraj še enega",
-  "receiptScannerResultDone": "Končano"
+  "receiptScannerResultDone": "Končano",
+  "receiptScannerViewQueueTooltip": "Ogled čakalne vrste",
+
+  "toolsReceiptQueueTitle": "Čakalna vrsta računov",
+  "toolsReceiptQueueSubtitle": "Preglejte skenirane račune in jih spremenite v stroške",
+  "receiptQueueScreenTitle": "Čakalna vrsta računov",
+  "receiptQueueEmptyState": "Še ni skeniranih računov. Skenirajte QR kodo fiskalnega računa, da ga dodate tukaj.",
+  "receiptQueueStatusLinked": "Povezano s stroškom",
+  "receiptQueueUnrecognizedFormat": "Neprepoznana oblika",
+  "receiptQueueScannedAt": "Skenirano {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Izbrišem to skeniranje?",
+  "receiptQueueDeleteConfirmBody": "S tem odstranite skenirani račun iz lokalne čakalne vrste.",
+  "receiptQueueDeletedConfirmation": "Skeniranje izbrisano",
+  "receiptHandoffTitle": "Ustvari strošek iz skeniranja",
+  "receiptHandoffFromScanNote": "Iz računa, skeniranega {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

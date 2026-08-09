@@ -1874,4 +1874,50 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'U krye';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'Shiko radhën';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Radha e kuponëve';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Shiko kuponët e skanuar dhe shndërroji në shpenzime';
+
+  @override
+  String get receiptQueueScreenTitle => 'Radha e kuponëve';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'Ende nuk ka kuponë të skanuar. Skano kodin QR të një kuponi fiskal për ta shtuar këtu.';
+
+  @override
+  String get receiptQueueStatusLinked => 'I lidhur me një shpenzim';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Format i panjohur';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Skanuar $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle => 'Të fshihet ky skanim?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'Kjo e heq kuponin e skanuar nga radha juaj lokale.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Skanimi u fshi';
+
+  @override
+  String get receiptHandoffTitle => 'Krijo shpenzim nga skanimi';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'Nga një kupon i skanuar më $date';
+  }
 }

@@ -1878,4 +1878,51 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'Готово';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'Преглед на опашката';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Опашка с бонове';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Преглед на сканирани бонове и превръщането им в разходи';
+
+  @override
+  String get receiptQueueScreenTitle => 'Опашка с бонове';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'Все още няма сканирани бонове. Сканирайте QR код на фискален бон, за да го добавите тук.';
+
+  @override
+  String get receiptQueueStatusLinked => 'Свързан с разход';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Неразпознат формат';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Сканирано $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle =>
+      'Да се изтрие ли това сканиране?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'Това премахва сканирания бон от локалната ви опашка.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Сканирането е изтрито';
+
+  @override
+  String get receiptHandoffTitle => 'Създаване на разход от сканиране';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'От бон, сканиран на $date';
+  }
 }

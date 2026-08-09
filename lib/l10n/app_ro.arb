@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Bon fiscal nerecunoscut",
   "receiptScannerResultUnknownBody": "Acest cod QR nu corespunde formatului de bon fiscal al niciunei țări acceptate. A fost salvat pentru a-l putea revizui.",
   "receiptScannerResultScanAnother": "Scanează altul",
-  "receiptScannerResultDone": "Gata"
+  "receiptScannerResultDone": "Gata",
+  "receiptScannerViewQueueTooltip": "Vezi coada",
+
+  "toolsReceiptQueueTitle": "Coada de bonuri",
+  "toolsReceiptQueueSubtitle": "Vezi bonurile scanate și transformă-le în cheltuieli",
+  "receiptQueueScreenTitle": "Coada de bonuri",
+  "receiptQueueEmptyState": "Niciun bon scanat încă. Scanează codul QR al unui bon fiscal pentru a-l adăuga aici.",
+  "receiptQueueStatusLinked": "Asociat unei cheltuieli",
+  "receiptQueueUnrecognizedFormat": "Format nerecunoscut",
+  "receiptQueueScannedAt": "Scanat {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Ștergi această scanare?",
+  "receiptQueueDeleteConfirmBody": "Aceasta elimină bonul scanat din coada ta locală.",
+  "receiptQueueDeletedConfirmation": "Scanare ștearsă",
+  "receiptHandoffTitle": "Creează o cheltuială din scanare",
+  "receiptHandoffFromScanNote": "Dintr-un bon scanat pe {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

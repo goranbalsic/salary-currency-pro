@@ -1857,4 +1857,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'Done';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'View queue';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Receipt Queue';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Review scanned receipts and turn them into expenses';
+
+  @override
+  String get receiptQueueScreenTitle => 'Receipt Queue';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'No scanned receipts yet. Scan a fiscal receipt QR code to add one here.';
+
+  @override
+  String get receiptQueueStatusLinked => 'Linked to expense';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Unrecognized format';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Scanned $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle => 'Delete this scan?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'This removes the scanned receipt from your local queue.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Scan deleted';
+
+  @override
+  String get receiptHandoffTitle => 'Create expense from scan';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'From a receipt scanned on $date';
+  }
 }

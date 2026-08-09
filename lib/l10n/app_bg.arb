@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Непризнат фискален бон",
   "receiptScannerResultUnknownBody": "Този QR код не съответства на формата на фискален бон на нито една поддържана държава. Запазено е, за да можете да го прегледате.",
   "receiptScannerResultScanAnother": "Сканирай друг",
-  "receiptScannerResultDone": "Готово"
+  "receiptScannerResultDone": "Готово",
+  "receiptScannerViewQueueTooltip": "Преглед на опашката",
+
+  "toolsReceiptQueueTitle": "Опашка с бонове",
+  "toolsReceiptQueueSubtitle": "Преглед на сканирани бонове и превръщането им в разходи",
+  "receiptQueueScreenTitle": "Опашка с бонове",
+  "receiptQueueEmptyState": "Все още няма сканирани бонове. Сканирайте QR код на фискален бон, за да го добавите тук.",
+  "receiptQueueStatusLinked": "Свързан с разход",
+  "receiptQueueUnrecognizedFormat": "Неразпознат формат",
+  "receiptQueueScannedAt": "Сканирано {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Да се изтрие ли това сканиране?",
+  "receiptQueueDeleteConfirmBody": "Това премахва сканирания бон от локалната ви опашка.",
+  "receiptQueueDeletedConfirmation": "Сканирането е изтрито",
+  "receiptHandoffTitle": "Създаване на разход от сканиране",
+  "receiptHandoffFromScanNote": "От бон, сканиран на {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

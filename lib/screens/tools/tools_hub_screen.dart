@@ -15,6 +15,7 @@ import '../expenses/subscription_radar_screen.dart';
 import '../scenarios/my_scenarios_screen.dart';
 import 'budget_screen.dart';
 import 'cross_border_screen.dart';
+import 'fiscal_receipt_queue_screen.dart';
 import 'fiscal_receipt_scanner_screen.dart';
 import 'freelance_tax_screen.dart';
 import 'freelancer_payout_screen.dart';
@@ -158,6 +159,14 @@ class _ToolsHubScreenState extends State<ToolsHubScreen> {
         subtitle: l10n.toolsReceiptScannerSubtitle,
         category: _ToolCategory.tracking,
         builder: (_) => const FiscalReceiptScannerScreen(),
+      ),
+      _ToolEntry(
+        id: 'fiscal_receipt_queue',
+        icon: Icons.inbox_outlined,
+        title: l10n.toolsReceiptQueueTitle,
+        subtitle: l10n.toolsReceiptQueueSubtitle,
+        category: _ToolCategory.tracking,
+        builder: (_) => const FiscalReceiptQueueScreen(),
       ),
       _ToolEntry(
         id: HistoryToolIds.loan,

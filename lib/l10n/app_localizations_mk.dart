@@ -1869,4 +1869,50 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'Готово';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'Прегледај го редот';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Ред на сметки';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Прегледајте скенирани сметки и претворете ги во трошоци';
+
+  @override
+  String get receiptQueueScreenTitle => 'Ред на сметки';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'Сè уште нема скенирани сметки. Скенирајте QR код на фискална сметка за да ја додадете тука.';
+
+  @override
+  String get receiptQueueStatusLinked => 'Поврзано со трошок';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Непрепознат формат';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Скенирано $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle => 'Да се избрише ова скенирање?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'Ова го отстранува скенираната сметка од вашиот локален ред.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Скенирањето е избришано';
+
+  @override
+  String get receiptHandoffTitle => 'Создај трошок од скенирање';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'Од сметка скенирана на $date';
+  }
 }

@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Nije prepoznat fiskalni račun",
   "receiptScannerResultUnknownBody": "Ovaj QR kod ne odgovara formatu fiskalnog računa nijedne podržane zemlje. Sačuvano je da biste mogli da ga pregledate.",
   "receiptScannerResultScanAnother": "Skeniraj još jedan",
-  "receiptScannerResultDone": "Gotovo"
+  "receiptScannerResultDone": "Gotovo",
+  "receiptScannerViewQueueTooltip": "Pogledaj red",
+
+  "toolsReceiptQueueTitle": "Red računa",
+  "toolsReceiptQueueSubtitle": "Pregledajte skenirane račune i pretvorite ih u troškove",
+  "receiptQueueScreenTitle": "Red računa",
+  "receiptQueueEmptyState": "Još nema skeniranih računa. Skenirajte QR kod fiskalnog računa da ga dodate ovde.",
+  "receiptQueueStatusLinked": "Povezano sa troškom",
+  "receiptQueueUnrecognizedFormat": "Neprepoznat format",
+  "receiptQueueScannedAt": "Skenirano {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Obrisati ovo skeniranje?",
+  "receiptQueueDeleteConfirmBody": "Ovo uklanja skenirani račun iz vašeg lokalnog reda.",
+  "receiptQueueDeletedConfirmation": "Skeniranje je obrisano",
+  "receiptHandoffTitle": "Napravi trošak iz skeniranja",
+  "receiptHandoffFromScanNote": "Iz računa skeniranog {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

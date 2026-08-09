@@ -78,6 +78,17 @@ class FiscalReceiptScanService {
     changes.value++;
   }
 
+  /// Re-inserts a previously-deleted [scan] exactly as it was — the undo
+  /// half of [delete], mirroring [ExpenseService.restore]. A no-op if a scan
+  /// with the same id already exists (e.g. undo tapped twice).
+  Future<void> restore(FiscalReceiptScan scan) async {
+    final all = await loadAll();
+    if (all.any((s) => s.id == scan.id)) return;
+    all.insert(0, scan);
+    await _save(all);
+    changes.value++;
+  }
+
   /// Marks [id] as having a manual expense created from it — additive,
   /// leaves every other field untouched. A no-op if [id] no longer exists.
   Future<void> linkExpense({required String id, required String expenseId}) async {

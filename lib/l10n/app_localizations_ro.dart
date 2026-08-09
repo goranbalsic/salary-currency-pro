@@ -1879,4 +1879,50 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'Gata';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'Vezi coada';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Coada de bonuri';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Vezi bonurile scanate și transformă-le în cheltuieli';
+
+  @override
+  String get receiptQueueScreenTitle => 'Coada de bonuri';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'Niciun bon scanat încă. Scanează codul QR al unui bon fiscal pentru a-l adăuga aici.';
+
+  @override
+  String get receiptQueueStatusLinked => 'Asociat unei cheltuieli';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Format nerecunoscut';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Scanat $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle => 'Ștergi această scanare?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'Aceasta elimină bonul scanat din coada ta locală.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Scanare ștearsă';
+
+  @override
+  String get receiptHandoffTitle => 'Creează o cheltuială din scanare';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'Dintr-un bon scanat pe $date';
+  }
 }

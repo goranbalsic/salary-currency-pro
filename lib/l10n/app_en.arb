@@ -637,5 +637,21 @@
   "receiptScannerResultUnknownTitle": "Not a recognized fiscal receipt",
   "receiptScannerResultUnknownBody": "This QR code doesn't match a supported country's fiscal-receipt format. It's been saved so you can review it.",
   "receiptScannerResultScanAnother": "Scan another",
-  "receiptScannerResultDone": "Done"
+  "receiptScannerResultDone": "Done",
+  "receiptScannerViewQueueTooltip": "View queue",
+
+  "toolsReceiptQueueTitle": "Receipt Queue",
+  "toolsReceiptQueueSubtitle": "Review scanned receipts and turn them into expenses",
+  "receiptQueueScreenTitle": "Receipt Queue",
+  "receiptQueueEmptyState": "No scanned receipts yet. Scan a fiscal receipt QR code to add one here.",
+  "receiptQueueStatusLinked": "Linked to expense",
+  "receiptQueueUnrecognizedFormat": "Unrecognized format",
+  "receiptQueueScannedAt": "Scanned {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Delete this scan?",
+  "receiptQueueDeleteConfirmBody": "This removes the scanned receipt from your local queue.",
+  "receiptQueueDeletedConfirmation": "Scan deleted",
+  "receiptHandoffTitle": "Create expense from scan",
+  "receiptHandoffFromScanNote": "From a receipt scanned on {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

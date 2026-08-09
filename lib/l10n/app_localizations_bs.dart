@@ -1863,4 +1863,50 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get receiptScannerResultDone => 'Gotovo';
+
+  @override
+  String get receiptScannerViewQueueTooltip => 'Pogledaj red čekanja';
+
+  @override
+  String get toolsReceiptQueueTitle => 'Red računa';
+
+  @override
+  String get toolsReceiptQueueSubtitle =>
+      'Pregledajte skenirane račune i pretvorite ih u troškove';
+
+  @override
+  String get receiptQueueScreenTitle => 'Red računa';
+
+  @override
+  String get receiptQueueEmptyState =>
+      'Još nema skeniranih računa. Skenirajte QR kod fiskalnog računa da ga dodate ovdje.';
+
+  @override
+  String get receiptQueueStatusLinked => 'Povezano s troškom';
+
+  @override
+  String get receiptQueueUnrecognizedFormat => 'Neprepoznat format';
+
+  @override
+  String receiptQueueScannedAt(String date) {
+    return 'Skenirano $date';
+  }
+
+  @override
+  String get receiptQueueDeleteConfirmTitle => 'Obrisati ovo skeniranje?';
+
+  @override
+  String get receiptQueueDeleteConfirmBody =>
+      'Ovo uklanja skenirani račun iz vašeg lokalnog reda.';
+
+  @override
+  String get receiptQueueDeletedConfirmation => 'Skeniranje je obrisano';
+
+  @override
+  String get receiptHandoffTitle => 'Kreiraj trošak iz skeniranja';
+
+  @override
+  String receiptHandoffFromScanNote(String date) {
+    return 'Iz računa skeniranog $date';
+  }
 }

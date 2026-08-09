@@ -616,5 +616,21 @@
   "receiptScannerResultUnknownTitle": "Kupon fiskal i panjohur",
   "receiptScannerResultUnknownBody": "Ky kod QR nuk përputhet me formatin e kuponit fiskal të asnjë vendi të mbështetur. Është ruajtur në mënyrë që ta rishikosh.",
   "receiptScannerResultScanAnother": "Skano një tjetër",
-  "receiptScannerResultDone": "U krye"
+  "receiptScannerResultDone": "U krye",
+  "receiptScannerViewQueueTooltip": "Shiko radhën",
+
+  "toolsReceiptQueueTitle": "Radha e kuponëve",
+  "toolsReceiptQueueSubtitle": "Shiko kuponët e skanuar dhe shndërroji në shpenzime",
+  "receiptQueueScreenTitle": "Radha e kuponëve",
+  "receiptQueueEmptyState": "Ende nuk ka kuponë të skanuar. Skano kodin QR të një kuponi fiskal për ta shtuar këtu.",
+  "receiptQueueStatusLinked": "I lidhur me një shpenzim",
+  "receiptQueueUnrecognizedFormat": "Format i panjohur",
+  "receiptQueueScannedAt": "Skanuar {date}",
+  "@receiptQueueScannedAt": {"placeholders": {"date": {"type": "String"}}},
+  "receiptQueueDeleteConfirmTitle": "Të fshihet ky skanim?",
+  "receiptQueueDeleteConfirmBody": "Kjo e heq kuponin e skanuar nga radha juaj lokale.",
+  "receiptQueueDeletedConfirmation": "Skanimi u fshi",
+  "receiptHandoffTitle": "Krijo shpenzim nga skanimi",
+  "receiptHandoffFromScanNote": "Nga një kupon i skanuar më {date}",
+  "@receiptHandoffFromScanNote": {"placeholders": {"date": {"type": "String"}}}
 }

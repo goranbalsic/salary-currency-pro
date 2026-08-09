@@ -183,15 +183,104 @@
   - `flutter analyze` clean on all new/changed files (3 pre-existing
     unrelated `unintended_html_in_doc_comment` info-level issues only).
     Full suite 477/477 (was 467 after checkpoint 1).
+- **Checkpoint 3 — queue screen, manual expense handoff:**
+  - **Audit first, per the checkpoint's own instruction:** re-read
+    `FiscalReceiptScan`/`FiscalReceiptScanService` (checkpoint 1) and
+    `FiscalReceiptScannerScreen` (checkpoint 2) before adding anything.
+    Found no existing queue UI or parallel queue data structure to
+    duplicate — `loadAll()` already returns newest-first, `delete`/
+    `linkExpense` already exist — so this checkpoint is UI-only over the
+    existing model/service, plus one small service addition (below).
+  - **Queue-vs-linked-removal decision:** an item stays in the queue after
+    linking, shown as "Linked to expense" rather than being removed. This
+    was already the design checkpoint 1 built (`ScanQueueStatus.expenseCreated`
+    is a terminal display state, not a deletion trigger) — checkpoint 3
+    confirms and keeps it rather than introducing removal-on-link, matching
+    how `ExpenseTrackerScreen` also never auto-removes a source record on
+    linking elsewhere in the app. A linked item has no further forward
+    action, so `_QueueTile` makes it non-tappable (`onTap: null`) once
+    `status == expenseCreated` — the handoff sheet only opens for
+    `awaitingFetch` items, preventing an accidental second expense from the
+    same scan.
+  - **New service method:** `FiscalReceiptScanService.restore()`, added
+    only now because checkpoint 1's audit note flagged the delete-then-undo
+    pattern (`ExpenseTrackerScreen._confirmDelete`) for reuse here; mirrors
+    `ExpenseService.restore()` exactly (re-insert by id, no-op if the id
+    already exists).
+  - **`FiscalReceiptQueueScreen`** (`lib/screens/tools/fiscal_receipt_queue_screen.dart`):
+    listens to `FiscalReceiptScanService.changes`, empty state, one
+    `_QueueTile` per scan (status label + `receiptQueueScannedAt` timestamp
+    + a 48-char-truncated raw-payload preview, never itself localized since
+    it's opaque scanned text, not app copy), delete via the confirm-dialog +
+    undo-snackbar pattern. Status label priority: `expenseCreated` →
+    "Linked to expense"; else `outcome == unknownFormat` → "Unrecognized
+    format"; else the existing `receiptScanStatusAwaitingFetch` string —
+    never a "verified"/"fetched" state, matching the model's own
+    boundary.
+  - **`_ScanExpenseHandoffSheet`** (private, same file): creates the
+    expense through the **existing** `ExpenseService.add(...)` — no
+    parallel expense model — then calls
+    `FiscalReceiptScanService.linkExpense`. Only the scan's own
+    `scannedAt` is pre-filled (as the default expense date): the Serbia
+    adapter doesn't parse a merchant/amount out of the payload today (see
+    checkpoint 1's classifier — it only returns outcome + country id), so
+    that timestamp is the one field "already deterministically provided"
+    that the prompt's 3.2 asks to reuse. The amount field is always empty
+    and required (`parseAmountInput(..., allowZero: false)`, same
+    validator/error copy as `ExpenseTrackerScreen`'s own add sheet) — never
+    inferred. Category/currency defaults and the currency dropdown mirror
+    `_AddTransactionSheet` exactly, including the same
+    `salary_selected_country_id` shared-prefs lookup for a default
+    currency. Cancel/back writes nothing (the sheet has no side effect
+    before `_save` runs), so a dismissed sheet leaves the scan record
+    byte-for-byte unchanged — verified by a widget test that dismisses via
+    the modal barrier and asserts zero expenses and an unchanged status.
+  - **Navigation:** a new Tools hub entry (`toolsReceiptQueueTitle`/
+    `Subtitle`, id `fiscal_receipt_queue`, Track & Plan category, not in
+    `HistoryToolIds` — same non-tracked precedent as the scanner entry) so
+    the queue is reachable without opening the camera, plus a small AppBar
+    shortcut (`Icons.inbox_outlined`, `receiptScannerViewQueueTooltip`) on
+    `FiscalReceiptScannerScreen` for the immediate after-scan path — both
+    reuse `appPageRoute`, the app's standard push transition.
+  - **Copy/disclosure discipline:** no string in this checkpoint uses
+    "verified," "fetched," or implies tax-authority confirmation; the raw
+    payload preview is labeled only by its scan timestamp, never presented
+    as validated content.
+  - **Tests:** `test/fiscal_receipt_scan_service_test.dart` gained 2 cases
+    for `restore`. New `test/fiscal_receipt_queue_screen_test.dart` (10
+    widget tests): empty state, populated/awaiting-fetch label,
+    unrecognized-format label, delete-cancel keeps the scan, delete-confirm
+    + undo, handoff pre-fill from `scannedAt`, required-amount validation,
+    successful save creates a linked expense via the real `ExpenseService`,
+    barrier-dismiss leaves the scan and expense list untouched, and a
+    linked item stays non-tappable. New
+    `test/fiscal_receipt_queue_no_network_test.dart`: a static source-scan
+    regression guard asserting the queue module's source text never
+    contains `suf.purs.gov.rs`, `dart:io`, `package:http`, `HttpClient`, or
+    even a reference to `FiscalReceiptFetchService` — the future-fetch
+    boundary stays a checkpoint-1-only concept this checkpoint doesn't
+    touch. 13/13 new tests pass; full suite 490/490 (was 477).
+  - **Localization:** 13 new keys (`toolsReceiptQueue*`, `receiptQueue*`,
+    `receiptHandoff*`, `receiptScannerViewQueueTooltip`) added to all 9
+    locale `.arb` files (554 keys × 9 locales) and regenerated via
+    `flutter gen-l10n`; `test/l10n_parity_test.dart` passes.
+  - `flutter analyze` clean (same 3 pre-existing unrelated
+    `unintended_html_in_doc_comment` info-level issues as checkpoint 2,
+    none in this checkpoint's files).
+  - Per PROMPT-003H Checkpoint 3's own instruction, next and last is
+    checkpoint 4 (final regression + release evidence + push), which
+    closes item 10 — then this prompt's stop condition applies: STOP, no
+    Stage D without a separate explicit go-ahead.
 - **Reversibility:** Fully reversible — this is a new, additive feature
   behind its own models/services/screens; nothing existing is modified
   except `pubspec.yaml`/`pubspec.lock` (new dependency),
   `AndroidManifest.xml`/iOS `Info.plist` (camera permission), and the
   Tools hub's entry list.
-- **Confidence:** High for checkpoints 1–2 (pure local logic and camera/
-  permission/manual-entry UI states are all covered by real, hardware-free
-  automated tests). Real-device camera/permission behavior is
-  build-verified only, not device-verified — see `PROJECT_CONTEXT.md`.
+- **Confidence:** High for checkpoints 1–3 (pure local logic, camera/
+  permission/manual-entry UI states, and the queue/handoff flow are all
+  covered by real, hardware-free automated tests). Real-device camera/
+  permission behavior is build-verified only, not device-verified — see
+  `PROJECT_CONTEXT.md`.
 
 ## D-031 — PROMPT-003G Stage C item 13: Cross-Border Pack — comparison semantics (done)
 
