@@ -2,6 +2,34 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-09 (later same day, after item 10 below). Stage D
+  (monetization) went from go-ahead to a real, signed release candidate
+  in one session — three prompts, all recorded in `PROMPTS.md`/
+  `DECISIONS.md`, none skipped: **PROMPT-003I** (Stage D go-ahead —
+  `EntitlementService`, four Pro gates, new paywall, D-033) →
+  **PROMPT-003J** (dev/prod Gradle build matrix, dev-only Entitlement
+  Preview simulator, QA audit, release-signing scaffold, D-034) →
+  **NEXT_ACTION** (removed the dormant Google Mobile Ads/UMP SDK
+  completely, then built and verified the *actually signed* production
+  release once the owner created their real upload keystore, D-035).
+  Free/Pro rules, final: Salary Calculator home-country-only for Free;
+  Cross-Border live+employer-cost free, one saved comparison free/
+  unlimited Pro; Invoice PDF and the paušal/VAT pack Pro; Freelance Tax
+  Screen and the QR scanner fully free; no ads. Removing the ad SDK also
+  dropped its entire transitive WebView chain (zero WebView dependency
+  now) and **measurably shrank the app** — arm64-v8a moved from 31.5MB to
+  **29.4MB, now under the 30MB budget**; only x86_64 remains over (31.8MB,
+  down from 33.8MB). The production AAB/split APKs were built and
+  verified as genuinely signed (`apksigner`/`jarsigner`, real certificate,
+  not the Android debug cert) — see `PROJECT_CONTEXT.md`'s own
+  "Development Setup" section below for the exact commands and
+  `PLAY_CONSOLE_CHECKLIST.md` for what the owner still needs to do in
+  Play Console itself. 525/525 tests, 584 l10n keys × 9 locales,
+  `flutter analyze` clean throughout. **No physical Android device
+  exists in this environment at any point in this work — every claim
+  above is a real build/signing/binary inspection or a widget test, never
+  a claimed device/Billing verification; see `DEVICE_TEST_CHECKLIST.md`.**
+
 - Date: 2026-08-09. PROMPT-003H Stage C item 10 (Offline Fiscal-Receipt QR
   Scanner Shell) done, all four checkpoints — see `DECISIONS.md` D-032.
   Built: `FiscalReceiptScan` model + `SerbiaReceiptAdapter`/
@@ -426,14 +454,16 @@ the user explicitly approves it).
   intentionally excludes social security contributions because that
   formula wasn't sourced to the same standard as the rest of the app —
   see `OPEN_QUESTIONS.md`.
-- **Release size budget breach (arm64-v8a, x86_64), accepted and
-  disclosed, not fixed:** item 10's `mobile_scanner` dependency pushed two
-  of three release ABIs over the 30MB-per-ABI budget set in D-012
-  (arm64-v8a 31.5MB, x86_64 33.8MB; armeabi-v7a 28.1MB stays under). See
-  `DECISIONS.md` D-032 checkpoint 4 for the full numbers and the accepted-
-  overage rationale. Not blocking, but real if this ever needs to be
-  revisited (e.g. before a Stage D monetization push that might add its
-  own size cost on top).
+- **Release size — real progress, one ABI still over budget.**
+  `mobile_scanner`'s dependency originally pushed two of three release
+  ABIs over the 30MB-per-ABI budget from D-012 (arm64-v8a 31.5MB, x86_64
+  33.8MB; armeabi-v7a 28.1MB stayed under — accepted per D-032). Removing
+  the dormant Google Mobile Ads/UMP SDK and its transitive WebView chain
+  (D-035) measurably shrank the app: **armeabi-v7a 26.1MB, arm64-v8a
+  29.4MB (now under budget), x86_64 31.8MB (still over, by ~6% instead of
+  ~13%)**. See `DECISIONS.md` D-035 checkpoint 2 for the full before/after
+  table. x86_64 remaining over budget is still real and still not
+  described as resolved.
 - **UMP/GDPR consent flow and the real app icon are both implemented
   (D-014, D-015) but NOT verified on a real device/emulator** — no
   device/emulator was available in this environment. Before trusting

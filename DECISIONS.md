@@ -1,6 +1,6 @@
 # DECISIONS.md
 
-## D-035 — NEXT_ACTION: remove dormant Google Mobile Ads/UMP completely; real signed release (checkpoint 1 done)
+## D-035 — NEXT_ACTION: remove dormant Google Mobile Ads/UMP completely; real signed release (done, checkpoints 1–2)
 
 - **Date:** 2026-08-09. Implements
   `_userprompts/NEXT_ACTION_Finish_Signed_App_Test_and_Play_Preparation.md`
@@ -74,11 +74,75 @@
     reintroduced, but not a config flag to flip back.
   - **Confidence:** High — every claim is a real build, a real `aapt`
     inspection, a real archive-listing grep, or a real test run.
-- **Next:** checkpoint 2 (verify the owner's real, locally-created
-  `android/key.properties` signing config is picked up correctly — never
-  reading/printing its contents — build and inspect the actual signed
-  production AAB + split APKs, confirm zero dev artifacts, record final
-  size evidence).
+- **Checkpoint 2 — real signed production release, verified for real:**
+  - **Signing config confirmed working, without ever reading the
+    secret:** `android/key.properties` was confirmed to *exist* via
+    `test -f` only (never opened/printed). `.gitignore` re-confirmed to
+    cover `android/key.properties`/`*.jks`/`*.keystore` (already true
+    before this checkpoint), and `git status --porcelain` was grepped for
+    any of those three patterns — zero matches, confirming no secret is
+    tracked, staged, or would appear in any commit/diff.
+  - **Real signing verified via certificate inspection, not assumed from
+    "the build succeeded":** built the production AAB
+    (`flutter build appbundle --release --flavor prod -t lib/main_prod.dart`)
+    and the production split APKs
+    (`flutter build apk --release --flavor prod -t lib/main_prod.dart
+    --split-per-abi`). Verified the AAB with `jarsigner -verify` and the
+    APK with `apksigner verify --print-certs` (the correct tool for
+    APK Signature Scheme v2, which this build actually uses — `jarsigner`
+    alone reports v2-only APKs as "unsigned" because it only understands
+    the older v1/JAR scheme, a real distinction confirmed by trying both
+    tools rather than trusting the first result). Both report a real
+    signer certificate — **not** the well-known Android debug
+    certificate. The certificate's distinguishing details (name,
+    location) are the owner's own and are deliberately not reproduced
+    here; the certificate's SHA-256 fingerprint (needed for Play Console
+    App Signing enrollment) was recorded separately for the owner, not
+    in this file.
+  - **Production artifact re-inspected clean:** `aapt dump badging`
+    confirmed `rs.salarycurrencypro.salary_currency_pro` (no `.dev`
+    suffix), label "Salary & Currency Pro" (no "(DEV)"), versionName
+    `1.0.0`. The same `unzip -l | grep -icE "ads|gms|admob|webview"`
+    check from checkpoint 1 was re-run against this final signed build —
+    still zero matches. The same binary-level check for the actual
+    "Entitlement Preview"/"Simulated for testing only" strings was
+    re-run against this build's `libapp.so` — still not found (the two
+    harmless internal `SharedPreferences`-key-name strings
+    `dev_simulated`/`dev_entitlement_override` are still present and
+    still inert, unchanged from checkpoint 4 of D-034).
+    `devDebug` was also rebuilt and re-confirmed as
+    `rs.salarycurrencypro.salary_currency_pro.dev` / "Salary & Currency
+    Pro (DEV)" / `1.0.0-dev`.
+  - **Real regression:** `flutter test -j 1` **525/525** (unchanged).
+    `flutter analyze` clean (same 3 pre-existing, unrelated info-level
+    issues). l10n parity: 584 keys × 9 locales, confirmed again.
+  - **Real, measurable size improvement from removing the ad SDK +
+    its transitive WebView chain — update the D-032 disclosure
+    honestly, don't just repeat the old numbers:**
+    | ABI | Before ad removal (D-032/D-034) | After (this checkpoint) | 30MB budget |
+    |---|---|---|---|
+    | armeabi-v7a | 28.1MB | **26.1MB** | under (was already under) |
+    | arm64-v8a | 31.5MB | **29.4MB** | **now under — was over** |
+    | x86_64 | 33.8MB | **31.8MB** | still over, by much less (was +12.7%, now +6%) |
+
+    AAB (whole-bundle, not per-device): **74.6MB** (was 75.3MB/79.0MB in
+    the debug-signed builds — real release signing/shrinking applies
+    identically regardless of key, so this is essentially the same
+    artifact, just genuinely signed now). **Two of three ABIs are now
+    within budget; x86_64 remains over and is still not described as
+    "under budget."** This is real, disclosed progress, not a claim that
+    the accepted-overage decision (D-032) is fully resolved — x86_64
+    still needs its own explicit acceptance or a future fix.
+  - **Reversibility:** none of this checkpoint changes app behavior —
+    it's real build/signing verification and documentation only.
+  - **Confidence:** High — every claim is a real build, a real
+    `apksigner`/`jarsigner`/`aapt` inspection, a real archive grep, a
+    real binary byte-search, or a real test run.
+- **What remains, explicitly not done here:** real Play Console upload
+  (owner's own action — see `PLAY_CONSOLE_CHECKLIST.md`, updated
+  alongside this entry), Firebase Test Lab, and every item in
+  `DEVICE_TEST_CHECKLIST.md`'s pending sections — none of that changed
+  this checkpoint.
 
 ## D-034 — PROMPT-003J Release Readiness: dev/prod build matrix + entitlement simulator (done, checkpoints 1–4)
 

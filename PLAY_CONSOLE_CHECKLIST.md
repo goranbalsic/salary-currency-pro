@@ -7,8 +7,8 @@ prompt, or a log. The owner performs every click/upload below; paste back
 screenshots or exact error text if something doesn't match what's
 described here.
 
-Real values, derived from the repo as of PROMPT-003J checkpoint 4
-(`DECISIONS.md` D-034) — not guessed:
+Real values, derived from the repo as of the NEXT_ACTION prompt's
+checkpoint 2 (`DECISIONS.md` D-035) — not guessed:
 
 | Field | Value |
 |---|---|
@@ -16,16 +16,23 @@ Real values, derived from the repo as of PROMPT-003J checkpoint 4
 | Dev application ID (never upload this one) | `rs.salarycurrencypro.salary_currency_pro.dev` |
 | Version name | `1.0.0` |
 | Version code | `1` (`pubspec.yaml`'s `version: 1.0.0+1`) |
-| Release AAB (once signed — see below) | `build/app/outputs/bundle/prodRelease/app-prod-release.aab` |
+| Release AAB | `build/app/outputs/bundle/prodRelease/app-prod-release.aab` (~74.6MB) |
 | Build command | `flutter build appbundle --release --flavor prod -t lib/main_prod.dart` |
+| Upload-key certificate SHA-256 (for Play Console App Signing enrollment) | `73fbcd79ff63af74d2aba647dff99d514267a3b058ffda5556fcdf2680079568` |
 
-## Before anything else: real signing
+## Signing — done and verified, not just built
 
-**The AAB this environment can build is signed with the debug keystore —
-Play will not accept it.** See `PROJECT_CONTEXT.md`'s "Release signing"
-section for the exact `keytool` command and the `android/key.properties`
-setup. Do not proceed to section B below until a real signed AAB exists;
-verify with `jarsigner -verify` first (also documented there).
+**Real signing is confirmed.** Once you created `android/key.properties`
+locally, `flutter build appbundle --release --flavor prod` and
+`flutter build apk --release --flavor prod --split-per-abi` were both
+verified — `jarsigner -verify` on the AAB and `apksigner verify
+--print-certs` on the APK (the correct tool for the APK Signature Scheme
+v2 this build actually uses) — to report your real certificate, not the
+Android debug certificate. Neither this environment nor this file ever
+read the keystore password or `key.properties` contents — only the
+build's own signature-verification output, which contains no secret.
+**The AAB above is ready to upload** — you don't need to rebuild it
+before section B.
 
 ## A. Confirm account readiness
 
@@ -62,9 +69,9 @@ verify with `jarsigner -verify` first (also documented there).
       *before* testing Billing. Do not substitute a real payment method
       for proper test-purchase setup.
 
-### Data Safety — known facts and one open item
+### Data Safety — known facts (no open items remaining)
 
-Source-derived, current as of this checkpoint (supersedes whatever
+Source-derived, current as of D-035 (supersedes whatever
 `store_listing/README.md` §2/§3 said before Stage D — that was written
 before the no-ads-at-launch decision and needs a fresh pass, not just
 reuse):
@@ -84,21 +91,16 @@ reuse):
   scanner and taps to scan; no frame or image is ever stored or
   transmitted (local on-device ML Kit detection only — see `DECISIONS.md`
   D-032).
-- **⚠️ Open item — decide before filling this in, don't guess:** the
-  Google Mobile Ads SDK (`google_mobile_ads`) is still a compiled
-  dependency of the app (Decision 1 disabled its *initialization*, not
-  the dependency itself — see D-033/D-034, "paused infrastructure, not
-  removed") — the AdMob app ID meta-data is also still present in
-  `AndroidManifest.xml`. Play's automated SDK scanning during app review
-  frequently detects an SDK's mere *presence* in the binary regardless of
-  whether your code ever calls it. **Before filling in Data Safety,
-  either:** (a) declare the Google Mobile Ads SDK's standard data
-  practices anyway to avoid a mismatch with Play's automated detection,
-  even though it's dormant, or (b) actually remove the
-  `google_mobile_ads` dependency from `pubspec.yaml` and the AdMob
-  manifest meta-data now, before this upload, so there's nothing for Play
-  to detect. This is a real product/compliance call — not something to
-  guess an answer for.
+- **No ad SDK, resolved by removal, not just disabled:** the Google
+  Mobile Ads/UMP SDK (`google_mobile_ads`) — previously flagged here as a
+  compiled-but-dormant dependency that Play's automated SDK scanning
+  might still detect — was removed completely (D-035): the dependency,
+  `AdsService`, `ConsentService`, `BannerAdSlot`, the AdMob manifest
+  meta-data, and the "Privacy & ad preferences" Settings row are all
+  gone. Confirmed by extracting the release APK and grepping its entire
+  file listing for `ads`/`gms`/`admob`/`webview` — zero matches. **Data
+  Safety can honestly declare no ad SDK and no advertising ID usage at
+  all** — there's nothing left to detect or declare.
 
 ## C. Create products only after the app upload is accepted
 
@@ -134,6 +136,6 @@ purchase/restore/trial/expiry verification").
 
 ---
 
-*Last updated: 2026-08-09, PROMPT-003J checkpoint 4. Pair with
-`DEVICE_TEST_CHECKLIST.md` for the device/Firebase Test Lab side of
-what's still pending.*
+*Last updated: 2026-08-09, NEXT_ACTION checkpoint 2 (`DECISIONS.md`
+D-035). Pair with `DEVICE_TEST_CHECKLIST.md` for the device/Firebase Test
+Lab side of what's still pending.*
