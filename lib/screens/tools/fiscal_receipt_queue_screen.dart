@@ -306,7 +306,7 @@ class _ScanExpenseHandoffSheetState extends State<_ScanExpenseHandoffSheet> {
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
-                  ?.copyWith(color: AppColors.alertRed, fontWeight: FontWeight.w700),
+                  ?.copyWith(color: Theme.of(context).colorScheme.error, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 4),
             Text(
@@ -325,7 +325,7 @@ class _ScanExpenseHandoffSheetState extends State<_ScanExpenseHandoffSheet> {
                     key: const Key('receipt_handoff_amount_field'),
                     controller: _amountCtrl,
                     autofocus: true,
-                    cursorColor: AppColors.alertRed,
+                    cursorColor: Theme.of(context).colorScheme.error,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: l10n.expenseAmount,
@@ -385,7 +385,8 @@ class _ScanExpenseHandoffSheetState extends State<_ScanExpenseHandoffSheet> {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: _saving ? null : _save,
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.alertRed),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.error),
               child: Text(l10n.commonSave),
             ),
           ],
