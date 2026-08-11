@@ -7,6 +7,17 @@ prompt should read first. It does not replace `PROJECT_CONTEXT.md`,
 `DECISIONS.md`, `DEVICE_TEST_CHECKLIST.md`, or `PLAY_CONSOLE_CHECKLIST.md`
 — it is a compact pointer into them for redesign purposes only.
 
+**Status: redesign complete as of 2026-08-11** — see `DECISIONS.md` D-036
+for the full per-checkpoint record and `_redesign_evidence/` for before/
+after screenshots and build/signing evidence. Every boundary this
+document set (below) was honored: no tax formula, data model, storage
+schema, entitlement rule, or pricing changed; offline-first, no-ads,
+no-WebView held throughout; 9-language l10n stayed in lockstep (584
+keys × 9 locales, unchanged — no strings were touched by this pass).
+This document's own content below is left intact as the historical
+record of what the redesign was scoped against, not rewritten after
+the fact.
+
 ## What is functionally complete and must be preserved
 
 - **9-country payroll engine**: Salary Calculator (`SalaryCalculator` +

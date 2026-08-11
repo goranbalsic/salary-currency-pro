@@ -7,18 +7,20 @@ prompt, or a log. The owner performs every click/upload below; paste back
 screenshots or exact error text if something doesn't match what's
 described here.
 
-Real values, derived from the repo as of the NEXT_ACTION prompt's
-checkpoint 2 (`DECISIONS.md` D-035) — not guessed:
+Real values, refreshed as of the UI/UX redesign pass's checkpoint 6
+(`DECISIONS.md` D-036, 2026-08-11) — not guessed. The redesign shipped no
+account/product/store-listing changes, only a rebuilt and re-verified
+artifact; every checklist item below this table is otherwise unchanged.
 
 | Field | Value |
 |---|---|
 | Production application ID | `rs.salarycurrencypro.salary_currency_pro` |
 | Dev application ID (never upload this one) | `rs.salarycurrencypro.salary_currency_pro.dev` |
-| Version name | `1.0.0` |
-| Version code | `1` (`pubspec.yaml`'s `version: 1.0.0+1`) |
-| Release AAB | `build/app/outputs/bundle/prodRelease/app-prod-release.aab` (~74.6MB) |
+| Version name | `1.0.1` |
+| Version code | `2` (`pubspec.yaml`'s `version: 1.0.1+2`) |
+| Release AAB | `build/app/outputs/bundle/prodRelease/app-prod-release.aab` (~71.5MB) |
 | Build command | `flutter build appbundle --release --flavor prod -t lib/main_prod.dart` |
-| Upload-key certificate SHA-256 (for Play Console App Signing enrollment) | `73fbcd79ff63af74d2aba647dff99d514267a3b058ffda5556fcdf2680079568` |
+| Upload-key certificate SHA-256 (for Play Console App Signing enrollment) | `73fbcd79ff63af74d2aba647dff99d514267a3b058ffda5556fcdf2680079568` (unchanged — same key used) |
 
 ## Signing — done and verified, not just built
 

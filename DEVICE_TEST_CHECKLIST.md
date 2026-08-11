@@ -13,6 +13,15 @@ checklist was written in.** Everything in the first section is real —
 either a passing automated test or a real `flutter build`/`aapt`
 inspection — never a guess dressed up as a result.
 
+**2026-08-11 update:** the UI/UX redesign pass (`DECISIONS.md` D-036)
+rebuilt and re-verified the signed production artifact (version bumped to
+`1.0.1+2`; AAB + split APKs re-signed with the same real owner
+certificate, re-checked via `apksigner`/`jarsigner`; 526/526 tests;
+`aapt2 dump badging` re-confirmed package ID/label/permissions unchanged).
+That refreshes the "Build/version evidence" entry below but does not
+change anything in either "Pending" section — still nothing here has
+touched real hardware, Firebase Test Lab, or Play Internal Testing.
+
 ## Verified here (tests, real builds, or static inspection)
 
 ### Free/Pro gate rules (source-audited against every gate + covered by a

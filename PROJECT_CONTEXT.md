@@ -2,6 +2,34 @@
 
 ## Last Updated (newest first)
 
+- Date: 2026-08-11. Full UI/UX redesign, interaction test, code review,
+  and release rebuild — `_userprompts/MEGAPROMPT_Full_Redesign_Full_Test_Ready_For_Play.md`,
+  recorded as **D-036**. Presentation/usability only: refined (not
+  replaced) the existing Material 3 palette with real spacing/radius/
+  typography tokens and 6 new shared widgets, redesigned every screen
+  group in 11 scoped commits, unified empty states app-wide, and added
+  a native splash screen. Fixed 2 real bugs found during the pass: a
+  dark-mode icon-color contrast regression (caught and fixed within the
+  same checkpoint) and a use-after-dispose crash in the scenario-rename
+  dialog (same bug class as an earlier fix, now regression-tested).
+  Diagnosed but deliberately did not unilaterally fix the Cross-Border
+  Comparison's "—" values for 5/9 countries (**QUESTION-011** in
+  `OPEN_QUESTIONS.md`) — a documented D-031 no-network-call design
+  constraint, not a bug; shipped a safer visible-guidance banner and
+  left the network-call question for the owner. Version bumped
+  1.0.0+1 → 1.0.1+2. 526/526 tests (525 + 1 new regression test),
+  `flutter analyze` clean, 584 l10n keys × 9 locales unchanged (no
+  strings touched). Production AAB (71.5MB) + split APKs rebuilt and
+  re-verified genuinely signed (same real certificate as D-035,
+  `apksigner`/`jarsigner`); arm64-v8a still under the 30MB budget
+  (29.7MB), x86_64 still over (32.1MB, honestly disclosed, not
+  described as under). Full before/after evidence under
+  `_redesign_evidence/`. See `DECISIONS.md` D-036 for the complete
+  per-checkpoint record. Owner next steps unchanged from before this
+  pass (real-device QA, Firebase Test Lab, Play upload, Billing
+  products, closed testing) — see `UI_REDESIGN_HANDOFF.md` and
+  `PLAY_CONSOLE_CHECKLIST.md`.
+
 - Date: 2026-08-09 (later same day, after item 10 below). Stage D
   (monetization) went from go-ahead to a real, signed release candidate
   in one session — three prompts, all recorded in `PROMPTS.md`/

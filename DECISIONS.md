@@ -1,5 +1,95 @@
 # DECISIONS.md
 
+## D-036 — MEGAPROMPT: Full UI/UX redesign, interaction test, code review, release rebuild (done, checkpoints 1–6)
+
+- **Date:** 2026-08-11. Implements
+  `_userprompts/MEGAPROMPT_Full_Redesign_Full_Test_Ready_For_Play.md`.
+  Presentation/usability redesign only — no tax formula, data model,
+  storage schema, entitlement rule, or product pricing/scope changed.
+- **Checkpoint 1 — baseline:** 29 "before" screenshots captured via the
+  dev build in Chrome (`claude-in-chrome`), covering onboarding-adjacent
+  navigation, Salary Calculator (free/Pro-active/expired states), Cross-
+  Border, Freelancer Self-Assessment, Paušal Tracker, Invoices, QR
+  scanner (camera-unavailable/manual-entry path — no camera in this
+  environment), Tools hub, Settings/Entitlement Preview, light+dark
+  theme. Saved under `_redesign_evidence/baseline/`.
+- **Checkpoint 2 — design system:** refines the existing M3 fintech
+  palette (`lib/theme/app_theme.dart`) rather than replacing it: adds
+  `AppSpacing`/`AppRadius`/`AppOpacity` token classes, wires the
+  already-bundled Noto Sans font into a real `TextTheme` (previously
+  declared in `pubspec.yaml` but never applied), fixes dark mode's
+  primary/secondary color duplication, and adds
+  `AppColors.positiveAction()`/`neutralAccent()` brightness-aware
+  helpers. New shared widgets: `AppListRow`, `AppChip`,
+  `AppSectionHeader`, `AppEmptyState`, `AppSkeleton`,
+  `showAppBottomSheet` (`lib/widgets/app_*.dart`).
+- **Checkpoint 3 — screen-by-screen redesign, 11 scoped commits:**
+  onboarding/dashboard, Salary Calculator, Expenses/Budget/Recurring,
+  Invoices, Cross-Border, Freelancer Tax, Paušal/VAT, QR scanner/queue,
+  Paywall/Settings, native splash screen (new `flutter_native_splash`
+  dependency, generated Android/iOS launch assets from the existing
+  branding source), and app-wide empty-state unification onto
+  `AppEmptyState`. Systematic sweep of `AppColors.moneyGreen`/`navy` —
+  fixed constants that don't adapt to dark mode — to the new brightness-
+  aware helpers across every screen touched. Caught and fixed one real
+  dark-mode contrast regression (money-related icons rendering navy-blue
+  instead of green) within the same checkpoint. Caught and fixed a
+  vertical-centering regression introduced by the empty-state
+  consolidation itself, verified against the Checkpoint 1 baseline.
+- **Checkpoint 4 — interactive click-through:** risk-focused rather than
+  exhaustive (stated scoping decision) — edge-case input testing
+  (empty/zero/negative/huge/non-numeric/comma-decimal) on Salary
+  Calculator/Convert/Loans via the shared `parseAmountInput()`
+  validator; all 5 Entitlement Preview states exercised against the
+  Salary Calculator country lock; the full QR-scan-to-expense manual
+  handoff pipeline verified end-to-end; browser back-navigation
+  confirmed correct. No confirmed bugs — one suspected color bug
+  investigated and correctly identified as an established, consistent
+  "red=expense/green=income" convention, not a defect.
+- **Checkpoint 5 — full codebase review:** two parallel investigator
+  passes covering logic/state/lifecycle/error-handling/security/
+  entitlement/dead-code/accessibility. One confirmed bug found and
+  fixed: a use-after-dispose in `MyScenariosScreen`'s rename dialog
+  (same bug class already fixed once for the scenario-save dialog),
+  with a new regression test that pumps frame-by-frame through the
+  dialog's exit animation. Diagnosed **QUESTION-011** (Cross-Border
+  showing "—" for 5/9 countries): not a bug — D-031's deliberate
+  cache-only, no-network-call rate lookup, whose own documented
+  first-use assumption doesn't hold in practice. Shipped the safe half
+  (a visible banner surfacing the already-correctly-localized "convert
+  it once" guidance, previously hover-only) and logged the
+  network-call-relaxation question for the owner rather than deciding
+  it unilaterally.
+- **Checkpoint 6 — final regression + release rebuild:** version bumped
+  1.0.0+1 → 1.0.1+2 (patch: redesign + 2 confirmed bug fixes, no
+  breaking changes, no new features). `flutter test -j 1`: 526/526
+  passing. `flutter analyze`: clean (same 3 pre-existing cosmetic
+  notices). l10n: 584 keys × 9 locales, unchanged — no strings touched
+  anywhere in this pass. Rebuilt and verified:
+  - `devDebug` APK: builds clean, DEV flavor/Entitlement Preview intact
+    (unchanged code path, `AppConfig.isDev` gate).
+  - `prodRelease` AAB (71.5MB) + split APKs — armeabi-v7a 26.4MB,
+    arm64-v8a 29.7MB (under the 30MB/ABI budget), x86_64 32.1MB
+    (remains over, consistent with the prior D-035 disclosure — not
+    described as under budget). Modest ~0.3MB/ABI increase from the
+    new splash assets and widget code.
+  - Signature re-verified via `apksigner`/`jarsigner`: real owner
+    certificate (`CN=Goran Balšić`, Serbia; SHA-256
+    `73fbcd79...80079568`), not a debug cert, identical fingerprint
+    across all 3 split APKs; AAB `jarsigner -verify` returns "jar
+    verified." (the self-signed-cert/no-timestamp warnings are normal
+    for Android app signing, not errors).
+  - Package/version confirmed via `aapt2 dump badging`:
+    `rs.salarycurrencypro.salary_currency_pro`, versionName `1.0.1`,
+    application label "Salary & Currency Pro" (no DEV suffix).
+    Permissions list has nothing unexpected (no ad/location SDKs).
+- **Full evidence** (before/after screenshots per checkpoint, build/
+  signing output) under `_redesign_evidence/`.
+- **Deferred to the owner per Checkpoint 7** (unchanged from
+  `UI_REDESIGN_HANDOFF.md`'s original list): real Android-device
+  testing, Firebase Test Lab, Play Internal Testing upload, Billing
+  purchase testing, closed-test recruitment.
+
 ## D-035 — NEXT_ACTION: remove dormant Google Mobile Ads/UMP completely; real signed release (done, checkpoints 1–2)
 
 - **Date:** 2026-08-09. Implements
