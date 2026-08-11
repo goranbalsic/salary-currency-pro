@@ -29,7 +29,8 @@ class AppListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final resolvedIconColor = iconColor ?? colorScheme.tertiary;
+    final resolvedIconColor =
+        iconColor ?? AppColors.positiveAction(Theme.of(context).brightness);
 
     return Material(
       color: colorScheme.surface,

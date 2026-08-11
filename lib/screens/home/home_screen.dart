@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
             for (final entry in _recent) ...[
               AppListRow(
                 icon: Icons.history,
-                iconColor: Theme.of(context).colorScheme.primary,
+                iconColor: AppColors.neutralAccent(Theme.of(context).brightness),
                 title: entry.title,
                 subtitle:
                     '${entry.summary} · ${DateFormat.MMMd().add_Hm().format(entry.timestamp)}',
@@ -187,7 +187,6 @@ class _LastSalaryCard extends StatelessWidget {
     final e = entry;
     return AppListRow(
       icon: Icons.account_balance_wallet_outlined,
-      iconColor: Theme.of(context).colorScheme.tertiary,
       title: l10n.homeLastSalaryTitle,
       subtitle: e == null
           ? l10n.homeLastSalaryEmpty
@@ -260,7 +259,7 @@ class _ExpenseOverviewCard extends StatelessWidget {
     final s = summaries.first;
     final fmt = NumberFormat.currency(symbol: '${s.currencyCode} ', decimalDigits: 0);
     final balanceColor = s.balance >= 0
-        ? Theme.of(context).colorScheme.tertiary
+        ? AppColors.positiveAction(Theme.of(context).brightness)
         : Theme.of(context).colorScheme.error;
 
     return Card(

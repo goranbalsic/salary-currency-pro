@@ -295,7 +295,7 @@ class _PrivacyPage extends StatelessWidget {
                 Icon(
                   Icons.lock_outline,
                   size: 64,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: AppColors.positiveAction(Theme.of(context).brightness),
                 ),
                 const SizedBox(height: 24),
                 Text(

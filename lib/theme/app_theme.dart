@@ -18,11 +18,20 @@ class AppColors {
   static const darkSurface = Color(0xFF122036);
 
   /// The app's one universal "do the positive/confirming thing" color —
-  /// Calculate/Save/Convert buttons, positive deltas — kept as a single
-  /// brand decision independent of which M3 role (primary/secondary/
-  /// tertiary) happens to be navy or gold in a given brightness.
+  /// Calculate/Save/Convert buttons, positive deltas, money-related row
+  /// icons — kept as a single brand decision independent of which M3 role
+  /// (primary/secondary/tertiary) happens to be navy or gold in a given
+  /// brightness. This is deliberately NOT colorScheme.tertiary: tertiary
+  /// is navy-toned in dark mode (a distinct M3 role), which would make
+  /// "positive/money" icons render blue instead of green in dark mode.
   static Color positiveAction(Brightness brightness) =>
       brightness == Brightness.dark ? moneyGreenLight : moneyGreen;
+
+  /// The app's neutral/structural accent (history, informational rows) —
+  /// distinct from [positiveAction] green so "this is money" and "this is
+  /// just a log entry" stay visually different in both themes.
+  static Color neutralAccent(Brightness brightness) =>
+      brightness == Brightness.dark ? navyLight : navy;
 }
 
 /// Spacing scale (logical pixels). Use instead of inlining raw numbers so
