@@ -145,7 +145,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   available: _products.containsKey(MonetizationConfig.proAnnualSubscriptionId),
                   buyLabel: l10n.paywallBuySubscription,
                   onBuy: () => _buy(l10n, MonetizationConfig.proAnnualSubscriptionId),
-                  color: AppColors.moneyGreen,
+                  color: AppColors.positiveAction(Theme.of(context).brightness),
                 ),
                 const SizedBox(height: 12),
                 _PlanCard(
@@ -162,7 +162,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   available: _products.containsKey(MonetizationConfig.proMonthlySubscriptionId),
                   buyLabel: l10n.paywallBuySubscription,
                   onBuy: () => _buy(l10n, MonetizationConfig.proMonthlySubscriptionId),
-                  color: AppColors.navy,
+                  color: AppColors.neutralAccent(Theme.of(context).brightness),
                 ),
                 const SizedBox(height: 24),
                 const Divider(),
@@ -285,8 +285,9 @@ class _StatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final (title, subtitle) = entitlementStatusCopy(l10n, entitlement.status);
     final active = entitlement.hasFullAccess;
+    final activeColor = AppColors.positiveAction(Theme.of(context).brightness);
     return Card(
-      color: (active ? AppColors.moneyGreen : Theme.of(context).colorScheme.outline)
+      color: (active ? activeColor : Theme.of(context).colorScheme.outline)
           .withValues(alpha: 0.1),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -294,7 +295,7 @@ class _StatusBanner extends StatelessWidget {
           children: [
             Icon(
               active ? Icons.check_circle : Icons.info_outline,
-              color: active ? AppColors.moneyGreen : Theme.of(context).colorScheme.outline,
+              color: active ? activeColor : Theme.of(context).colorScheme.outline,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -349,7 +350,9 @@ class _FeatureList extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.check, size: 18, color: AppColors.moneyGreen),
+                Icon(Icons.check,
+                    size: 18,
+                    color: AppColors.positiveAction(Theme.of(context).brightness)),
                 const SizedBox(width: 8),
                 Expanded(child: Text(f)),
               ],
