@@ -284,8 +284,8 @@ class _InvoiceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final overdue = invoice.isOverdueAsOf(DateTime.now());
     final color = invoice.isPaid
-        ? AppColors.moneyGreen
-        : (overdue ? AppColors.alertRed : AppColors.gold);
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : (overdue ? Theme.of(context).colorScheme.error : AppColors.gold);
     final statusLabel = invoice.isPaid
         ? l10n.invoiceStatusPaid
         : (overdue ? l10n.invoiceStatusOverdue : l10n.invoiceStatusUnpaid);

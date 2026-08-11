@@ -212,8 +212,8 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
 
     final overdue = invoice.isOverdueAsOf(DateTime.now());
     final statusColor = invoice.isPaid
-        ? AppColors.moneyGreen
-        : (overdue ? AppColors.alertRed : AppColors.gold);
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : (overdue ? Theme.of(context).colorScheme.error : AppColors.gold);
     final statusLabel = invoice.isPaid
         ? l10n.invoiceStatusPaid
         : (overdue ? l10n.invoiceStatusOverdue : l10n.invoiceStatusUnpaid);
@@ -369,7 +369,9 @@ class _QrEligibilityBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = eligible ? AppColors.moneyGreen : Theme.of(context).colorScheme.outline;
+    final color = eligible
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : Theme.of(context).colorScheme.outline;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
