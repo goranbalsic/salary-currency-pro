@@ -13,6 +13,8 @@ import '../../services/expense_service.dart';
 import '../../services/history_service.dart';
 import '../../services/quote_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_list_row.dart';
+import '../../widgets/app_section_header.dart';
 import '../expenses/expense_tracker_screen.dart';
 
 /// Which bottom-nav tab a tap on a history entry should open. Toolkit
@@ -111,12 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final localeCode = Localizations.localeOf(context).languageCode;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (_loaded && _quote != null) _QuoteCard(quote: _quote!, l10n: l10n, localeCode: localeCode),
-          if (_loaded && _quote != null) const SizedBox(height: 16),
+          if (_loaded && _quote != null) const SizedBox(height: AppSpacing.lg),
           if (_loaded) ...[
             _ExpenseOverviewCard(
               summaries: _monthSummaries,
@@ -125,44 +127,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 appPageRoute((_) => const ExpenseTrackerScreen()),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
           ],
           _CountryCard(country: _country, l10n: l10n),
           if (_loaded) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             _LastSalaryCard(
               entry: _lastSalary,
               l10n: l10n,
               onTap: () => widget.onNavigate(2),
             ),
           ],
-          const SizedBox(height: 20),
-          Text(l10n.homeQuickActions, style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: 8),
-          _ShortcutTile(
+          AppSectionHeader(l10n.homeQuickActions),
+          AppListRow(
             icon: Icons.currency_exchange,
-            label: l10n.navConvert,
+            title: l10n.navConvert,
             onTap: () => widget.onNavigate(1),
           ),
-          _ShortcutTile(
+          const SizedBox(height: AppSpacing.sm),
+          AppListRow(
             icon: Icons.account_balance_wallet_outlined,
-            label: l10n.navSalary,
+            title: l10n.navSalary,
             onTap: () => widget.onNavigate(2),
           ),
-          _ShortcutTile(
+          const SizedBox(height: AppSpacing.sm),
+          AppListRow(
             icon: Icons.build_outlined,
-            label: l10n.navTools,
+            title: l10n.navTools,
             onTap: () => widget.onNavigate(3),
           ),
           if (_recent.isNotEmpty) ...[
-            const SizedBox(height: 20),
-            Text(l10n.homeRecentlyUsed, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
-            for (final entry in _recent)
-              _RecentEntryTile(
-                entry: entry,
+            AppSectionHeader(l10n.homeRecentlyUsed),
+            for (final entry in _recent) ...[
+              AppListRow(
+                icon: Icons.history,
+                iconColor: Theme.of(context).colorScheme.primary,
+                title: entry.title,
+                subtitle:
+                    '${entry.summary} · ${DateFormat.MMMd().add_Hm().format(entry.timestamp)}',
                 onTap: () => widget.onNavigate(_tabIndexForTool(entry.toolId)),
               ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
           ],
         ],
       ),
@@ -179,59 +185,14 @@ class _LastSalaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final e = entry;
-    if (e == null) {
-      return Card(
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: AppColors.moneyGreen.withValues(alpha: 0.12),
-            child: const Icon(Icons.account_balance_wallet_outlined, color: AppColors.moneyGreen),
-          ),
-          title: Text(l10n.homeLastSalaryTitle, style: const TextStyle(fontWeight: FontWeight.w600)),
-          subtitle: Text(l10n.homeLastSalaryEmpty),
-          trailing: TextButton(
-            onPressed: onTap,
-            child: Text(l10n.homeLastSalaryCta),
-          ),
-          onTap: onTap,
-        ),
-      );
-    }
-    final timeFmt = DateFormat.MMMd().add_Hm();
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.moneyGreen.withValues(alpha: 0.12),
-          child: const Icon(Icons.account_balance_wallet_outlined, color: AppColors.moneyGreen),
-        ),
-        title: Text(l10n.homeLastSalaryTitle, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text('${e.summary} · ${timeFmt.format(e.timestamp)}'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      ),
-    );
-  }
-}
-
-class _RecentEntryTile extends StatelessWidget {
-  final HistoryEntry entry;
-  final VoidCallback onTap;
-  const _RecentEntryTile({required this.entry, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final timeFmt = DateFormat.MMMd().add_Hm();
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.navy.withValues(alpha: 0.12),
-          child: const Icon(Icons.history, color: AppColors.navy),
-        ),
-        title: Text(entry.title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text('${entry.summary} · ${timeFmt.format(entry.timestamp)}'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      ),
+    return AppListRow(
+      icon: Icons.account_balance_wallet_outlined,
+      iconColor: Theme.of(context).colorScheme.tertiary,
+      title: l10n.homeLastSalaryTitle,
+      subtitle: e == null
+          ? l10n.homeLastSalaryEmpty
+          : '${e.summary} · ${DateFormat.MMMd().add_Hm().format(e.timestamp)}',
+      onTap: onTap,
     );
   }
 }
@@ -287,30 +248,27 @@ class _ExpenseOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (summaries.isEmpty) {
-      return Card(
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: AppColors.gold.withValues(alpha: 0.15),
-            child: const Icon(Icons.savings_outlined, color: AppColors.gold),
-          ),
-          title: Text(l10n.homeExpenseTrackerTitle, style: const TextStyle(fontWeight: FontWeight.w600)),
-          subtitle: Text(l10n.homeExpenseTrackerCtaEmpty),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: onTap,
-        ),
+      return AppListRow(
+        icon: Icons.savings_outlined,
+        iconColor: Theme.of(context).colorScheme.secondary,
+        title: l10n.homeExpenseTrackerTitle,
+        subtitle: l10n.homeExpenseTrackerCtaEmpty,
+        onTap: onTap,
       );
     }
 
     final s = summaries.first;
     final fmt = NumberFormat.currency(symbol: '${s.currencyCode} ', decimalDigits: 0);
-    final balanceColor = s.balance >= 0 ? AppColors.moneyGreen : AppColors.alertRed;
+    final balanceColor = s.balance >= 0
+        ? Theme.of(context).colorScheme.tertiary
+        : Theme.of(context).colorScheme.error;
 
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -318,11 +276,11 @@ class _ExpenseOverviewCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.homeExpenseTrackerTitle,
-                      style: const TextStyle(fontWeight: FontWeight.w600)),
+                      style: Theme.of(context).textTheme.titleMedium),
                   Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.outline),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.sm),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -358,17 +316,17 @@ class _CountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Row(
           children: [
             Text(country.flagEmoji, style: const TextStyle(fontSize: 28)),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(localizedCountryName(l10n, country.id),
-                      style: const TextStyle(fontWeight: FontWeight.w700)),
+                      style: Theme.of(context).textTheme.titleMedium),
                   Text(
                     country.currencyCode,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -378,29 +336,6 @@ class _CountryCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _ShortcutTile extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _ShortcutTile({required this.icon, required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.moneyGreen.withValues(alpha: 0.12),
-          child: Icon(icon, color: AppColors.moneyGreen),
-        ),
-        title: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
       ),
     );
   }

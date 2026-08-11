@@ -292,7 +292,11 @@ class _PrivacyPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.lock_outline, size: 64, color: AppColors.moneyGreen),
+                Icon(
+                  Icons.lock_outline,
+                  size: 64,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
                 const SizedBox(height: 24),
                 Text(
                   l10n.onboardingPrivacyTitle,
@@ -417,7 +421,7 @@ class _GoalCard extends StatelessWidget {
     return Card(
       color: selected ? colorScheme.primaryContainer.withValues(alpha: 0.5) : null,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         side: BorderSide(color: selected ? colorScheme.primary : Colors.transparent, width: 2),
       ),
       child: ListTile(
