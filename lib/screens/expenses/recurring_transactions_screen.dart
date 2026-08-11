@@ -57,9 +57,10 @@ class _RecurringTransactionsScreenState extends State<RecurringTransactionsScree
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: AppColors.moneyGreen,
-                child: Icon(Icons.add, color: Colors.white),
+              leading: CircleAvatar(
+                backgroundColor: AppColors.positiveAction(
+                    Theme.of(sheetContext).brightness),
+                child: const Icon(Icons.add, color: Colors.white),
               ),
               title: Text(l10n.expenseAddIncome),
               onTap: () => Navigator.of(sheetContext).pop(TransactionType.income),
@@ -98,7 +99,8 @@ class _RecurringTransactionsScreenState extends State<RecurringTransactionsScree
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.commonDelete, style: const TextStyle(color: AppColors.alertRed)),
+            child: Text(l10n.commonDelete,
+                style: TextStyle(color: Theme.of(dialogContext).colorScheme.error)),
           ),
         ],
       ),
@@ -126,7 +128,10 @@ class _RecurringTransactionsScreenState extends State<RecurringTransactionsScree
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.repeat, size: 48, color: AppColors.navy),
+                        Icon(Icons.repeat,
+                            size: 48,
+                            color: AppColors.neutralAccent(
+                                Theme.of(context).brightness)),
                         const SizedBox(height: 12),
                         Text(
                           l10n.recurringEmptyState,
@@ -142,8 +147,9 @@ class _RecurringTransactionsScreenState extends State<RecurringTransactionsScree
                   itemCount: _templates.length,
                   itemBuilder: (context, index) {
                     final t = _templates[index];
-                    final color =
-                        t.type == TransactionType.income ? AppColors.moneyGreen : AppColors.alertRed;
+                    final color = t.type == TransactionType.income
+                        ? AppColors.positiveAction(Theme.of(context).brightness)
+                        : Theme.of(context).colorScheme.error;
                     return Card(
                       margin: const EdgeInsets.only(bottom: 10),
                       child: ListTile(
@@ -298,7 +304,9 @@ class _RecurringEditSheetState extends State<_RecurringEditSheet> {
     final categoryIds = widget.type == TransactionType.income
         ? ExpenseCategories.incomeIds
         : ExpenseCategories.expenseIds;
-    final color = widget.type == TransactionType.income ? AppColors.moneyGreen : AppColors.alertRed;
+    final color = widget.type == TransactionType.income
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : Theme.of(context).colorScheme.error;
     final dateFmt = DateFormat.yMMMd(Localizations.localeOf(context).languageCode);
 
     return Padding(

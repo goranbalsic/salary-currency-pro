@@ -85,7 +85,10 @@ class _SubscriptionRadarScreenState extends State<SubscriptionRadarScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.radar, size: 48, color: AppColors.navy),
+                        Icon(Icons.radar,
+                            size: 48,
+                            color: AppColors.neutralAccent(
+                                Theme.of(context).brightness)),
                         const SizedBox(height: 12),
                         Text(
                           l10n.radarEmptyState,

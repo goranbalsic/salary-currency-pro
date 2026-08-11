@@ -215,17 +215,18 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: AppColors.moneyGreen,
-                child: Icon(Icons.add, color: Colors.white),
+              leading: CircleAvatar(
+                backgroundColor: AppColors.positiveAction(
+                    Theme.of(sheetContext).brightness),
+                child: const Icon(Icons.add, color: Colors.white),
               ),
               title: Text(l10n.expenseAddIncome),
               onTap: () => Navigator.of(sheetContext).pop(TransactionType.income),
             ),
             ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: AppColors.alertRed,
-                child: Icon(Icons.remove, color: Colors.white),
+              leading: CircleAvatar(
+                backgroundColor: Theme.of(sheetContext).colorScheme.error,
+                child: const Icon(Icons.remove, color: Colors.white),
               ),
               title: Text(l10n.expenseAddExpense),
               onTap: () => Navigator.of(sheetContext).pop(TransactionType.expense),
@@ -256,7 +257,8 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.commonDelete, style: const TextStyle(color: AppColors.alertRed)),
+            child: Text(l10n.commonDelete,
+                style: TextStyle(color: Theme.of(dialogContext).colorScheme.error)),
           ),
         ],
       ),
@@ -510,7 +512,10 @@ class _RecurringReviewBanner extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.repeat, size: 18, color: AppColors.navy),
+                Icon(Icons.repeat,
+                    size: 18,
+                    color: AppColors.neutralAccent(
+                        Theme.of(context).colorScheme.brightness)),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -560,8 +565,9 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fmt = NumberFormat.currency(symbol: '${summary.currencyCode} ', decimalDigits: 2);
-    final balanceColor =
-        summary.balance >= 0 ? AppColors.moneyGreen : AppColors.alertRed;
+    final incomeColor = AppColors.positiveAction(Theme.of(context).brightness);
+    final expenseColor = Theme.of(context).colorScheme.error;
+    final balanceColor = summary.balance >= 0 ? incomeColor : expenseColor;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -571,8 +577,8 @@ class _SummaryCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _summaryColumn(context, l10n.expenseIncome, fmt.format(summary.totalIncome), AppColors.moneyGreen),
-                _summaryColumn(context, l10n.expenseExpenses, fmt.format(summary.totalExpense), AppColors.alertRed),
+                _summaryColumn(context, l10n.expenseIncome, fmt.format(summary.totalIncome), incomeColor),
+                _summaryColumn(context, l10n.expenseExpenses, fmt.format(summary.totalExpense), expenseColor),
               ],
             ),
             const Divider(height: 24),
@@ -779,7 +785,9 @@ class _InsightsCardState extends State<_InsightsCard> {
           children: [
             Row(
               children: [
-                const Icon(Icons.insights_outlined, size: 18, color: AppColors.navy),
+                Icon(Icons.insights_outlined,
+                    size: 18,
+                    color: AppColors.neutralAccent(Theme.of(context).brightness)),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(l10n.expenseInsightsTitle,
@@ -804,13 +812,13 @@ class _InsightsCardState extends State<_InsightsCard> {
                     Icon(
                       _expanded ? Icons.expand_less : Icons.expand_more,
                       size: 18,
-                      color: AppColors.moneyGreen,
+                      color: AppColors.positiveAction(Theme.of(context).brightness),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       l10n.expenseInsightHowCalculated,
-                      style: const TextStyle(
-                        color: AppColors.moneyGreen,
+                      style: TextStyle(
+                        color: AppColors.positiveAction(Theme.of(context).brightness),
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -868,7 +876,9 @@ class _TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isIncome = entry.type == TransactionType.income;
-    final color = isIncome ? AppColors.moneyGreen : AppColors.alertRed;
+    final color = isIncome
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : Theme.of(context).colorScheme.error;
     final fmt = NumberFormat.currency(symbol: '', decimalDigits: 2);
     final dateFmt = DateFormat.MMMd(Localizations.localeOf(context).languageCode);
 
@@ -1021,8 +1031,9 @@ class _AddTransactionSheetState extends State<_AddTransactionSheet> {
     final categoryIds = widget.type == TransactionType.income
         ? ExpenseCategories.incomeIds
         : ExpenseCategories.expenseIds;
-    final color =
-        widget.type == TransactionType.income ? AppColors.moneyGreen : AppColors.alertRed;
+    final color = widget.type == TransactionType.income
+        ? AppColors.positiveAction(Theme.of(context).brightness)
+        : Theme.of(context).colorScheme.error;
     final dateFmt = DateFormat.yMMMd(Localizations.localeOf(context).languageCode);
 
     return Padding(

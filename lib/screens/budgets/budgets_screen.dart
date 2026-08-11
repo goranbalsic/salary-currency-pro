@@ -128,7 +128,8 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.commonDelete, style: const TextStyle(color: AppColors.alertRed)),
+            child: Text(l10n.commonDelete,
+                style: TextStyle(color: Theme.of(dialogContext).colorScheme.error)),
           ),
         ],
       ),
@@ -151,7 +152,8 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.commonDelete, style: const TextStyle(color: AppColors.alertRed)),
+            child: Text(l10n.commonDelete,
+                style: TextStyle(color: Theme.of(dialogContext).colorScheme.error)),
           ),
         ],
       ),
@@ -280,9 +282,12 @@ class _CategoryBudgetTile extends StatelessWidget {
 
     final fraction = b.monthlyLimit > 0 ? (spent / b.monthlyLimit).clamp(0.0, 1.0) : 0.0;
     final isOver = spent > b.monthlyLimit;
+    final colorScheme = Theme.of(context).colorScheme;
     final color = isOver
-        ? AppColors.alertRed
-        : (fraction >= 0.8 ? AppColors.gold : AppColors.moneyGreen);
+        ? colorScheme.error
+        : (fraction >= 0.8
+            ? colorScheme.secondary
+            : AppColors.positiveAction(colorScheme.brightness));
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -328,7 +333,7 @@ class _CategoryBudgetTile extends StatelessWidget {
                   : '${fmt.format(spent)} / ${fmt.format(b.monthlyLimit)} ${b.currencyCode}',
               style: TextStyle(
                 fontSize: 12,
-                color: isOver ? AppColors.alertRed : null,
+                color: isOver ? colorScheme.error : null,
                 fontWeight: isOver ? FontWeight.w600 : null,
               ),
             ),
@@ -355,7 +360,10 @@ class _GoalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fmt = NumberFormat.currency(symbol: '', decimalDigits: 0);
-    final color = goal.isComplete ? AppColors.moneyGreen : AppColors.navy;
+    final brightness = Theme.of(context).colorScheme.brightness;
+    final color = goal.isComplete
+        ? AppColors.positiveAction(brightness)
+        : AppColors.neutralAccent(brightness);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
@@ -402,7 +410,7 @@ class _GoalCard extends StatelessWidget {
                 ),
                 if (goal.isComplete)
                   Text(l10n.budgetsGoalComplete,
-                      style: const TextStyle(color: AppColors.moneyGreen, fontWeight: FontWeight.w700)),
+                      style: TextStyle(color: color, fontWeight: FontWeight.w700)),
               ],
             ),
             const SizedBox(height: 8),
