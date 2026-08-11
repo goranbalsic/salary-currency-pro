@@ -104,8 +104,8 @@ class _PausalTrackerScreenState extends State<PausalTrackerScreen> {
         PausalThresholdState.exceeded => l10n.pausalTrackerStateExceeded,
       };
 
-  Color _stateColor(PausalThresholdState state) => switch (state) {
-        PausalThresholdState.ok => AppColors.moneyGreen,
+  Color _stateColor(BuildContext context, PausalThresholdState state) => switch (state) {
+        PausalThresholdState.ok => AppColors.positiveAction(Theme.of(context).brightness),
         PausalThresholdState.exceeded => AppColors.alertRed,
         _ => AppColors.gold,
       };
@@ -159,7 +159,7 @@ class _PausalTrackerScreenState extends State<PausalTrackerScreen> {
 
   Widget _limitCard(AppLocalizations l10n, String title, PausalLimitStatus status) {
     final fmt = NumberFormat.currency(symbol: '', decimalDigits: 0);
-    final color = _stateColor(status.state);
+    final color = _stateColor(context, status.state);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
