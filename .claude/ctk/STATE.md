@@ -1,2 +1,4 @@
 # ctk bounded session state
 2026-08-09T14:03:29Z D-035 done: removed AdMob/UMP SDK, real signed prod AAB+APKs verified (arm64 now under 30MB budget), 525/525 tests, pushed. Next: owner runs Play Console checklist.
+2026-08-09T16:31:58Z Pre-redesign closeout done: UI_REDESIGN_HANDOFF.md written, docs reconciled, workspace 10.01GB->9MB, pushed 0742e9b. Next: await owner's separate UI/UX redesign prompt; Play/device testing paused.
+2026-08-11T00:00:00Z MEGAPROMPT redesign done, checkpoints 1-7 (D-036): design system + 11-group screen redesign + interactive test + full code review (1 bug fixed, QUESTION-011 diagnosed) + release rebuild v1.0.1+2, 526/526 tests, signed prod AAB+APKs re-verified, pushed 289ad6b. No device/Firebase/Play/Billing testing performed (owner-only, unchanged). Next: owner runs DEVICE_TEST_CHECKLIST.md + PLAY_CONSOLE_CHECKLIST.md pending sections; decide QUESTION-011 (b)/(c).
