@@ -88,7 +88,7 @@ class _ConfigErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, color: AppColors.alertRed, size: 40),
+            Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error, size: 40),
             const SizedBox(height: 12),
             Text(
               provider.configError ??
@@ -314,7 +314,9 @@ class _CountryPickerRow extends StatelessWidget {
                 title: Text(localizedCountryName(l10n, country.id)),
                 subtitle: Text(country.currencyCode),
                 trailing: country.id == provider.selectedCountry.id
-                    ? const Icon(Icons.check, color: AppColors.moneyGreen)
+                    ? Icon(Icons.check,
+                        color: AppColors.positiveAction(
+                            Theme.of(sheetContext).brightness))
                     : (!hasFullAccess && country.id != homeCountryId)
                         ? Icon(Icons.lock_outline,
                             color: Theme.of(sheetContext).colorScheme.outline)
@@ -471,29 +473,31 @@ class _BreakdownCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (result.neto <= 0)
-          Card(
-            color: AppColors.alertRed.withValues(alpha: 0.08),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  const Icon(Icons.warning_amber_rounded,
-                      color: AppColors.alertRed),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      hasFlooredBase
-                          ? l10n.salaryNegativeNetoFloored(
-                              money(result.highestContributionBase))
-                          : l10n.salaryNegativeNetoGeneric,
-                      style: const TextStyle(color: AppColors.alertRed),
+          Builder(builder: (context) {
+            final errorColor = Theme.of(context).colorScheme.error;
+            return Card(
+              color: errorColor.withValues(alpha: 0.08),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning_amber_rounded, color: errorColor),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Text(
+                        hasFlooredBase
+                            ? l10n.salaryNegativeNetoFloored(
+                                money(result.highestContributionBase))
+                            : l10n.salaryNegativeNetoGeneric,
+                        style: TextStyle(color: errorColor),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        if (result.neto <= 0) const SizedBox(height: 16),
+            );
+          }),
+        if (result.neto <= 0) const SizedBox(height: AppSpacing.lg),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -506,11 +510,11 @@ class _BreakdownCard extends StatelessWidget {
                 ),
                 Text(
                   money(result.neto),
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: result.neto > 0
-                            ? AppColors.moneyGreen
-                            : AppColors.alertRed,
+                            ? AppColors.positiveAction(
+                                Theme.of(context).brightness)
+                            : Theme.of(context).colorScheme.error,
                       ),
                 ),
                 if (result.bruto1 > 0) ...[
@@ -582,6 +586,11 @@ class _BreakdownChart extends StatelessWidget {
     final taxPct = tax / total * 100;
     final contribPct = contributions / total * 100;
 
+    final colorScheme = Theme.of(context).colorScheme;
+    final netoColor = AppColors.positiveAction(colorScheme.brightness);
+    final taxColor = colorScheme.error;
+    final contribColor = colorScheme.secondary;
+
     return SizedBox(
       height: 140,
       child: Row(
@@ -596,19 +605,19 @@ class _BreakdownChart extends StatelessWidget {
                 sections: [
                   PieChartSectionData(
                     value: netoPct <= 0 ? 0.001 : netoPct,
-                    color: AppColors.moneyGreen,
+                    color: netoColor,
                     title: '',
                     radius: 26,
                   ),
                   PieChartSectionData(
                     value: taxPct <= 0 ? 0.001 : taxPct,
-                    color: AppColors.alertRed,
+                    color: taxColor,
                     title: '',
                     radius: 26,
                   ),
                   PieChartSectionData(
                     value: contribPct <= 0 ? 0.001 : contribPct,
-                    color: AppColors.gold,
+                    color: contribColor,
                     title: '',
                     radius: 26,
                   ),
@@ -616,17 +625,17 @@ class _BreakdownChart extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppSpacing.lg),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _legendRow(AppColors.moneyGreen, l10n.chartTakeHome, netoPct),
-                const SizedBox(height: 8),
-                _legendRow(AppColors.alertRed, l10n.chartTax, taxPct),
-                const SizedBox(height: 8),
-                _legendRow(AppColors.gold, l10n.chartContributions, contribPct),
+                _legendRow(netoColor, l10n.chartTakeHome, netoPct),
+                const SizedBox(height: AppSpacing.sm),
+                _legendRow(taxColor, l10n.chartTax, taxPct),
+                const SizedBox(height: AppSpacing.sm),
+                _legendRow(contribColor, l10n.chartContributions, contribPct),
               ],
             ),
           ),
