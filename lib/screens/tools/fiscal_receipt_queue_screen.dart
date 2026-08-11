@@ -178,16 +178,19 @@ class _QueueTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFmt = DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
         .add_Hm();
+    final brightness = Theme.of(context).brightness;
+    final statusColor = _isLinked
+        ? AppColors.positiveAction(brightness)
+        : AppColors.neutralAccent(brightness);
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         onTap: _isLinked ? null : onTap,
         leading: CircleAvatar(
-          backgroundColor:
-              (_isLinked ? AppColors.moneyGreen : AppColors.navy).withValues(alpha: 0.12),
+          backgroundColor: statusColor.withValues(alpha: 0.12),
           child: Icon(
             _isLinked ? Icons.check_circle_outline : Icons.qr_code_2,
-            color: _isLinked ? AppColors.moneyGreen : AppColors.navy,
+            color: statusColor,
           ),
         ),
         title: Text(_statusLabel, style: const TextStyle(fontWeight: FontWeight.w600)),

@@ -105,10 +105,11 @@ class _FiscalReceiptScannerScreenState extends State<FiscalReceiptScannerScreen>
 
   Future<bool> _showResultSheet(FiscalReceiptScan scan) async {
     final l10n = AppLocalizations.of(context)!;
+    final brightness = Theme.of(context).brightness;
     final (IconData icon, Color color, String title, String body) = switch (scan.outcome) {
       ReceiptScanOutcome.recognized => (
           Icons.check_circle_outline,
-          AppColors.moneyGreen,
+          AppColors.positiveAction(brightness),
           l10n.receiptScannerResultRecognizedTitle,
           l10n.receiptScannerResultRecognizedBody(l10n.receiptScanStatusAwaitingFetch),
         ),
@@ -120,7 +121,7 @@ class _FiscalReceiptScannerScreenState extends State<FiscalReceiptScannerScreen>
         ),
       ReceiptScanOutcome.unknownFormat => (
           Icons.help_outline,
-          AppColors.navy,
+          AppColors.neutralAccent(brightness),
           l10n.receiptScannerResultUnknownTitle,
           l10n.receiptScannerResultUnknownBody,
         ),
