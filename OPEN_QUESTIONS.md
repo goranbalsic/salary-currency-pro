@@ -5,47 +5,74 @@ progress and don't get re-asked every session.
 
 ## High Importance
 
-### QUESTION-011: Cross-Border Comparison shows "—" for 5 of 9 countries (Serbia, Bosnia-FBiH, North Macedonia, Albania, Romania)
+### QUESTION-011: Cross-Border Comparison's "cache-only" rate design (D-031) leaves RSD/BAM/MKD/ALL/RON unavailable on a real first use, contrary to its own documented assumption
 
-Date added: 2026-08-11
+Date added: 2026-08-11. Updated: 2026-08-11 (Checkpoint 5 — root cause found, reclassified from "suspected bug" to "product decision needed").
 
-Why it matters: discovered live while capturing Checkpoint 3 (redesign)
-screenshots for the Cross-Border Comparison screen — no code change was
-made to this screen beyond one text color (the megaprompt's redesign
-pass does not touch calculation logic). With a 3000 EUR gross salary
-entered: Croatia (EUR), Montenegro (EUR), Slovenia (EUR), and Bulgaria
-(BGN) return real computed Gross/Employee deductions/Net/Employer cost
-figures. Serbia (RSD), Bosnia and Herzegovina — Federation of BiH
-(BAM), North Macedonia (MKD), Albania (ALL), and Romania (RON) render
-"—" in every numeric column instead. Serbia is the app's default/home
-country and its own Salary Calculator works fine standalone, so this is
-specific to the Cross-Border comparator, not a broken tax config.
-Root cause is unknown but the working/broken split lines up exactly
-with currency: every broken country's currency is neither EUR nor BGN,
-suggesting a currency-conversion/exchange-rate lookup failure (missing
-cached rate, wrong currency-code lookup key, or similar) rather than a
-payroll-calculation bug — but this is an observation, not a verified
-diagnosis.
+Why it matters: discovered live while capturing Checkpoint 3 screenshots
+— with a 3000 EUR gross salary entered, Croatia/Montenegro/Slovenia/
+Bulgaria compute correctly but Serbia/Bosnia-FBiH/North Macedonia/
+Albania/Romania render "—" in every column. Checkpoint 5 traced the
+root cause: this is **not a bug** in the redesign or in the payroll
+calculators — `CrossBorderComparisonService.compare()`
+(`lib/services/cross_border_comparison_service.dart` line 49) calls
+`ExchangeRateService.getCachedRateOnly()`, a cache-only lookup that
+**never makes a network call**, by deliberate design recorded in
+DECISIONS.md D-031 ("Rate lookup" section): the original PROMPT-003G
+spec imposed a "no network call" constraint on this specific feature.
+Croatia/Montenegro/Slovenia/Bulgaria work because their currency is EUR
+(Bulgaria adopted the euro 1 Jan 2026, see `country.dart` line 119-124
+and D-020) — same-currency pairs return an identity rate with no cache
+needed. Every other currency requires a previously-cached EUR-based
+rate, and nothing in the app pre-fetches or bundles one.
 
-Current assumptions: none — not investigated further, since the
-redesign pass explicitly defers logic/data suspicions to Checkpoint 5's
-full codebase review rather than fixing them ad hoc mid-redesign.
+D-031 explicitly assumed "RSD ... reliably available from a first app
+run's own default converter screen" (the Currency Converter's default
+pair is EUR→RSD). Checkpoint 5 verified this assumption does **not**
+hold in practice: `currency_converter_screen.dart`'s `initState` does
+not auto-fetch — merely opening the Convert tab caches nothing; the
+user must actually enter an amount and tap "Convert" for that specific
+pair once, live, before Cross-Border can use it. A real user who opens
+Cross-Border Comparison first (a very plausible path — it's a top-level
+Tools-hub entry) sees "—" for their own home country, including Serbia,
+the app's default/home locale, even though the underlying Salary
+Calculator works fine for the identical country (it never needs
+conversion — it computes directly in the country's own currency).
 
-Possible answers: (a) Checkpoint 5's full review traces the currency-
-conversion path in `lib/screens/tools/cross_border_screen.dart` (and
-whatever exchange-rate service/cache it calls) for RSD/BAM/MKD/ALL/RON
-specifically, compares it against why EUR/BGN succeed, and fixes the
-root cause with a regression test (recommended); (b) if Checkpoint 5
-finds this is a pre-existing, already-known limitation with a reason
-not documented here, downgrade this entry accordingly.
+Current assumptions: none changed — Cross-Border's cache-only
+constraint is left exactly as D-031 specified it. No code was changed
+under this question; the color-only redesign changes to this screen
+(Checkpoint 3 group 5) are unrelated and unaffected.
 
-Does it block current work? No — the redesign pass continues per its
-own rule (restyle only, log data/logic suspicions). It should block
-Checkpoint 6/7's "ready for Play" sign-off if still unresolved, since it
-affects the free-tier's most-used calculator's own country.
+Possible answers: (a) leave the cache-only constraint exactly as
+designed (D-031 was a deliberate response to an explicit "no network
+call" requirement) but improve the empty-state message so a user who
+hits "—" is told to open Currency Converter and convert their currency
+once first, rather than a bare "No cached exchange rate for RSD."
+tooltip; (b) relax the constraint specifically for Cross-Border and
+switch `getCachedRateOnly()` to `getRate()` (live-fetch-with-cache-
+fallback, same method the Currency Converter itself already uses) —
+most reliable first-use experience, but reverses an explicit, recorded
+product/scope decision from the original feature spec, which is not
+mine to make unilaterally; (c) add a best-effort, non-blocking
+background pre-fetch of the user's detected home currency's rate at
+app startup (e.g. from `RootShell` or `HomeScreen`) so the cache is
+warm before Cross-Border is ever opened, without touching Cross-
+Border's own "never calls network" contract at all — a middle path
+that keeps D-031's service-level guarantee intact while fixing the
+practical first-use gap.
 
-Recommended default if no answer is received: treat as a confirmed bug
-and fix in Checkpoint 5, not skip it.
+Does it block current work? No — Checkpoint 3's redesign changes to
+this screen are already complete and unaffected (color-only). This
+should block Checkpoint 6/7's "ready for Play" sign-off only if the
+owner wants it fixed before shipping; otherwise it can ship with option
+(a) as a fast, safe, non-network-touching improvement and a documented
+known-limitation.
+
+Recommended default if no answer is received: implement (a) now (safe,
+matches the existing constraint, no product-decision risk) and leave
+(b)/(c) for the owner to decide, since both change when/whether this
+feature makes a network call.
 
 Status: Open.
 

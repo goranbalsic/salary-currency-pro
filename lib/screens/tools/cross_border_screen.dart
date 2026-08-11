@@ -227,6 +227,11 @@ class _CrossBorderScreenState extends State<CrossBorderScreen> {
           else ...[
             Text(l10n.crossBorderScopeNote, style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 12),
+            if (_result!.errors.any((e) =>
+                e.reason == CrossBorderUnavailableReason.noCachedRate)) ...[
+              _RateWarningBanner(errors: _result!.errors, l10n: l10n),
+              const SizedBox(height: 12),
+            ],
             _ComparisonTable(result: _result!, l10n: l10n, onRowTap: _openDetail),
             const SizedBox(height: 8),
             Text(
@@ -244,6 +249,52 @@ class _CrossBorderScreenState extends State<CrossBorderScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Surfaces the same "convert it once in the Currency Converter" guidance
+/// the table already attaches to each unavailable row's Tooltip/Semantics
+/// label — but visibly, since a bare "—" with a hover-only tooltip is
+/// invisible to a sighted user on a touch device who never long-presses it.
+/// Reuses the existing per-row l10n string rather than adding a new one, to
+/// keep 9-locale parity without a translation pass.
+class _RateWarningBanner extends StatelessWidget {
+  final List<CrossBorderRegimeError> errors;
+  final AppLocalizations l10n;
+
+  const _RateWarningBanner({required this.errors, required this.l10n});
+
+  @override
+  Widget build(BuildContext context) {
+    final currencies = errors
+        .where((e) => e.reason == CrossBorderUnavailableReason.noCachedRate)
+        .map((e) => e.currencyCode)
+        .toSet();
+    return Card(
+      color: AppColors.gold.withValues(alpha: 0.1),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(Icons.info_outline, size: 18, color: AppColors.gold),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final currency in currencies)
+                    Text(
+                      l10n.crossBorderUnavailableNoRate(currency),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
