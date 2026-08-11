@@ -12,6 +12,7 @@ import '../../services/expense_service.dart';
 import '../../services/fiscal_receipt_scan_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 
 /// PROMPT-003H checkpoint 3: reviews the local scan queue built by
 /// [FiscalReceiptScanService] and lets the user turn an
@@ -107,26 +108,9 @@ class _FiscalReceiptQueueScreenState extends State<FiscalReceiptQueueScreen> {
       body: !_loaded
           ? const Center(child: CircularProgressIndicator())
           : _scans.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.inbox_outlined,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.receiptQueueEmptyState,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
+              ? AppEmptyState(
+                  icon: Icons.inbox_outlined,
+                  message: l10n.receiptQueueEmptyState,
                 )
               : ListView.builder(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),

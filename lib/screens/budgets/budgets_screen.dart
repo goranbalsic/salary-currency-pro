@@ -13,6 +13,7 @@ import '../../services/expense_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 
 /// Monthly category spending limits (compared against real
 /// [ExpenseService] data, never enforced — informational only) and savings
@@ -179,26 +180,9 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                 const SizedBox(height: 8),
                 if (_goals.isEmpty)
                   Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.savings_outlined,
-                              size: 32,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              l10n.budgetsNoGoalsYet,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                      ),
+                    child: AppEmptyState(
+                      icon: Icons.savings_outlined,
+                      message: l10n.budgetsNoGoalsYet,
                     ),
                   )
                 else

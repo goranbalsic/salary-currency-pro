@@ -17,6 +17,7 @@ import '../../services/notification_service.dart';
 import '../../services/recurring_transaction_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 
 /// A monthly income/expense ledger the user enters directly — the app's one
 /// screen backed by ongoing, multi-entry data rather than a single
@@ -358,23 +359,9 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
                 if (_entries.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 32),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.account_balance_wallet_outlined,
-                            size: 40,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            l10n.expenseEmptyState,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
+                    child: AppEmptyState(
+                      icon: Icons.account_balance_wallet_outlined,
+                      message: l10n.expenseEmptyState,
                     ),
                   )
                 else ...[

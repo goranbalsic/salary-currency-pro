@@ -10,6 +10,7 @@ import '../../providers/currency_converter_provider.dart';
 import '../../services/history_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 import '../../widgets/rate_status_banner.dart';
 import '../../widgets/save_scenario_action.dart';
 
@@ -244,23 +245,9 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            Icon(
-              Icons.currency_exchange,
-              size: 40,
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context)!.convertEmptyState,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
+      child: AppEmptyState(
+        icon: Icons.currency_exchange,
+        message: AppLocalizations.of(context)!.convertEmptyState,
       ),
     );
   }

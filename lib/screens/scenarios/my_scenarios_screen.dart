@@ -7,6 +7,7 @@ import '../../models/scenario.dart';
 import '../../navigation/app_page_route.dart';
 import '../../services/scenario_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_empty_state.dart';
 import '../currency/currency_converter_screen.dart';
 import '../salary/salary_calculator_screen.dart';
 import '../tools/budget_screen.dart';
@@ -168,26 +169,9 @@ class _MyScenariosScreenState extends State<MyScenariosScreen> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _scenarios.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.bookmark_outline,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.myScenariosEmptyState,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
+              ? AppEmptyState(
+                  icon: Icons.bookmark_outline,
+                  message: l10n.myScenariosEmptyState,
                 )
               : ListView.builder(
                   padding: const EdgeInsets.all(16),

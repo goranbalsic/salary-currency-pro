@@ -9,6 +9,7 @@ import '../../models/recurring_transaction.dart';
 import '../../services/recurring_transaction_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 
 /// Manage recurring-transaction templates — PROMPT-003 Stage B item 5
 /// ("define-once, auto-post, review-before-post option"). Any due
@@ -122,25 +123,9 @@ class _RecurringTransactionsScreenState extends State<RecurringTransactionsScree
       body: !_loaded
           ? const Center(child: CircularProgressIndicator())
           : _templates.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.repeat,
-                            size: 48,
-                            color: AppColors.neutralAccent(
-                                Theme.of(context).brightness)),
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.recurringEmptyState,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
+              ? AppEmptyState(
+                  icon: Icons.repeat,
+                  message: l10n.recurringEmptyState,
                 )
               : ListView.builder(
                   padding: const EdgeInsets.all(16),

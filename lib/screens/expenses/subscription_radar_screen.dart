@@ -7,6 +7,7 @@ import '../../models/expense_entry.dart';
 import '../../models/recurring_transaction.dart';
 import '../../services/recurring_transaction_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_empty_state.dart';
 
 /// Read-only overview of active recurring EXPENSES — PROMPT-003 Stage B
 /// item 6 ("subscription/fixed-cost radar screen"). Deliberately excludes
@@ -79,25 +80,9 @@ class _SubscriptionRadarScreenState extends State<SubscriptionRadarScreen> {
       body: !_loaded
           ? const Center(child: CircularProgressIndicator())
           : _fixedCosts.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.radar,
-                            size: 48,
-                            color: AppColors.neutralAccent(
-                                Theme.of(context).brightness)),
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.radarEmptyState,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
+              ? AppEmptyState(
+                  icon: Icons.radar,
+                  message: l10n.radarEmptyState,
                 )
               : ListView(
                   padding: const EdgeInsets.all(16),

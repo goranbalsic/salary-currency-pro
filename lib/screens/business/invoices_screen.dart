@@ -10,6 +10,7 @@ import '../../services/invoice_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/validators.dart';
+import '../../widgets/app_empty_state.dart';
 import 'invoice_detail_screen.dart';
 
 /// A minimal, offline invoice ledger for freelancers/small businesses:
@@ -152,23 +153,9 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
                 if (_invoices.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 32),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.receipt_long_outlined,
-                            size: 40,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            l10n.invoicesEmptyState,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
+                    child: AppEmptyState(
+                      icon: Icons.receipt_long_outlined,
+                      message: l10n.invoicesEmptyState,
                     ),
                   )
                 else ...[
