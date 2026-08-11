@@ -593,10 +593,11 @@ class _RsComparatorSection extends StatelessWidget {
                           m2.netIncome >= m1.netIncome ? l10n.samoMixedModel : l10n.samoFixedModel,
                           money((m2.netIncome - m1.netIncome).abs()),
                         ),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontWeight: FontWeight.w700, color: AppColors.moneyGreen),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.positiveAction(
+                                  Theme.of(context).brightness),
+                            ),
                       ),
                     ),
                   ],
