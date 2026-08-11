@@ -5,7 +5,49 @@ progress and don't get re-asked every session.
 
 ## High Importance
 
-_None currently — nothing open is blocking the current Phase 10 work._
+### QUESTION-011: Cross-Border Comparison shows "—" for 5 of 9 countries (Serbia, Bosnia-FBiH, North Macedonia, Albania, Romania)
+
+Date added: 2026-08-11
+
+Why it matters: discovered live while capturing Checkpoint 3 (redesign)
+screenshots for the Cross-Border Comparison screen — no code change was
+made to this screen beyond one text color (the megaprompt's redesign
+pass does not touch calculation logic). With a 3000 EUR gross salary
+entered: Croatia (EUR), Montenegro (EUR), Slovenia (EUR), and Bulgaria
+(BGN) return real computed Gross/Employee deductions/Net/Employer cost
+figures. Serbia (RSD), Bosnia and Herzegovina — Federation of BiH
+(BAM), North Macedonia (MKD), Albania (ALL), and Romania (RON) render
+"—" in every numeric column instead. Serbia is the app's default/home
+country and its own Salary Calculator works fine standalone, so this is
+specific to the Cross-Border comparator, not a broken tax config.
+Root cause is unknown but the working/broken split lines up exactly
+with currency: every broken country's currency is neither EUR nor BGN,
+suggesting a currency-conversion/exchange-rate lookup failure (missing
+cached rate, wrong currency-code lookup key, or similar) rather than a
+payroll-calculation bug — but this is an observation, not a verified
+diagnosis.
+
+Current assumptions: none — not investigated further, since the
+redesign pass explicitly defers logic/data suspicions to Checkpoint 5's
+full codebase review rather than fixing them ad hoc mid-redesign.
+
+Possible answers: (a) Checkpoint 5's full review traces the currency-
+conversion path in `lib/screens/tools/cross_border_screen.dart` (and
+whatever exchange-rate service/cache it calls) for RSD/BAM/MKD/ALL/RON
+specifically, compares it against why EUR/BGN succeed, and fixes the
+root cause with a regression test (recommended); (b) if Checkpoint 5
+finds this is a pre-existing, already-known limitation with a reason
+not documented here, downgrade this entry accordingly.
+
+Does it block current work? No — the redesign pass continues per its
+own rule (restyle only, log data/logic suspicions). It should block
+Checkpoint 6/7's "ready for Play" sign-off if still unresolved, since it
+affects the free-tier's most-used calculator's own country.
+
+Recommended default if no answer is received: treat as a confirmed bug
+and fix in Checkpoint 5, not skip it.
+
+Status: Open.
 
 ## Medium Importance
 

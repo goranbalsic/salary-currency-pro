@@ -402,7 +402,10 @@ class _RegimeDetailSheet extends StatelessWidget {
                   ? l10n.crossBorderSameCurrencyLabel
                   : '${l10n.crossBorderColumnComparisonSuffix(l10n.salaryNeto, 'EUR')}: '
                       '${fmt.format(regime.netInComparisonCurrency)} EUR',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.moneyGreen, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.positiveAction(Theme.of(context).brightness),
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
           ],
         ),
