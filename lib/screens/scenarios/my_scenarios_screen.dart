@@ -73,6 +73,56 @@ class MyScenariosScreen extends StatefulWidget {
   State<MyScenariosScreen> createState() => _MyScenariosScreenState();
 }
 
+/// The rename dialog's content, split into its own `State` (rather than a
+/// `TextEditingController` owned by the caller and disposed the instant
+/// `showDialog` resolves) so the controller stays valid for as long as the
+/// `TextField` is actually in the tree, including during the dialog's own
+/// close/exit animation — same class of bug already fixed once in this app
+/// for the scenario-save dialog (see `save_scenario_action.dart`).
+class _RenameScenarioDialog extends StatefulWidget {
+  final AppLocalizations l10n;
+  final String currentName;
+
+  const _RenameScenarioDialog({required this.l10n, required this.currentName});
+
+  @override
+  State<_RenameScenarioDialog> createState() => _RenameScenarioDialogState();
+}
+
+class _RenameScenarioDialogState extends State<_RenameScenarioDialog> {
+  late final _nameCtrl = TextEditingController(text: widget.currentName);
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.l10n.scenarioRenameDialogTitle),
+      content: TextField(
+        controller: _nameCtrl,
+        autofocus: true,
+        decoration: InputDecoration(labelText: widget.l10n.scenarioNameLabel),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(widget.l10n.commonCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(
+            _nameCtrl.text.trim().isEmpty ? widget.currentName : _nameCtrl.text.trim(),
+          ),
+          child: Text(widget.l10n.commonSave),
+        ),
+      ],
+    );
+  }
+}
+
 class _MyScenariosScreenState extends State<MyScenariosScreen> {
   final _service = ScenarioService();
   List<Scenario> _scenarios = const [];
@@ -107,31 +157,11 @@ class _MyScenariosScreenState extends State<MyScenariosScreen> {
   }
 
   Future<void> _rename(Scenario scenario, AppLocalizations l10n) async {
-    final nameCtrl = TextEditingController(text: scenario.name);
     final newName = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.scenarioRenameDialogTitle),
-        content: TextField(
-          controller: nameCtrl,
-          autofocus: true,
-          decoration: InputDecoration(labelText: l10n.scenarioNameLabel),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.commonCancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(
-              nameCtrl.text.trim().isEmpty ? scenario.name : nameCtrl.text.trim(),
-            ),
-            child: Text(l10n.commonSave),
-          ),
-        ],
-      ),
+      builder: (dialogContext) =>
+          _RenameScenarioDialog(l10n: l10n, currentName: scenario.name),
     );
-    nameCtrl.dispose();
     if (newName == null) return;
     await _service.rename(scenario.id, newName);
   }
