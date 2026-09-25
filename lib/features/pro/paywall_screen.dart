@@ -59,7 +59,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     // The controller notifies listeners elsewhere in the tree, which must
     // not happen while this route is being built or torn down.
     scheduleMicrotask(() {
-      _pro.acknowledgeFlow();
+      _pro.resetFlow();
       if (_pro.products.isEmpty) unawaited(_pro.loadProducts());
     });
   }
@@ -67,7 +67,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   void dispose() {
     final pro = _pro;
-    scheduleMicrotask(pro.acknowledgeFlow);
+    scheduleMicrotask(pro.resetFlow);
     super.dispose();
   }
 

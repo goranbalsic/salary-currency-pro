@@ -25,6 +25,9 @@ class AmountInputFormatter extends TextInputFormatter {
 
   static const _minus = '−';
 
+  /// Cleared field with the caret at the start (a -1 offset would drop it).
+  static const _empty = TextEditingValue(selection: TextSelection.collapsed(offset: 0));
+
   String get _group => formats.group;
   String get _decimal => formats.decimal;
 
@@ -58,7 +61,7 @@ class AmountInputFormatter extends TextInputFormatter {
 
   TextEditingValue _format(TextEditingValue oldValue, TextEditingValue newValue) {
     final newText = newValue.text;
-    if (newText.isEmpty) return const TextEditingValue();
+    if (newText.isEmpty) return _empty;
 
     var cursor = newValue.selection.isValid ? newValue.selection.baseOffset : newText.length;
     cursor = cursor.clamp(0, newText.length);
@@ -121,7 +124,7 @@ class AmountInputFormatter extends TextInputFormatter {
       intPart = '0';
       significantBeforeCursor++;
     }
-    if (intPart.isEmpty && !hasDecimal) return const TextEditingValue();
+    if (intPart.isEmpty && !hasDecimal) return _empty;
 
     // Leading-zero stripping removed characters before the cursor.
     final removedZeros = intDigits.length - intPart.length;

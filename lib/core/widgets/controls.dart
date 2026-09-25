@@ -447,12 +447,21 @@ class PillChip extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 40),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (leading != null) ...[leading!, const SizedBox(width: 6)],
-                  Text(label, style: t.labelMedium!.copyWith(color: selected ? c.paper : c.ink)),
+                  // Long translations wrap inside the pill instead of overflowing.
+                  Flexible(
+                    child: Text(
+                      label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: t.labelMedium!.copyWith(color: selected ? c.paper : c.ink),
+                    ),
+                  ),
                 ],
               ),
             ),

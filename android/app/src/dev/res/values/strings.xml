@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Overrides src/main/res/values/strings.xml's app_name for the dev
-         flavor only — Android's flavor-specific resource merging prefers
-         this file over main's for dev builds, unchanged for prod. Paired
-         with the badged dev launcher icon (see
-         branding/generate_dev_icon.py) so a dev build is unmistakable on
-         the home screen both by icon and by name. -->
-    <string name="app_name">Salary &amp; Currency Pro (DEV)</string>
+    <!-- The dev build installs beside the Play build; the label tells them apart. -->
+    <string name="app_name">Bilans DEV</string>
 </resources>

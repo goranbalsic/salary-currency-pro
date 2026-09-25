@@ -87,7 +87,10 @@ class _FxScreenState extends State<FxScreen> {
           child: PageBody(
             padding: const EdgeInsets.fromLTRB(Gap.page, 16, Gap.page, 40),
             children: [
-              ScreenHeader(title: l.fxTitle, trailing: _StatusPill(rates: rates)),
+              ScreenHeader(
+                title: l.fxTitle,
+                trailing: _StatusPill(rates: rates),
+              ),
               const SizedBox(height: 18),
               Segmented<int>(
                 values: const [0, 1],
@@ -156,7 +159,7 @@ class _FxScreenState extends State<FxScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -176,38 +179,45 @@ class _FxScreenState extends State<FxScreen> {
                 ],
               ),
             ),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(height: 1, color: c.line),
-                Positioned(
-                  right: 16,
-                  top: -22,
-                  child: Tooltip(
-                    message: l.fxSwap,
-                    child: Material(
-                      color: c.paper,
-                      shape: CircleBorder(side: BorderSide(color: c.ink)),
-                      child: InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: () {
-                          setState(() {
-                            final tmp = _from;
-                            _from = _to;
-                            _to = tmp;
-                            if (conv != null) _amount = double.parse(conv.result.toStringAsFixed(2));
-                          });
-                          _persist();
-                        },
-                        child: const SizedBox(width: 44, height: 44, child: Icon(Icons.swap_vert, size: 22)),
+            // The swap button sits on the divider. The row is as tall as the
+            // button so the whole button receives taps (a child painted
+            // outside its parent's box is not hit-testable).
+            SizedBox(
+              height: 44,
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  Positioned.fill(
+                    child: Center(child: Container(height: 1, color: c.line)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Tooltip(
+                      message: l.fxSwap,
+                      child: Material(
+                        color: c.paper,
+                        shape: CircleBorder(side: BorderSide(color: c.ink)),
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () {
+                            setState(() {
+                              final tmp = _from;
+                              _from = _to;
+                              _to = tmp;
+                              if (conv != null) _amount = double.parse(conv.result.toStringAsFixed(2));
+                            });
+                            _persist();
+                          },
+                          child: const SizedBox(width: 44, height: 44, child: Icon(Icons.swap_vert, size: 22)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 2, 16, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -218,10 +228,7 @@ class _FxScreenState extends State<FxScreen> {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        conv == null ? '—' : f.number(conv.result, decimals: 2),
-                        style: t.displayMedium!.copyWith(fontSize: 34, color: c.green),
-                      ),
+                      child: Text(conv == null ? '—' : f.number(conv.result, decimals: 2), style: t.displayMedium!.copyWith(fontSize: 34, color: c.green)),
                     ),
                   ),
                 ],
@@ -229,7 +236,9 @@ class _FxScreenState extends State<FxScreen> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-              decoration: BoxDecoration(border: Border(top: BorderSide(color: c.line))),
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(color: c.line)),
+              ),
               child: Text(
                 rate == null
                     ? l.fxUnsupported
@@ -283,8 +292,8 @@ class _StatusPill extends StatelessWidget {
     final text = loading
         ? l.fxLoading
         : fetched == null
-            ? ''
-            : (offline ? l.fxOffline(f.shortDate(fetched)) : l.fxUpdated(f.shortDate(fetched)));
+        ? ''
+        : (offline ? l.fxOffline(f.shortDate(fetched)) : l.fxUpdated(f.shortDate(fetched)));
     if (text.isEmpty) return const SizedBox.shrink();
     return Semantics(
       button: true,
@@ -301,7 +310,11 @@ class _StatusPill extends StatelessWidget {
               if (loading)
                 SizedBox(width: 10, height: 10, child: CircularProgressIndicator(strokeWidth: 1.6, color: c.ink2))
               else
-                Container(width: 7, height: 7, decoration: BoxDecoration(shape: BoxShape.circle, color: offline ? c.warning : c.positive)),
+                Container(
+                  width: 7,
+                  height: 7,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: offline ? c.warning : c.positive),
+                ),
               const SizedBox(width: 6),
               Text(text, style: t.bodySmall!.copyWith(color: c.ink2)),
             ],
@@ -364,7 +377,9 @@ class _CurrencyButton extends StatelessWidget {
                 children: [
                   CodeTile(code, filled: !accent, accent: accent, width: 42),
                   const SizedBox(width: 10),
-                  Flexible(child: Text(l.currencyName(code) ?? code, style: t.titleMedium, overflow: TextOverflow.ellipsis)),
+                  Flexible(
+                    child: Text(l.currencyName(code) ?? code, style: t.titleMedium, overflow: TextOverflow.ellipsis),
+                  ),
                   const SizedBox(width: 2),
                   Icon(Icons.expand_more, size: 18, color: c.ink2),
                 ],
@@ -427,10 +442,7 @@ class _HistorySectionState extends State<_HistorySection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SectionTitle(
-          l.fxHistoryTitle(widget.from, widget.to, _days),
-          trailing: unlocked ? null : const ProBadge(),
-        ),
+        SectionTitle(l.fxHistoryTitle(widget.from, widget.to, _days), trailing: unlocked ? null : const ProBadge()),
         Wrap(
           spacing: 8,
           children: [
@@ -455,7 +467,11 @@ class _HistorySectionState extends State<_HistorySection> {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(color: c.sunken, borderRadius: BorderRadius.circular(Radii.md)),
-              child: Text(l.fxHistoryPro, textAlign: TextAlign.center, style: t.bodyMedium!.copyWith(color: c.ink2)),
+              child: Text(
+                l.fxHistoryPro,
+                textAlign: TextAlign.center,
+                style: t.bodyMedium!.copyWith(color: c.ink2),
+              ),
             ),
           )
         else
@@ -467,7 +483,10 @@ class _HistorySectionState extends State<_HistorySection> {
               }
               final points = snap.data ?? const [];
               if (snap.hasError || points.length < 2) {
-                return SizedBox(height: 60, child: Center(child: Text(l.fxHistoryError, style: t.bodySmall)));
+                return SizedBox(
+                  height: 60,
+                  child: Center(child: Text(l.fxHistoryError, style: t.bodySmall)),
+                );
               }
               var min = points.first.value;
               var max = points.first.value;
@@ -483,14 +502,20 @@ class _HistorySectionState extends State<_HistorySection> {
                     points: [for (var i = 0; i < points.length; i++) LinePoint(i.toDouble(), points[i].value, f.date(points[i].date))],
                     color: c.chart1,
                     formatY: (v) => f.rate(v, decimals: dec),
-                    semanticLabel: '${l.fxHistoryTitle(widget.from, widget.to, _days)}: ${l.fxHistoryMinMax(f.rate(min, decimals: dec), f.rate(max, decimals: dec))}',
+                    semanticLabel:
+                        '${l.fxHistoryTitle(widget.from, widget.to, _days)}: ${l.fxHistoryMinMax(f.rate(min, decimals: dec), f.rate(max, decimals: dec))}',
                   ),
                   const SizedBox(height: 6),
-                  Row(
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    spacing: 12,
+                    runSpacing: 2,
                     children: [
                       Text('${f.shortDate(points.first.date)} · ${f.rate(points.first.value, decimals: dec)}', style: t.bodySmall),
-                      const Spacer(),
-                      Text(l.fxHistoryMinMax(f.rate(min, decimals: dec), f.rate(max, decimals: dec)), style: t.bodySmall),
+                      Text(
+                        l.fxHistoryMinMax(f.rate(min, decimals: dec), f.rate(max, decimals: dec)),
+                        style: t.bodySmall,
+                      ),
                     ],
                   ),
                 ],
@@ -516,23 +541,30 @@ class _QuickList extends StatelessWidget {
     final euroHome = home == 'EUR';
     final codes = euroHome
         ? const ['USD', 'GBP', 'CHF', 'RSD', 'BAM', 'RON', 'HUF', 'MKD']
-        : [for (final code in const ['EUR', 'USD', 'CHF', 'GBP', 'BAM', 'MKD', 'RON', 'RSD', 'HUF']) if (code != home) code];
+        : [
+            for (final code in const ['EUR', 'USD', 'CHF', 'GBP', 'BAM', 'MKD', 'RON', 'RSD', 'HUF'])
+              if (code != home) code,
+          ];
     final rows = <Widget>[];
     for (final code in codes) {
       final r = euroHome ? book.rate('EUR', code) : book.rate(code, home);
       if (r == null) continue;
-      rows.add(Container(
-        constraints: const BoxConstraints(minHeight: 56),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
-        child: Row(
-          children: [
-            CodeTile(code, width: 40),
-            const SizedBox(width: 12),
-            Expanded(child: Text(l.currencyName(code) ?? code, style: t.bodyMedium)),
-            Text(f.rate(r.rate, decimals: r.rate < 0.1 ? 6 : 4), style: t.titleLarge!.copyWith(fontSize: 17)),
-          ],
+      rows.add(
+        Container(
+          constraints: const BoxConstraints(minHeight: 56),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.line)),
+          ),
+          child: Row(
+            children: [
+              CodeTile(code, width: 40),
+              const SizedBox(width: 12),
+              Expanded(child: Text(l.currencyName(code) ?? code, style: t.bodyMedium)),
+              Text(f.rate(r.rate, decimals: r.rate < 0.1 ? 6 : 4), style: t.titleLarge!.copyWith(fontSize: 17)),
+            ],
+          ),
         ),
-      ));
+      );
     }
     if (rows.isEmpty) return const SizedBox.shrink();
     return Column(
@@ -540,7 +572,9 @@ class _QuickList extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 8),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.ink))),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.ink)),
+          ),
           child: Overline(euroHome ? l.fxListEcb : '${l.fxPerUnit} · $home'),
         ),
         ...rows,
@@ -575,16 +609,21 @@ class _RateList extends StatelessWidget {
       });
     final cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular, fontSize: 13.5);
     Widget row(String code, List<String> v, {bool header = false}) => Container(
-          constraints: const BoxConstraints(minHeight: 48),
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: header ? c.ink : c.line))),
-          child: Row(
-            children: [
-              SizedBox(width: 52, child: header ? Text(code, style: t.labelSmall) : CodeTile(code, width: 42)),
-              for (final s in v) Expanded(child: Text(s, textAlign: TextAlign.right, style: header ? t.labelSmall : cell)),
-            ],
-          ),
-        );
+      constraints: const BoxConstraints(minHeight: 48),
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: header ? c.ink : c.line)),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 52, child: header ? Text(code, style: t.labelSmall) : CodeTile(code, width: 42)),
+          for (final s in v)
+            Expanded(
+              child: Text(s, textAlign: TextAlign.right, style: header ? t.labelSmall : cell),
+            ),
+        ],
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

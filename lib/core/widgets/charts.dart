@@ -144,10 +144,11 @@ class _StackedColumnsState extends State<StackedColumns> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        Wrap(
+          spacing: Gap.lg,
+          runSpacing: 4,
           children: [
             _LegendKey(color: widget.bottomColor, label: widget.bottomLabel),
-            const SizedBox(width: Gap.lg),
             _LegendKey(color: widget.topColor, label: widget.topLabel),
           ],
         ),
@@ -213,12 +214,13 @@ class _StackedColumnsState extends State<StackedColumns> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     decoration: BoxDecoration(color: c.surface, borderRadius: BorderRadius.circular(Radii.md), border: Border.all(color: c.line)),
-                    child: Row(
+                    child: Wrap(
+                      spacing: Gap.md,
+                      runSpacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(sel.label, style: t.labelMedium),
-                        const Spacer(),
                         _LegendKey(color: widget.bottomColor, label: widget.format(sel.bottom)),
-                        const SizedBox(width: Gap.md),
                         _LegendKey(color: widget.topColor, label: widget.format(sel.top)),
                       ],
                     ),

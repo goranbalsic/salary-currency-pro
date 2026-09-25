@@ -221,6 +221,16 @@ class ProController extends ChangeNotifier {
     }
   }
 
+  /// Starts a fresh paywall session. A purchase that never reported back
+  /// (Play closed without an update) must not leave the button spinning;
+  /// a pending payment stays visible until Play resolves it.
+  void resetFlow() {
+    if (_flow == PurchaseFlow.pending || _flow == PurchaseFlow.idle) return;
+    _flow = PurchaseFlow.idle;
+    _lastError = null;
+    notifyListeners();
+  }
+
   /// Dev flavor only: toggles a simulated Pro entitlement.
   Future<void> setDevSimulated(bool value) async {
     if (!AppConfig.isDev) return;

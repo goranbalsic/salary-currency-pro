@@ -61,11 +61,8 @@ class LedgerRow extends StatelessWidget {
     );
     Widget row = Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
+      child: _LabelValue(
+        label: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text.rich(
@@ -84,10 +81,7 @@ class LedgerRow extends StatelessWidget {
                 ],
               ],
             ),
-          ),
-          const SizedBox(width: Gap.md),
-          Text(value, style: base.copyWith(color: valueColor), textAlign: TextAlign.right),
-        ],
+        value: Text(value, style: base.copyWith(color: valueColor), textAlign: TextAlign.right),
       ),
     );
     if (onTap != null) {
@@ -121,18 +115,14 @@ class LedgerTotal extends StatelessWidget {
         Container(height: 1.2, color: c.ink),
         Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Expanded(child: Text(label, style: t.bodyMedium!.copyWith(fontWeight: FontWeight.w600))),
-              const SizedBox(width: Gap.md),
-              Text(
-                value,
-                style: t.titleLarge!.copyWith(fontSize: 18, color: valueColor),
-                textAlign: TextAlign.right,
-              ),
-            ],
+          child: _LabelValue(
+            baseline: true,
+            label: Text(label, style: t.bodyMedium!.copyWith(fontWeight: FontWeight.w600)),
+            value: Text(
+              value,
+              style: t.titleLarge!.copyWith(fontSize: 18, color: valueColor),
+              textAlign: TextAlign.right,
+            ),
           ),
         ),
       ],
@@ -190,6 +180,37 @@ class Panel extends StatelessWidget {
         border: Border.all(color: borderColor ?? c.line),
       ),
       child: child,
+    );
+  }
+}
+
+/// Label on the left, value on the right. The value keeps its natural
+/// width up to 62% of the row and wraps beyond that, so a long value or a
+/// large text size can never push the row past the screen edge.
+class _LabelValue extends StatelessWidget {
+  const _LabelValue({required this.label, required this.value, this.baseline = false});
+
+  final Widget label;
+  final Widget value;
+
+  /// Align label and value on their text baseline (totals).
+  final bool baseline;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        crossAxisAlignment: baseline ? CrossAxisAlignment.baseline : CrossAxisAlignment.start,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Expanded(child: label),
+          const SizedBox(width: Gap.md),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.62),
+            child: value,
+          ),
+        ],
+      ),
     );
   }
 }

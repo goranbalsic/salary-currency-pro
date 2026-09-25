@@ -13,6 +13,8 @@ mixin CalcState<T extends StatefulWidget> on State<T> {
   ToolId get toolId;
   String get storeKey;
   Timer? _recordTimer;
+  HistoryStore? _history;
+  Map<String, Object?>? _pending;
 
   /// Inputs to start from: the ones passed in (restoring a saved
   /// calculation), else the last-used ones, else null.
@@ -26,15 +28,27 @@ mixin CalcState<T extends StatefulWidget> on State<T> {
   void persistInputs(Map<String, Object?> inputs, {required bool complete}) {
     unawaited(context.read<AppServices>().store.writeJson(storeKey, inputs));
     _recordTimer?.cancel();
+    _pending = null;
     if (!complete) return;
-    _recordTimer = Timer(const Duration(milliseconds: 1500), () {
-      if (mounted) unawaited(context.read<HistoryStore>().recordRecent(toolId, inputs));
-    });
+    _history = context.read<HistoryStore>();
+    _pending = inputs;
+    _recordTimer = Timer(const Duration(milliseconds: 1500), _flushRecent);
+  }
+
+  void _flushRecent() {
+    final inputs = _pending;
+    _pending = null;
+    if (inputs != null) unawaited(_history?.recordRecent(toolId, inputs));
   }
 
   @override
   void dispose() {
-    _recordTimer?.cancel();
+    // Leaving right after typing still counts as a finished calculation.
+    // Recorded after this frame: listeners may not rebuild mid-teardown.
+    if (_recordTimer?.isActive ?? false) {
+      _recordTimer!.cancel();
+      scheduleMicrotask(_flushRecent);
+    }
     super.dispose();
   }
 }

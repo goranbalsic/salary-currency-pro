@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -7,59 +7,39 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// PROMPT-003J checkpoint 4: real release-signing scaffold. Reads
-// android/key.properties if present (never committed — see .gitignore's
-// existing `android/key.properties`/`*.jks`/`*.keystore` entries, already
-// in place before this checkpoint). Falls back to null when absent so
-// `flutter build`/`flutter run --release` keep working exactly as before
-// for anyone without a real keystore yet — see the release buildType's
-// own signingConfig selection below for the actual fallback-to-debug
-// behavior. No real signing secret is read, generated, or touched by
-// this environment; the owner runs `keytool` themselves (see
-// PROJECT_CONTEXT.md's release-signing section for the exact command)
-// and drops the resulting keystore + key.properties in place locally.
+// Release signing reads android/key.properties when present (never
+// committed; see android/key.properties.example). Without it, release
+// builds fall back to the debug key so local builds keep working — such
+// builds cannot be uploaded to Play.
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
-val hasRealSigningConfig = keystorePropertiesFile.exists()
-if (hasRealSigningConfig) {
+val hasReleaseSigning = keystorePropertiesFile.exists()
+if (hasReleaseSigning) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
-    namespace = "rs.salarycurrencypro.salary_currency_pro"
+    namespace = "rs.bilans.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        // flutter_local_notifications (added for PROMPT-003 Stage B item 7)
-        // requires core library desugaring — see its README's Kotlin DSL
-        // setup snippet, matched here.
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "rs.salarycurrencypro.salary_currency_pro"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // Must match AppConfig.androidPackage in lib/app/app_config.dart.
+        applicationId = "rs.bilans.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        multiDexEnabled = true
     }
 
-    // PROMPT-003J checkpoint 1: dev/prod build matrix. `dev` is for
-    // owner/local QA only — distinct application ID (via suffix, so it
-    // installs side-by-side with a real prod install on the same phone
-    // rather than overwriting it) and distinct label/icon (see
-    // src/dev/res/) so it can never be mistaken for production. `prod` is
-    // production-equivalent QA and the eventual Play release; its
-    // applicationId is deliberately unchanged from before this flavor
-    // split so it matches whatever, if anything, is already installed
-    // from earlier sessions.
+    // dev: local QA build with its own ID and label, installable next to
+    // the Play build; unlocks the Pro simulator (lib/main_dev.dart).
+    // prod: the Play Store build.
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -73,7 +53,7 @@ android {
     }
 
     signingConfigs {
-        if (hasRealSigningConfig) {
+        if (hasReleaseSigning) {
             create("release") {
                 keyAlias = keystoreProperties.getProperty("keyAlias")
                 keyPassword = keystoreProperties.getProperty("keyPassword")
@@ -85,13 +65,7 @@ android {
 
     buildTypes {
         release {
-            // Real signing once android/key.properties exists (see the
-            // scaffold above); until then, falls back to the debug keys
-            // so `flutter build`/`flutter run --release` keep working —
-            // this fallback is exactly why every release artifact built
-            // in this environment is explicitly disclosed as debug-signed
-            // rather than upload-ready (see DECISIONS.md D-034).
-            signingConfig = if (hasRealSigningConfig) {
+            signingConfig = if (hasReleaseSigning) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
@@ -104,14 +78,6 @@ android {
             )
         }
     }
-    // Per-ABI splitting is handled by `flutter build apk --split-per-abi`
-    // (raw APK distribution) or automatically by Play Store's App Bundle
-    // delivery for `flutter build appbundle` (the actual Play Store
-    // artifact) — a manual `splits { abi {...} }` block here conflicts
-    // with the Flutter Gradle plugin's own NDK abiFilters management
-    // ("Conflicting configuration ... ndk abiFilters cannot be present
-    // when splits abi filters are set", confirmed by an actual failed
-    // build attempt this session).
 }
 
 kotlin {
@@ -122,8 +88,4 @@ kotlin {
 
 flutter {
     source = "../.."
-}
-
-dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

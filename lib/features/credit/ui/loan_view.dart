@@ -162,19 +162,18 @@ class _LoanViewState extends State<LoanView> {
                 ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: Text(l.loanRepayment, style: t.bodyMedium!.copyWith(color: c.ink2))),
-                    Flexible(
-                      child: Wrap(
-                        alignment: WrapAlignment.end,
-                        spacing: 6,
-                        runSpacing: 6,
-                        children: [
-                          PillChip(label: l.loanAnnuity, selected: inputs.type == RepaymentType.annuity, onTap: () => _update(inputs.copyWith(type: RepaymentType.annuity))),
-                          PillChip(label: l.loanLinear, selected: inputs.type == RepaymentType.linear, onTap: () => _update(inputs.copyWith(type: RepaymentType.linear))),
-                        ],
-                      ),
+                    Text(l.loanRepayment, style: t.bodyMedium!.copyWith(color: c.ink2)),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        PillChip(label: l.loanAnnuity, selected: inputs.type == RepaymentType.annuity, onTap: () => _update(inputs.copyWith(type: RepaymentType.annuity))),
+                        PillChip(label: l.loanLinear, selected: inputs.type == RepaymentType.linear, onTap: () => _update(inputs.copyWith(type: RepaymentType.linear))),
+                      ],
                     ),
                   ],
                 ),

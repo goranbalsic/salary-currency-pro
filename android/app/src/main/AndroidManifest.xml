@@ -1,28 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Local notifications (PROMPT-003 Stage B item 7) — all off by
-         default, opt-in per reminder type in Settings. POST_NOTIFICATIONS
-         is the Android 13+ runtime permission to show any notification at
-         all; RECEIVE_BOOT_COMPLETED lets already-scheduled reminders
-         survive a device reboot. Deliberately NOT requesting
-         SCHEDULE_EXACT_ALARM/USE_EXACT_ALARM — none of these reminders
-         (a daily nudge, a monthly paušal reminder, a budget-threshold or
-         invoice-due alert) need second-precision timing, so the app uses
-         AndroidScheduleMode.inexactAllowWhileIdle instead, which needs
-         neither permission. -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- Fiscal Receipt Scanner (PROMPT-003 Stage C item 10) — requested
-         only when the user opens the scanner and taps to scan, via
-         mobile_scanner's local on-device ML Kit barcode detection. No
-         image/frame is ever stored or sent anywhere. required="false" so
-         the app remains installable on camera-less devices; the scanner
-         screen falls back to manual entry in that case. -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <!-- Official exchange rates (NBS, ECB). The only network use; no
+         analytics, ads or accounts. Play Billing adds its own permission. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="@string/app_name"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -32,10 +17,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
+            <!-- Theme shown while the Flutter UI initializes, and behind it. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
@@ -45,53 +27,25 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <!-- Used by the Flutter tool to generate GeneratedPluginRegistrant.java. -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- flutter_local_notifications: required receivers for scheduled
-             (not just immediate) notifications to fire and to survive a
-             device reboot. -->
-        <receiver android:exported="false"
-            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
-        <receiver android:exported="false"
-            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
-            </intent-filter>
-        </receiver>
-        <!-- Home-screen widgets (PROMPT-003 Stage B item 8). Both are
-             classic RemoteViews AppWidgetProviders fed by
-             lib/services/home_widget_service.dart via the `home_widget`
-             plugin — see android/app/.../widgets/. -->
-        <receiver android:name=".widgets.BudgetWidgetProvider"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/budget_widget_info" />
-        </receiver>
-        <receiver android:name=".widgets.PinnedPairWidgetProvider"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/pinned_pair_widget_info" />
-        </receiver>
     </application>
-    <!-- Required to query activities that can process text, see:
-         https://developer.android.com/training/package-visibility and
-         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
-
-         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <!-- Package visibility (Android 11+): text processing for the engine,
+         web links (privacy policy, Play subscriptions) and email. -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO"/>
+            <data android:scheme="mailto"/>
         </intent>
     </queries>
 </manifest>

@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 /// Locale-aware number, money, percent and date formatting.
 ///
 /// Uses a fixed separator table instead of intl's CLDR data for the few
@@ -86,10 +84,13 @@ class Formats {
   /// Exchange rate with 4 decimals, no grouping below 1000.
   String rate(double value, {int decimals = 4}) => number(value, decimals: decimals);
 
+  static const _enMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
   /// Numeric date: "25.09.2026." (sr/hr/bs), "25.09.2026" (sl/mk/bg/ro),
-  /// "25 Sep 2026" (en).
+  /// "25 Sep 2026" (en). No intl date data needed, so any language can be
+  /// formatted whatever the app's current locale (e.g. English invoices).
   String date(DateTime d) {
-    if (isEnglish) return DateFormat('d MMM yyyy', 'en').format(d);
+    if (isEnglish) return '${d.day} ${_enMonths[d.month - 1]} ${d.year}';
     final core = '${_two(d.day)}.${_two(d.month)}.${d.year}';
     return switch (languageCode) {
       'sr' || 'hr' || 'bs' => '$core.',
@@ -99,7 +100,7 @@ class Formats {
 
   /// Short date without year: "25.09." / "25 Sep".
   String shortDate(DateTime d) {
-    if (isEnglish) return DateFormat('d MMM', 'en').format(d);
+    if (isEnglish) return '${d.day} ${_enMonths[d.month - 1]}';
     return '${_two(d.day)}.${_two(d.month)}.';
   }
 

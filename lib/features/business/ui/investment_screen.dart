@@ -152,7 +152,9 @@ class _InvestmentScreenState extends State<InvestmentScreen> with CalcState<Inve
             ),
           ),
           const SizedBox(height: 10),
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            spacing: 8,
             children: [
               if (_flows.length < maxYears)
                 TextButton.icon(
@@ -163,7 +165,6 @@ class _InvestmentScreenState extends State<InvestmentScreen> with CalcState<Inve
                   icon: const Icon(Icons.add, size: 18),
                   label: Text(l.invsAddYear),
                 ),
-              const Spacer(),
               if (_flows.length > 1)
                 TextButton.icon(
                   onPressed: () {

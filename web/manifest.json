@@ -1,11 +1,11 @@
 {
-    "name": "Salary & Currency Pro",
-    "short_name": "Salary & Currency Pro",
+    "name": "Bilans",
+    "short_name": "Bilans",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0F2A43",
-    "theme_color": "#0F2A43",
-    "description": "Balkan payroll, currency conversion, and personal-finance calculators for 9 countries and 9 languages — fully offline.",
+    "background_color": "#F3F0E8",
+    "theme_color": "#0E5A43",
+    "description": "Pay, loans, official exchange rates and invoices for the Balkans — calculated to each country's rules.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

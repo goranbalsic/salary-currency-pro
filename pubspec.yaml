@@ -77,6 +77,8 @@ flutter_launcher_icons:
   adaptive_icon_background: "#0E5A43"
   adaptive_icon_foreground: "tool/brand/out/icon_foreground_1024.png"
   adaptive_icon_monochrome: "tool/brand/out/icon_monochrome_1024.png"
+  # The sources already keep the mark inside the safe zone.
+  adaptive_icon_foreground_inset: 0
   min_sdk_android: 24
 
 # Native splash: regenerate with `dart run flutter_native_splash:create`.

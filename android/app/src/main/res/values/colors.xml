@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#0F2A43</color>
-    <!-- Home-screen widget colors (PROMPT-003 Stage B item 8) — reuse the
-         app's brand navy/green/white from lib/theme/app_theme.dart's
-         AppColors, since RemoteViews layouts can't reference Dart. -->
-    <color name="widget_background">#0F2A43</color>
-    <color name="widget_text_primary">#FFFFFF</color>
-    <color name="widget_text_secondary">#B8C4D0</color>
-    <color name="widget_accent_green">#34C77B</color>
+    <color name="ic_launcher_background">#0E5A43</color>
 </resources>

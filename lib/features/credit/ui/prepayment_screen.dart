@@ -104,19 +104,18 @@ class _PrepaymentScreenState extends State<PrepaymentScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(child: Text(l.prepayMode, style: t.bodyMedium!.copyWith(color: c.ink2))),
-                              Flexible(
-                                child: Wrap(
-                                  alignment: WrapAlignment.end,
-                                  spacing: 6,
-                                  runSpacing: 6,
-                                  children: [
-                                    PillChip(label: l.prepayShorten, selected: _mode == PrepaymentMode.shortenTerm, onTap: () => setState(() => _mode = PrepaymentMode.shortenTerm)),
-                                    PillChip(label: l.prepayLower, selected: _mode == PrepaymentMode.lowerPayment, onTap: () => setState(() => _mode = PrepaymentMode.lowerPayment)),
-                                  ],
-                                ),
+                              Text(l.prepayMode, style: t.bodyMedium!.copyWith(color: c.ink2)),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 6,
+                                runSpacing: 6,
+                                children: [
+                                  PillChip(label: l.prepayShorten, selected: _mode == PrepaymentMode.shortenTerm, onTap: () => setState(() => _mode = PrepaymentMode.shortenTerm)),
+                                  PillChip(label: l.prepayLower, selected: _mode == PrepaymentMode.lowerPayment, onTap: () => setState(() => _mode = PrepaymentMode.lowerPayment)),
+                                ],
                               ),
                             ],
                           ),
