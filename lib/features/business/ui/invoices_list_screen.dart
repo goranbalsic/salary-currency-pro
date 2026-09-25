@@ -59,12 +59,12 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     ].join(' · ');
 
     String label(_Filter x) => switch (x) {
-          _Filter.all => l.invsFilterAll,
-          _Filter.unpaid => l.statusIssued,
-          _Filter.overdue => l.statusOverdue,
-          _Filter.paid => l.statusPaid,
-          _Filter.drafts => l.invsFilterDrafts,
-        };
+      _Filter.all => l.invsFilterAll,
+      _Filter.unpaid => l.statusIssued,
+      _Filter.overdue => l.statusOverdue,
+      _Filter.paid => l.statusPaid,
+      _Filter.drafts => l.invsFilterDrafts,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -121,7 +121,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
           if (shown.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 32),
-              child: Text(all.isEmpty ? l.bizInvoicesEmpty : l.invsNoMatch, textAlign: TextAlign.center, style: t.bodyMedium!.copyWith(color: c.ink2)),
+              child: Text(
+                all.isEmpty ? l.bizInvoicesEmpty : l.invsNoMatch,
+                textAlign: TextAlign.center,
+                style: t.bodyMedium!.copyWith(color: c.ink2),
+              ),
             )
           else
             for (final inv in shown) InvoiceRow(invoice: inv, today: today),

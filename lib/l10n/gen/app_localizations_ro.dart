@@ -259,8 +259,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get onbHeadline => 'Cifre în care puteți avea încredere.';
 
   @override
-  String get onbBody =>
-      'Salarii, credite, cursuri valutare oficiale și facturi — calculate după regulile țării dvs. Fără cont, fără urmărire.';
+  String get onbBody => 'Salarii, credite, cursuri valutare oficiale și facturi — calculate după regulile țării dvs. Fără cont, fără urmărire.';
 
   @override
   String get onbCountry => 'Țara dvs.';
@@ -297,8 +296,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get homeRatesEmpty =>
-      'Cursurile oficiale de azi apar aici când sunteți online.';
+  String get homeRatesEmpty => 'Cursurile oficiale de azi apar aici când sunteți online.';
 
   @override
   String get homeRecent => 'Recente';
@@ -488,8 +486,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get historySaved => 'Salvate';
 
   @override
-  String get historySavedEmpty =>
-      'Atingeți Salvează la orice rezultat pentru a-l păstra aici cu un nume.';
+  String get historySavedEmpty => 'Atingeți Salvează la orice rezultat pentru a-l păstra aici cu un nume.';
 
   @override
   String get historyRecentEmpty => 'Calculele finalizate apar aici automat.';
@@ -530,8 +527,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get payHelperNet => 'Suma pe care o primește angajatul';
 
   @override
-  String get payHelperCost =>
-      'Salariul brut plus toate contribuțiile angajatorului';
+  String get payHelperCost => 'Salariul brut plus toate contribuțiile angajatorului';
 
   @override
   String get payResultNet => 'Salariu net';
@@ -654,8 +650,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get payAnnualNote =>
-      'Sumele anuale sunt 12 × sumele lunare; regularizarea anuală a impozitului poate diferi.';
+  String get payAnnualNote => 'Sumele anuale sunt 12 × sumele lunare; regularizarea anuală a impozitului poate diferi.';
 
   @override
   String payNoteMinBase(String amount) {
@@ -673,12 +668,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get payNoteNonPositive =>
-      'Contribuțiile și impozitele obligatorii depășesc acest salariu.';
+  String get payNoteNonPositive => 'Contribuțiile și impozitele obligatorii depășesc acest salariu.';
 
   @override
-  String get payEmpty =>
-      'Introduceți o sumă pentru a vedea detalierea completă — contribuții, impozit și costul total al angajatorului.';
+  String get payEmpty => 'Introduceți o sumă pentru a vedea detalierea completă — contribuții, impozit și costul total al angajatorului.';
 
   @override
   String get payErrorTooLarge => 'Suma este prea mare pentru a fi calculată.';
@@ -687,8 +680,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get paySystemTitle => 'Sistem fiscal';
 
   @override
-  String get paySystemProHint =>
-      'Țara dvs. este gratuită. Celelalte țări fac parte din Pro.';
+  String get paySystemProHint => 'Țara dvs. este gratuită. Celelalte țări fac parte din Pro.';
 
   @override
   String get payOptions => 'Opțiuni';
@@ -732,8 +724,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get payHrHigher => 'Cota superioară';
 
   @override
-  String get payHrRatesHint =>
-      'Stabilite de orașul sau comuna dvs.: 15–23 % și 25–33 %. Fără o decizie se aplică 20 % și 30 %.';
+  String get payHrRatesHint => 'Stabilite de orașul sau comuna dvs.: 15–23 % și 25–33 %. Fără o decizie se aplică 20 % și 30 %.';
 
   @override
   String payHrRateError(String lowRange, String highRange) {
@@ -753,23 +744,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get payRoMinWage => 'Scutire pentru salariul minim';
 
   @override
-  String get payRoMinWageHint =>
-      '200 de lei sunt neimpozabili pentru angajații plătiți cu salariul minim pe economie.';
+  String get payRoMinWageHint => '200 de lei sunt neimpozabili pentru angajații plătiți cu salariul minim pe economie.';
 
   @override
   String get payMeSurtax => 'Cota suprataxei';
 
   @override
-  String get payMeSurtaxHint =>
-      '13 % în majoritatea municipiilor, 15 % în Podgorica și Cetinje.';
+  String get payMeSurtaxHint => '13 % în majoritatea municipiilor, 15 % în Podgorica și Cetinje.';
 
   @override
-  String get payFbihDisability =>
-      'Fondul pentru angajarea persoanelor cu dizabilități 0,5 %';
+  String get payFbihDisability => 'Fondul pentru angajarea persoanelor cu dizabilități 0,5 %';
 
   @override
-  String get payFbihDisabilityHint =>
-      'Plătit de firmele care nu angajează ponderea obligatorie de persoane cu dizabilități.';
+  String get payFbihDisabilityHint => 'Plătit de firmele care nu angajează ponderea obligatorie de persoane cu dizabilități.';
 
   @override
   String get itemPension => 'Asigurare de pensie și invaliditate';
@@ -814,8 +801,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get itemDisasterFee => 'Taxa de protecție împotriva dezastrelor';
 
   @override
-  String get itemDisabilityFund =>
-      'Fondul pentru angajarea persoanelor cu dizabilități';
+  String get itemDisabilityFund => 'Fondul pentru angajarea persoanelor cu dizabilități';
 
   @override
   String get itemSickness => 'Boală și maternitate';
@@ -881,12 +867,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get teamNote =>
-      'Fiecare angajat este calculat după regulile propriului sistem fiscal. Sumele anuale sunt 12 × sumele lunare.';
+  String get teamNote => 'Fiecare angajat este calculat după regulile propriului sistem fiscal. Sumele anuale sunt 12 × sumele lunare.';
 
   @override
-  String get teamCurrenciesNote =>
-      'Totalurile sunt afișate separat pentru fiecare monedă.';
+  String get teamCurrenciesNote => 'Totalurile sunt afișate separat pentru fiecare monedă.';
 
   @override
   String get teamUnnamed => 'Fără nume';
@@ -1014,8 +998,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get loanEirNote =>
-      'DAE este dobânda anuală efectivă, cu toate comisioanele incluse, calculată după formula UE pentru creditele de consum.';
+  String get loanEirNote => 'DAE este dobânda anuală efectivă, cu toate comisioanele incluse, calculată după formula UE pentru creditele de consum.';
 
   @override
   String get loanByYear => 'Pe ani';
@@ -1087,8 +1070,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get loanErrorTerm => 'Perioada trebuie să fie între 1 și 600 de luni.';
 
   @override
-  String get loanErrorFee =>
-      'Comisioanele trebuie să fie mai mici decât creditul.';
+  String get loanErrorFee => 'Comisioanele trebuie să fie mai mici decât creditul.';
 
   @override
   String get prepayTitle => 'Rambursare anticipată';
@@ -1170,12 +1152,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get depTax => 'Impozit pe dobândă';
 
   @override
-  String get depTaxHintRs =>
-      'În Serbia, dobânda la economiile în dinari este neimpozabilă; cea la economiile în valută se impozitează cu 15 %.';
+  String get depTaxHintRs => 'În Serbia, dobânda la economiile în dinari este neimpozabilă; cea la economiile în valută se impozitează cu 15 %.';
 
   @override
-  String get depTaxHint =>
-      'Introduceți impozitul pe dobândă reținut la sursă care vi se aplică.';
+  String get depTaxHint => 'Introduceți impozitul pe dobândă reținut la sursă care vi se aplică.';
 
   @override
   String get depContribution => 'Depunere lunară';
@@ -1219,8 +1199,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get depErrorRate => 'Introduceți o rată a dobânzii între 0 și 100 %.';
 
   @override
-  String get cmpLoanIntro =>
-      'Aceeași sumă pentru toate ofertele. Cea mai avantajoasă ofertă este cea cu cel mai mic cost total.';
+  String get cmpLoanIntro => 'Aceeași sumă pentru toate ofertele. Cea mai avantajoasă ofertă este cea cu cel mai mic cost total.';
 
   @override
   String cmpLoanOffer(int n) {
@@ -1291,8 +1270,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get fxKindSell => 'Vânzare';
 
   @override
-  String get fxKindHint =>
-      'Cursurile de cumpărare și vânzare se aplică la schimburile în dinari.';
+  String get fxKindHint => 'Cursurile de cumpărare și vânzare se aplică la schimburile în dinari.';
 
   @override
   String fxUpdated(String date) {
@@ -1312,8 +1290,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Încă nu există cursuri. Conectați-vă o dată la internet pentru a descărca cursurile oficiale de azi — după aceea convertorul funcționează și offline.';
 
   @override
-  String get fxUnsupported =>
-      'Nu există un curs oficial pentru această pereche.';
+  String get fxUnsupported => 'Nu există un curs oficial pentru această pereche.';
 
   @override
   String fxHistoryTitle(String from, String to, int days) {
@@ -1329,8 +1306,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get fxHistoryError => 'Istoricul nu este disponibil offline.';
 
   @override
-  String get fxHistoryPro =>
-      'Istoricul cursului pentru 30, 90 și 365 de zile face parte din Pro.';
+  String get fxHistoryPro => 'Istoricul cursului pentru 30, 90 și 365 de zile face parte din Pro.';
 
   @override
   String fxHistoryMinMax(String min, String max) {
@@ -1384,8 +1360,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get bizNewInvoice => 'Nouă';
 
   @override
-  String get bizInvoicesEmpty =>
-      'Încă nu aveți facturi. Creați o factură profesională în mai puțin de un minut.';
+  String get bizInvoicesEmpty => 'Încă nu aveți facturi. Creați o factură profesională în mai puțin de un minut.';
 
   @override
   String bizFreeLeft(int count) {
@@ -1538,8 +1513,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invRateFetching => 'Se descarcă cursul BNS…';
 
   @override
-  String get invRateUnavailable =>
-      'Cursul BNS pentru această dată nu este încă publicat.';
+  String get invRateUnavailable => 'Cursul BNS pentru această dată nu este încă publicat.';
 
   @override
   String get invRateRetry => 'Descarcă cursul';
@@ -1574,22 +1548,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invDuplicate => 'Duplică';
 
   @override
-  String get invProfileMissing =>
-      'Adăugați mai întâi datele firmei — apar pe fiecare factură.';
+  String get invProfileMissing => 'Adăugați mai întâi datele firmei — apar pe fiecare factură.';
 
   @override
   String get invNotInVat => 'Emitentul nu este înregistrat în scopuri de TVA.';
 
   @override
-  String get invValidWithoutStamp =>
-      'Factura este valabilă fără ștampilă și semnătură.';
+  String get invValidWithoutStamp => 'Factura este valabilă fără ștampilă și semnătură.';
 
   @override
   String get invQrCaption => 'Scanați pentru a plăti (NBS IPS)';
 
   @override
-  String get invQrHint =>
-      'Clientul scanează codul QR în aplicația băncii sale — suma, contul și referința se completează automat.';
+  String get invQrHint => 'Clientul scanează codul QR în aplicația băncii sale — suma, contul și referința se completează automat.';
 
   @override
   String invQrMissing(String reason) {
@@ -1597,12 +1568,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get invQrReasonAccount =>
-      'adăugați un cont bancar sârbesc valid în datele firmei';
+  String get invQrReasonAccount => 'adăugați un cont bancar sârbesc valid în datele firmei';
 
   @override
-  String get invQrReasonOther =>
-      'verificați numele firmei și referința de plată';
+  String get invQrReasonOther => 'verificați numele firmei și referința de plată';
 
   @override
   String get invDocTitle => 'Factură';
@@ -1627,15 +1596,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invErrorClient => 'Introduceți numele clientului.';
 
   @override
-  String get invErrorItems =>
-      'Adăugați cel puțin un articol cu descriere și preț.';
+  String get invErrorItems => 'Adăugați cel puțin un articol cu descriere și preț.';
 
   @override
   String get invErrorNumber => 'Introduceți numărul facturii.';
 
   @override
-  String get invErrorDue =>
-      'Data scadenței nu poate fi înaintea datei emiterii.';
+  String get invErrorDue => 'Data scadenței nu poate fi înaintea datei emiterii.';
 
   @override
   String invErrorNumberTaken(String number) {
@@ -1715,8 +1682,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get profVat => 'Înregistrat în scopuri de TVA';
 
   @override
-  String get profVatHint =>
-      'Adaugă TVA pe facturi. Când este dezactivat, facturile menționează că nu sunteți plătitor de TVA.';
+  String get profVatHint => 'Adaugă TVA pe facturi. Când este dezactivat, facturile menționează că nu sunteți plătitor de TVA.';
 
   @override
   String get profPaymentCode => 'Codul plății pentru codul QR';
@@ -1740,16 +1706,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get profShowOnReports => 'Afișează datele firmei în rapoartele PDF';
 
   @override
-  String get profInvalidPib =>
-      'Cifra de control a PIB-ului nu corespunde — verificați numărul.';
+  String get profInvalidPib => 'Cifra de control a PIB-ului nu corespunde — verificați numărul.';
 
   @override
-  String get profInvalidMb =>
-      'Cifra de control a numărului de înregistrare nu corespunde.';
+  String get profInvalidMb => 'Cifra de control a numărului de înregistrare nu corespunde.';
 
   @override
-  String get profInvalidAccount =>
-      'Cifrele de control ale numărului de cont nu corespund.';
+  String get profInvalidAccount => 'Cifrele de control ale numărului de cont nu corespund.';
 
   @override
   String get profSaved => 'Datele firmei au fost salvate';
@@ -1806,15 +1769,13 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get pausalSourceInvoices =>
-      'Calculat din facturile emise și plătite (după data livrării), plus veniturile adăugate mai jos.';
+  String get pausalSourceInvoices => 'Calculat din facturile emise și plătite (după data livrării), plus veniturile adăugate mai jos.';
 
   @override
   String get pausalManual => 'Venituri din afara aplicației';
 
   @override
-  String get pausalManualEmpty =>
-      'Adăugați facturile emise în altă parte anul acesta, pentru ca totalurile să fie complete.';
+  String get pausalManualEmpty => 'Adăugați facturile emise în altă parte anul acesta, pentru ca totalurile să fie complete.';
 
   @override
   String get pausalManualAdd => 'Adaugă venit';
@@ -1898,8 +1859,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get mrgPriceWithVat => 'Preț cu TVA';
 
   @override
-  String get mrgMarginHint =>
-      'Marja este profitul ca pondere din prețul de vânzare; adaosul este profitul ca pondere din cost.';
+  String get mrgMarginHint => 'Marja este profitul ca pondere din prețul de vânzare; adaosul este profitul ca pondere din cost.';
 
   @override
   String get mrgImpossible => 'O marjă de 100 % sau mai mare nu este posibilă.';
@@ -1941,8 +1901,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get beContribution => 'Marjă de contribuție';
 
   @override
-  String get beImpossible =>
-      'Prețul trebuie să fie mai mare decât costul variabil pe unitate.';
+  String get beImpossible => 'Prețul trebuie să fie mai mare decât costul variabil pe unitate.';
 
   @override
   String get invsTitle => 'Analiza investiției';
@@ -2031,33 +1990,28 @@ class AppLocalizationsRo extends AppLocalizations {
   String get profMbLength => 'Numărul de înregistrare are 8 cifre.';
 
   @override
-  String get profInvalidAccountShape =>
-      'Introduceți un cont sârbesc (160-0000000000000-00) sau un IBAN.';
+  String get profInvalidAccountShape => 'Introduceți un cont sârbesc (160-0000000000000-00) sau un IBAN.';
 
   @override
   String get profInvalidEmail => 'Verificați adresa de e-mail.';
 
   @override
-  String get profInvalidPaymentCode =>
-      'Codul plății are trei cifre, de ex. 221.';
+  String get profInvalidPaymentCode => 'Codul plății are trei cifre, de ex. 221.';
 
   @override
-  String get profPrivacy =>
-      'Datele sunt stocate doar pe acest telefon și sunt incluse în copiile de rezervă pe care le exportați.';
+  String get profPrivacy => 'Datele sunt stocate doar pe acest telefon și sunt incluse în copiile de rezervă pe care le exportați.';
 
   @override
   String get profIban => 'IBAN pentru plăți din străinătate';
 
   @override
-  String get profIbanHint =>
-      'Apare pe facturile în valută. Lăsați gol pentru a folosi contul de mai sus în format IBAN.';
+  String get profIbanHint => 'Apare pe facturile în valută. Lăsați gol pentru a folosi contul de mai sus în format IBAN.';
 
   @override
   String get profSwift => 'SWIFT / BIC';
 
   @override
-  String get profInvalidIban =>
-      'Verificați IBAN-ul — cifrele de control nu corespund.';
+  String get profInvalidIban => 'Verificați IBAN-ul — cifrele de control nu corespund.';
 
   @override
   String get profInvalidSwift => 'Un cod SWIFT/BIC are 8 sau 11 caractere.';
@@ -2076,8 +2030,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Facturile către sectorul public sârbesc — și, pentru plătitorii de TVA, către firmele sârbești — trebuie trimise și prin SEF (e-Faktura). Facturile Bilans sunt potrivite pentru clienți din străinătate, persoane fizice și evidența proprie.';
 
   @override
-  String get invRateOffline =>
-      'BNS nu poate fi contactată. Verificați conexiunea — puteți salva acum și descărca cursul mai târziu.';
+  String get invRateOffline => 'BNS nu poate fi contactată. Verificați conexiunea — puteți salva acum și descărca cursul mai târziu.';
 
   @override
   String get invMarkedPaid => 'Marcată ca plătită';
@@ -2092,8 +2045,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invCancelled => 'Factura a fost anulată';
 
   @override
-  String get invCompleteFirst =>
-      'Adăugați clientul și cel puțin un articol înainte de emitere.';
+  String get invCompleteFirst => 'Adăugați clientul și cel puțin un articol înainte de emitere.';
 
   @override
   String invCancelConfirm(String number) {
@@ -2101,12 +2053,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get invCancelBody =>
-      'Rămâne în listă, marcată ca anulată, și nu mai este inclusă în venituri.';
+  String get invCancelBody => 'Rămâne în listă, marcată ca anulată, și nu mai este inclusă în venituri.';
 
   @override
-  String get invRateMissingNote =>
-      'Încă nu există curs BNS — factura nu este inclusă în plafoanele paušal până nu îl primește.';
+  String get invRateMissingNote => 'Încă nu există curs BNS — factura nu este inclusă în plafoanele paušal până nu îl primește.';
 
   @override
   String pausalMonthlyRoom(String amount) {
@@ -2147,8 +2097,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invsNoMatch => 'Nicio factură nu corespunde.';
 
   @override
-  String get vatEmpty =>
-      'Introduceți o sumă pentru a o împărți în valoare netă și TVA.';
+  String get vatEmpty => 'Introduceți o sumă pentru a o împărți în valoare netă și TVA.';
 
   @override
   String vatRatesNote(String country) {
@@ -2168,8 +2117,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get beVariableHint => 'Materiale, comisioane, livrare…';
 
   @override
-  String get beEmpty =>
-      'Introduceți costurile fixe, prețul și costul variabil pe unitate.';
+  String get beEmpty => 'Introduceți costurile fixe, prețul și costul variabil pe unitate.';
 
   @override
   String get beContributionUnit => 'Contribuție pe unitate';
@@ -2179,12 +2127,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'Fiecare unitate vândută contribuie cu prețul minus costul variabil la acoperirea costurilor fixe și la profit. Sumele sunt fără TVA.';
 
   @override
-  String get invsFlowsHint =>
-      'Fluxul de numerar net la sfârșitul fiecărui an. Introduceți un minus pentru un an cu mai multe ieșiri decât intrări.';
+  String get invsFlowsHint => 'Fluxul de numerar net la sfârșitul fiecărui an. Introduceți un minus pentru un an cu mai multe ieșiri decât intrări.';
 
   @override
-  String get invsEmpty =>
-      'Introduceți investiția, o rată de actualizare și fluxul de numerar pentru cel puțin un an.';
+  String get invsEmpty => 'Introduceți investiția, o rată de actualizare și fluxul de numerar pentru cel puțin un an.';
 
   @override
   String get invsCumulative => 'Flux de numerar cumulat';
@@ -2196,12 +2142,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get proHeadline => 'Bilans Pro';
 
   @override
-  String get proSubhead =>
-      'Toate calculatoarele, toate țările, facturi nelimitate și rapoarte PDF. Fără reclame, fără cont.';
+  String get proSubhead => 'Toate calculatoarele, toate țările, facturi nelimitate și rapoarte PDF. Fără reclame, fără cont.';
 
   @override
-  String get proFeatAllCountries =>
-      'Salarii pentru toate cele 9 sisteme fiscale';
+  String get proFeatAllCountries => 'Salarii pentru toate cele 9 sisteme fiscale';
 
   @override
   String get proFeatUnlimitedInvoices => 'Facturi nelimitate';
@@ -2213,40 +2157,31 @@ class AppLocalizationsRo extends AppLocalizations {
   String get proFeatUnlimitedSaves => 'Calcule salvate nelimitate';
 
   @override
-  String get proBenefitCountries =>
-      'Salarii pentru toate cele 9 sisteme fiscale și același salariu comparat între țări';
+  String get proBenefitCountries => 'Salarii pentru toate cele 9 sisteme fiscale și același salariu comparat între țări';
 
   @override
-  String get proBenefitTeam =>
-      'Costul echipei: toate salariile pe luni și pe ani';
+  String get proBenefitTeam => 'Costul echipei: toate salariile pe luni și pe ani';
 
   @override
-  String get proBenefitInvoices =>
-      'Facturi nelimitate, ca PDF-uri profesionale';
+  String get proBenefitInvoices => 'Facturi nelimitate, ca PDF-uri profesionale';
 
   @override
-  String get proBenefitInvoicesRs =>
-      'Facturi nelimitate cu cod QR de plată NBS IPS';
+  String get proBenefitInvoicesRs => 'Facturi nelimitate cu cod QR de plată NBS IPS';
 
   @override
-  String get proBenefitPausal =>
-      'Monitorizarea plafoanelor paušal de 6 și 8 milioane de dinari';
+  String get proBenefitPausal => 'Monitorizarea plafoanelor paušal de 6 și 8 milioane de dinari';
 
   @override
-  String get proBenefitLoans =>
-      'Comparați oferte de credit și planificați rambursări anticipate';
+  String get proBenefitLoans => 'Comparați oferte de credit și planificați rambursări anticipate';
 
   @override
-  String get proBenefitHistory =>
-      'Istoricul cursului pentru 30, 90 și 365 de zile';
+  String get proBenefitHistory => 'Istoricul cursului pentru 30, 90 și 365 de zile';
 
   @override
-  String get proBenefitInvestment =>
-      'Analiza investițiilor: VAN, RIR și perioada de recuperare';
+  String get proBenefitInvestment => 'Analiza investițiilor: VAN, RIR și perioada de recuperare';
 
   @override
-  String get proBenefitPdf =>
-      'Rapoarte PDF pentru salarii, credite, economii și echipe';
+  String get proBenefitPdf => 'Rapoarte PDF pentru salarii, credite, economii și echipe';
 
   @override
   String get proYearly => 'Anual';
@@ -2308,16 +2243,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get proRestored => 'Bilans Pro este activ pe acest dispozitiv.';
 
   @override
-  String get proNothingToRestore =>
-      'Nu a fost găsită nicio achiziție Bilans Pro pentru acest cont Google.';
+  String get proNothingToRestore => 'Nu a fost găsită nicio achiziție Bilans Pro pentru acest cont Google.';
 
   @override
-  String get proPending =>
-      'Plata este în curs de procesare. Pro se deblochează automat imediat ce Google Play o confirmă.';
+  String get proPending => 'Plata este în curs de procesare. Pro se deblochează automat imediat ce Google Play o confirmă.';
 
   @override
-  String get proError =>
-      'Achiziția nu a reușit. Nu ați fost taxat — încercați din nou.';
+  String get proError => 'Achiziția nu a reușit. Nu ați fost taxat — încercați din nou.';
 
   @override
   String get proUnavailable =>
@@ -2328,8 +2260,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Abonamentele se reînnoiesc automat la prețul afișat până când le anulați. Puteți anula oricând din Google Play → Plăți și abonamente, cu cel puțin 24 de ore înainte de data reînnoirii. Perioada de probă gratuită devine un abonament anual plătit dacă nu o anulați înainte de încheierea ei.';
 
   @override
-  String get proLegalLifetime =>
-      'O achiziție unică: fără abonament și fără reînnoiri. Pro rămâne activ pe fiecare dispozitiv conectat la același cont Google.';
+  String get proLegalLifetime => 'O achiziție unică: fără abonament și fără reînnoiri. Pro rămâne activ pe fiecare dispozitiv conectat la același cont Google.';
 
   @override
   String get proDevSimulate => 'Simulează Pro (versiune de dezvoltare)';
@@ -2338,8 +2269,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get proWelcome => 'Bun venit la Bilans Pro';
 
   @override
-  String get proWelcomeBody =>
-      'Totul este deblocat. Vă mulțumim că susțineți o aplicație independentă.';
+  String get proWelcomeBody => 'Totul este deblocat. Vă mulțumim că susțineți o aplicație independentă.';
 
   @override
   String get settingsPreferences => 'Preferințe';
@@ -2372,15 +2302,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsExported => 'Copia de rezervă este gata';
 
   @override
-  String get settingsImportInvalid =>
-      'Fișierul nu este o copie de rezervă Bilans.';
+  String get settingsImportInvalid => 'Fișierul nu este o copie de rezervă Bilans.';
 
   @override
   String get settingsImportTitle => 'Restabiliți această copie de rezervă?';
 
   @override
-  String get settingsImportBody =>
-      'Tot conținutul aplicației va fi înlocuit cu cel din copie — facturi, datele firmei, echipa și calculele salvate.';
+  String get settingsImportBody => 'Tot conținutul aplicației va fi înlocuit cu cel din copie — facturi, datele firmei, echipa și calculele salvate.';
 
   @override
   String get settingsImportAction => 'Restabilește';
@@ -2424,8 +2352,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsLicenses => 'Licențe open source';
 
   @override
-  String get settingsDisclaimer =>
-      'Calculele sunt orientative și nu înlocuiesc consultanța fiscală, juridică sau financiară de specialitate.';
+  String get settingsDisclaimer => 'Calculele sunt orientative și nu înlocuiesc consultanța fiscală, juridică sau financiară de specialitate.';
 
   @override
   String get settingsProActive => 'Bilans Pro este activ';
@@ -2434,8 +2361,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsManageSubscription => 'Gestionează abonamentul';
 
   @override
-  String get settingsProPitch =>
-      'Toate țările, costul echipei, facturi nelimitate, rapoarte PDF și multe altele.';
+  String get settingsProPitch => 'Toate țările, costul echipei, facturi nelimitate, rapoarte PDF și multe altele.';
 
   @override
   String get settingsSeePlans => 'Vezi planurile';

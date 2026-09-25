@@ -263,7 +263,9 @@ class _PayrollScreenState extends State<PayrollScreen> {
               FinePrint(l.payDisclaimer(rulesDate)),
             ],
             SizedBox(height: MediaQuery.paddingOf(context).bottom),
-            ExcludeSemantics(child: SizedBox(height: 1, child: ColoredBox(color: c.paper))),
+            ExcludeSemantics(
+              child: SizedBox(height: 1, child: ColoredBox(color: c.paper)),
+            ),
           ],
         ),
       ),
@@ -280,35 +282,43 @@ class _PayrollScreenState extends State<PayrollScreen> {
   }
 
   List<Widget> _notes(AppLocalizations l, Formats fm, PayrollResult r) => [
-        for (final (text, warning) in payrollNoteTexts(l, fm, r))
-          Padding(padding: const EdgeInsets.only(top: 8), child: InfoNote(text, warning: warning)),
-      ];
+    for (final (text, warning) in payrollNoteTexts(l, fm, r))
+      Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: InfoNote(text, warning: warning),
+      ),
+  ];
 
   void _showSources(BuildContext context, PayrollSystem system) {
     final l = context.l10n;
     final t = Theme.of(context).textTheme;
-    unawaited(showModalBottomSheet<void>(
-      context: context,
-      useSafeArea: true,
-      builder: (context) => ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.fromLTRB(Gap.page, 0, Gap.page, 24),
-        children: [
-          Text(l.sourcesTitle, style: t.titleLarge),
-          const SizedBox(height: 12),
-          for (final s in PayrollRules.sources(system))
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [const Text('•  '), Expanded(child: Text(s, style: t.bodyMedium))],
+    unawaited(
+      showModalBottomSheet<void>(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.fromLTRB(Gap.page, 0, Gap.page, 24),
+          children: [
+            Text(l.sourcesTitle, style: t.titleLarge),
+            const SizedBox(height: 12),
+            for (final s in PayrollRules.sources(system))
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('•  '),
+                    Expanded(child: Text(s, style: t.bodyMedium)),
+                  ],
+                ),
               ),
-            ),
-          const SizedBox(height: 4),
-          FinePrint(l.payDisclaimer(context.fmt.date(PayrollRules.effectiveFrom(system)))),
-        ],
+            const SizedBox(height: 4),
+            FinePrint(l.payDisclaimer(context.fmt.date(PayrollRules.effectiveFrom(system)))),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
 
@@ -330,7 +340,10 @@ class _SystemButton extends StatelessWidget {
       excludeSemantics: true,
       child: Material(
         color: c.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radii.md), side: BorderSide(color: c.line)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          side: BorderSide(color: c.line),
+        ),
         child: InkWell(
           borderRadius: BorderRadius.circular(Radii.md),
           onTap: onTap,
@@ -343,7 +356,9 @@ class _SystemButton extends StatelessWidget {
                 children: [
                   CodeTile(system.countryCode, filled: true, width: 30),
                   const SizedBox(width: 8),
-                  Flexible(child: Text(name, style: t.labelMedium, overflow: TextOverflow.ellipsis)),
+                  Flexible(
+                    child: Text(name, style: t.labelMedium, overflow: TextOverflow.ellipsis),
+                  ),
                   const SizedBox(width: 2),
                   Icon(Icons.expand_more, size: 18, color: c.ink2),
                 ],
@@ -415,8 +430,7 @@ class _ResultHero extends StatelessWidget {
       ChartSegment(label: l.segNet, value: r.net > 0 ? r.net : 0, color: c.chart1, valueLabel: f.percentValue(shares[0], decimals: 1)),
       ChartSegment(label: l.segTax, value: r.totalTax, color: c.chart2, valueLabel: f.percentValue(shares[1], decimals: 1)),
       ChartSegment(label: l.segEmployee, value: r.employeeTotal, color: c.chart3, valueLabel: f.percentValue(shares[2], decimals: 1)),
-      if (r.employerTotal > 0)
-        ChartSegment(label: l.segEmployer, value: r.employerTotal, color: c.chart4, valueLabel: f.percentValue(shares[3], decimals: 1)),
+      if (r.employerTotal > 0) ChartSegment(label: l.segEmployer, value: r.employerTotal, color: c.chart4, valueLabel: f.percentValue(shares[3], decimals: 1)),
     ];
     return Panel(
       padding: const EdgeInsets.fromLTRB(18, 20, 18, 18),
@@ -436,7 +450,10 @@ class _ResultHero extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  Text(f.number(figure, decimals: d), style: t.displayLarge!.copyWith(color: c.green)),
+                  Text(
+                    f.number(figure, decimals: d),
+                    style: t.displayLarge!.copyWith(color: c.green),
+                  ),
                   const SizedBox(width: 8),
                   Text(f.currencySymbol(cur), style: t.titleMedium!.copyWith(color: c.ink2)),
                 ],
@@ -446,7 +463,10 @@ class _ResultHero extends StatelessWidget {
           const SizedBox(height: 4),
           Text(lines.join(' · '), style: t.bodyMedium!.copyWith(color: c.ink2)),
           if (mode != PayrollInputMode.totalCost && r.employerLines.isNotEmpty)
-            Text(l.payTotalCostLine(f.money(r.totalCost, cur, decimals: d)), style: t.bodyMedium!.copyWith(color: c.ink2)),
+            Text(
+              l.payTotalCostLine(f.money(r.totalCost, cur, decimals: d)),
+              style: t.bodyMedium!.copyWith(color: c.ink2),
+            ),
           const SizedBox(height: 18),
           Text(l.payComposition, style: t.labelMedium!.copyWith(color: c.ink2)),
           const SizedBox(height: 10),
@@ -472,7 +492,12 @@ class _LockedCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [Expanded(child: Text(l.systemName(system), style: t.titleLarge)), const ProBadge(strong: true)]),
+          Row(
+            children: [
+              Expanded(child: Text(l.systemName(system), style: t.titleLarge)),
+              const ProBadge(strong: true),
+            ],
+          ),
           const SizedBox(height: 8),
           Text(l.paySystemProHint, style: t.bodyMedium),
           const SizedBox(height: 12),

@@ -77,10 +77,5 @@ abstract final class IpsQr {
   }
 
   /// Removes the field delimiter and trims every line.
-  static String _clean(String s) => s
-      .replaceAll('|', ' ')
-      .split('\n')
-      .map((l) => l.trim())
-      .where((l) => l.isNotEmpty)
-      .join('\n');
+  static String _clean(String s) => s.replaceAll('|', ' ').split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).join('\n');
 }

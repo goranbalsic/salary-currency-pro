@@ -149,27 +149,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool get _serbian => context.read<SettingsController>().country.code == 'RS';
 
   BusinessProfile _current() => BusinessProfile(
-        party: InvoiceParty(
-          name: _name.text.trim(),
-          address: _address.text.trim(),
-          city: _city.text.trim(),
-          country: _country.text.trim(),
-          taxId: _taxId.text.trim(),
-          registrationNo: _regNo.text.trim(),
-          email: _email.text.trim(),
-        ),
-        bankAccount: BusinessValidators.tidyAccount(_account.text),
-        bankName: _bank.text.trim(),
-        iban: _iban.text.trim().isEmpty ? '' : Identifiers.formatIban(_iban.text),
-        swift: _swift.text.replaceAll(' ', '').toUpperCase(),
-        phone: _phone.text.trim(),
-        vatRegistered: _vat,
-        paymentCode: _paymentCode.text.trim().isEmpty ? '221' : _paymentCode.text.trim(),
-        defaultDueDays: _dueDays,
-        defaultCurrency: _currency,
-        defaultNote: _note.text.trim(),
-        showOnReports: _showOnReports,
-      );
+    party: InvoiceParty(
+      name: _name.text.trim(),
+      address: _address.text.trim(),
+      city: _city.text.trim(),
+      country: _country.text.trim(),
+      taxId: _taxId.text.trim(),
+      registrationNo: _regNo.text.trim(),
+      email: _email.text.trim(),
+    ),
+    bankAccount: BusinessValidators.tidyAccount(_account.text),
+    bankName: _bank.text.trim(),
+    iban: _iban.text.trim().isEmpty ? '' : Identifiers.formatIban(_iban.text),
+    swift: _swift.text.replaceAll(' ', '').toUpperCase(),
+    phone: _phone.text.trim(),
+    vatRegistered: _vat,
+    paymentCode: _paymentCode.text.trim().isEmpty ? '221' : _paymentCode.text.trim(),
+    defaultDueDays: _dueDays,
+    defaultCurrency: _currency,
+    defaultNote: _note.text.trim(),
+    showOnReports: _showOnReports,
+  );
 
   bool get _dirty => jsonEncode(_current().toJson()) != _initial;
 

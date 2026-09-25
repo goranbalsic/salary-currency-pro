@@ -37,16 +37,15 @@ class LoanInputs {
     bool clearFee = false,
     double? monthlyFee,
     bool clearMonthlyFee = false,
-  }) =>
-      LoanInputs(
-        principal: clearPrincipal ? null : (principal ?? this.principal),
-        currency: currency ?? this.currency,
-        rate: clearRate ? null : (rate ?? this.rate),
-        months: months ?? this.months,
-        type: type ?? this.type,
-        feePercent: clearFee ? null : (feePercent ?? this.feePercent),
-        monthlyFee: clearMonthlyFee ? null : (monthlyFee ?? this.monthlyFee),
-      );
+  }) => LoanInputs(
+    principal: clearPrincipal ? null : (principal ?? this.principal),
+    currency: currency ?? this.currency,
+    rate: clearRate ? null : (rate ?? this.rate),
+    months: months ?? this.months,
+    type: type ?? this.type,
+    feePercent: clearFee ? null : (feePercent ?? this.feePercent),
+    monthlyFee: clearMonthlyFee ? null : (monthlyFee ?? this.monthlyFee),
+  );
 
   LoanInput? toInput() {
     final p = principal;
@@ -63,14 +62,14 @@ class LoanInputs {
   }
 
   Map<String, Object?> toJson() => {
-        'principal': principal,
-        'currency': currency,
-        'rate': rate,
-        'months': months,
-        'type': type.name,
-        'fee': feePercent,
-        'monthlyFee': monthlyFee,
-      };
+    'principal': principal,
+    'currency': currency,
+    'rate': rate,
+    'months': months,
+    'type': type.name,
+    'fee': feePercent,
+    'monthlyFee': monthlyFee,
+  };
 
   static LoanInputs? fromJson(Object? raw, {required String fallbackCurrency}) {
     if (raw is! Map) return null;
@@ -118,16 +117,15 @@ class DepositInputs {
     bool clearTax = false,
     double? contribution,
     bool clearContribution = false,
-  }) =>
-      DepositInputs(
-        principal: clearPrincipal ? null : (principal ?? this.principal),
-        currency: currency ?? this.currency,
-        rate: clearRate ? null : (rate ?? this.rate),
-        months: months ?? this.months,
-        compounding: compounding ?? this.compounding,
-        taxPercent: clearTax ? null : (taxPercent ?? this.taxPercent),
-        contribution: clearContribution ? null : (contribution ?? this.contribution),
-      );
+  }) => DepositInputs(
+    principal: clearPrincipal ? null : (principal ?? this.principal),
+    currency: currency ?? this.currency,
+    rate: clearRate ? null : (rate ?? this.rate),
+    months: months ?? this.months,
+    compounding: compounding ?? this.compounding,
+    taxPercent: clearTax ? null : (taxPercent ?? this.taxPercent),
+    contribution: clearContribution ? null : (contribution ?? this.contribution),
+  );
 
   DepositInput? toInput() {
     final r = rate;
@@ -143,14 +141,14 @@ class DepositInputs {
   }
 
   Map<String, Object?> toJson() => {
-        'principal': principal,
-        'currency': currency,
-        'rate': rate,
-        'months': months,
-        'compounding': compounding.name,
-        'tax': taxPercent,
-        'contribution': contribution,
-      };
+    'principal': principal,
+    'currency': currency,
+    'rate': rate,
+    'months': months,
+    'compounding': compounding.name,
+    'tax': taxPercent,
+    'contribution': contribution,
+  };
 
   static DepositInputs? fromJson(Object? raw, {required String fallbackCurrency}) {
     if (raw is! Map) return null;
@@ -176,13 +174,20 @@ class LoanOffer {
   final double? feePercent;
   final double? monthlyFee;
 
-  LoanOffer copyWith({double? rate, bool clearRate = false, int? months, double? feePercent, bool clearFee = false, double? monthlyFee, bool clearMonthlyFee = false}) =>
-      LoanOffer(
-        rate: clearRate ? null : (rate ?? this.rate),
-        months: months ?? this.months,
-        feePercent: clearFee ? null : (feePercent ?? this.feePercent),
-        monthlyFee: clearMonthlyFee ? null : (monthlyFee ?? this.monthlyFee),
-      );
+  LoanOffer copyWith({
+    double? rate,
+    bool clearRate = false,
+    int? months,
+    double? feePercent,
+    bool clearFee = false,
+    double? monthlyFee,
+    bool clearMonthlyFee = false,
+  }) => LoanOffer(
+    rate: clearRate ? null : (rate ?? this.rate),
+    months: months ?? this.months,
+    feePercent: clearFee ? null : (feePercent ?? this.feePercent),
+    monthlyFee: clearMonthlyFee ? null : (monthlyFee ?? this.monthlyFee),
+  );
 
   Map<String, Object?> toJson() => {'rate': rate, 'months': months, 'fee': feePercent, 'monthlyFee': monthlyFee};
 

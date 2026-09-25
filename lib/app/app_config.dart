@@ -37,7 +37,7 @@ abstract final class AppConfig {
   static Uri get playStoreUri => Uri.parse('https://play.google.com/store/apps/details?id=$androidPackage');
 
   static Uri manageSubscriptionUri(String? productId) => Uri.parse(
-        'https://play.google.com/store/account/subscriptions'
-        '${productId == null ? '' : '?sku=$productId&package=$androidPackage'}',
-      );
+    'https://play.google.com/store/account/subscriptions'
+    '${productId == null ? '' : '?sku=$productId&package=$androidPackage'}',
+  );
 }

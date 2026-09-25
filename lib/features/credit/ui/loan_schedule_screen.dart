@@ -25,17 +25,21 @@ class LoanScheduleScreen extends StatelessWidget {
     final cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular, fontSize: 13.5);
     final head = t.labelSmall!;
     Widget row(List<String> v, {bool header = false}) => Container(
-          constraints: const BoxConstraints(minHeight: 44),
-          padding: const EdgeInsets.symmetric(horizontal: Gap.page, vertical: 8),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: header ? c.ink : c.line))),
-          child: Row(
-            children: [
-              SizedBox(width: 34, child: Text(v[0], style: header ? head : cell)),
-              for (var i = 1; i < v.length; i++)
-                Expanded(child: Text(v[i], textAlign: TextAlign.right, style: header ? head : cell, maxLines: 1)),
-            ],
-          ),
-        );
+      constraints: const BoxConstraints(minHeight: 44),
+      padding: const EdgeInsets.symmetric(horizontal: Gap.page, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: header ? c.ink : c.line)),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 34, child: Text(v[0], style: header ? head : cell)),
+          for (var i = 1; i < v.length; i++)
+            Expanded(
+              child: Text(v[i], textAlign: TextAlign.right, style: header ? head : cell, maxLines: 1),
+            ),
+        ],
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(l.loanSchedule),
@@ -48,7 +52,10 @@ class LoanScheduleScreen extends StatelessWidget {
             },
             icon: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [const Icon(Icons.picture_as_pdf_outlined), if (!pro.can(ProFeature.pdfExport)) ...[const SizedBox(width: 4), const ProBadge()]],
+              children: [
+                const Icon(Icons.picture_as_pdf_outlined),
+                if (!pro.can(ProFeature.pdfExport)) ...[const SizedBox(width: 4), const ProBadge()],
+              ],
             ),
           ),
         ],
@@ -64,7 +71,8 @@ class LoanScheduleScreen extends StatelessWidget {
                 itemBuilder: (context, i) {
                   final r = result.rows[i];
                   return Semantics(
-                    label: '${l.loanColNo} ${r.index}: ${l.loanColInstallment} ${f.money(r.outflow, currency)}, ${l.loanColInterest} ${f.money(r.interest, currency)}, ${l.loanColBalance} ${f.money(r.balance, currency)}',
+                    label:
+                        '${l.loanColNo} ${r.index}: ${l.loanColInstallment} ${f.money(r.outflow, currency)}, ${l.loanColInterest} ${f.money(r.interest, currency)}, ${l.loanColBalance} ${f.money(r.balance, currency)}',
                     excludeSemantics: true,
                     child: row(['${r.index}', f.number(r.outflow), f.number(r.interest), f.number(r.balance)]),
                   );

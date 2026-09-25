@@ -68,15 +68,15 @@ class _MarginScreenState extends State<MarginScreen> with CalcState<MarginScreen
   static double? _positive(double? v) => v != null && v > 0 ? v : null;
 
   Map<String, Object?> get _json => {
-        'mode': _mode.name,
-        'cost': _cost,
-        'price': _price,
-        'markup': _markup,
-        'margin': _margin,
-        'discount': _discount,
-        'vat': _vat,
-        'currency': _currency,
-      };
+    'mode': _mode.name,
+    'cost': _cost,
+    'price': _price,
+    'markup': _markup,
+    'margin': _margin,
+    'discount': _discount,
+    'vat': _vat,
+    'currency': _currency,
+  };
 
   /// Selling price before discount, from whichever inputs the mode uses.
   double? get _listPrice {
@@ -161,42 +161,42 @@ class _MarginScreenState extends State<MarginScreen> with CalcState<MarginScreen
                 ),
                 switch (_mode) {
                   MarginMode.price => NumberInputRow(
-                      key: const ValueKey('price'),
-                      label: l.mrgPrice,
-                      value: _price,
-                      formats: f,
-                      decimals: decimals,
-                      suffix: symbol,
-                      onChanged: (v) {
-                        _price = _positive(v);
-                        _changed();
-                      },
-                    ),
+                    key: const ValueKey('price'),
+                    label: l.mrgPrice,
+                    value: _price,
+                    formats: f,
+                    decimals: decimals,
+                    suffix: symbol,
+                    onChanged: (v) {
+                      _price = _positive(v);
+                      _changed();
+                    },
+                  ),
                   MarginMode.markup => NumberInputRow(
-                      key: const ValueKey('markup'),
-                      label: l.mrgMarkup,
-                      value: _markup,
-                      formats: f,
-                      suffix: '%',
-                      maxIntegerDigits: 5,
-                      onChanged: (v) {
-                        _markup = v;
-                        _changed();
-                      },
-                    ),
+                    key: const ValueKey('markup'),
+                    label: l.mrgMarkup,
+                    value: _markup,
+                    formats: f,
+                    suffix: '%',
+                    maxIntegerDigits: 5,
+                    onChanged: (v) {
+                      _markup = v;
+                      _changed();
+                    },
+                  ),
                   MarginMode.margin => NumberInputRow(
-                      key: const ValueKey('margin'),
-                      label: l.mrgMargin,
-                      value: _margin,
-                      formats: f,
-                      suffix: '%',
-                      maxIntegerDigits: 3,
-                      error: impossible,
-                      onChanged: (v) {
-                        _margin = v;
-                        _changed();
-                      },
-                    ),
+                    key: const ValueKey('margin'),
+                    label: l.mrgMargin,
+                    value: _margin,
+                    formats: f,
+                    suffix: '%',
+                    maxIntegerDigits: 3,
+                    error: impossible,
+                    onChanged: (v) {
+                      _margin = v;
+                      _changed();
+                    },
+                  ),
                 },
                 NumberInputRow(
                   label: l.mrgDiscount,

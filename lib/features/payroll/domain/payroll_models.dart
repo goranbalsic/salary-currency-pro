@@ -39,16 +39,16 @@ enum PayrollSystem {
   /// The default system for a country code, or null when the country has
   /// no modelled payroll system.
   static PayrollSystem? defaultFor(String countryCode) => switch (countryCode) {
-        'RS' => PayrollSystem.serbia,
-        'HR' => PayrollSystem.croatia,
-        'SI' => PayrollSystem.slovenia,
-        'BA' => PayrollSystem.fbih,
-        'ME' => PayrollSystem.montenegro,
-        'MK' => PayrollSystem.northMacedonia,
-        'BG' => PayrollSystem.bulgaria,
-        'RO' => PayrollSystem.romania,
-        _ => null,
-      };
+    'RS' => PayrollSystem.serbia,
+    'HR' => PayrollSystem.croatia,
+    'SI' => PayrollSystem.slovenia,
+    'BA' => PayrollSystem.fbih,
+    'ME' => PayrollSystem.montenegro,
+    'MK' => PayrollSystem.northMacedonia,
+    'BG' => PayrollSystem.bulgaria,
+    'RO' => PayrollSystem.romania,
+    _ => null,
+  };
 }
 
 /// What the person typed the amount as.
@@ -124,26 +124,25 @@ class PayrollOptions {
     double? montenegroSurtaxRate,
     bool? romaniaMinimumWageFacility,
     bool? fbihDisabilityFund,
-  }) =>
-      PayrollOptions(
-        croatiaLowerRate: croatiaLowerRate ?? this.croatiaLowerRate,
-        croatiaHigherRate: croatiaHigherRate ?? this.croatiaHigherRate,
-        children: children ?? this.children,
-        dependents: dependents ?? this.dependents,
-        montenegroSurtaxRate: montenegroSurtaxRate ?? this.montenegroSurtaxRate,
-        romaniaMinimumWageFacility: romaniaMinimumWageFacility ?? this.romaniaMinimumWageFacility,
-        fbihDisabilityFund: fbihDisabilityFund ?? this.fbihDisabilityFund,
-      );
+  }) => PayrollOptions(
+    croatiaLowerRate: croatiaLowerRate ?? this.croatiaLowerRate,
+    croatiaHigherRate: croatiaHigherRate ?? this.croatiaHigherRate,
+    children: children ?? this.children,
+    dependents: dependents ?? this.dependents,
+    montenegroSurtaxRate: montenegroSurtaxRate ?? this.montenegroSurtaxRate,
+    romaniaMinimumWageFacility: romaniaMinimumWageFacility ?? this.romaniaMinimumWageFacility,
+    fbihDisabilityFund: fbihDisabilityFund ?? this.fbihDisabilityFund,
+  );
 
   Map<String, Object?> toJson() => {
-        'hrLower': croatiaLowerRate,
-        'hrHigher': croatiaHigherRate,
-        'children': children,
-        'dependents': dependents,
-        'meSurtax': montenegroSurtaxRate,
-        'roMinWage': romaniaMinimumWageFacility,
-        'fbihDisability': fbihDisabilityFund,
-      };
+    'hrLower': croatiaLowerRate,
+    'hrHigher': croatiaHigherRate,
+    'children': children,
+    'dependents': dependents,
+    'meSurtax': montenegroSurtaxRate,
+    'roMinWage': romaniaMinimumWageFacility,
+    'fbihDisability': fbihDisabilityFund,
+  };
 
   factory PayrollOptions.fromJson(Map<String, Object?> json) {
     double d(String k, double fallback) {
@@ -185,14 +184,14 @@ class PayrollOptions {
 
   @override
   int get hashCode => Object.hash(
-        croatiaLowerRate,
-        croatiaHigherRate,
-        children,
-        dependents,
-        montenegroSurtaxRate,
-        romaniaMinimumWageFacility,
-        fbihDisabilityFund,
-      );
+    croatiaLowerRate,
+    croatiaHigherRate,
+    children,
+    dependents,
+    montenegroSurtaxRate,
+    romaniaMinimumWageFacility,
+    fbihDisabilityFund,
+  );
 }
 
 /// One computed line: a contribution or fee with its rate and amount.

@@ -257,8 +257,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbHeadline => 'Numbers you can trust.';
 
   @override
-  String get onbBody =>
-      'Pay, loans, official exchange rates and invoices — calculated to your country\'s rules. No account, no tracking.';
+  String get onbBody => 'Pay, loans, official exchange rates and invoices — calculated to your country\'s rules. No account, no tracking.';
 
   @override
   String get onbCountry => 'Your country';
@@ -295,8 +294,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get homeRatesEmpty =>
-      'Today\'s official rates appear here once you\'re online.';
+  String get homeRatesEmpty => 'Today\'s official rates appear here once you\'re online.';
 
   @override
   String get homeRecent => 'Recent';
@@ -486,12 +484,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get historySaved => 'Saved';
 
   @override
-  String get historySavedEmpty =>
-      'Tap Save on any result to keep it here with a name.';
+  String get historySavedEmpty => 'Tap Save on any result to keep it here with a name.';
 
   @override
-  String get historyRecentEmpty =>
-      'Calculations you finish appear here automatically.';
+  String get historyRecentEmpty => 'Calculations you finish appear here automatically.';
 
   @override
   String get historyClearTitle => 'Clear the recent list?';
@@ -652,8 +648,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get payAnnualNote =>
-      'Annual figures are 12 × the monthly amounts; year-end tax reconciliation may differ.';
+  String get payAnnualNote => 'Annual figures are 12 × the monthly amounts; year-end tax reconciliation may differ.';
 
   @override
   String payNoteMinBase(String amount) {
@@ -674,8 +669,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payNoteNonPositive => 'Mandatory charges exceed this pay.';
 
   @override
-  String get payEmpty =>
-      'Enter an amount to see the full breakdown — contributions, tax and the employer\'s total cost.';
+  String get payEmpty => 'Enter an amount to see the full breakdown — contributions, tax and the employer\'s total cost.';
 
   @override
   String get payErrorTooLarge => 'That amount is too large to calculate.';
@@ -684,8 +678,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paySystemTitle => 'Tax system';
 
   @override
-  String get paySystemProHint =>
-      'Your home country is free. Other countries are part of Pro.';
+  String get paySystemProHint => 'Your home country is free. Other countries are part of Pro.';
 
   @override
   String get payOptions => 'Options';
@@ -729,8 +722,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payHrHigher => 'Higher rate';
 
   @override
-  String get payHrRatesHint =>
-      'Set by your city or municipality: 15–23% and 25–33%. Without a decision, 20% and 30% apply.';
+  String get payHrRatesHint => 'Set by your city or municipality: 15–23% and 25–33%. Without a decision, 20% and 30% apply.';
 
   @override
   String payHrRateError(String lowRange, String highRange) {
@@ -750,22 +742,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payRoMinWage => 'Minimum-wage relief';
 
   @override
-  String get payRoMinWageHint =>
-      '200 lei are exempt for employees paid the national minimum wage.';
+  String get payRoMinWageHint => '200 lei are exempt for employees paid the national minimum wage.';
 
   @override
   String get payMeSurtax => 'Surtax rate';
 
   @override
-  String get payMeSurtaxHint =>
-      '13% in most municipalities, 15% in Podgorica and Cetinje.';
+  String get payMeSurtaxHint => '13% in most municipalities, 15% in Podgorica and Cetinje.';
 
   @override
   String get payFbihDisability => 'Disability employment fund 0.5%';
 
   @override
-  String get payFbihDisabilityHint =>
-      'Paid by companies that don\'t employ the required share of people with disabilities.';
+  String get payFbihDisabilityHint => 'Paid by companies that don\'t employ the required share of people with disabilities.';
 
   @override
   String get itemPension => 'Pension and disability insurance';
@@ -875,12 +864,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get teamNote =>
-      'Each employee is calculated under the rules of their own tax system. Annual figures are 12 × monthly.';
+  String get teamNote => 'Each employee is calculated under the rules of their own tax system. Annual figures are 12 × monthly.';
 
   @override
-  String get teamCurrenciesNote =>
-      'Totals are shown separately for each currency.';
+  String get teamCurrenciesNote => 'Totals are shown separately for each currency.';
 
   @override
   String get teamUnnamed => 'Unnamed';
@@ -909,8 +896,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get teamAmountError => 'Enter the pay amount.';
 
   @override
-  String get cmpNeedsRates =>
-      'Comparing countries needs today\'s exchange rates. Connect to the internet once and they\'ll be saved for offline use.';
+  String get cmpNeedsRates => 'Comparing countries needs today\'s exchange rates. Connect to the internet once and they\'ll be saved for offline use.';
 
   @override
   String get cmpRankedByNet => 'Ranked by net pay';
@@ -1008,8 +994,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get loanEirNote =>
-      'APR is the effective annual rate including all fees, per the EU consumer-credit formula.';
+  String get loanEirNote => 'APR is the effective annual rate including all fees, per the EU consumer-credit formula.';
 
   @override
   String get loanByYear => 'By year';
@@ -1129,8 +1114,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get prepayPaidOff =>
-      'The extra payment clears the entire remaining balance.';
+  String get prepayPaidOff => 'The extra payment clears the entire remaining balance.';
 
   @override
   String get prepayBefore => 'Before';
@@ -1163,12 +1147,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get depTax => 'Tax on interest';
 
   @override
-  String get depTaxHintRs =>
-      'In Serbia, interest on dinar savings is tax-free; on foreign-currency savings it is taxed at 15%.';
+  String get depTaxHintRs => 'In Serbia, interest on dinar savings is tax-free; on foreign-currency savings it is taxed at 15%.';
 
   @override
-  String get depTaxHint =>
-      'Enter the withholding tax on interest that applies to you.';
+  String get depTaxHint => 'Enter the withholding tax on interest that applies to you.';
 
   @override
   String get depContribution => 'Monthly addition';
@@ -1212,8 +1194,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get depErrorRate => 'Enter an interest rate between 0 and 100%.';
 
   @override
-  String get cmpLoanIntro =>
-      'Same amount for every offer. The cheapest offer is the one with the lowest total cost.';
+  String get cmpLoanIntro => 'Same amount for every offer. The cheapest offer is the one with the lowest total cost.';
 
   @override
   String cmpLoanOffer(int n) {
@@ -1284,8 +1265,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fxKindSell => 'Selling';
 
   @override
-  String get fxKindHint =>
-      'Buying and selling rates apply to dinar conversions.';
+  String get fxKindHint => 'Buying and selling rates apply to dinar conversions.';
 
   @override
   String fxUpdated(String date) {
@@ -1301,8 +1281,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fxLoading => 'Updating rates…';
 
   @override
-  String get fxNoRates =>
-      'No rates yet. Connect to the internet once to download today\'s official rates — after that the converter also works offline.';
+  String get fxNoRates => 'No rates yet. Connect to the internet once to download today\'s official rates — after that the converter also works offline.';
 
   @override
   String get fxUnsupported => 'There\'s no official rate for this pair.';
@@ -1321,8 +1300,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fxHistoryError => 'History isn\'t available offline.';
 
   @override
-  String get fxHistoryPro =>
-      'Rate history for 30, 90 and 365 days is part of Pro.';
+  String get fxHistoryPro => 'Rate history for 30, 90 and 365 days is part of Pro.';
 
   @override
   String fxHistoryMinMax(String min, String max) {
@@ -1376,8 +1354,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bizNewInvoice => 'New';
 
   @override
-  String get bizInvoicesEmpty =>
-      'No invoices yet. Create a professional invoice in under a minute.';
+  String get bizInvoicesEmpty => 'No invoices yet. Create a professional invoice in under a minute.';
 
   @override
   String bizFreeLeft(int count) {
@@ -1529,8 +1506,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invRateFetching => 'Fetching the NBS rate…';
 
   @override
-  String get invRateUnavailable =>
-      'The NBS rate for this date isn\'t available yet.';
+  String get invRateUnavailable => 'The NBS rate for this date isn\'t available yet.';
 
   @override
   String get invRateRetry => 'Fetch rate';
@@ -1565,22 +1541,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invDuplicate => 'Duplicate';
 
   @override
-  String get invProfileMissing =>
-      'Add your business details first — they appear on every invoice.';
+  String get invProfileMissing => 'Add your business details first — they appear on every invoice.';
 
   @override
   String get invNotInVat => 'The issuer is not registered for VAT.';
 
   @override
-  String get invValidWithoutStamp =>
-      'This invoice is valid without a stamp or signature.';
+  String get invValidWithoutStamp => 'This invoice is valid without a stamp or signature.';
 
   @override
   String get invQrCaption => 'Scan to pay (NBS IPS)';
 
   @override
-  String get invQrHint =>
-      'Your client scans the QR code in their bank app — amount, account and reference fill in automatically.';
+  String get invQrHint => 'Your client scans the QR code in their bank app — amount, account and reference fill in automatically.';
 
   @override
   String invQrMissing(String reason) {
@@ -1588,12 +1561,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invQrReasonAccount =>
-      'add a valid Serbian bank account in Business details';
+  String get invQrReasonAccount => 'add a valid Serbian bank account in Business details';
 
   @override
-  String get invQrReasonOther =>
-      'check the business name and payment reference';
+  String get invQrReasonOther => 'check the business name and payment reference';
 
   @override
   String get invDocTitle => 'Invoice';
@@ -1618,8 +1589,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invErrorClient => 'Enter the client\'s name.';
 
   @override
-  String get invErrorItems =>
-      'Add at least one item with a description and price.';
+  String get invErrorItems => 'Add at least one item with a description and price.';
 
   @override
   String get invErrorNumber => 'Enter an invoice number.';
@@ -1666,8 +1636,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profTitle => 'Business details';
 
   @override
-  String get profIntro =>
-      'Printed on your invoices and, if you choose, on PDF reports.';
+  String get profIntro => 'Printed on your invoices and, if you choose, on PDF reports.';
 
   @override
   String get profName => 'Business name';
@@ -1691,8 +1660,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profAccount => 'Bank account';
 
   @override
-  String get profAccountHint =>
-      'Serbian account (160-0000000000000-00) or IBAN';
+  String get profAccountHint => 'Serbian account (160-0000000000000-00) or IBAN';
 
   @override
   String get profBank => 'Bank';
@@ -1707,8 +1675,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profVat => 'Registered for VAT';
 
   @override
-  String get profVatHint =>
-      'Adds VAT lines to invoices. When off, invoices state that you\'re not in the VAT system.';
+  String get profVatHint => 'Adds VAT lines to invoices. When off, invoices state that you\'re not in the VAT system.';
 
   @override
   String get profPaymentCode => 'Payment code for the QR (šifra plaćanja)';
@@ -1732,16 +1699,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profShowOnReports => 'Show business details on PDF reports';
 
   @override
-  String get profInvalidPib =>
-      'The PIB check digit doesn\'t match — please check it.';
+  String get profInvalidPib => 'The PIB check digit doesn\'t match — please check it.';
 
   @override
-  String get profInvalidMb =>
-      'The registration number check digit doesn\'t match.';
+  String get profInvalidMb => 'The registration number check digit doesn\'t match.';
 
   @override
-  String get profInvalidAccount =>
-      'The account number check digits don\'t match.';
+  String get profInvalidAccount => 'The account number check digits don\'t match.';
 
   @override
   String get profSaved => 'Business details saved';
@@ -1790,24 +1754,20 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other:
-          '$count foreign-currency invoices have no NBS rate and aren\'t counted.',
-      one:
-          '$count foreign-currency invoice has no NBS rate and isn\'t counted.',
+      other: '$count foreign-currency invoices have no NBS rate and aren\'t counted.',
+      one: '$count foreign-currency invoice has no NBS rate and isn\'t counted.',
     );
     return '$_temp0';
   }
 
   @override
-  String get pausalSourceInvoices =>
-      'Counted from issued and paid invoices (by date of supply) plus revenue you add below.';
+  String get pausalSourceInvoices => 'Counted from issued and paid invoices (by date of supply) plus revenue you add below.';
 
   @override
   String get pausalManual => 'Revenue outside the app';
 
   @override
-  String get pausalManualEmpty =>
-      'Add invoices you issued elsewhere this year to keep the totals complete.';
+  String get pausalManualEmpty => 'Add invoices you issued elsewhere this year to keep the totals complete.';
 
   @override
   String get pausalManualAdd => 'Add revenue';
@@ -1891,8 +1851,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mrgPriceWithVat => 'Price with VAT';
 
   @override
-  String get mrgMarginHint =>
-      'Margin is profit as a share of the price; markup is profit as a share of the cost.';
+  String get mrgMarginHint => 'Margin is profit as a share of the price; markup is profit as a share of the cost.';
 
   @override
   String get mrgImpossible => 'A margin of 100% or more isn\'t possible.';
@@ -1933,8 +1892,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get beContribution => 'Contribution margin';
 
   @override
-  String get beImpossible =>
-      'The price must be higher than the variable cost per unit.';
+  String get beImpossible => 'The price must be higher than the variable cost per unit.';
 
   @override
   String get invsTitle => 'Investment analysis';
@@ -2023,33 +1981,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profMbLength => 'The registration number has 8 digits.';
 
   @override
-  String get profInvalidAccountShape =>
-      'Enter a Serbian account (160-0000000000000-00) or an IBAN.';
+  String get profInvalidAccountShape => 'Enter a Serbian account (160-0000000000000-00) or an IBAN.';
 
   @override
   String get profInvalidEmail => 'Check the email address.';
 
   @override
-  String get profInvalidPaymentCode =>
-      'Use a three-digit payment code, e.g. 221.';
+  String get profInvalidPaymentCode => 'Use a three-digit payment code, e.g. 221.';
 
   @override
-  String get profPrivacy =>
-      'Stored only on this phone. It is included in backups you export.';
+  String get profPrivacy => 'Stored only on this phone. It is included in backups you export.';
 
   @override
   String get profIban => 'IBAN for payments from abroad';
 
   @override
-  String get profIbanHint =>
-      'Printed on foreign-currency invoices. Leave empty to use your account above in IBAN form.';
+  String get profIbanHint => 'Printed on foreign-currency invoices. Leave empty to use your account above in IBAN form.';
 
   @override
   String get profSwift => 'SWIFT / BIC';
 
   @override
-  String get profInvalidIban =>
-      'Check the IBAN — the check digits don\'t match.';
+  String get profInvalidIban => 'Check the IBAN — the check digits don\'t match.';
 
   @override
   String get profInvalidSwift => 'A SWIFT/BIC code has 8 or 11 characters.';
@@ -2068,8 +2021,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Invoices to the Serbian public sector — and, for VAT payers, to Serbian companies — must also go through SEF (e-Faktura). Bilans invoices suit clients abroad, individuals and your own records.';
 
   @override
-  String get invRateOffline =>
-      'Couldn\'t reach the NBS. Check your connection — you can also save now and fetch the rate later.';
+  String get invRateOffline => 'Couldn\'t reach the NBS. Check your connection — you can also save now and fetch the rate later.';
 
   @override
   String get invMarkedPaid => 'Marked as paid';
@@ -2084,8 +2036,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invCancelled => 'Invoice cancelled';
 
   @override
-  String get invCompleteFirst =>
-      'Add the client and at least one item before issuing.';
+  String get invCompleteFirst => 'Add the client and at least one item before issuing.';
 
   @override
   String invCancelConfirm(String number) {
@@ -2093,12 +2044,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invCancelBody =>
-      'It stays in your list, marked as cancelled, and no longer counts as revenue.';
+  String get invCancelBody => 'It stays in your list, marked as cancelled, and no longer counts as revenue.';
 
   @override
-  String get invRateMissingNote =>
-      'No NBS rate yet — this invoice isn\'t counted toward your paušal limits until it has one.';
+  String get invRateMissingNote => 'No NBS rate yet — this invoice isn\'t counted toward your paušal limits until it has one.';
 
   @override
   String pausalMonthlyRoom(String amount) {
@@ -2139,8 +2088,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invsNoMatch => 'No invoices match.';
 
   @override
-  String get vatEmpty =>
-      'Enter an amount to split it into the net amount and VAT.';
+  String get vatEmpty => 'Enter an amount to split it into the net amount and VAT.';
 
   @override
   String vatRatesNote(String country) {
@@ -2160,23 +2108,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get beVariableHint => 'Materials, commissions, delivery…';
 
   @override
-  String get beEmpty =>
-      'Enter your fixed costs, price and variable cost per unit.';
+  String get beEmpty => 'Enter your fixed costs, price and variable cost per unit.';
 
   @override
   String get beContributionUnit => 'Contribution per unit';
 
   @override
-  String get beExplain =>
-      'Each unit sold contributes its price minus its variable cost toward fixed costs and profit. Amounts are without VAT.';
+  String get beExplain => 'Each unit sold contributes its price minus its variable cost toward fixed costs and profit. Amounts are without VAT.';
 
   @override
-  String get invsFlowsHint =>
-      'Net cash flow at the end of each year. Type a minus sign for a year with more going out than coming in.';
+  String get invsFlowsHint => 'Net cash flow at the end of each year. Type a minus sign for a year with more going out than coming in.';
 
   @override
-  String get invsEmpty =>
-      'Enter the investment, a discount rate and at least one year\'s cash flow.';
+  String get invsEmpty => 'Enter the investment, a discount rate and at least one year\'s cash flow.';
 
   @override
   String get invsCumulative => 'Cumulative cash flow';
@@ -2188,8 +2132,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proHeadline => 'Bilans Pro';
 
   @override
-  String get proSubhead =>
-      'Every calculator, every country, unlimited invoices and PDF reports. No ads, no account.';
+  String get proSubhead => 'Every calculator, every country, unlimited invoices and PDF reports. No ads, no account.';
 
   @override
   String get proFeatAllCountries => 'Payroll for all 9 tax systems';
@@ -2204,34 +2147,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proFeatUnlimitedSaves => 'Unlimited saved calculations';
 
   @override
-  String get proBenefitCountries =>
-      'Payroll for all 9 tax systems, and the same pay compared across countries';
+  String get proBenefitCountries => 'Payroll for all 9 tax systems, and the same pay compared across countries';
 
   @override
-  String get proBenefitTeam =>
-      'Team cost: your whole payroll by month and year';
+  String get proBenefitTeam => 'Team cost: your whole payroll by month and year';
 
   @override
   String get proBenefitInvoices => 'Unlimited invoices as professional PDFs';
 
   @override
-  String get proBenefitInvoicesRs =>
-      'Unlimited invoices with the NBS IPS payment QR code';
+  String get proBenefitInvoicesRs => 'Unlimited invoices with the NBS IPS payment QR code';
 
   @override
-  String get proBenefitPausal =>
-      'Paušal limit tracker for the 6 and 8 million dinar limits';
+  String get proBenefitPausal => 'Paušal limit tracker for the 6 and 8 million dinar limits';
 
   @override
   String get proBenefitLoans => 'Compare loan offers and plan early repayments';
 
   @override
-  String get proBenefitHistory =>
-      'Exchange-rate history for 30, 90 and 365 days';
+  String get proBenefitHistory => 'Exchange-rate history for 30, 90 and 365 days';
 
   @override
-  String get proBenefitInvestment =>
-      'Investment analysis: NPV, IRR and payback';
+  String get proBenefitInvestment => 'Investment analysis: NPV, IRR and payback';
 
   @override
   String get proBenefitPdf => 'PDF reports for pay, loans, savings and teams';
@@ -2294,28 +2231,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proRestored => 'Bilans Pro is active on this device.';
 
   @override
-  String get proNothingToRestore =>
-      'No Bilans Pro purchase was found for this Google account.';
+  String get proNothingToRestore => 'No Bilans Pro purchase was found for this Google account.';
 
   @override
-  String get proPending =>
-      'Your payment is pending. Pro unlocks automatically as soon as Google Play confirms it.';
+  String get proPending => 'Your payment is pending. Pro unlocks automatically as soon as Google Play confirms it.';
 
   @override
-  String get proError =>
-      'The purchase didn\'t go through. You haven\'t been charged — please try again.';
+  String get proError => 'The purchase didn\'t go through. You haven\'t been charged — please try again.';
 
   @override
-  String get proUnavailable =>
-      'Purchases aren\'t available right now. Check that Google Play is installed and you\'re signed in, then try again.';
+  String get proUnavailable => 'Purchases aren\'t available right now. Check that Google Play is installed and you\'re signed in, then try again.';
 
   @override
   String get proLegal =>
       'Subscriptions renew automatically at the price shown until you cancel. Cancel anytime in Google Play → Payments & subscriptions, at least 24 hours before the renewal date. A free trial turns into a paid yearly subscription unless you cancel before it ends.';
 
   @override
-  String get proLegalLifetime =>
-      'A one-time purchase: no subscription and no renewals. Pro stays active on every device signed in to the same Google account.';
+  String get proLegalLifetime => 'A one-time purchase: no subscription and no renewals. Pro stays active on every device signed in to the same Google account.';
 
   @override
   String get proDevSimulate => 'Simulate Pro (developer build)';
@@ -2324,8 +2256,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proWelcome => 'Welcome to Bilans Pro';
 
   @override
-  String get proWelcomeBody =>
-      'Everything is unlocked. Thank you for supporting an independent app.';
+  String get proWelcomeBody => 'Everything is unlocked. Thank you for supporting an independent app.';
 
   @override
   String get settingsPreferences => 'Preferences';
@@ -2364,8 +2295,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsImportTitle => 'Restore this backup?';
 
   @override
-  String get settingsImportBody =>
-      'Everything in the app is replaced with the backup\'s contents — invoices, business details, team and saved calculations.';
+  String get settingsImportBody => 'Everything in the app is replaced with the backup\'s contents — invoices, business details, team and saved calculations.';
 
   @override
   String get settingsImportAction => 'Restore';
@@ -2387,8 +2317,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDeleteAction => 'Delete everything';
 
   @override
-  String get settingsDataNote =>
-      'Bilans has no account and no servers: your data lives only on this phone. Export a backup to move it to a new phone.';
+  String get settingsDataNote => 'Bilans has no account and no servers: your data lives only on this phone. Export a backup to move it to a new phone.';
 
   @override
   String get settingsAbout => 'About';
@@ -2409,8 +2338,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLicenses => 'Open-source licences';
 
   @override
-  String get settingsDisclaimer =>
-      'Calculations are indicative and do not replace professional tax, legal or financial advice.';
+  String get settingsDisclaimer => 'Calculations are indicative and do not replace professional tax, legal or financial advice.';
 
   @override
   String get settingsProActive => 'Bilans Pro is active';
@@ -2419,8 +2347,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsManageSubscription => 'Manage subscription';
 
   @override
-  String get settingsProPitch =>
-      'All countries, team payroll, unlimited invoices, PDF reports and more.';
+  String get settingsProPitch => 'All countries, team payroll, unlimited invoices, PDF reports and more.';
 
   @override
   String get settingsSeePlans => 'See plans';

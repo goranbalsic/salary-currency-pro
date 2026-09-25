@@ -9,51 +9,51 @@ import 'payroll_models.dart';
 abstract final class PayrollRules {
   /// The date the displayed rules are effective from, per system.
   static DateTime effectiveFrom(PayrollSystem s) => switch (s) {
-        PayrollSystem.northMacedonia => DateTime(2026, 7, 1),
-        PayrollSystem.bulgaria => DateTime(2026, 8, 1),
-        PayrollSystem.romania => DateTime(2026, 7, 1),
-        PayrollSystem.slovenia => DateTime(2026, 3, 1),
-        _ => DateTime(2026, 1, 1),
-      };
+    PayrollSystem.northMacedonia => DateTime(2026, 7, 1),
+    PayrollSystem.bulgaria => DateTime(2026, 8, 1),
+    PayrollSystem.romania => DateTime(2026, 7, 1),
+    PayrollSystem.slovenia => DateTime(2026, 3, 1),
+    _ => DateTime(2026, 1, 1),
+  };
 
   static List<String> sources(PayrollSystem s) => switch (s) {
-        PayrollSystem.serbia => const [
-            'Zakon o porezu na dohodak građana — neoporezivi iznos 34.221 RSD od 1.1.2026.',
-            'Najniža / najviša mesečna osnovica doprinosa 2026: 51.297 / 732.820 RSD',
-          ],
-        PayrollSystem.croatia => const [
-            'Naredba o iznosima osnovica za obračun doprinosa za 2026. (NN 150/2025)',
-            'Zakon o porezu na dohodak — osobni odbitak 600 EUR, prag 5.000 EUR mjesečno',
-          ],
-        PayrollSystem.slovenia => const [
-            'Lestvica za odmero dohodnine in olajšave za leto 2026 (Ur. l. RS 104/2025)',
-            'Obvezni zdravstveni prispevek 39,36 EUR od 1.3.2026; prispevek za dolgotrajno oskrbo 1 %',
-          ],
-        PayrollSystem.fbih => const [
-            'Zakon o doprinosima FBiH — stope od 1.7.2025. (31 % iz plate, 5 % na platu)',
-            'Zakon o porezu na dohodak FBiH — lični odbitak 300 KM',
-          ],
-        PayrollSystem.republikaSrpska => const [
-            'Zakon o doprinosima RS — ukupna stopa 31 %',
-            'Zakon o porezu na dohodak RS — stopa 8 %, lični odbitak 1.000 KM',
-          ],
-        PayrollSystem.montenegro => const [
-            'Zakon o porezu na dohodak fizičkih lica — 0 % do 700, 9 % do 1.000, 15 % preko 1.000 EUR bruto',
-            'Prirez porezu: 13 % (Podgorica i Cetinje 15 %)',
-          ],
-        PayrollSystem.northMacedonia => const [
-            'Закон за придонеси — стапки од 1.7.2026',
-            'УЈП — лично ослободување 10.932 денари месечно за 2026',
-          ],
-        PayrollSystem.bulgaria => const [
-            'КСО — осигурителни вноски 2026; максимален осигурителен доход 2.300 EUR от 1.8.2026',
-            'ЗДДФЛ — плосък данък 10 %',
-          ],
-        PayrollSystem.romania => const [
-            'Codul fiscal art. 77 — deducere personală; salariul minim 4.325 lei de la 1.7.2026 (HG 146/2026)',
-            'OUG 89/2025 — suma netaxabilă 200 lei pentru salariul minim',
-          ],
-      };
+    PayrollSystem.serbia => const [
+      'Zakon o porezu na dohodak građana — neoporezivi iznos 34.221 RSD od 1.1.2026.',
+      'Najniža / najviša mesečna osnovica doprinosa 2026: 51.297 / 732.820 RSD',
+    ],
+    PayrollSystem.croatia => const [
+      'Naredba o iznosima osnovica za obračun doprinosa za 2026. (NN 150/2025)',
+      'Zakon o porezu na dohodak — osobni odbitak 600 EUR, prag 5.000 EUR mjesečno',
+    ],
+    PayrollSystem.slovenia => const [
+      'Lestvica za odmero dohodnine in olajšave za leto 2026 (Ur. l. RS 104/2025)',
+      'Obvezni zdravstveni prispevek 39,36 EUR od 1.3.2026; prispevek za dolgotrajno oskrbo 1 %',
+    ],
+    PayrollSystem.fbih => const [
+      'Zakon o doprinosima FBiH — stope od 1.7.2025. (31 % iz plate, 5 % na platu)',
+      'Zakon o porezu na dohodak FBiH — lični odbitak 300 KM',
+    ],
+    PayrollSystem.republikaSrpska => const [
+      'Zakon o doprinosima RS — ukupna stopa 31 %',
+      'Zakon o porezu na dohodak RS — stopa 8 %, lični odbitak 1.000 KM',
+    ],
+    PayrollSystem.montenegro => const [
+      'Zakon o porezu na dohodak fizičkih lica — 0 % do 700, 9 % do 1.000, 15 % preko 1.000 EUR bruto',
+      'Prirez porezu: 13 % (Podgorica i Cetinje 15 %)',
+    ],
+    PayrollSystem.northMacedonia => const [
+      'Закон за придонеси — стапки од 1.7.2026',
+      'УЈП — лично ослободување 10.932 денари месечно за 2026',
+    ],
+    PayrollSystem.bulgaria => const [
+      'КСО — осигурителни вноски 2026; максимален осигурителен доход 2.300 EUR от 1.8.2026',
+      'ЗДДФЛ — плосък данък 10 %',
+    ],
+    PayrollSystem.romania => const [
+      'Codul fiscal art. 77 — deducere personală; salariul minim 4.325 lei de la 1.7.2026 (HG 146/2026)',
+      'OUG 89/2025 — suma netaxabilă 200 lei pentru salariul minim',
+    ],
+  };
 
   // ---------------------------------------------------------------- Serbia
   static const rsNonTaxable = 34221.0;

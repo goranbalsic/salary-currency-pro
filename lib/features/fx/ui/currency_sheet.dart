@@ -42,9 +42,7 @@ class _CurrencySheetState extends State<_CurrencySheet> {
     final rest = (widget.available.toList()..sort()).where((c) => !pinned.contains(c)).toList();
     final all = [...pinned, ...rest];
     final q = _q.trim().toLowerCase();
-    final filtered = q.isEmpty
-        ? all
-        : all.where((code) => code.toLowerCase().contains(q) || (l.currencyName(code) ?? '').toLowerCase().contains(q)).toList();
+    final filtered = q.isEmpty ? all : all.where((code) => code.toLowerCase().contains(q) || (l.currencyName(code) ?? '').toLowerCase().contains(q)).toList();
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.8,

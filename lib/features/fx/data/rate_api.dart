@@ -28,7 +28,23 @@ abstract class RateApi {
 /// Currencies the NBS still quotes (the feed also carries legacy
 /// pre-euro currencies with a middle rate only — those are dropped).
 const _nbsLegacy = {
-  'ATS', 'BEF', 'DEM', 'ESP', 'FIM', 'FRF', 'GRD', 'IEP', 'ITL', 'LUF', 'NLG', 'PTE', 'SIT', 'SKK', 'HRK', 'BGN', 'XDR',
+  'ATS',
+  'BEF',
+  'DEM',
+  'ESP',
+  'FIM',
+  'FRF',
+  'GRD',
+  'IEP',
+  'ITL',
+  'LUF',
+  'NLG',
+  'PTE',
+  'SIT',
+  'SKK',
+  'HRK',
+  'BGN',
+  'XDR',
 };
 
 class HttpRateApi implements RateApi {
@@ -58,8 +74,7 @@ class HttpRateApi implements RateApi {
     }
   }
 
-  static String _ymd(DateTime d) =>
-      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  static String _ymd(DateTime d) => '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   static double? _pos(Object? v) => v is num && v.isFinite && v > 0 ? v.toDouble() : null;
 

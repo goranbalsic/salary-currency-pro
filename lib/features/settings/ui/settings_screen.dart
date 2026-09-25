@@ -95,11 +95,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final now = DateTime.now();
       final bytes = Uint8List.fromList(utf8.encode(Backup.encode(store, now: now)));
       final name = Backup.fileName(now);
-      final result = await SharePlus.instance.share(ShareParams(
-        files: [XFile.fromData(bytes, mimeType: 'application/json', name: name)],
-        fileNameOverrides: [name],
-        subject: l.settingsBackupSubject,
-      ));
+      final result = await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile.fromData(bytes, mimeType: 'application/json', name: name)],
+          fileNameOverrides: [name],
+          subject: l.settingsBackupSubject,
+        ),
+      );
       if (!mounted) return;
       if (result.status == ShareResultStatus.success) showSnack(context, l.settingsExported);
     } catch (_) {
@@ -114,9 +116,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final services = context.read<AppServices>();
     XFile? file;
     try {
-      file = await openFile(acceptedTypeGroups: [
-        const XTypeGroup(label: 'JSON', extensions: ['json'], mimeTypes: ['application/json', 'text/plain', 'application/octet-stream']),
-      ]);
+      file = await openFile(
+        acceptedTypeGroups: [
+          const XTypeGroup(label: 'JSON', extensions: ['json'], mimeTypes: ['application/json', 'text/plain', 'application/octet-stream']),
+        ],
+      );
     } catch (_) {
       if (mounted) showSnack(context, l.errorGeneric);
       return;
@@ -228,7 +232,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Container(
               constraints: const BoxConstraints(minHeight: 56),
               alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: c.line)),
+              ),
               child: Text(l.settingsDeleteAll, style: t.bodyMedium!.copyWith(color: c.brick)),
             ),
           ),
@@ -258,7 +264,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 24),
           Center(child: Text('${l.appName} ${_version ?? ''}'.trim(), style: t.bodySmall)),
           const SizedBox(height: 4),
-          Center(child: Text(l.settingsDisclaimer, style: t.bodySmall, textAlign: TextAlign.center)),
+          Center(
+            child: Text(l.settingsDisclaimer, style: t.bodySmall, textAlign: TextAlign.center),
+          ),
         ],
       ),
     );

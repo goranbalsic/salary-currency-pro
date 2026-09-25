@@ -316,7 +316,14 @@ class _StatusPill extends StatelessWidget {
                   decoration: BoxDecoration(shape: BoxShape.circle, color: offline ? c.warning : c.positive),
                 ),
               const SizedBox(width: 6),
-              Flexible(child: Text(text, style: t.bodySmall!.copyWith(color: c.ink2), maxLines: 2, overflow: TextOverflow.ellipsis)),
+              Flexible(
+                child: Text(
+                  text,
+                  style: t.bodySmall!.copyWith(color: c.ink2),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         ),

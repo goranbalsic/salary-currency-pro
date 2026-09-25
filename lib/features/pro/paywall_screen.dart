@@ -16,18 +16,18 @@ import 'billing_gateway.dart';
 import 'pro_controller.dart';
 
 String proFeatureName(AppLocalizations l, ProFeature f) => switch (f) {
-      ProFeature.allCountries => l.proFeatAllCountries,
-      ProFeature.teamPayroll => l.toolTeam,
-      ProFeature.compareCountries => l.toolCompare,
-      ProFeature.compareLoans => l.toolLoanCompare,
-      ProFeature.earlyRepayment => l.toolPrepay,
-      ProFeature.fxHistory => l.toolRateHistory,
-      ProFeature.unlimitedInvoices => l.proFeatUnlimitedInvoices,
-      ProFeature.pausalTracker => l.toolPausal,
-      ProFeature.investment => l.toolInvestment,
-      ProFeature.pdfExport => l.proFeatPdf,
-      ProFeature.unlimitedSaves => l.proFeatUnlimitedSaves,
-    };
+  ProFeature.allCountries => l.proFeatAllCountries,
+  ProFeature.teamPayroll => l.toolTeam,
+  ProFeature.compareCountries => l.toolCompare,
+  ProFeature.compareLoans => l.toolLoanCompare,
+  ProFeature.earlyRepayment => l.toolPrepay,
+  ProFeature.fxHistory => l.toolRateHistory,
+  ProFeature.unlimitedInvoices => l.proFeatUnlimitedInvoices,
+  ProFeature.pausalTracker => l.toolPausal,
+  ProFeature.investment => l.toolInvestment,
+  ProFeature.pdfExport => l.proFeatPdf,
+  ProFeature.unlimitedSaves => l.proFeatUnlimitedSaves,
+};
 
 /// Opens a URL in the browser; shows a snack when that fails.
 Future<void> openExternal(BuildContext context, Uri uri) async {
@@ -182,7 +182,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
       bottomNavigationBar: unavailable
           ? null
           : Container(
-              decoration: BoxDecoration(color: c.paper, border: Border(top: BorderSide(color: c.line))),
+              decoration: BoxDecoration(
+                color: c.paper,
+                border: Border(top: BorderSide(color: c.line)),
+              ),
               child: SafeArea(
                 top: false,
                 child: Padding(
@@ -200,7 +203,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         onPressed: selected == null || purchasing || loading ? null : () => _buy(pro),
                         child: purchasing
                             ? SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: c.onBrass))
-                            : Text(cta(), style: t.titleMedium!.copyWith(color: c.onBrass), textAlign: TextAlign.center),
+                            : Text(
+                                cta(),
+                                style: t.titleMedium!.copyWith(color: c.onBrass),
+                                textAlign: TextAlign.center,
+                              ),
                       ),
                       if (summaryText != null) ...[
                         const SizedBox(height: 8),
@@ -232,7 +239,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
           Text(l.proSubhead, style: t.bodyMedium!.copyWith(color: c.ink2)),
           const SizedBox(height: 18),
           if (loading)
-            const Padding(padding: EdgeInsets.symmetric(vertical: 32), child: Center(child: CircularProgressIndicator()))
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Center(child: CircularProgressIndicator()),
+            )
           else if (unavailable)
             _Unavailable(onRetry: pro.loadProducts)
           else
@@ -369,7 +379,10 @@ class _Unavailable extends StatelessWidget {
       children: [
         InfoNote(l.proUnavailable, warning: true),
         const SizedBox(height: 8),
-        Align(alignment: Alignment.centerLeft, child: TextButton(onPressed: onRetry, child: Text(l.actionRetry))),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton(onPressed: onRetry, child: Text(l.actionRetry)),
+        ),
         if (AppConfig.isDev) ...[
           const SizedBox(height: 8),
           SwitchRow(
@@ -405,7 +418,11 @@ class _SuccessView extends StatelessWidget {
               const SizedBox(height: 18),
               Text(l.proWelcome, style: t.headlineMedium, textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(l.proWelcomeBody, style: t.bodyMedium!.copyWith(color: c.ink2), textAlign: TextAlign.center),
+              Text(
+                l.proWelcomeBody,
+                style: t.bodyMedium!.copyWith(color: c.ink2),
+                textAlign: TextAlign.center,
+              ),
               const Spacer(),
               FilledButton(onPressed: onDone, child: Text(l.actionContinue)),
             ],

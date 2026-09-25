@@ -68,17 +68,16 @@ class LoanInput {
     double? upfrontFeePercent,
     double? upfrontFeeFixed,
     double? monthlyFee,
-  }) =>
-      LoanInput(
-        principal: principal ?? this.principal,
-        annualRatePercent: annualRatePercent ?? this.annualRatePercent,
-        months: months ?? this.months,
-        type: type ?? this.type,
-        upfrontFeePercent: upfrontFeePercent ?? this.upfrontFeePercent,
-        upfrontFeeFixed: upfrontFeeFixed ?? this.upfrontFeeFixed,
-        monthlyFee: monthlyFee ?? this.monthlyFee,
-        firstPaymentDate: firstPaymentDate,
-      );
+  }) => LoanInput(
+    principal: principal ?? this.principal,
+    annualRatePercent: annualRatePercent ?? this.annualRatePercent,
+    months: months ?? this.months,
+    type: type ?? this.type,
+    upfrontFeePercent: upfrontFeePercent ?? this.upfrontFeePercent,
+    upfrontFeeFixed: upfrontFeeFixed ?? this.upfrontFeeFixed,
+    monthlyFee: monthlyFee ?? this.monthlyFee,
+    firstPaymentDate: firstPaymentDate,
+  );
 }
 
 enum LoanInputError { principal, rate, term, fee }
@@ -309,14 +308,16 @@ class LoanEngine {
       }
       principalPart = Money.clamp(principalPart, 0, balance);
       balance = Money.sub(balance, principalPart);
-      rows.add(LoanRow(
-        index: startIndex + i,
-        date: firstPaymentDate == null ? null : _addMonths(firstPaymentDate, i),
-        interest: interest,
-        principal: principalPart,
-        fee: fee,
-        balance: balance,
-      ));
+      rows.add(
+        LoanRow(
+          index: startIndex + i,
+          date: firstPaymentDate == null ? null : _addMonths(firstPaymentDate, i),
+          interest: interest,
+          principal: principalPart,
+          fee: fee,
+          balance: balance,
+        ),
+      );
       if (balance <= 0) break;
     }
     return rows;
@@ -341,14 +342,16 @@ class LoanEngine {
       if (principalPart <= 0 || i == maxMonths - 1) principalPart = balance;
       principalPart = Money.clamp(principalPart, 0, balance);
       balance = Money.sub(balance, principalPart);
-      rows.add(LoanRow(
-        index: startIndex + i,
-        date: firstPaymentDate == null ? null : _addMonths(firstPaymentDate, i),
-        interest: interest,
-        principal: principalPart,
-        fee: fee,
-        balance: balance,
-      ));
+      rows.add(
+        LoanRow(
+          index: startIndex + i,
+          date: firstPaymentDate == null ? null : _addMonths(firstPaymentDate, i),
+          interest: interest,
+          principal: principalPart,
+          fee: fee,
+          balance: balance,
+        ),
+      );
     }
     return rows;
   }

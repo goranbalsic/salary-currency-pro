@@ -21,10 +21,10 @@ class Quote {
   final double? sell;
 
   double valueFor(RateKind kind) => switch (kind) {
-        RateKind.middle => middle,
-        RateKind.buy => buy ?? middle,
-        RateKind.sell => sell ?? middle,
-      };
+    RateKind.middle => middle,
+    RateKind.buy => buy ?? middle,
+    RateKind.sell => sell ?? middle,
+  };
 
   Map<String, Object?> toJson() => {'m': middle, 'b': buy, 's': sell};
 
@@ -66,12 +66,12 @@ class RateTable {
   }
 
   Map<String, Object?> toJson() => {
-        'source': source.name,
-        'base': base,
-        'date': date.toIso8601String(),
-        'fetchedAt': fetchedAt.toIso8601String(),
-        'quotes': {for (final e in quotes.entries) e.key: e.value.toJson()},
-      };
+    'source': source.name,
+    'base': base,
+    'date': date.toIso8601String(),
+    'fetchedAt': fetchedAt.toIso8601String(),
+    'quotes': {for (final e in quotes.entries) e.key: e.value.toJson()},
+  };
 
   static RateTable? fromJson(Object? raw) {
     if (raw is! Map) return null;
@@ -134,9 +134,9 @@ class RateBook {
   bool get isEmpty => nbs == null && ecb == null;
 
   Set<String> get currencies => {
-        if (nbs != null) ...{nbs!.base, ...nbs!.quotes.keys},
-        if (ecb != null) ...{ecb!.base, ...ecb!.quotes.keys, 'BAM'},
-      };
+    if (nbs != null) ...{nbs!.base, ...nbs!.quotes.keys},
+    if (ecb != null) ...{ecb!.base, ...ecb!.quotes.keys, 'BAM'},
+  };
 
   double? _ecbEurValue(String code) {
     final e = ecb;

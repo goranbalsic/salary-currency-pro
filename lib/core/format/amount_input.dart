@@ -72,16 +72,15 @@ class AmountInputFormatter extends TextInputFormatter {
       final v = Formats.parseLoose(newText);
       if (v == null) return oldValue;
       final text = formatNumberForEditing(v.abs());
-      return TextEditingValue(text: text, selection: TextSelection.collapsed(offset: text.length));
+      return TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
     }
 
     var working = newText;
     // Backspace over a thousands separator deletes the digit before it.
-    if (inserted == -1 &&
-        oldValue.selection.isCollapsed &&
-        cursor < oldValue.text.length &&
-        oldValue.text[cursor] == _group &&
-        cursor > 0) {
+    if (inserted == -1 && oldValue.selection.isCollapsed && cursor < oldValue.text.length && oldValue.text[cursor] == _group && cursor > 0) {
       working = newText.substring(0, cursor - 1) + newText.substring(cursor);
       cursor -= 1;
     }
@@ -139,7 +138,10 @@ class AmountInputFormatter extends TextInputFormatter {
       if (text[offset] != _group) seen++;
       offset++;
     }
-    return TextEditingValue(text: text, selection: TextSelection.collapsed(offset: offset));
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: offset),
+    );
   }
 
   String _groupDigits(String digits) {

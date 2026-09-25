@@ -31,36 +31,35 @@ class InvoiceParty {
     String? taxId,
     String? registrationNo,
     String? email,
-  }) =>
-      InvoiceParty(
-        name: name ?? this.name,
-        address: address ?? this.address,
-        city: city ?? this.city,
-        country: country ?? this.country,
-        taxId: taxId ?? this.taxId,
-        registrationNo: registrationNo ?? this.registrationNo,
-        email: email ?? this.email,
-      );
+  }) => InvoiceParty(
+    name: name ?? this.name,
+    address: address ?? this.address,
+    city: city ?? this.city,
+    country: country ?? this.country,
+    taxId: taxId ?? this.taxId,
+    registrationNo: registrationNo ?? this.registrationNo,
+    email: email ?? this.email,
+  );
 
   Map<String, Object?> toJson() => {
-        'name': name,
-        'address': address,
-        'city': city,
-        'country': country,
-        'taxId': taxId,
-        'regNo': registrationNo,
-        'email': email,
-      };
+    'name': name,
+    'address': address,
+    'city': city,
+    'country': country,
+    'taxId': taxId,
+    'regNo': registrationNo,
+    'email': email,
+  };
 
   factory InvoiceParty.fromJson(Map<String, Object?> j) => InvoiceParty(
-        name: _s(j['name']),
-        address: _s(j['address']),
-        city: _s(j['city']),
-        country: _s(j['country']),
-        taxId: _s(j['taxId']),
-        registrationNo: _s(j['regNo']),
-        email: _s(j['email']),
-      );
+    name: _s(j['name']),
+    address: _s(j['address']),
+    city: _s(j['city']),
+    country: _s(j['country']),
+    taxId: _s(j['taxId']),
+    registrationNo: _s(j['regNo']),
+    email: _s(j['email']),
+  );
 }
 
 class InvoiceItem {
@@ -84,30 +83,29 @@ class InvoiceItem {
 
   bool get isBlank => description.trim().isEmpty && unitPrice == 0;
 
-  InvoiceItem copyWith({String? description, double? quantity, String? unit, double? unitPrice, double? vatPercent}) =>
-      InvoiceItem(
-        description: description ?? this.description,
-        quantity: quantity ?? this.quantity,
-        unit: unit ?? this.unit,
-        unitPrice: unitPrice ?? this.unitPrice,
-        vatPercent: vatPercent ?? this.vatPercent,
-      );
+  InvoiceItem copyWith({String? description, double? quantity, String? unit, double? unitPrice, double? vatPercent}) => InvoiceItem(
+    description: description ?? this.description,
+    quantity: quantity ?? this.quantity,
+    unit: unit ?? this.unit,
+    unitPrice: unitPrice ?? this.unitPrice,
+    vatPercent: vatPercent ?? this.vatPercent,
+  );
 
   Map<String, Object?> toJson() => {
-        'd': description,
-        'q': quantity,
-        'u': unit,
-        'p': unitPrice,
-        'v': vatPercent,
-      };
+    'd': description,
+    'q': quantity,
+    'u': unit,
+    'p': unitPrice,
+    'v': vatPercent,
+  };
 
   factory InvoiceItem.fromJson(Map<String, Object?> j) => InvoiceItem(
-        description: _s(j['d']),
-        quantity: _d(j['q'], 1),
-        unit: _s(j['u']),
-        unitPrice: _d(j['p'], 0),
-        vatPercent: _d(j['v'], 0),
-      );
+    description: _s(j['d']),
+    quantity: _d(j['q'], 1),
+    unit: _s(j['u']),
+    unitPrice: _d(j['p'], 0),
+    vatPercent: _d(j['v'], 0),
+  );
 }
 
 class Invoice {
@@ -194,46 +192,45 @@ class Invoice {
     bool clearRsdRate = false,
     DateTime? paidDate,
     bool clearPaidDate = false,
-  }) =>
-      Invoice(
-        id: id,
-        number: number ?? this.number,
-        status: status ?? this.status,
-        issueDate: issueDate ?? this.issueDate,
-        serviceDate: serviceDate ?? this.serviceDate,
-        dueDate: dueDate ?? this.dueDate,
-        place: place ?? this.place,
-        client: client ?? this.client,
-        currency: currency ?? this.currency,
-        items: items ?? this.items,
-        vatRegistered: vatRegistered ?? this.vatRegistered,
-        note: note ?? this.note,
-        reference: reference ?? this.reference,
-        rsdRate: clearRsdRate ? null : (rsdRate ?? this.rsdRate),
-        rsdRateDate: clearRsdRate ? null : (rsdRateDate ?? this.rsdRateDate),
-        paidDate: clearPaidDate ? null : (paidDate ?? this.paidDate),
-        createdAt: createdAt,
-      );
+  }) => Invoice(
+    id: id,
+    number: number ?? this.number,
+    status: status ?? this.status,
+    issueDate: issueDate ?? this.issueDate,
+    serviceDate: serviceDate ?? this.serviceDate,
+    dueDate: dueDate ?? this.dueDate,
+    place: place ?? this.place,
+    client: client ?? this.client,
+    currency: currency ?? this.currency,
+    items: items ?? this.items,
+    vatRegistered: vatRegistered ?? this.vatRegistered,
+    note: note ?? this.note,
+    reference: reference ?? this.reference,
+    rsdRate: clearRsdRate ? null : (rsdRate ?? this.rsdRate),
+    rsdRateDate: clearRsdRate ? null : (rsdRateDate ?? this.rsdRateDate),
+    paidDate: clearPaidDate ? null : (paidDate ?? this.paidDate),
+    createdAt: createdAt,
+  );
 
   Map<String, Object?> toJson() => {
-        'id': id,
-        'number': number,
-        'status': status.name,
-        'issue': issueDate.toIso8601String(),
-        'service': serviceDate.toIso8601String(),
-        'due': dueDate.toIso8601String(),
-        'place': place,
-        'client': client.toJson(),
-        'currency': currency,
-        'items': [for (final i in items) i.toJson()],
-        'vat': vatRegistered,
-        'note': note,
-        'ref': reference,
-        'rsdRate': rsdRate,
-        'rsdRateDate': rsdRateDate?.toIso8601String(),
-        'paid': paidDate?.toIso8601String(),
-        'created': createdAt.toIso8601String(),
-      };
+    'id': id,
+    'number': number,
+    'status': status.name,
+    'issue': issueDate.toIso8601String(),
+    'service': serviceDate.toIso8601String(),
+    'due': dueDate.toIso8601String(),
+    'place': place,
+    'client': client.toJson(),
+    'currency': currency,
+    'items': [for (final i in items) i.toJson()],
+    'vat': vatRegistered,
+    'note': note,
+    'ref': reference,
+    'rsdRate': rsdRate,
+    'rsdRateDate': rsdRateDate?.toIso8601String(),
+    'paid': paidDate?.toIso8601String(),
+    'created': createdAt.toIso8601String(),
+  };
 
   /// Returns null for a record that is too damaged to show.
   static Invoice? tryFromJson(Object? raw) {
@@ -254,7 +251,10 @@ class Invoice {
       client: j['client'] is Map ? InvoiceParty.fromJson((j['client']! as Map).cast<String, Object?>()) : const InvoiceParty(),
       currency: _s(j['currency']).isEmpty ? 'RSD' : _s(j['currency']),
       items: itemsRaw is List
-          ? [for (final i in itemsRaw) if (i is Map) InvoiceItem.fromJson(i.cast<String, Object?>())]
+          ? [
+              for (final i in itemsRaw)
+                if (i is Map) InvoiceItem.fromJson(i.cast<String, Object?>()),
+            ]
           : const [],
       vatRegistered: j['vat'] == true,
       note: _s(j['note']),

@@ -44,16 +44,16 @@ enum AppLanguage {
 
   /// Native name, shown the same in every UI language.
   String get nativeName => switch (this) {
-        AppLanguage.en => 'English',
-        AppLanguage.srLatn => 'Srpski (latinica)',
-        AppLanguage.srCyrl => 'Српски (ћирилица)',
-        AppLanguage.hr => 'Hrvatski',
-        AppLanguage.bs => 'Bosanski',
-        AppLanguage.sl => 'Slovenščina',
-        AppLanguage.mk => 'Македонски',
-        AppLanguage.bg => 'Български',
-        AppLanguage.ro => 'Română',
-      };
+    AppLanguage.en => 'English',
+    AppLanguage.srLatn => 'Srpski (latinica)',
+    AppLanguage.srCyrl => 'Српски (ћирилица)',
+    AppLanguage.hr => 'Hrvatski',
+    AppLanguage.bs => 'Bosanski',
+    AppLanguage.sl => 'Slovenščina',
+    AppLanguage.mk => 'Македонски',
+    AppLanguage.bg => 'Български',
+    AppLanguage.ro => 'Română',
+  };
 
   static AppLanguage? byName(String? name) => AppLanguage.values.where((l) => l.name == name).firstOrNull;
 
@@ -96,14 +96,14 @@ enum AppLanguage {
 
   /// Default country for a language when the device region is unknown.
   String get defaultCountry => switch (this) {
-        AppLanguage.hr => 'HR',
-        AppLanguage.bs => 'BA',
-        AppLanguage.sl => 'SI',
-        AppLanguage.mk => 'MK',
-        AppLanguage.bg => 'BG',
-        AppLanguage.ro => 'RO',
-        _ => 'RS',
-      };
+    AppLanguage.hr => 'HR',
+    AppLanguage.bs => 'BA',
+    AppLanguage.sl => 'SI',
+    AppLanguage.mk => 'MK',
+    AppLanguage.bg => 'BG',
+    AppLanguage.ro => 'RO',
+    _ => 'RS',
+  };
 }
 
 class SettingsController extends ChangeNotifier {
@@ -151,13 +151,13 @@ class SettingsController extends ChangeNotifier {
   }
 
   Future<void> _save() => _store.writeJson(_key, {
-        'country': _country,
-        'language': _language?.name,
-        'theme': _theme.name,
-        'onboarded': _onboarded,
-        'payroll': _payrollSystem?.name,
-        'annual': _annualView,
-      });
+    'country': _country,
+    'language': _language?.name,
+    'theme': _theme.name,
+    'onboarded': _onboarded,
+    'payroll': _payrollSystem?.name,
+    'annual': _annualView,
+  });
 
   Future<void> setCountry(String code) async {
     if (!HomeCountry.all.any((h) => h.code == code)) return;

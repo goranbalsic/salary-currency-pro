@@ -10,20 +10,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Invoice inv(String id, {InvoiceStatus status = InvoiceStatus.issued, String currency = 'RSD', double? rate, String client = 'Client'}) => Invoice(
-      id: id,
-      number: '$id/2026',
-      status: status,
-      issueDate: DateTime(2026, 5, 1),
-      serviceDate: DateTime(2026, 5, 1),
-      dueDate: DateTime(2026, 5, 16),
-      place: '',
-      client: InvoiceParty(name: client),
-      currency: currency,
-      items: const [InvoiceItem(description: 'Work', unitPrice: 1000)],
-      vatRegistered: false,
-      rsdRate: rate,
-      createdAt: DateTime(2026, 5, 1),
-    );
+  id: id,
+  number: '$id/2026',
+  status: status,
+  issueDate: DateTime(2026, 5, 1),
+  serviceDate: DateTime(2026, 5, 1),
+  dueDate: DateTime(2026, 5, 16),
+  place: '',
+  client: InvoiceParty(name: client),
+  currency: currency,
+  items: const [InvoiceItem(description: 'Work', unitPrice: 1000)],
+  vatRegistered: false,
+  rsdRate: rate,
+  createdAt: DateTime(2026, 5, 1),
+);
 
 void main() {
   late Store store;
@@ -82,7 +82,13 @@ void main() {
 
     test('profile round trip with defaults for missing fields', () async {
       final b = BusinessStore(store);
-      await b.saveProfile(const BusinessProfile(party: InvoiceParty(name: 'Studio'), iban: 'RS35160000502000123464', swift: 'AIKBRS22'));
+      await b.saveProfile(
+        const BusinessProfile(
+          party: InvoiceParty(name: 'Studio'),
+          iban: 'RS35160000502000123464',
+          swift: 'AIKBRS22',
+        ),
+      );
       final p = BusinessStore(store).profile;
       expect(p.party.name, 'Studio');
       expect(p.iban, 'RS35160000502000123464');

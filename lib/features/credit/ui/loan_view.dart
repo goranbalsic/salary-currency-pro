@@ -86,12 +86,12 @@ class _LoanViewState extends State<LoanView> {
   }
 
   String? _errorText(AppLocalizations l, LoanInputError? e) => switch (e) {
-        LoanInputError.principal => l.loanErrorPrincipal,
-        LoanInputError.rate => l.loanErrorRate,
-        LoanInputError.term => l.loanErrorTerm,
-        LoanInputError.fee => l.loanErrorFee,
-        null => null,
-      };
+    LoanInputError.principal => l.loanErrorPrincipal,
+    LoanInputError.rate => l.loanErrorRate,
+    LoanInputError.term => l.loanErrorTerm,
+    LoanInputError.fee => l.loanErrorFee,
+    null => null,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,11 @@ class _LoanViewState extends State<LoanView> {
                 error: validation == LoanInputError.rate,
                 onChanged: (v) => _update(inputs.copyWith(rate: v, clearRate: v == null)),
               ),
-              TermField(label: l.loanTerm, months: inputs.months, onChanged: (m) => _update(inputs.copyWith(months: m))),
+              TermField(
+                label: l.loanTerm,
+                months: inputs.months,
+                onChanged: (m) => _update(inputs.copyWith(months: m)),
+              ),
               NumberInputRow(
                 label: l.loanFee,
                 value: inputs.feePercent,
@@ -171,8 +175,16 @@ class _LoanViewState extends State<LoanView> {
                       spacing: 6,
                       runSpacing: 6,
                       children: [
-                        PillChip(label: l.loanAnnuity, selected: inputs.type == RepaymentType.annuity, onTap: () => _update(inputs.copyWith(type: RepaymentType.annuity))),
-                        PillChip(label: l.loanLinear, selected: inputs.type == RepaymentType.linear, onTap: () => _update(inputs.copyWith(type: RepaymentType.linear))),
+                        PillChip(
+                          label: l.loanAnnuity,
+                          selected: inputs.type == RepaymentType.annuity,
+                          onTap: () => _update(inputs.copyWith(type: RepaymentType.annuity)),
+                        ),
+                        PillChip(
+                          label: l.loanLinear,
+                          selected: inputs.type == RepaymentType.linear,
+                          onTap: () => _update(inputs.copyWith(type: RepaymentType.linear)),
+                        ),
                       ],
                     ),
                   ],
@@ -223,9 +235,11 @@ class _LoanViewState extends State<LoanView> {
           _SchedulePreview(result: result),
           const SizedBox(height: 10),
           OutlinedButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-              builder: (_) => LoanScheduleScreen(result: result!, currency: cur),
-            )),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => LoanScheduleScreen(result: result!, currency: cur),
+              ),
+            ),
             child: Text(l.loanScheduleAll(result.months)),
           ),
           if (result.months >= 6) ...[
@@ -282,15 +296,22 @@ class _SchedulePreview extends StatelessWidget {
     final cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular, fontSize: 13.5);
     final head = t.labelSmall!;
     Widget r(List<String> v, {bool header = false, bool divider = true}) => Container(
-          padding: const EdgeInsets.symmetric(vertical: 9),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: header ? c.ink : c.line, width: header ? 1 : (divider ? 1 : 0)))),
-          child: Row(
-            children: [
-              SizedBox(width: 34, child: Text(v[0], style: header ? head : cell)),
-              for (var i = 1; i < v.length; i++) Expanded(child: Text(v[i], textAlign: TextAlign.right, style: header ? head : cell)),
-            ],
-          ),
-        );
+      padding: const EdgeInsets.symmetric(vertical: 9),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: header ? c.ink : c.line, width: header ? 1 : (divider ? 1 : 0)),
+        ),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 34, child: Text(v[0], style: header ? head : cell)),
+          for (var i = 1; i < v.length; i++)
+            Expanded(
+              child: Text(v[i], textAlign: TextAlign.right, style: header ? head : cell),
+            ),
+        ],
+      ),
+    );
     return Column(
       children: [
         r([l.loanColNo, l.loanColInterest.toUpperCase(), l.loanColPrincipal.toUpperCase(), l.loanColBalance.toUpperCase()], header: true),
@@ -298,7 +319,9 @@ class _SchedulePreview extends StatelessWidget {
           if (rows.length > 5 && i == 3)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: c.line)),
+              ),
               child: Text('· · ·', textAlign: TextAlign.center, style: t.bodySmall),
             ),
           r(

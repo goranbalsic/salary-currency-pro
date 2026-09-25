@@ -72,8 +72,7 @@ const _pluralCategories = {
 void main() {
   final dir = Directory('lib/l10n');
   final arbs = {
-    for (final f in dir.listSync().whereType<File>().where((f) => f.path.endsWith('.arb')))
-      f.uri.pathSegments.last.replaceAll(RegExp(r'^app_|\.arb$'), ''): f,
+    for (final f in dir.listSync().whereType<File>().where((f) => f.path.endsWith('.arb'))) f.uri.pathSegments.last.replaceAll(RegExp(r'^app_|\.arb$'), ''): f,
   };
   final english = _messages(arbs['en']!);
 

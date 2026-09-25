@@ -43,8 +43,7 @@ abstract final class Money {
   }
 
   /// Exact difference `a - b` at [decimals] precision.
-  static double sub(double a, double b, [int decimals = 2]) =>
-      fromMinor(toMinor(a, decimals) - toMinor(b, decimals), decimals);
+  static double sub(double a, double b, [int decimals = 2]) => fromMinor(toMinor(a, decimals) - toMinor(b, decimals), decimals);
 
   static double clamp(double value, double? min, double? max) {
     var v = value;

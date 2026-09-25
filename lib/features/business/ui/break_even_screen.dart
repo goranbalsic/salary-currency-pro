@@ -61,9 +61,8 @@ class _BreakEvenScreenState extends State<BreakEvenScreen> with CalcState<BreakE
     persistInputs(_json, complete: r != null);
   }
 
-  BreakEvenResult? get _result => !_ready
-      ? null
-      : BreakEven.compute(fixedCosts: _fixed ?? 0, unitPrice: _price!, unitVariableCost: _variable ?? 0, targetProfit: _target ?? 0);
+  BreakEvenResult? get _result =>
+      !_ready ? null : BreakEven.compute(fixedCosts: _fixed ?? 0, unitPrice: _price!, unitVariableCost: _variable ?? 0, targetProfit: _target ?? 0);
 
   @override
   Widget build(BuildContext context) {
@@ -77,18 +76,18 @@ class _BreakEvenScreenState extends State<BreakEvenScreen> with CalcState<BreakE
     final impossible = _ready && result == null;
 
     Widget input(String label, double? value, ValueChanged<double?> onChanged, {String? hint, bool divider = true}) => NumberInputRow(
-          label: label,
-          hint: hint,
-          value: value,
-          formats: f,
-          decimals: decimals,
-          suffix: symbol,
-          divider: divider,
-          onChanged: (v) {
-            onChanged(v);
-            _changed();
-          },
-        );
+      label: label,
+      hint: hint,
+      value: value,
+      formats: f,
+      decimals: decimals,
+      suffix: symbol,
+      divider: divider,
+      onChanged: (v) {
+        onChanged(v);
+        _changed();
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(l.beTitle)),

@@ -36,26 +36,25 @@ class TeamMember {
     }
   }
 
-  TeamMember copyWith({String? name, String? role, PayrollSystem? system, PayrollInputMode? mode, double? amount, PayrollOptions? options}) =>
-      TeamMember(
-        id: id,
-        name: name ?? this.name,
-        role: role ?? this.role,
-        system: system ?? this.system,
-        mode: mode ?? this.mode,
-        amount: amount ?? this.amount,
-        options: options ?? this.options,
-      );
+  TeamMember copyWith({String? name, String? role, PayrollSystem? system, PayrollInputMode? mode, double? amount, PayrollOptions? options}) => TeamMember(
+    id: id,
+    name: name ?? this.name,
+    role: role ?? this.role,
+    system: system ?? this.system,
+    mode: mode ?? this.mode,
+    amount: amount ?? this.amount,
+    options: options ?? this.options,
+  );
 
   Map<String, Object?> toJson() => {
-        'id': id,
-        'name': name,
-        'role': role,
-        'system': system.name,
-        'mode': mode.name,
-        'amount': amount,
-        'options': options.toJson(),
-      };
+    'id': id,
+    'name': name,
+    'role': role,
+    'system': system.name,
+    'mode': mode.name,
+    'amount': amount,
+    'options': options.toJson(),
+  };
 
   static TeamMember? tryFromJson(Object? raw) {
     if (raw is! Map) return null;

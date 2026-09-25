@@ -24,7 +24,13 @@ final ecbTable = RateTable(
   base: 'EUR',
   date: DateTime(2026, 9, 25),
   fetchedAt: DateTime(2026, 9, 25, 16),
-  quotes: const {'USD': Quote(middle: 1.1375), 'CHF': Quote(middle: 0.9435), 'GBP': Quote(middle: 0.8608), 'RON': Quote(middle: 5.0791), 'HUF': Quote(middle: 366.2)},
+  quotes: const {
+    'USD': Quote(middle: 1.1375),
+    'CHF': Quote(middle: 0.9435),
+    'GBP': Quote(middle: 0.8608),
+    'RON': Quote(middle: 5.0791),
+    'HUF': Quote(middle: 366.2),
+  },
 );
 
 class FakeRateApi implements RateApi {

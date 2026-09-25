@@ -60,36 +60,35 @@ class BusinessProfile {
     String? defaultCurrency,
     String? defaultNote,
     bool? showOnReports,
-  }) =>
-      BusinessProfile(
-        party: party ?? this.party,
-        bankAccount: bankAccount ?? this.bankAccount,
-        bankName: bankName ?? this.bankName,
-        iban: iban ?? this.iban,
-        swift: swift ?? this.swift,
-        phone: phone ?? this.phone,
-        vatRegistered: vatRegistered ?? this.vatRegistered,
-        paymentCode: paymentCode ?? this.paymentCode,
-        defaultDueDays: defaultDueDays ?? this.defaultDueDays,
-        defaultCurrency: defaultCurrency ?? this.defaultCurrency,
-        defaultNote: defaultNote ?? this.defaultNote,
-        showOnReports: showOnReports ?? this.showOnReports,
-      );
+  }) => BusinessProfile(
+    party: party ?? this.party,
+    bankAccount: bankAccount ?? this.bankAccount,
+    bankName: bankName ?? this.bankName,
+    iban: iban ?? this.iban,
+    swift: swift ?? this.swift,
+    phone: phone ?? this.phone,
+    vatRegistered: vatRegistered ?? this.vatRegistered,
+    paymentCode: paymentCode ?? this.paymentCode,
+    defaultDueDays: defaultDueDays ?? this.defaultDueDays,
+    defaultCurrency: defaultCurrency ?? this.defaultCurrency,
+    defaultNote: defaultNote ?? this.defaultNote,
+    showOnReports: showOnReports ?? this.showOnReports,
+  );
 
   Map<String, Object?> toJson() => {
-        'party': party.toJson(),
-        'account': bankAccount,
-        'bank': bankName,
-        'iban': iban,
-        'swift': swift,
-        'phone': phone,
-        'vat': vatRegistered,
-        'sf': paymentCode,
-        'due': defaultDueDays,
-        'currency': defaultCurrency,
-        'note': defaultNote,
-        'reports': showOnReports,
-      };
+    'party': party.toJson(),
+    'account': bankAccount,
+    'bank': bankName,
+    'iban': iban,
+    'swift': swift,
+    'phone': phone,
+    'vat': vatRegistered,
+    'sf': paymentCode,
+    'due': defaultDueDays,
+    'currency': defaultCurrency,
+    'note': defaultNote,
+    'reports': showOnReports,
+  };
 
   static BusinessProfile fromJson(Object? raw) {
     if (raw is! Map) return const BusinessProfile();
@@ -182,9 +181,9 @@ class BusinessStore extends ChangeNotifier {
   }
 
   void _sortInvoices() => _invoices.sort((a, b) {
-        final byDate = b.issueDate.compareTo(a.issueDate);
-        return byDate != 0 ? byDate : b.createdAt.compareTo(a.createdAt);
-      });
+    final byDate = b.issueDate.compareTo(a.issueDate);
+    return byDate != 0 ? byDate : b.createdAt.compareTo(a.createdAt);
+  });
 
   String newId() => '${DateTime.now().microsecondsSinceEpoch}-${_random.nextInt(1 << 20)}';
 

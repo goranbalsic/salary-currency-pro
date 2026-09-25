@@ -57,105 +57,121 @@ class _PrepaymentScreenState extends State<PrepaymentScreen> {
       appBar: AppBar(title: Text(l.prepayTitle)),
       body: !valid
           ? Padding(padding: const EdgeInsets.all(Gap.page), child: InfoNote(l.prepayNoLoan))
-          : Builder(builder: (context) {
-              final cur = _loan!.currency;
-              final after = _after.clamp(1, input.months - 1);
-              final result = const LoanEngine().prepay(
-                input,
-                afterMonth: after,
-                amount: _amount ?? 0,
-                mode: _mode,
-                feePercent: _fee ?? 0,
-              );
-              final hasAmount = (_amount ?? 0) > 0;
-              return PageBody(
-                children: [
-                  Text(
-                    l.prepayIntro(f.money(input.principal, cur), f.percentValue(input.annualRatePercent), l.commonMonthsCount(input.months)),
-                    style: t.bodyMedium!.copyWith(color: c.ink2),
-                  ),
-                  const SizedBox(height: 16),
-                  Panel(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        NumberInputRow(
-                          label: l.prepayAmount,
-                          value: _amount,
-                          formats: f,
-                          suffix: f.currencySymbol(cur),
-                          onChanged: (v) => setState(() => _amount = v),
-                        ),
-                        StepperRow(
-                          label: l.prepayAfter,
-                          value: after,
-                          min: 1,
-                          max: input.months - 1,
-                          onChanged: (v) => setState(() => _after = v),
-                        ),
-                        NumberInputRow(
-                          label: l.prepayFee,
-                          value: _fee,
-                          formats: f,
-                          suffix: '%',
-                          maxIntegerDigits: 2,
-                          onChanged: (v) => setState(() => _fee = v),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(l.prepayMode, style: t.bodyMedium!.copyWith(color: c.ink2)),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 6,
-                                runSpacing: 6,
-                                children: [
-                                  PillChip(label: l.prepayShorten, selected: _mode == PrepaymentMode.shortenTerm, onTap: () => setState(() => _mode = PrepaymentMode.shortenTerm)),
-                                  PillChip(label: l.prepayLower, selected: _mode == PrepaymentMode.lowerPayment, onTap: () => setState(() => _mode = PrepaymentMode.lowerPayment)),
-                                ],
-                              ),
-                            ],
+          : Builder(
+              builder: (context) {
+                final cur = _loan!.currency;
+                final after = _after.clamp(1, input.months - 1);
+                final result = const LoanEngine().prepay(
+                  input,
+                  afterMonth: after,
+                  amount: _amount ?? 0,
+                  mode: _mode,
+                  feePercent: _fee ?? 0,
+                );
+                final hasAmount = (_amount ?? 0) > 0;
+                return PageBody(
+                  children: [
+                    Text(
+                      l.prepayIntro(f.money(input.principal, cur), f.percentValue(input.annualRatePercent), l.commonMonthsCount(input.months)),
+                      style: t.bodyMedium!.copyWith(color: c.ink2),
+                    ),
+                    const SizedBox(height: 16),
+                    Panel(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          NumberInputRow(
+                            label: l.prepayAmount,
+                            value: _amount,
+                            formats: f,
+                            suffix: f.currencySymbol(cur),
+                            onChanged: (v) => setState(() => _amount = v),
                           ),
-                        ),
-                      ],
+                          StepperRow(
+                            label: l.prepayAfter,
+                            value: after,
+                            min: 1,
+                            max: input.months - 1,
+                            onChanged: (v) => setState(() => _after = v),
+                          ),
+                          NumberInputRow(
+                            label: l.prepayFee,
+                            value: _fee,
+                            formats: f,
+                            suffix: '%',
+                            maxIntegerDigits: 2,
+                            onChanged: (v) => setState(() => _fee = v),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(l.prepayMode, style: t.bodyMedium!.copyWith(color: c.ink2)),
+                                const SizedBox(height: 8),
+                                Wrap(
+                                  spacing: 6,
+                                  runSpacing: 6,
+                                  children: [
+                                    PillChip(
+                                      label: l.prepayShorten,
+                                      selected: _mode == PrepaymentMode.shortenTerm,
+                                      onTap: () => setState(() => _mode = PrepaymentMode.shortenTerm),
+                                    ),
+                                    PillChip(
+                                      label: l.prepayLower,
+                                      selected: _mode == PrepaymentMode.lowerPayment,
+                                      onTap: () => setState(() => _mode = PrepaymentMode.lowerPayment),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  if (hasAmount) ...[
-                    InkResultCard(
-                      label: l.prepaySaved,
-                      figure: f.money(result.interestSaved, cur),
-                      stats: [
-                        if (result.paidOff || _mode == PrepaymentMode.shortenTerm)
-                          (l.prepayNewTerm, l.commonMonthsCount(result.after.months), false)
-                        else
-                          (l.prepayNewInstallment, f.money(result.newInstallment, cur), false),
-                        (l.prepayNetSaving, f.money(result.netSaving, cur), true),
-                      ],
-                    ),
-                    if (result.paidOff) ...[const SizedBox(height: 10), InfoNote(l.prepayPaidOff)],
                     const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        const Expanded(flex: 4, child: SizedBox.shrink()),
-                        Expanded(flex: 3, child: Text(l.prepayBefore.toUpperCase(), textAlign: TextAlign.right, style: t.labelSmall)),
-                        Expanded(flex: 3, child: Text(l.prepayAfterLabel.toUpperCase(), textAlign: TextAlign.right, style: t.labelSmall)),
+                    if (hasAmount) ...[
+                      InkResultCard(
+                        label: l.prepaySaved,
+                        figure: f.money(result.interestSaved, cur),
+                        stats: [
+                          if (result.paidOff || _mode == PrepaymentMode.shortenTerm)
+                            (l.prepayNewTerm, l.commonMonthsCount(result.after.months), false)
+                          else
+                            (l.prepayNewInstallment, f.money(result.newInstallment, cur), false),
+                          (l.prepayNetSaving, f.money(result.netSaving, cur), true),
+                        ],
+                      ),
+                      if (result.paidOff) ...[const SizedBox(height: 10), InfoNote(l.prepayPaidOff)],
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const Expanded(flex: 4, child: SizedBox.shrink()),
+                          Expanded(
+                            flex: 3,
+                            child: Text(l.prepayBefore.toUpperCase(), textAlign: TextAlign.right, style: t.labelSmall),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(l.prepayAfterLabel.toUpperCase(), textAlign: TextAlign.right, style: t.labelSmall),
+                          ),
+                        ],
+                      ),
+                      _Compare(label: l.loanTotalInterest, before: f.number(result.original.totalInterest), after: f.number(result.after.totalInterest)),
+                      _Compare(label: l.loanTerm, before: l.commonMonthsCount(result.original.months), after: l.commonMonthsCount(result.after.months)),
+                      _Compare(label: l.loanTotal, before: f.number(result.original.totalCost), after: f.number(result.after.totalCost)),
+                      if (result.monthsSaved > 0) ...[
+                        const SizedBox(height: 10),
+                        Text(l.prepayMonthsSaved(l.commonMonthsCount(result.monthsSaved)), style: t.titleSmall!.copyWith(color: c.positive)),
                       ],
-                    ),
-                    _Compare(label: l.loanTotalInterest, before: f.number(result.original.totalInterest), after: f.number(result.after.totalInterest)),
-                    _Compare(label: l.loanTerm, before: l.commonMonthsCount(result.original.months), after: l.commonMonthsCount(result.after.months)),
-                    _Compare(label: l.loanTotal, before: f.number(result.original.totalCost), after: f.number(result.after.totalCost)),
-                    if (result.monthsSaved > 0) ...[
-                      const SizedBox(height: 10),
-                      Text(l.prepayMonthsSaved(l.commonMonthsCount(result.monthsSaved)), style: t.titleSmall!.copyWith(color: c.positive)),
                     ],
                   ],
-                ],
-              );
-            }),
+                );
+              },
+            ),
     );
   }
 }
@@ -173,12 +189,28 @@ class _Compare extends StatelessWidget {
     final style = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: c.line)),
+      ),
       child: Row(
         children: [
           Expanded(flex: 4, child: Text(label, style: style)),
-          Expanded(flex: 3, child: Text(before, textAlign: TextAlign.right, style: style.copyWith(color: c.ink2))),
-          Expanded(flex: 3, child: Text(after, textAlign: TextAlign.right, style: style.copyWith(fontWeight: FontWeight.w600))),
+          Expanded(
+            flex: 3,
+            child: Text(
+              before,
+              textAlign: TextAlign.right,
+              style: style.copyWith(color: c.ink2),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Text(
+              after,
+              textAlign: TextAlign.right,
+              style: style.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
         ],
       ),
     );

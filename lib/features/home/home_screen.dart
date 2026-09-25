@@ -64,38 +64,42 @@ class _HomeScreenState extends State<HomeScreen> {
     for (final section in CatalogSection.values) {
       final inSection = tools.where((tl) => tl.section == section).toList();
       if (inSection.isEmpty) continue;
-      sections.add(Padding(
-        padding: const EdgeInsets.only(top: 22),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.ink))),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    const ['I', 'II', 'III', 'IV'][section.index],
-                    style: t.bodySmall!.copyWith(fontFamily: Fonts.serif, fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(child: Text(sectionTitle(l, section), style: t.headlineSmall)),
-                ],
+      sections.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: c.ink)),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      const ['I', 'II', 'III', 'IV'][section.index],
+                      style: t.bodySmall!.copyWith(fontFamily: Fonts.serif, fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(child: Text(sectionTitle(l, section), style: t.headlineSmall)),
+                  ],
+                ),
               ),
-            ),
-            for (final tool in inSection)
-              _IndexRow(
-                number: ++number,
-                title: tool.title(l),
-                subtitle: tool.description(l, country),
-                locked: tool.pro != null && !pro.can(tool.pro!),
-                onTap: () => openTool(context, tool),
-              ),
-          ],
+              for (final tool in inSection)
+                _IndexRow(
+                  number: ++number,
+                  title: tool.title(l),
+                  subtitle: tool.description(l, country),
+                  locked: tool.pro != null && !pro.can(tool.pro!),
+                  onTap: () => openTool(context, tool),
+                ),
+            ],
+          ),
         ),
-      ));
+      );
     }
 
     return Scaffold(
@@ -143,7 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (tools.isEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 40),
-                      child: Text(l.homeNoResults(_query.trim()), textAlign: TextAlign.center, style: t.bodyMedium!.copyWith(color: c.ink2)),
+                      child: Text(
+                        l.homeNoResults(_query.trim()),
+                        textAlign: TextAlign.center,
+                        style: t.bodyMedium!.copyWith(color: c.ink2),
+                      ),
                     ),
                 ],
               ),
@@ -194,7 +202,10 @@ class _SearchField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(vertical: 12),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide.none),
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.green, width: 1.4)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.green, width: 1.4),
+        ),
       ),
     );
   }
@@ -217,7 +228,9 @@ class _IndexRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         constraints: const BoxConstraints(minHeight: 64),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
         child: Row(
           children: [
             SizedBox(
@@ -306,7 +319,10 @@ class _RatesCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(cells[i].$1, style: t.bodySmall!.copyWith(fontFamily: Fonts.mono, color: c.ink2)),
+                            Text(
+                              cells[i].$1,
+                              style: t.bodySmall!.copyWith(fontFamily: Fonts.mono, color: c.ink2),
+                            ),
                             const SizedBox(height: 4),
                             FittedBox(
                               fit: BoxFit.scaleDown,
@@ -385,7 +401,10 @@ class _RecentCard extends StatelessWidget {
     final t = Theme.of(context).textTheme;
     return Material(
       color: c.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: c.line)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: c.line),
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: onTap,
@@ -402,7 +421,12 @@ class _RecentCard extends StatelessWidget {
                 child: Text(summary.figure, style: t.titleLarge!.copyWith(fontSize: 19)),
               ),
               const SizedBox(height: 4),
-              Text(summary.subtitle, style: t.bodySmall!.copyWith(color: c.ink2), maxLines: 2, overflow: TextOverflow.ellipsis),
+              Text(
+                summary.subtitle,
+                style: t.bodySmall!.copyWith(color: c.ink2),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
         ),

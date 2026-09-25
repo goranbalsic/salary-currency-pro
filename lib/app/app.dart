@@ -58,7 +58,10 @@ class BilansApp extends StatelessWidget {
             // extremes of the Android accessibility range.
             final media = MediaQuery.of(context);
             final scaler = media.textScaler.clamp(minScaleFactor: 0.85, maxScaleFactor: 1.6);
-            return MediaQuery(data: media.copyWith(textScaler: scaler), child: child!);
+            return MediaQuery(
+              data: media.copyWith(textScaler: scaler),
+              child: child!,
+            );
           },
           home: const _Root(),
         ),

@@ -175,7 +175,10 @@ void main() {
       await d.enter('city', labelled('Postcode and city'), '11000 Beograd');
       await d.enter('pib bad', labelled('Tax ID (PIB)'), '101134703');
       await d.tap('save invalid', find.widgetWithText(FilledButton, 'Save'));
-      expect(find.text('The PIB check digit doesn’t match — please check it.').evaluate().isNotEmpty || find.textContaining('check digit').evaluate().isNotEmpty, isTrue);
+      expect(
+        find.text('The PIB check digit doesn’t match — please check it.').evaluate().isNotEmpty || find.textContaining('check digit').evaluate().isNotEmpty,
+        isTrue,
+      );
       await d.enter('pib good', labelled('Tax ID (PIB)'), '101134702');
       await d.enter('account', labelled('Bank account'), '160-5020001234-64');
       await d.tap('save profile', find.widgetWithText(FilledButton, 'Save'));

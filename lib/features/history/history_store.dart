@@ -27,13 +27,13 @@ class SavedCalc {
       SavedCalc(id: id, tool: tool, at: at ?? this.at, inputs: inputs, name: name ?? this.name, pinned: pinned ?? this.pinned);
 
   Map<String, Object?> toJson() => {
-        'id': id,
-        'tool': tool.name,
-        'at': at.toIso8601String(),
-        'inputs': inputs,
-        'name': name,
-        'pinned': pinned,
-      };
+    'id': id,
+    'tool': tool.name,
+    'at': at.toIso8601String(),
+    'inputs': inputs,
+    'name': name,
+    'pinned': pinned,
+  };
 
   static SavedCalc? tryFromJson(Object? raw) {
     if (raw is! Map) return null;

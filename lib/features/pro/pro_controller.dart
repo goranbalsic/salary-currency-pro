@@ -29,8 +29,8 @@ enum PurchaseFlow { idle, loadingProducts, purchasing, pending, success, error, 
 /// entitlement covers offline use for [AppConfig.entitlementOfflineGrace].
 class ProController extends ChangeNotifier {
   ProController(this._store, {this._gateway, bool? billingSupported, DateTime Function()? clock})
-      : _billingSupported = billingSupported ?? (defaultTargetPlatform == TargetPlatform.android && !kIsWeb),
-        _now = clock ?? DateTime.now {
+    : _billingSupported = billingSupported ?? (defaultTargetPlatform == TargetPlatform.android && !kIsWeb),
+      _now = clock ?? DateTime.now {
     _loadCache();
   }
 
@@ -80,10 +80,10 @@ class ProController extends ChangeNotifier {
   }
 
   Future<void> _saveCache() => _store.writeJson(_cacheKey, {
-        'active': _active,
-        'productId': _productId,
-        'verifiedAt': _verifiedAt?.toIso8601String(),
-      });
+    'active': _active,
+    'productId': _productId,
+    'verifiedAt': _verifiedAt?.toIso8601String(),
+  });
 
   /// Connects to the store and reconciles the entitlement. Safe to call on
   /// platforms without billing (it becomes a no-op).
@@ -93,9 +93,12 @@ class ProController extends ChangeNotifier {
       _gateway ??= PlayBillingGateway();
       final gateway = _gateway!;
       await _sub?.cancel();
-      _sub = gateway.purchaseStream.listen(_onPurchases, onError: (Object e) {
-        _setFlow(PurchaseFlow.error, e.toString());
-      });
+      _sub = gateway.purchaseStream.listen(
+        _onPurchases,
+        onError: (Object e) {
+          _setFlow(PurchaseFlow.error, e.toString());
+        },
+      );
       await reconcile();
     } catch (e) {
       debugPrint('ProController.start failed: $e');

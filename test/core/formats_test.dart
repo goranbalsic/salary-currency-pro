@@ -8,10 +8,19 @@ const nbsp = ' ';
 
 /// Types [text] one character at a time through [f], as a keyboard would.
 String type(AmountInputFormatter f, String text, {String start = ''}) {
-  var value = TextEditingValue(text: start, selection: TextSelection.collapsed(offset: start.length));
+  var value = TextEditingValue(
+    text: start,
+    selection: TextSelection.collapsed(offset: start.length),
+  );
   for (final ch in text.split('')) {
     final next = value.text.substring(0, value.selection.baseOffset) + ch + value.text.substring(value.selection.baseOffset);
-    value = f.formatEditUpdate(value, TextEditingValue(text: next, selection: TextSelection.collapsed(offset: value.selection.baseOffset + 1)));
+    value = f.formatEditUpdate(
+      value,
+      TextEditingValue(
+        text: next,
+        selection: TextSelection.collapsed(offset: value.selection.baseOffset + 1),
+      ),
+    );
   }
   return value.text;
 }

@@ -28,10 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       // The first preferred locale whose region the app supports, else the
       // home country of the first supported language.
       final device = WidgetsBinding.instance.platformDispatcher.locales;
-      final fromRegion = device
-          .map((l) => HomeCountry.all.where((c) => c.code == l.countryCode).firstOrNull)
-          .nonNulls
-          .firstOrNull;
+      final fromRegion = device.map((l) => HomeCountry.all.where((c) => c.code == l.countryCode).firstOrNull).nonNulls.firstOrNull;
       _country = fromRegion?.code ?? AppLanguage.fromLocales(device).defaultCountry;
     }
   }
@@ -71,7 +68,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 20),
                   Material(
                     color: c.surface,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radii.md), side: BorderSide(color: c.line)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Radii.md),
+                      side: BorderSide(color: c.line),
+                    ),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(Radii.md),
                       onTap: () async {
@@ -117,9 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     FilledButton(
                       style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(56)),
-                      onPressed: _country == null
-                          ? null
-                          : () => settings.completeOnboarding(country: _country!, language: effectiveLanguage),
+                      onPressed: _country == null ? null : () => settings.completeOnboarding(country: _country!, language: effectiveLanguage),
                       child: Text(l.actionContinue),
                     ),
                     const SizedBox(height: 14),
@@ -128,7 +126,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       children: [
                         Icon(Icons.lock_outline, size: 16, color: c.ink2),
                         const SizedBox(width: 8),
-                        Flexible(child: Text(l.onbPrivacy, style: t.bodySmall!.copyWith(color: c.ink2))),
+                        Flexible(
+                          child: Text(l.onbPrivacy, style: t.bodySmall!.copyWith(color: c.ink2)),
+                        ),
                       ],
                     ),
                   ],
@@ -171,7 +171,9 @@ class _CountryRow extends StatelessWidget {
         onTap: onTap,
         child: Container(
           constraints: const BoxConstraints(minHeight: 56),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.line)),
+          ),
           child: Row(
             children: [
               CodeTile(code, filled: selected),

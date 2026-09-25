@@ -45,7 +45,9 @@ Future<PayrollSystem?> showPayrollSystemSheet(
                 onTap: () => Navigator.of(context).pop(s),
                 child: Container(
                   constraints: const BoxConstraints(minHeight: 60),
-                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+                  decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: c.line)),
+                  ),
                   child: Row(
                     children: [
                       CodeTile(s.countryCode, filled: s == current),
@@ -56,8 +58,7 @@ Future<PayrollSystem?> showPayrollSystemSheet(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(l.systemName(s), style: t.titleMedium),
-                            if (s == PayrollSystem.fbih || s == PayrollSystem.republikaSrpska)
-                              Text(l.countryBA, style: t.bodySmall),
+                            if (s == PayrollSystem.fbih || s == PayrollSystem.republikaSrpska) Text(l.countryBA, style: t.bodySmall),
                           ],
                         ),
                       ),
@@ -158,12 +159,14 @@ class _OptionsSheetState extends State<_OptionsSheet> {
             onChanged: (v) => setState(() => _higher = v),
           ),
           const SizedBox(height: 8),
-          FinePrint(_hrValid
-              ? l.payHrRatesHint
-              : l.payHrRateError(
-                  '${f.number(lMin * 100, decimals: 0)}–${f.number(lMax * 100, decimals: 0)}${f.percentSign}',
-                  '${f.number(hMin * 100, decimals: 0)}–${f.number(hMax * 100, decimals: 0)}${f.percentSign}',
-                )),
+          FinePrint(
+            _hrValid
+                ? l.payHrRatesHint
+                : l.payHrRateError(
+                    '${f.number(lMin * 100, decimals: 0)}–${f.number(lMax * 100, decimals: 0)}${f.percentSign}',
+                    '${f.number(hMin * 100, decimals: 0)}–${f.number(hMax * 100, decimals: 0)}${f.percentSign}',
+                  ),
+          ),
           const SizedBox(height: 16),
           StepperRow(
             label: l.payChildren,
@@ -226,13 +229,15 @@ class _OptionsSheetState extends State<_OptionsSheet> {
           ),
         ]);
       case PayrollSystem.fbih:
-        children.add(SwitchRow(
-          label: l.payFbihDisability,
-          hint: l.payFbihDisabilityHint,
-          value: _o.fbihDisabilityFund,
-          divider: false,
-          onChanged: (v) => setState(() => _o = _o.copyWith(fbihDisabilityFund: v)),
-        ));
+        children.add(
+          SwitchRow(
+            label: l.payFbihDisability,
+            hint: l.payFbihDisabilityHint,
+            value: _o.fbihDisabilityFund,
+            divider: false,
+            onChanged: (v) => setState(() => _o = _o.copyWith(fbihDisabilityFund: v)),
+          ),
+        );
       default:
         break;
     }

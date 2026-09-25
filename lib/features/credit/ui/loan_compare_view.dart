@@ -49,11 +49,13 @@ class _LoanCompareViewState extends State<LoanCompareView> {
   }
 
   void _save() {
-    unawaited(context.read<AppServices>().store.writeJson(_compareKey, {
-      'principal': _principal,
-      'currency': _currency,
-      'offers': [for (final o in _offers) o.toJson()],
-    }));
+    unawaited(
+      context.read<AppServices>().store.writeJson(_compareKey, {
+        'principal': _principal,
+        'currency': _currency,
+        'offers': [for (final o in _offers) o.toJson()],
+      }),
+    );
   }
 
   void _setOffer(int i, LoanOffer o) {
@@ -79,7 +81,12 @@ class _LoanCompareViewState extends State<LoanCompareView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(children: [Expanded(child: Text(l.toolLoanCompare, style: t.titleLarge)), const ProBadge(strong: true)]),
+                Row(
+                  children: [
+                    Expanded(child: Text(l.toolLoanCompare, style: t.titleLarge)),
+                    const ProBadge(strong: true),
+                  ],
+                ),
                 const SizedBox(height: 8),
                 Text(l.toolLoanCompareDesc, style: t.bodyMedium),
                 const SizedBox(height: 14),
@@ -105,7 +112,10 @@ class _LoanCompareViewState extends State<LoanCompareView> {
       final input = LoanInput(principal: p, annualRatePercent: r, months: o.months, upfrontFeePercent: o.feePercent ?? 0, monthlyFee: o.monthlyFee ?? 0);
       results.add(input.validate() == null ? const LoanEngine().compute(input) : null);
     }
-    final valid = [for (var i = 0; i < results.length; i++) if (results[i] != null) i];
+    final valid = [
+      for (var i = 0; i < results.length; i++)
+        if (results[i] != null) i,
+    ];
     int? best;
     double? worstCost;
     for (final i in valid) {
@@ -175,7 +185,11 @@ class _LoanCompareViewState extends State<LoanCompareView> {
                         maxIntegerDigits: 3,
                         onChanged: (v) => _setOffer(i, _offers[i].copyWith(rate: v, clearRate: v == null)),
                       ),
-                      TermField(label: l.loanTerm, months: _offers[i].months, onChanged: (m) => _setOffer(i, _offers[i].copyWith(months: m))),
+                      TermField(
+                        label: l.loanTerm,
+                        months: _offers[i].months,
+                        onChanged: (m) => _setOffer(i, _offers[i].copyWith(months: m)),
+                      ),
                       NumberInputRow(
                         label: l.loanFee,
                         value: _offers[i].feePercent,

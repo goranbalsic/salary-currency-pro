@@ -18,10 +18,10 @@ class Formats {
 
   /// Thousands separator.
   String get group => switch (languageCode) {
-        'en' => ',',
-        'bg' => _nbsp,
-        _ => '.',
-      };
+    'en' => ',',
+    'bg' => _nbsp,
+    _ => '.',
+  };
 
   String number(double value, {int decimals = 2, bool grouping = true}) {
     if (!value.isFinite) return '—';
@@ -47,22 +47,22 @@ class Formats {
 
   /// Display symbol or code for a currency.
   String currencySymbol(String code) => switch (code) {
-        'EUR' => '€',
-        'USD' when isEnglish => r'$',
-        'GBP' when isEnglish => '£',
-        'BAM' => 'KM',
-        'MKD' when languageCode == 'mk' => 'ден',
-        'RON' when languageCode == 'ro' => 'lei',
-        'BGN' when languageCode == 'bg' => 'лв.',
-        _ => code,
-      };
+    'EUR' => '€',
+    'USD' when isEnglish => r'$',
+    'GBP' when isEnglish => '£',
+    'BAM' => 'KM',
+    'MKD' when languageCode == 'mk' => 'ден',
+    'RON' when languageCode == 'ro' => 'lei',
+    'BGN' when languageCode == 'bg' => 'лв.',
+    _ => code,
+  };
 
   /// Decimals conventionally shown for a currency.
   static int currencyDecimals(String code) => switch (code) {
-        'JPY' || 'KRW' || 'ISK' || 'IDR' || 'HUF' => 0,
-        'KWD' => 3,
-        _ => 2,
-      };
+    'JPY' || 'KRW' || 'ISK' || 'IDR' || 'HUF' => 0,
+    'KWD' => 3,
+    _ => 2,
+  };
 
   /// "108.572,10 RSD", "240,40 €", or "€240.40" in English.
   String money(double value, String currency, {int? decimals}) {
@@ -78,9 +78,9 @@ class Formats {
   /// The percent sign as written after a number (CLDR): "37,1 %" in
   /// Croatian, Slovenian, Macedonian and Romanian, "37,1%" elsewhere.
   String get percentSign => switch (languageCode) {
-        'hr' || 'sl' || 'mk' || 'ro' => '$_nbsp%',
-        _ => '%',
-      };
+    'hr' || 'sl' || 'mk' || 'ro' => '$_nbsp%',
+    _ => '%',
+  };
 
   /// Percent from a fraction: 0.3714 → "37,1%".
   String percent(double fraction, {int decimals = 1}) => '${number(fraction * 100, decimals: decimals)}$percentSign';

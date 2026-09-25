@@ -259,8 +259,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get onbHeadline => 'Brojke na koje se možete osloniti.';
 
   @override
-  String get onbBody =>
-      'Plaće, krediti, službeni tečajevi i računi — izračunati prema pravilima vaše zemlje. Bez računa, bez praćenja.';
+  String get onbBody => 'Plaće, krediti, službeni tečajevi i računi — izračunati prema pravilima vaše zemlje. Bez računa, bez praćenja.';
 
   @override
   String get onbCountry => 'Vaša zemlja';
@@ -297,8 +296,7 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get homeRatesEmpty =>
-      'Današnji službeni tečajevi pojavit će se ovdje čim budete na mreži.';
+  String get homeRatesEmpty => 'Današnji službeni tečajevi pojavit će se ovdje čim budete na mreži.';
 
   @override
   String get homeRecent => 'Nedavno';
@@ -488,12 +486,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get historySaved => 'Spremljeno';
 
   @override
-  String get historySavedEmpty =>
-      'Dodirnite Spremi na bilo kojem rezultatu da biste ga zadržali ovdje pod nazivom.';
+  String get historySavedEmpty => 'Dodirnite Spremi na bilo kojem rezultatu da biste ga zadržali ovdje pod nazivom.';
 
   @override
-  String get historyRecentEmpty =>
-      'Završeni izračuni pojavljuju se ovdje automatski.';
+  String get historyRecentEmpty => 'Završeni izračuni pojavljuju se ovdje automatski.';
 
   @override
   String get historyClearTitle => 'Očistiti popis nedavnih?';
@@ -654,8 +650,7 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get payAnnualNote =>
-      'Godišnji iznosi su 12 × mjesečni; godišnji porezni obračun može se razlikovati.';
+  String get payAnnualNote => 'Godišnji iznosi su 12 × mjesečni; godišnji porezni obračun može se razlikovati.';
 
   @override
   String payNoteMinBase(String amount) {
@@ -676,8 +671,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get payNoteNonPositive => 'Obvezna davanja veća su od ove plaće.';
 
   @override
-  String get payEmpty =>
-      'Unesite iznos za potpuni obračun — doprinose, porez i ukupni trošak poslodavca.';
+  String get payEmpty => 'Unesite iznos za potpuni obračun — doprinose, porez i ukupni trošak poslodavca.';
 
   @override
   String get payErrorTooLarge => 'Iznos je prevelik za izračun.';
@@ -686,8 +680,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get paySystemTitle => 'Porezni sustav';
 
   @override
-  String get paySystemProHint =>
-      'Vaša zemlja je besplatna. Ostale zemlje dio su paketa Pro.';
+  String get paySystemProHint => 'Vaša zemlja je besplatna. Ostale zemlje dio su paketa Pro.';
 
   @override
   String get payOptions => 'Mogućnosti';
@@ -722,8 +715,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get payOff => 'isključen';
 
   @override
-  String get payHrRates =>
-      'Stope poreza na dohodak jedinice lokalne samouprave';
+  String get payHrRates => 'Stope poreza na dohodak jedinice lokalne samouprave';
 
   @override
   String get payHrLower => 'Niža stopa';
@@ -732,8 +724,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get payHrHigher => 'Viša stopa';
 
   @override
-  String get payHrRatesHint =>
-      'Određuje ih grad ili općina: 15–23 % i 25–33 %. Bez odluke vrijede 20 % i 30 %.';
+  String get payHrRatesHint => 'Određuje ih grad ili općina: 15–23 % i 25–33 %. Bez odluke vrijede 20 % i 30 %.';
 
   @override
   String payHrRateError(String lowRange, String highRange) {
@@ -753,22 +744,19 @@ class AppLocalizationsHr extends AppLocalizations {
   String get payRoMinWage => 'Olakšica za minimalnu plaću';
 
   @override
-  String get payRoMinWageHint =>
-      'Zaposlenicima s nacionalnom minimalnom plaćom 200 leja je oslobođeno.';
+  String get payRoMinWageHint => 'Zaposlenicima s nacionalnom minimalnom plaćom 200 leja je oslobođeno.';
 
   @override
   String get payMeSurtax => 'Stopa prireza';
 
   @override
-  String get payMeSurtaxHint =>
-      '13 % u većini općina, 15 % u Podgorici i na Cetinju.';
+  String get payMeSurtaxHint => '13 % u većini općina, 15 % u Podgorici i na Cetinju.';
 
   @override
   String get payFbihDisability => 'Fond za zapošljavanje OSI 0,5 %';
 
   @override
-  String get payFbihDisabilityHint =>
-      'Plaćaju ga tvrtke koje ne zapošljavaju propisani broj osoba s invaliditetom.';
+  String get payFbihDisabilityHint => 'Plaćaju ga tvrtke koje ne zapošljavaju propisani broj osoba s invaliditetom.';
 
   @override
   String get itemPension => 'Mirovinsko osiguranje';
@@ -886,12 +874,10 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get teamNote =>
-      'Svatko se obračunava prema propisima svojeg poreznog sustava. Godišnji iznosi su 12 × mjesečni.';
+  String get teamNote => 'Svatko se obračunava prema propisima svojeg poreznog sustava. Godišnji iznosi su 12 × mjesečni.';
 
   @override
-  String get teamCurrenciesNote =>
-      'Zbrojevi su prikazani zasebno za svaku valutu.';
+  String get teamCurrenciesNote => 'Zbrojevi su prikazani zasebno za svaku valutu.';
 
   @override
   String get teamUnnamed => 'Bez imena';
@@ -920,8 +906,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get teamAmountError => 'Unesite iznos plaće.';
 
   @override
-  String get cmpNeedsRates =>
-      'Za usporedbu zemalja potrebni su današnji tečajevi. Povežite se na internet jednom i bit će spremljeni za rad bez mreže.';
+  String get cmpNeedsRates => 'Za usporedbu zemalja potrebni su današnji tečajevi. Povežite se na internet jednom i bit će spremljeni za rad bez mreže.';
 
   @override
   String get cmpRankedByNet => 'Po neto plaći';
@@ -1019,8 +1004,7 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get loanEirNote =>
-      'EKS je efektivna kamatna stopa sa svim troškovima, prema formuli EU-a za potrošačke kredite.';
+  String get loanEirNote => 'EKS je efektivna kamatna stopa sa svim troškovima, prema formuli EU-a za potrošačke kredite.';
 
   @override
   String get loanByYear => 'Po godinama';
@@ -1174,8 +1158,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get depTax => 'Porez na kamatu';
 
   @override
-  String get depTaxHintRs =>
-      'U Srbiji je kamata na dinarsku štednju oslobođena poreza; na deviznu štednju porez je 15 %.';
+  String get depTaxHintRs => 'U Srbiji je kamata na dinarsku štednju oslobođena poreza; na deviznu štednju porez je 15 %.';
 
   @override
   String get depTaxHint => 'Unesite porez na kamatu koji se odnosi na vas.';
@@ -1222,8 +1205,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get depErrorRate => 'Unesite kamatnu stopu između 0 i 100 %.';
 
   @override
-  String get cmpLoanIntro =>
-      'Isti iznos za svaku ponudu. Najpovoljnija je ponuda s najmanjim ukupnim troškom.';
+  String get cmpLoanIntro => 'Isti iznos za svaku ponudu. Najpovoljnija je ponuda s najmanjim ukupnim troškom.';
 
   @override
   String cmpLoanOffer(int n) {
@@ -1294,8 +1276,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get fxKindSell => 'Prodajni';
 
   @override
-  String get fxKindHint =>
-      'Kupovni i prodajni tečaj vrijede za pretvorbu dinara.';
+  String get fxKindHint => 'Kupovni i prodajni tečaj vrijede za pretvorbu dinara.';
 
   @override
   String fxUpdated(String date) {
@@ -1311,8 +1292,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get fxLoading => 'Ažuriranje tečaja…';
 
   @override
-  String get fxNoRates =>
-      'Još nema tečajeva. Povežite se na internet jednom da preuzmete današnje službene tečajeve — nakon toga pretvornik radi i bez mreže.';
+  String get fxNoRates => 'Još nema tečajeva. Povežite se na internet jednom da preuzmete današnje službene tečajeve — nakon toga pretvornik radi i bez mreže.';
 
   @override
   String get fxUnsupported => 'Za ovaj par ne postoji službeni tečaj.';
@@ -1331,8 +1311,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get fxHistoryError => 'Povijest tečaja nije dostupna bez mreže.';
 
   @override
-  String get fxHistoryPro =>
-      'Povijest tečaja za 30, 90 i 365 dana dio je paketa Pro.';
+  String get fxHistoryPro => 'Povijest tečaja za 30, 90 i 365 dana dio je paketa Pro.';
 
   @override
   String fxHistoryMinMax(String min, String max) {
@@ -1386,8 +1365,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get bizNewInvoice => 'Novi';
 
   @override
-  String get bizInvoicesEmpty =>
-      'Još nema računa. Profesionalni račun izradite za manje od minute.';
+  String get bizInvoicesEmpty => 'Još nema računa. Profesionalni račun izradite za manje od minute.';
 
   @override
   String bizFreeLeft(int count) {
@@ -1540,8 +1518,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invRateFetching => 'Preuzimanje tečaja NBS-a…';
 
   @override
-  String get invRateUnavailable =>
-      'Tečaj NBS-a za ovaj datum još nije objavljen.';
+  String get invRateUnavailable => 'Tečaj NBS-a za ovaj datum još nije objavljen.';
 
   @override
   String get invRateRetry => 'Preuzmi tečaj';
@@ -1576,8 +1553,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invDuplicate => 'Dupliciraj';
 
   @override
-  String get invProfileMissing =>
-      'Najprije unesite podatke o tvrtki — pojavljuju se na svakom računu.';
+  String get invProfileMissing => 'Najprije unesite podatke o tvrtki — pojavljuju se na svakom računu.';
 
   @override
   String get invNotInVat => 'Izdavatelj nije u sustavu PDV-a.';
@@ -1589,8 +1565,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invQrCaption => 'Skeniraj i plati (NBS IPS)';
 
   @override
-  String get invQrHint =>
-      'Kupac skenira QR kod u aplikaciji svoje banke — iznos, račun i poziv na broj popunjavaju se sami.';
+  String get invQrHint => 'Kupac skenira QR kod u aplikaciji svoje banke — iznos, račun i poziv na broj popunjavaju se sami.';
 
   @override
   String invQrMissing(String reason) {
@@ -1598,8 +1573,7 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get invQrReasonAccount =>
-      'unesite ispravan srpski račun u podacima o tvrtki';
+  String get invQrReasonAccount => 'unesite ispravan srpski račun u podacima o tvrtki';
 
   @override
   String get invQrReasonOther => 'provjerite naziv tvrtke i poziv na broj';
@@ -1633,8 +1607,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invErrorNumber => 'Unesite broj računa.';
 
   @override
-  String get invErrorDue =>
-      'Datum dospijeća ne može biti prije datuma izdavanja.';
+  String get invErrorDue => 'Datum dospijeća ne može biti prije datuma izdavanja.';
 
   @override
   String invErrorNumberTaken(String number) {
@@ -1675,8 +1648,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get profTitle => 'Podaci o tvrtki';
 
   @override
-  String get profIntro =>
-      'Ispisuju se na računima i, ako želite, na PDF izvješćima.';
+  String get profIntro => 'Ispisuju se na računima i, ako želite, na PDF izvješćima.';
 
   @override
   String get profName => 'Naziv tvrtke';
@@ -1715,8 +1687,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get profVat => 'U sustavu PDV-a';
 
   @override
-  String get profVatHint =>
-      'Dodaje PDV na račune. Kad je isključeno, na računu piše da niste u sustavu PDV-a.';
+  String get profVatHint => 'Dodaje PDV na račune. Kad je isključeno, na računu piše da niste u sustavu PDV-a.';
 
   @override
   String get profPaymentCode => 'Šifra plaćanja za QR kod';
@@ -1740,12 +1711,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get profShowOnReports => 'Prikaži podatke o tvrtki na PDF izvješćima';
 
   @override
-  String get profInvalidPib =>
-      'Kontrolna znamenka PIB-a nije ispravna — provjerite broj.';
+  String get profInvalidPib => 'Kontrolna znamenka PIB-a nije ispravna — provjerite broj.';
 
   @override
-  String get profInvalidMb =>
-      'Kontrolna znamenka matičnog broja nije ispravna.';
+  String get profInvalidMb => 'Kontrolna znamenka matičnog broja nije ispravna.';
 
   @override
   String get profInvalidAccount => 'Kontrolni broj računa nije ispravan.';
@@ -1805,15 +1774,13 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get pausalSourceInvoices =>
-      'Računa se iz izdanih i plaćenih računa (po datumu isporuke) i prihoda koje dodate ispod.';
+  String get pausalSourceInvoices => 'Računa se iz izdanih i plaćenih računa (po datumu isporuke) i prihoda koje dodate ispod.';
 
   @override
   String get pausalManual => 'Prihod izvan aplikacije';
 
   @override
-  String get pausalManualEmpty =>
-      'Dodajte račune izdane drugdje ove godine kako bi zbrojevi bili potpuni.';
+  String get pausalManualEmpty => 'Dodajte račune izdane drugdje ove godine kako bi zbrojevi bili potpuni.';
 
   @override
   String get pausalManualAdd => 'Dodaj prihod';
@@ -1897,8 +1864,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get mrgPriceWithVat => 'Cijena s PDV-om';
 
   @override
-  String get mrgMarginHint =>
-      'Marža je dobit kao udio u prodajnoj cijeni; razlika u cijeni je dobit kao udio u nabavnoj cijeni.';
+  String get mrgMarginHint => 'Marža je dobit kao udio u prodajnoj cijeni; razlika u cijeni je dobit kao udio u nabavnoj cijeni.';
 
   @override
   String get mrgImpossible => 'Marža od 100 % ili više nije moguća.';
@@ -1940,8 +1906,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get beContribution => 'Kontribucijska marža';
 
   @override
-  String get beImpossible =>
-      'Cijena mora biti veća od varijabilnog troška po jedinici.';
+  String get beImpossible => 'Cijena mora biti veća od varijabilnog troška po jedinici.';
 
   @override
   String get invsTitle => 'Analiza investicije';
@@ -2030,33 +1995,28 @@ class AppLocalizationsHr extends AppLocalizations {
   String get profMbLength => 'Matični broj ima 8 znamenki.';
 
   @override
-  String get profInvalidAccountShape =>
-      'Unesite srpski račun (160-0000000000000-00) ili IBAN.';
+  String get profInvalidAccountShape => 'Unesite srpski račun (160-0000000000000-00) ili IBAN.';
 
   @override
   String get profInvalidEmail => 'Provjerite adresu e-pošte.';
 
   @override
-  String get profInvalidPaymentCode =>
-      'Šifra plaćanja ima tri znamenke, npr. 221.';
+  String get profInvalidPaymentCode => 'Šifra plaćanja ima tri znamenke, npr. 221.';
 
   @override
-  String get profPrivacy =>
-      'Čuva se samo na ovom telefonu i ulazi u sigurnosne kopije koje izvezete.';
+  String get profPrivacy => 'Čuva se samo na ovom telefonu i ulazi u sigurnosne kopije koje izvezete.';
 
   @override
   String get profIban => 'IBAN za uplate iz inozemstva';
 
   @override
-  String get profIbanHint =>
-      'Ispisuje se na deviznim računima. Ostavite prazno za račun iznad u obliku IBAN-a.';
+  String get profIbanHint => 'Ispisuje se na deviznim računima. Ostavite prazno za račun iznad u obliku IBAN-a.';
 
   @override
   String get profSwift => 'SWIFT / BIC';
 
   @override
-  String get profInvalidIban =>
-      'Provjerite IBAN — kontrolni brojevi nisu ispravni.';
+  String get profInvalidIban => 'Provjerite IBAN — kontrolni brojevi nisu ispravni.';
 
   @override
   String get profInvalidSwift => 'SWIFT/BIC kod ima 8 ili 11 znakova.';
@@ -2075,8 +2035,7 @@ class AppLocalizationsHr extends AppLocalizations {
       'Računi srpskom javnom sektoru — a za obveznike PDV-a i srpskim tvrtkama — moraju ići i kroz SEF (e-Faktura). Bilans računi prikladni su za kupce iz inozemstva, fizičke osobe i vašu evidenciju.';
 
   @override
-  String get invRateOffline =>
-      'NBS nije dostupna. Provjerite vezu — možete spremiti sada i preuzeti tečaj kasnije.';
+  String get invRateOffline => 'NBS nije dostupna. Provjerite vezu — možete spremiti sada i preuzeti tečaj kasnije.';
 
   @override
   String get invMarkedPaid => 'Označen kao plaćen';
@@ -2091,8 +2050,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invCancelled => 'Račun je storniran';
 
   @override
-  String get invCompleteFirst =>
-      'Prije izdavanja dodajte kupca i barem jednu stavku.';
+  String get invCompleteFirst => 'Prije izdavanja dodajte kupca i barem jednu stavku.';
 
   @override
   String invCancelConfirm(String number) {
@@ -2100,12 +2058,10 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get invCancelBody =>
-      'Ostaje na popisu, označen kao storniran, i više se ne računa u prihod.';
+  String get invCancelBody => 'Ostaje na popisu, označen kao storniran, i više se ne računa u prihod.';
 
   @override
-  String get invRateMissingNote =>
-      'Još nema tečaja NBS-a — račun se ne računa u paušalne limite dok ga ne dobije.';
+  String get invRateMissingNote => 'Još nema tečaja NBS-a — račun se ne računa u paušalne limite dok ga ne dobije.';
 
   @override
   String pausalMonthlyRoom(String amount) {
@@ -2146,8 +2102,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get invsNoMatch => 'Nijedan račun ne odgovara.';
 
   @override
-  String get vatEmpty =>
-      'Unesite iznos da biste ga podijelili na osnovicu i PDV.';
+  String get vatEmpty => 'Unesite iznos da biste ga podijelili na osnovicu i PDV.';
 
   @override
   String vatRatesNote(String country) {
@@ -2155,8 +2110,7 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get mrgEmpty =>
-      'Unesite nabavnu cijenu i prodajnu cijenu, razliku u cijeni ili maržu.';
+  String get mrgEmpty => 'Unesite nabavnu cijenu i prodajnu cijenu, razliku u cijeni ili maržu.';
 
   @override
   String get mrgLoss => 'Po ovoj cijeni prodajete ispod nabavne cijene.';
@@ -2168,23 +2122,19 @@ class AppLocalizationsHr extends AppLocalizations {
   String get beVariableHint => 'Materijal, provizije, dostava…';
 
   @override
-  String get beEmpty =>
-      'Unesite fiksne troškove, cijenu i varijabilni trošak po jedinici.';
+  String get beEmpty => 'Unesite fiksne troškove, cijenu i varijabilni trošak po jedinici.';
 
   @override
   String get beContributionUnit => 'Doprinos po jedinici';
 
   @override
-  String get beExplain =>
-      'Svaka prodana jedinica pridonosi cijenom umanjenom za varijabilni trošak pokriću fiksnih troškova i dobiti. Iznosi su bez PDV-a.';
+  String get beExplain => 'Svaka prodana jedinica pridonosi cijenom umanjenom za varijabilni trošak pokriću fiksnih troškova i dobiti. Iznosi su bez PDV-a.';
 
   @override
-  String get invsFlowsHint =>
-      'Neto novčani tok na kraju svake godine. Upišite minus za godinu u kojoj je više odljeva nego priljeva.';
+  String get invsFlowsHint => 'Neto novčani tok na kraju svake godine. Upišite minus za godinu u kojoj je više odljeva nego priljeva.';
 
   @override
-  String get invsEmpty =>
-      'Unesite ulaganje, diskontnu stopu i novčani tok za barem jednu godinu.';
+  String get invsEmpty => 'Unesite ulaganje, diskontnu stopu i novčani tok za barem jednu godinu.';
 
   @override
   String get invsCumulative => 'Kumulativni novčani tok';
@@ -2196,8 +2146,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get proHeadline => 'Bilans Pro';
 
   @override
-  String get proSubhead =>
-      'Svi kalkulatori, sve zemlje, neograničeni računi i PDF izvješća. Bez oglasa, bez korisničkog računa.';
+  String get proSubhead => 'Svi kalkulatori, sve zemlje, neograničeni računi i PDF izvješća. Bez oglasa, bez korisničkog računa.';
 
   @override
   String get proFeatAllCountries => 'Obračun plaće za svih 9 poreznih sustava';
@@ -2212,8 +2161,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get proFeatUnlimitedSaves => 'Neograničen broj spremljenih izračuna';
 
   @override
-  String get proBenefitCountries =>
-      'Obračun plaće za svih 9 poreznih sustava i usporedba iste plaće po zemljama';
+  String get proBenefitCountries => 'Obračun plaće za svih 9 poreznih sustava i usporedba iste plaće po zemljama';
 
   @override
   String get proBenefitTeam => 'Trošak tima: sve plaće po mjesecima i godinama';
@@ -2222,27 +2170,22 @@ class AppLocalizationsHr extends AppLocalizations {
   String get proBenefitInvoices => 'Neograničen broj profesionalnih PDF računa';
 
   @override
-  String get proBenefitInvoicesRs =>
-      'Neograničen broj računa s NBS IPS QR kodom za plaćanje';
+  String get proBenefitInvoicesRs => 'Neograničen broj računa s NBS IPS QR kodom za plaćanje';
 
   @override
-  String get proBenefitPausal =>
-      'Praćenje paušalnih limita od 6 i 8 milijuna dinara';
+  String get proBenefitPausal => 'Praćenje paušalnih limita od 6 i 8 milijuna dinara';
 
   @override
-  String get proBenefitLoans =>
-      'Usporedba ponuda za kredit i plan prijevremene otplate';
+  String get proBenefitLoans => 'Usporedba ponuda za kredit i plan prijevremene otplate';
 
   @override
   String get proBenefitHistory => 'Povijest tečaja za 30, 90 i 365 dana';
 
   @override
-  String get proBenefitInvestment =>
-      'Analiza investicija: NSV, ISR i razdoblje povrata';
+  String get proBenefitInvestment => 'Analiza investicija: NSV, ISR i razdoblje povrata';
 
   @override
-  String get proBenefitPdf =>
-      'PDF izvješća za plaće, kredite, štednju i timove';
+  String get proBenefitPdf => 'PDF izvješća za plaće, kredite, štednju i timove';
 
   @override
   String get proYearly => 'Godišnje';
@@ -2304,28 +2247,23 @@ class AppLocalizationsHr extends AppLocalizations {
   String get proRestored => 'Bilans Pro aktivan je na ovom uređaju.';
 
   @override
-  String get proNothingToRestore =>
-      'Za ovaj Google račun nije pronađena kupnja paketa Bilans Pro.';
+  String get proNothingToRestore => 'Za ovaj Google račun nije pronađena kupnja paketa Bilans Pro.';
 
   @override
-  String get proPending =>
-      'Plaćanje je na čekanju. Pro se otključava automatski čim Google Play potvrdi uplatu.';
+  String get proPending => 'Plaćanje je na čekanju. Pro se otključava automatski čim Google Play potvrdi uplatu.';
 
   @override
-  String get proError =>
-      'Kupnja nije uspjela. Novac nije naplaćen — pokušajte ponovno.';
+  String get proError => 'Kupnja nije uspjela. Novac nije naplaćen — pokušajte ponovno.';
 
   @override
-  String get proUnavailable =>
-      'Kupnja trenutačno nije dostupna. Provjerite je li Google Play instaliran i jeste li prijavljeni, pa pokušajte ponovno.';
+  String get proUnavailable => 'Kupnja trenutačno nije dostupna. Provjerite je li Google Play instaliran i jeste li prijavljeni, pa pokušajte ponovno.';
 
   @override
   String get proLegal =>
       'Pretplata se automatski obnavlja po prikazanoj cijeni dok je ne otkažete. Otkazati možete bilo kada u Google Play → Plaćanja i pretplate, najkasnije 24 sata prije obnove. Besplatna proba prelazi u plaćenu godišnju pretplatu ako je ne otkažete prije isteka.';
 
   @override
-  String get proLegalLifetime =>
-      'Jednokratna kupnja: bez pretplate i bez obnavljanja. Pro je aktivan na svakom uređaju prijavljenom na isti Google račun.';
+  String get proLegalLifetime => 'Jednokratna kupnja: bez pretplate i bez obnavljanja. Pro je aktivan na svakom uređaju prijavljenom na isti Google račun.';
 
   @override
   String get proDevSimulate => 'Simuliraj Pro (razvojna verzija)';
@@ -2334,8 +2272,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get proWelcome => 'Dobro došli u Bilans Pro';
 
   @override
-  String get proWelcomeBody =>
-      'Sve je otključano. Hvala što podržavate neovisnu aplikaciju.';
+  String get proWelcomeBody => 'Sve je otključano. Hvala što podržavate neovisnu aplikaciju.';
 
   @override
   String get settingsPreferences => 'Postavke';
@@ -2368,15 +2305,13 @@ class AppLocalizationsHr extends AppLocalizations {
   String get settingsExported => 'Sigurnosna kopija je spremna';
 
   @override
-  String get settingsImportInvalid =>
-      'Ta datoteka nije Bilans sigurnosna kopija.';
+  String get settingsImportInvalid => 'Ta datoteka nije Bilans sigurnosna kopija.';
 
   @override
   String get settingsImportTitle => 'Vratiti ovu sigurnosnu kopiju?';
 
   @override
-  String get settingsImportBody =>
-      'Sve u aplikaciji bit će zamijenjeno sadržajem kopije — računi, podaci o tvrtki, tim i spremljeni izračuni.';
+  String get settingsImportBody => 'Sve u aplikaciji bit će zamijenjeno sadržajem kopije — računi, podaci o tvrtki, tim i spremljeni izračuni.';
 
   @override
   String get settingsImportAction => 'Vrati';
@@ -2420,8 +2355,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get settingsLicenses => 'Licence otvorenog koda';
 
   @override
-  String get settingsDisclaimer =>
-      'Izračuni su informativni i ne zamjenjuju stručni porezni, pravni ili financijski savjet.';
+  String get settingsDisclaimer => 'Izračuni su informativni i ne zamjenjuju stručni porezni, pravni ili financijski savjet.';
 
   @override
   String get settingsProActive => 'Bilans Pro je aktivan';
@@ -2430,8 +2364,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get settingsManageSubscription => 'Upravljaj pretplatom';
 
   @override
-  String get settingsProPitch =>
-      'Sve zemlje, trošak tima, neograničeni računi, PDF izvješća i još mnogo toga.';
+  String get settingsProPitch => 'Sve zemlje, trošak tima, neograničeni računi, PDF izvješća i još mnogo toga.';
 
   @override
   String get settingsSeePlans => 'Pogledaj pakete';

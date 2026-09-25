@@ -41,15 +41,15 @@ class AppServices {
   final ShellController shell;
 
   static AppServices create(Store store, {RateApi? rateApi, ProController? pro}) => AppServices(
-        store: store,
-        settings: SettingsController(store),
-        rates: RatesController(store, rateApi ?? HttpRateApi()),
-        history: HistoryStore(store),
-        business: BusinessStore(store),
-        team: TeamStore(store),
-        pro: pro ?? ProController(store),
-        shell: ShellController(),
-      );
+    store: store,
+    settings: SettingsController(store),
+    rates: RatesController(store, rateApi ?? HttpRateApi()),
+    history: HistoryStore(store),
+    business: BusinessStore(store),
+    team: TeamStore(store),
+    pro: pro ?? ProController(store),
+    shell: ShellController(),
+  );
 
   /// Re-reads every store after a backup restore or a data reset.
   void reloadAll() {

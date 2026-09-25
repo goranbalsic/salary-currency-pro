@@ -137,11 +137,14 @@ void main() {
 
   group('invoice', () {
     test('totals per line, rounded like a bill', () {
-      final inv = invoice(vat: true, items: const [
-        InvoiceItem(description: 'A', quantity: 3, unitPrice: 33.333, vatPercent: 20),
-        InvoiceItem(description: 'B', quantity: 1, unitPrice: 0.05, vatPercent: 10),
-        InvoiceItem(),
-      ]);
+      final inv = invoice(
+        vat: true,
+        items: const [
+          InvoiceItem(description: 'A', quantity: 3, unitPrice: 33.333, vatPercent: 20),
+          InvoiceItem(description: 'B', quantity: 1, unitPrice: 0.05, vatPercent: 10),
+          InvoiceItem(),
+        ],
+      );
       expect(inv.lines.length, 2, reason: 'blank lines are ignored');
       expect(inv.netTotal, 100.05);
       expect(inv.vatTotal, 20.01);
@@ -150,8 +153,21 @@ void main() {
 
     test('RSD counter-value needs a rate for foreign currency', () {
       expect(invoice().totalRsd, 50000);
-      expect(invoice(currency: 'EUR', items: const [InvoiceItem(description: 'x', unitPrice: 1000)]).totalRsd, isNull);
-      expect(invoice(currency: 'EUR', rate: 117.1234, items: const [InvoiceItem(description: 'x', unitPrice: 1000)]).totalRsd, 117123.4);
+      expect(
+        invoice(
+          currency: 'EUR',
+          items: const [InvoiceItem(description: 'x', unitPrice: 1000)],
+        ).totalRsd,
+        isNull,
+      );
+      expect(
+        invoice(
+          currency: 'EUR',
+          rate: 117.1234,
+          items: const [InvoiceItem(description: 'x', unitPrice: 1000)],
+        ).totalRsd,
+        117123.4,
+      );
     });
 
     test('overdue only when issued and past the due date', () {

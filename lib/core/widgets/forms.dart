@@ -132,12 +132,10 @@ class NumberBox extends StatefulWidget {
 
 class _NumberBoxState extends State<NumberBox> {
   late AmountInputFormatter _formatter = _make();
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
+  late final TextEditingController _controller = TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
   final _focus = FocusNode();
 
-  AmountInputFormatter _make() =>
-      AmountInputFormatter(formats: widget.formats, decimals: widget.decimals, maxIntegerDigits: widget.maxIntegerDigits);
+  AmountInputFormatter _make() => AmountInputFormatter(formats: widget.formats, decimals: widget.decimals, maxIntegerDigits: widget.maxIntegerDigits);
 
   @override
   void didUpdateWidget(covariant NumberBox old) {
@@ -146,11 +144,13 @@ class _NumberBoxState extends State<NumberBox> {
     if (formatsChanged) _formatter = _make();
     final current = _formatter.parse(_controller.text);
     final external = widget.value;
-    final differs = (external == null && _controller.text.isNotEmpty) ||
-        (external != null && (current == null || (current - external).abs() > 1e-9));
+    final differs = (external == null && _controller.text.isNotEmpty) || (external != null && (current == null || (current - external).abs() > 1e-9));
     if (formatsChanged || (differs && !_focus.hasFocus)) {
       final text = external == null ? '' : _formatter.formatNumberForEditing(external);
-      _controller.value = TextEditingValue(text: text, selection: TextSelection.collapsed(offset: text.length));
+      _controller.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
     }
   }
 
@@ -264,7 +264,9 @@ class PickerBox extends StatelessWidget {
         child: Row(
           children: [
             if (leading != null) ...[leading!, const SizedBox(width: 10)],
-            Expanded(child: Text(value, style: Theme.of(context).textTheme.bodyLarge, overflow: TextOverflow.ellipsis)),
+            Expanded(
+              child: Text(value, style: Theme.of(context).textTheme.bodyLarge, overflow: TextOverflow.ellipsis),
+            ),
           ],
         ),
       ),
@@ -321,7 +323,10 @@ class BottomActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Container(
-      decoration: BoxDecoration(color: c.paper, border: Border(top: BorderSide(color: c.line))),
+      decoration: BoxDecoration(
+        color: c.paper,
+        border: Border(top: BorderSide(color: c.line)),
+      ),
       child: SafeArea(
         top: false,
         child: Padding(

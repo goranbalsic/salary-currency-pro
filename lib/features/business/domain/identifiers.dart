@@ -96,8 +96,7 @@ abstract final class Identifiers {
 
   /// SWIFT/BIC: 4 bank letters, 2 country letters, 2 location characters
   /// and an optional 3-character branch code.
-  static bool isValidBic(String input) =>
-      RegExp(r'^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$').hasMatch(input.replaceAll(' ', '').toUpperCase());
+  static bool isValidBic(String input) => RegExp(r'^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$').hasMatch(input.replaceAll(' ', '').toUpperCase());
 
   /// Groups an IBAN in blocks of four for display.
   static String formatIban(String input) {

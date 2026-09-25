@@ -41,7 +41,10 @@ class BrandMark extends StatelessWidget {
     );
   }
 
-  static Widget _bar(double h, Color c) => Container(height: h, decoration: BoxDecoration(color: c, borderRadius: BorderRadius.circular(h / 2)));
+  static Widget _bar(double h, Color c) => Container(
+    height: h,
+    decoration: BoxDecoration(color: c, borderRadius: BorderRadius.circular(h / 2)),
+  );
 }
 
 /// "Bilans" set in the serif face.

@@ -7,7 +7,14 @@ import '../../fx/ui/currency_sheet.dart';
 
 /// Months input with quick-pick chips.
 class TermField extends StatelessWidget {
-  const TermField({super.key, required this.label, required this.months, required this.onChanged, this.presets = const [12, 24, 36, 60, 84, 120, 240, 360], this.divider = true});
+  const TermField({
+    super.key,
+    required this.label,
+    required this.months,
+    required this.onChanged,
+    this.presets = const [12, 24, 36, 60, 84, 120, 240, 360],
+    this.divider = true,
+  });
 
   final String label;
   final int months;
@@ -21,7 +28,9 @@ class TermField extends StatelessWidget {
     final l = context.l10n;
     final f = context.fmt;
     return Container(
-      decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: c.line)) : null),
+      decoration: BoxDecoration(
+        border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
+      ),
       padding: const EdgeInsets.only(bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,7 +54,11 @@ class TermField extends StatelessWidget {
             child: Row(
               children: [
                 for (final p in presets) ...[
-                  PillChip(label: p % 12 == 0 && p >= 12 ? l.commonYearsCount(p ~/ 12) : l.commonMonthsCount(p), selected: months == p, onTap: () => onChanged(p)),
+                  PillChip(
+                    label: p % 12 == 0 && p >= 12 ? l.commonYearsCount(p ~/ 12) : l.commonMonthsCount(p),
+                    selected: months == p,
+                    onTap: () => onChanged(p),
+                  ),
                   const SizedBox(width: 6),
                 ],
               ],
@@ -101,7 +114,9 @@ class CurrencyAmountRow extends StatelessWidget {
           ),
         ),
         Container(
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.line)),
+          ),
           height: 60,
           alignment: Alignment.center,
           child: Tooltip(

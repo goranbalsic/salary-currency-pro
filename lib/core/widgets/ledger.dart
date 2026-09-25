@@ -63,32 +63,41 @@ class LedgerRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: _LabelValue(
         label: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    text: label,
-                    children: [
-                      if (hint != null)
-                        TextSpan(text: '  $hint', style: base.copyWith(color: c.ink3, fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                  style: base,
-                ),
-                if (note != null) ...[
-                  const SizedBox(height: 2),
-                  Text(note!, style: t.bodySmall),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text.rich(
+              TextSpan(
+                text: label,
+                children: [
+                  if (hint != null)
+                    TextSpan(
+                      text: '  $hint',
+                      style: base.copyWith(color: c.ink3, fontWeight: FontWeight.w400),
+                    ),
                 ],
-              ],
+              ),
+              style: base,
             ),
-        value: Text(value, style: base.copyWith(color: valueColor), textAlign: TextAlign.right),
+            if (note != null) ...[
+              const SizedBox(height: 2),
+              Text(note!, style: t.bodySmall),
+            ],
+          ],
+        ),
+        value: Text(
+          value,
+          style: base.copyWith(color: valueColor),
+          textAlign: TextAlign.right,
+        ),
       ),
     );
     if (onTap != null) {
       row = InkWell(onTap: onTap, child: row);
     }
     return DecoratedBox(
-      decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: c.line)) : null),
+      decoration: BoxDecoration(
+        border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
+      ),
       child: row,
     );
   }

@@ -9,22 +9,22 @@ abstract final class BilansTheme {
 
   static TextTheme _text(BilansColors c) {
     TextStyle sans(double size, FontWeight w, {Color? color, double? height, double? spacing}) => TextStyle(
-          fontFamily: Fonts.sans,
-          fontSize: size,
-          fontWeight: w,
-          color: color ?? c.ink,
-          height: height,
-          letterSpacing: spacing,
-        );
+      fontFamily: Fonts.sans,
+      fontSize: size,
+      fontWeight: w,
+      color: color ?? c.ink,
+      height: height,
+      letterSpacing: spacing,
+    );
     TextStyle serif(double size, {double? spacing, double? height}) => TextStyle(
-          fontFamily: Fonts.serif,
-          fontSize: size,
-          fontWeight: FontWeight.w600,
-          color: c.ink,
-          letterSpacing: spacing,
-          height: height,
-          fontFeatures: Fonts.tabular,
-        );
+      fontFamily: Fonts.serif,
+      fontSize: size,
+      fontWeight: FontWeight.w600,
+      color: c.ink,
+      letterSpacing: spacing,
+      height: height,
+      fontFeatures: Fonts.tabular,
+    );
     return TextTheme(
       displayLarge: serif(46, spacing: -0.7, height: 1.05),
       displayMedium: serif(36, spacing: -0.5, height: 1.1),
@@ -160,15 +160,26 @@ abstract final class BilansTheme {
         hintStyle: text.bodyMedium?.copyWith(color: c.ink3),
         helperStyle: text.bodySmall,
         errorStyle: text.bodySmall?.copyWith(color: c.brick),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.line)),
-        enabledBorder:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.line)),
-        focusedBorder:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.green, width: 1.6)),
-        errorBorder:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.brick)),
-        focusedErrorBorder:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.md), borderSide: BorderSide(color: c.brick, width: 1.6)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.line),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.line),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.green, width: 1.6),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.brick),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          borderSide: BorderSide(color: c.brick, width: 1.6),
+        ),
       ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: c.green,
@@ -227,7 +238,10 @@ abstract final class BilansTheme {
         color: c.surface,
         surfaceTintColor: Colors.transparent,
         textStyle: text.bodyMedium,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radii.md), side: BorderSide(color: c.line)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Radii.md),
+          side: BorderSide(color: c.line),
+        ),
       ),
       scrollbarTheme: ScrollbarThemeData(thumbColor: WidgetStatePropertyAll(c.ink3.withValues(alpha: 0.5))),
       datePickerTheme: DatePickerThemeData(

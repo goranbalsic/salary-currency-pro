@@ -28,12 +28,11 @@ class PayrollEngine {
     PayrollInputMode mode,
     double amount, [
     PayrollOptions options = const PayrollOptions(),
-  ]) =>
-      switch (mode) {
-        PayrollInputMode.gross => fromGross(system, amount, options),
-        PayrollInputMode.net => fromNet(system, amount, options),
-        PayrollInputMode.totalCost => fromTotalCost(system, amount, options),
-      };
+  ]) => switch (mode) {
+    PayrollInputMode.gross => fromGross(system, amount, options),
+    PayrollInputMode.net => fromNet(system, amount, options),
+    PayrollInputMode.totalCost => fromTotalCost(system, amount, options),
+  };
 
   PayrollResult fromGross(
     PayrollSystem system,
@@ -151,35 +150,34 @@ class PayrollEngine {
   }
 
   static PayrollResult _zero(PayrollSystem s, PayrollOptions o) => PayrollResult(
-        system: s,
-        options: o,
-        gross: 0,
-        employeeLines: const [],
-        allowance: 0,
-        taxableBase: 0,
-        taxBands: const [],
-        incomeTax: 0,
-        surtax: 0,
-        net: 0,
-        employerLines: const [],
-        notes: const {},
-      );
+    system: s,
+    options: o,
+    gross: 0,
+    employeeLines: const [],
+    allowance: 0,
+    taxableBase: 0,
+    taxBands: const [],
+    incomeTax: 0,
+    surtax: 0,
+    net: 0,
+    employerLines: const [],
+    notes: const {},
+  );
 
   static List<PayrollLine> _lines(
     List<(PayrollItem, double)> rules,
     double base,
     double gross,
     int d,
-  ) =>
-      [
-        for (final (item, rate) in rules)
-          PayrollLine(
-            item,
-            Money.round(base * rate, d),
-            rate: rate,
-            base: base == gross ? null : base,
-          ),
-      ];
+  ) => [
+    for (final (item, rate) in rules)
+      PayrollLine(
+        item,
+        Money.round(base * rate, d),
+        rate: rate,
+        base: base == gross ? null : base,
+      ),
+  ];
 
   static double _sumLines(List<PayrollLine> lines, int d) => Money.sum(lines.map((l) => l.amount), d);
 
@@ -202,9 +200,9 @@ class PayrollEngine {
       Money.fromMinor(Money.toMinor(gross, d) - deductions.fold<int>(0, (a, v) => a + Money.toMinor(v, d)), d);
 
   static Set<PayrollNote> _baseNotes(double gross, double? min, double? max) => {
-        if (min != null && gross < min) PayrollNote.minimumBaseApplied,
-        if (max != null && gross > max) PayrollNote.maximumBaseApplied,
-      };
+    if (min != null && gross < min) PayrollNote.minimumBaseApplied,
+    if (max != null && gross > max) PayrollNote.maximumBaseApplied,
+  };
 
   PayrollResult _finish({
     required PayrollSystem s,
@@ -435,8 +433,7 @@ class PayrollEngine {
         rate: PayrollRules.meEmployer[0].$2,
         base: base == gross ? null : base,
       ),
-      for (final (item, rate) in PayrollRules.meEmployer.skip(1))
-        PayrollLine(item, Money.round(gross * rate, d), rate: rate),
+      for (final (item, rate) in PayrollRules.meEmployer.skip(1)) PayrollLine(item, Money.round(gross * rate, d), rate: rate),
     ];
     return _finish(
       s: s,

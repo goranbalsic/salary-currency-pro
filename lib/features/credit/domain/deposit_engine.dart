@@ -152,13 +152,15 @@ class DepositEngine {
         yearContrib = Money.sum([yearContrib, c]);
       }
       if (m % 12 == 0 || m == input.months) {
-        years.add(DepositYear(
-          year: (m + 11) ~/ 12,
-          contributed: yearContrib,
-          grossInterest: yearGross,
-          tax: yearTax,
-          balance: Money.round(balance + pendingInterest * (1 - t)),
-        ));
+        years.add(
+          DepositYear(
+            year: (m + 11) ~/ 12,
+            contributed: yearContrib,
+            grossInterest: yearGross,
+            tax: yearTax,
+            balance: Money.round(balance + pendingInterest * (1 - t)),
+          ),
+        );
         yearGross = 0;
         yearTax = 0;
         yearContrib = 0;

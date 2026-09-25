@@ -35,9 +35,7 @@ class PayrollBreakdown extends StatelessWidget {
         LedgerRow(
           label: payrollItemLabel(l, line.item),
           hint: line.rate == null ? null : pct(line.rate),
-          note: line.base != null
-              ? l.payOnBase(m(line.base!))
-              : (line.rate == null ? l.payFixedMonthly : null),
+          note: line.base != null ? l.payOnBase(m(line.base!)) : (line.rate == null ? l.payFixedMonthly : null),
           value: neg(line.amount),
         ),
     ];
@@ -50,30 +48,36 @@ class PayrollBreakdown extends StatelessWidget {
     }
     if (r.taxBands.length <= 1) {
       final band = r.taxBands.firstOrNull;
-      rows.add(LedgerRow(
-        label: l.payIncomeTax,
-        hint: band == null ? null : pct(band.rate),
-        value: neg(r.incomeTax),
-        divider: r.surtax > 0,
-      ));
+      rows.add(
+        LedgerRow(
+          label: l.payIncomeTax,
+          hint: band == null ? null : pct(band.rate),
+          value: neg(r.incomeTax),
+          divider: r.surtax > 0,
+        ),
+      );
     } else {
       for (var i = 0; i < r.taxBands.length; i++) {
         final b = r.taxBands[i];
-        rows.add(LedgerRow(
-          label: i == 0 ? l.payIncomeTax : '',
-          note: l.payTaxOn(pct(b.rate), m(b.taxable)),
-          value: neg(b.tax),
-          divider: i == r.taxBands.length - 1 && r.surtax > 0,
-        ));
+        rows.add(
+          LedgerRow(
+            label: i == 0 ? l.payIncomeTax : '',
+            note: l.payTaxOn(pct(b.rate), m(b.taxable)),
+            value: neg(b.tax),
+            divider: i == r.taxBands.length - 1 && r.surtax > 0,
+          ),
+        );
       }
     }
     if (r.surtax > 0) {
-      rows.add(LedgerRow(
-        label: l.paySurtax,
-        hint: pct(r.options.montenegroSurtaxRate),
-        value: neg(r.surtax),
-        divider: false,
-      ));
+      rows.add(
+        LedgerRow(
+          label: l.paySurtax,
+          hint: pct(r.options.montenegroSurtaxRate),
+          value: neg(r.surtax),
+          divider: false,
+        ),
+      );
     }
     rows.add(LedgerTotal(label: l.payNetTotal, value: m(r.net)));
 
@@ -81,13 +85,15 @@ class PayrollBreakdown extends StatelessWidget {
       rows.add(Overline(l.payEmployer, padding: const EdgeInsets.only(top: 14, bottom: 2)));
       for (var i = 0; i < r.employerLines.length; i++) {
         final line = r.employerLines[i];
-        rows.add(LedgerRow(
-          label: payrollItemLabel(l, line.item),
-          hint: line.rate == null ? null : pct(line.rate),
-          note: line.base != null ? l.payOnBase(m(line.base!)) : null,
-          value: m(line.amount),
-          divider: i < r.employerLines.length - 1,
-        ));
+        rows.add(
+          LedgerRow(
+            label: payrollItemLabel(l, line.item),
+            hint: line.rate == null ? null : pct(line.rate),
+            note: line.base != null ? l.payOnBase(m(line.base!)) : null,
+            value: m(line.amount),
+            divider: i < r.employerLines.length - 1,
+          ),
+        );
       }
       rows.add(LedgerTotal(label: l.payTotalCost, value: m(r.totalCost)));
     }

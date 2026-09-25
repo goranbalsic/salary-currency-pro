@@ -51,12 +51,15 @@ void mockPlatformChannels() {
   final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
   messenger.setMockMethodCallHandler(const MethodChannel('net.nfet.printing'), (call) async => call.method == 'sharePdf' ? 1 : null);
   messenger.setMockMethodCallHandler(const MethodChannel('dev.fluttercommunity.plus/share'), (call) async => 'dev.fluttercommunity.plus/share/unavailable');
-  messenger.setMockMethodCallHandler(const MethodChannel('dev.fluttercommunity.plus/package_info'), (call) async => <String, Object>{
-        'appName': 'Bilans',
-        'packageName': 'rs.bilans.app',
-        'version': '2.0.0',
-        'buildNumber': '20',
-      });
+  messenger.setMockMethodCallHandler(
+    const MethodChannel('dev.fluttercommunity.plus/package_info'),
+    (call) async => <String, Object>{
+      'appName': 'Bilans',
+      'packageName': 'rs.bilans.app',
+      'version': '2.0.0',
+      'buildNumber': '20',
+    },
+  );
   messenger.setMockMethodCallHandler(const MethodChannel('dev.britannio.in_app_review'), (call) async => null);
   messenger.setMockMethodCallHandler(const MethodChannel('plugins.flutter.io/url_launcher_android'), (call) async => true);
 }

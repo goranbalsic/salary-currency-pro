@@ -86,10 +86,15 @@ class CompositionBar extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink))),
+                        Expanded(
+                          child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink)),
+                        ),
                         if (s.valueLabel != null) ...[
                           const SizedBox(width: 6),
-                          Text(s.valueLabel!, style: t.bodySmall!.copyWith(color: c.ink2, fontFeatures: Fonts.tabular)),
+                          Text(
+                            s.valueLabel!,
+                            style: t.bodySmall!.copyWith(color: c.ink2, fontFeatures: Fonts.tabular),
+                          ),
                         ],
                       ],
                     ),
@@ -217,7 +222,11 @@ class _StackedColumnsState extends State<StackedColumns> {
                   padding: const EdgeInsets.only(top: Gap.sm),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    decoration: BoxDecoration(color: c.surface, borderRadius: BorderRadius.circular(Radii.md), border: Border.all(color: c.line)),
+                    decoration: BoxDecoration(
+                      color: c.surface,
+                      borderRadius: BorderRadius.circular(Radii.md),
+                      border: Border.all(color: c.line),
+                    ),
                     child: Wrap(
                       spacing: Gap.md,
                       runSpacing: 4,
@@ -247,11 +256,20 @@ class _LegendKey extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(width: 10, height: 10, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2))),
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2)),
+        ),
         const SizedBox(width: 6),
         // Wraps rather than overflows: legend labels are translated and can
         // be long at large text sizes.
-        Flexible(child: Text(label, style: t.bodySmall!.copyWith(color: context.colors.ink, fontFeatures: Fonts.tabular))),
+        Flexible(
+          child: Text(
+            label,
+            style: t.bodySmall!.copyWith(color: context.colors.ink, fontFeatures: Fonts.tabular),
+          ),
+        ),
       ],
     );
   }
@@ -302,7 +320,13 @@ class _ColumnsPainter extends CustomPainter {
         // 2px surface gap, then the top segment with a 4px rounded data end.
         final topRect = Rect.fromLTWH(left, baseY - hBottom - 2 - hTop, barWidth, math.max(0, hTop));
         canvas.drawRRect(
-          RRect.fromRectAndCorners(topRect, topLeft: const Radius.circular(4), topRight: const Radius.circular(4), bottomLeft: const Radius.circular(1), bottomRight: const Radius.circular(1)),
+          RRect.fromRectAndCorners(
+            topRect,
+            topLeft: const Radius.circular(4),
+            topRight: const Radius.circular(4),
+            bottomLeft: const Radius.circular(1),
+            bottomRight: const Radius.circular(1),
+          ),
           Paint()..color = topColor,
         );
       }
@@ -310,9 +334,13 @@ class _ColumnsPainter extends CustomPainter {
         canvas.drawRect(Rect.fromLTWH(left - 1, 0, barWidth + 2, size.height - 1), Paint()..color = dimColor);
       }
     }
-    canvas.drawLine(Offset(0, size.height - 0.5), Offset(size.width, size.height - 0.5), Paint()
-      ..color = baseline
-      ..strokeWidth = 1);
+    canvas.drawLine(
+      Offset(0, size.height - 0.5),
+      Offset(size.width, size.height - 0.5),
+      Paint()
+        ..color = baseline
+        ..strokeWidth = 1,
+    );
   }
 
   @override
@@ -507,15 +535,18 @@ class _LinePainter extends CustomPainter {
     final idx = active ?? points.length - 1;
     final p = pos(idx);
     if (active != null) {
-      canvas.drawLine(Offset(p.dx, 0), Offset(p.dx, size.height), Paint()
-        ..color = ink.withValues(alpha: 0.5)
-        ..strokeWidth = 1);
+      canvas.drawLine(
+        Offset(p.dx, 0),
+        Offset(p.dx, size.height),
+        Paint()
+          ..color = ink.withValues(alpha: 0.5)
+          ..strokeWidth = 1,
+      );
     }
     canvas.drawCircle(p, 6, Paint()..color = surface);
     canvas.drawCircle(p, 4, Paint()..color = color);
   }
 
   @override
-  bool shouldRepaint(covariant _LinePainter old) =>
-      old.points != points || old.active != active || old.color != color || old.baseline != baseline;
+  bool shouldRepaint(covariant _LinePainter old) => old.points != points || old.active != active || old.color != color || old.baseline != baseline;
 }

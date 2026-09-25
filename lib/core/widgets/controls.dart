@@ -63,9 +63,7 @@ class Segmented<T> extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: v == selected ? c.surface : Colors.transparent,
                         borderRadius: BorderRadius.circular(9),
-                        boxShadow: v == selected
-                            ? [BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: 2, offset: const Offset(0, 1))]
-                            : null,
+                        boxShadow: v == selected ? [BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: 2, offset: const Offset(0, 1))] : null,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -200,15 +198,14 @@ class AmountField extends StatefulWidget {
 
 class _AmountFieldState extends State<AmountField> {
   late AmountInputFormatter _formatter = _makeFormatter();
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
+  late final TextEditingController _controller = TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
   final _focus = FocusNode();
 
   AmountInputFormatter _makeFormatter() => AmountInputFormatter(
-        formats: widget.formats,
-        decimals: widget.decimals,
-        maxIntegerDigits: widget.maxIntegerDigits,
-      );
+    formats: widget.formats,
+    decimals: widget.decimals,
+    maxIntegerDigits: widget.maxIntegerDigits,
+  );
 
   @override
   void didUpdateWidget(covariant AmountField old) {
@@ -217,11 +214,13 @@ class _AmountFieldState extends State<AmountField> {
     if (formatsChanged) _formatter = _makeFormatter();
     final current = _formatter.parse(_controller.text);
     final external = widget.value;
-    final differs = (external == null && _controller.text.isNotEmpty) ||
-        (external != null && (current == null || (current - external).abs() > 1e-9));
+    final differs = (external == null && _controller.text.isNotEmpty) || (external != null && (current == null || (current - external).abs() > 1e-9));
     if (formatsChanged || (differs && !_focus.hasFocus)) {
       final text = external == null ? '' : _formatter.formatNumberForEditing(external);
-      _controller.value = TextEditingValue(text: text, selection: TextSelection.collapsed(offset: text.length));
+      _controller.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
     }
   }
 
@@ -242,7 +241,9 @@ class _AmountFieldState extends State<AmountField> {
         Overline(widget.label),
         const SizedBox(height: 6),
         Container(
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.ink, width: 2))),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.ink, width: 2)),
+          ),
           padding: const EdgeInsets.only(bottom: 4),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -326,16 +327,15 @@ class NumberInputRow extends StatefulWidget {
 
 class _NumberInputRowState extends State<NumberInputRow> {
   late AmountInputFormatter _formatter = _make();
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
+  late final TextEditingController _controller = TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
   final _focus = FocusNode();
 
   AmountInputFormatter _make() => AmountInputFormatter(
-        formats: widget.formats,
-        decimals: widget.decimals,
-        maxIntegerDigits: widget.maxIntegerDigits,
-        allowNegative: widget.signed,
-      );
+    formats: widget.formats,
+    decimals: widget.decimals,
+    maxIntegerDigits: widget.maxIntegerDigits,
+    allowNegative: widget.signed,
+  );
 
   @override
   void didUpdateWidget(covariant NumberInputRow old) {
@@ -344,11 +344,13 @@ class _NumberInputRowState extends State<NumberInputRow> {
     if (formatsChanged) _formatter = _make();
     final current = _formatter.parse(_controller.text);
     final external = widget.value;
-    final differs = (external == null && _controller.text.isNotEmpty) ||
-        (external != null && (current == null || (current - external).abs() > 1e-9));
+    final differs = (external == null && _controller.text.isNotEmpty) || (external != null && (current == null || (current - external).abs() > 1e-9));
     if (formatsChanged || (differs && !_focus.hasFocus)) {
       final text = external == null ? '' : _formatter.formatNumberForEditing(external);
-      _controller.value = TextEditingValue(text: text, selection: TextSelection.collapsed(offset: text.length));
+      _controller.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
     }
   }
 
@@ -365,7 +367,9 @@ class _NumberInputRowState extends State<NumberInputRow> {
     final t = Theme.of(context).textTheme;
     return Container(
       constraints: const BoxConstraints(minHeight: 60),
-      decoration: BoxDecoration(border: widget.divider ? Border(bottom: BorderSide(color: c.line)) : null),
+      decoration: BoxDecoration(
+        border: widget.divider ? Border(bottom: BorderSide(color: c.line)) : null,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -506,28 +510,30 @@ class StepperRow extends StatelessWidget {
     final c = context.colors;
     final t = Theme.of(context).textTheme;
     Widget btn(IconData icon, String semantic, int? next) => SizedBox(
-          width: 44,
-          height: 44,
-          child: IconButton.outlined(
-            tooltip: semantic,
-            onPressed: next == null
-                ? null
-                : () {
-                    unawaited(HapticFeedback.selectionClick());
-                    onChanged(next);
-                  },
-            icon: Icon(icon, size: 18),
-            style: IconButton.styleFrom(
-              padding: EdgeInsets.zero,
-              side: BorderSide(color: c.line),
-              backgroundColor: c.paper,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
-        );
+      width: 44,
+      height: 44,
+      child: IconButton.outlined(
+        tooltip: semantic,
+        onPressed: next == null
+            ? null
+            : () {
+                unawaited(HapticFeedback.selectionClick());
+                onChanged(next);
+              },
+        icon: Icon(icon, size: 18),
+        style: IconButton.styleFrom(
+          padding: EdgeInsets.zero,
+          side: BorderSide(color: c.line),
+          backgroundColor: c.paper,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
+    );
     return Container(
       constraints: const BoxConstraints(minHeight: 60),
-      decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: c.line)) : null),
+      decoration: BoxDecoration(
+        border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -552,7 +558,10 @@ class StepperRow extends StatelessWidget {
           btn(Icons.add, incrementLabel, value + step <= max ? value + step : (value < max ? max : null)),
           if (suffix != null) ...[
             const SizedBox(width: 8),
-            ConstrainedBox(constraints: const BoxConstraints(minWidth: 28), child: Text(suffix!, style: t.bodyMedium!.copyWith(color: c.ink2))),
+            ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 28),
+              child: Text(suffix!, style: t.bodyMedium!.copyWith(color: c.ink2)),
+            ),
           ],
         ],
       ),

@@ -36,8 +36,8 @@ class InvoiceEditorScreen extends StatefulWidget {
 
 class _ItemDraft {
   _ItemDraft({required this.key, String description = '', String unit = '', this.quantity = 1, this.price, required this.vat})
-      : description = TextEditingController(text: description),
-        unit = TextEditingController(text: unit);
+    : description = TextEditingController(text: description),
+      unit = TextEditingController(text: unit);
 
   final int key;
   final TextEditingController description;
@@ -47,12 +47,12 @@ class _ItemDraft {
   double vat;
 
   InvoiceItem toItem() => InvoiceItem(
-        description: description.text.trim(),
-        quantity: quantity ?? 0,
-        unit: unit.text.trim(),
-        unitPrice: price ?? 0,
-        vatPercent: vat,
-      );
+    description: description.text.trim(),
+    quantity: quantity ?? 0,
+    unit: unit.text.trim(),
+    unitPrice: price ?? 0,
+    vatPercent: vat,
+  );
 
   void dispose() {
     description.dispose();
@@ -157,14 +157,16 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
       _items.add(_newItem());
     } else {
       for (final i in items) {
-        _items.add(_ItemDraft(
-          key: _nextKey++,
-          description: i.description,
-          unit: i.unit,
-          quantity: i.quantity,
-          price: i.unitPrice,
-          vat: _vatRegistered ? i.vatPercent : 0,
-        ));
+        _items.add(
+          _ItemDraft(
+            key: _nextKey++,
+            description: i.description,
+            unit: i.unit,
+            quantity: i.quantity,
+            price: i.unitPrice,
+            vat: _vatRegistered ? i.vatPercent : 0,
+          ),
+        );
       }
     }
     _initial = _snapshot();
@@ -199,36 +201,36 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
   }
 
   InvoiceParty get _client => InvoiceParty(
-        name: _clientName.text.trim(),
-        address: _clientAddress.text.trim(),
-        city: _clientCity.text.trim(),
-        country: _clientCountry.text.trim(),
-        taxId: _clientTaxId.text.trim(),
-        registrationNo: _clientRegNo.text.trim(),
-        email: _clientEmail.text.trim(),
-      );
+    name: _clientName.text.trim(),
+    address: _clientAddress.text.trim(),
+    city: _clientCity.text.trim(),
+    country: _clientCountry.text.trim(),
+    taxId: _clientTaxId.text.trim(),
+    registrationNo: _clientRegNo.text.trim(),
+    email: _clientEmail.text.trim(),
+  );
 
   bool get _needsRate => _serbian && _currency != 'RSD';
 
   Invoice _build(InvoiceStatus status) => Invoice(
-        id: _id,
-        number: _number.text.trim(),
-        status: status,
-        issueDate: _issue,
-        serviceDate: _service,
-        dueDate: _due,
-        place: _place.text.trim(),
-        client: _client,
-        currency: _currency,
-        items: [for (final i in _items) i.toItem()],
-        vatRegistered: _vatRegistered,
-        note: _note.text.trim(),
-        reference: _reference.text.trim(),
-        rsdRate: _needsRate ? _rate : null,
-        rsdRateDate: _needsRate ? _rateDate : null,
-        paidDate: status == InvoiceStatus.paid ? _paidDate : null,
-        createdAt: _createdAt,
-      );
+    id: _id,
+    number: _number.text.trim(),
+    status: status,
+    issueDate: _issue,
+    serviceDate: _service,
+    dueDate: _due,
+    place: _place.text.trim(),
+    client: _client,
+    currency: _currency,
+    items: [for (final i in _items) i.toItem()],
+    vatRegistered: _vatRegistered,
+    note: _note.text.trim(),
+    reference: _reference.text.trim(),
+    rsdRate: _needsRate ? _rate : null,
+    rsdRateDate: _needsRate ? _rateDate : null,
+    paidDate: status == InvoiceStatus.paid ? _paidDate : null,
+    createdAt: _createdAt,
+  );
 
   String _snapshot() {
     final j = _build(_status).toJson()
@@ -285,8 +287,7 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
 
   String? get _dueError => _due.isBefore(_issue) ? context.l10n.invErrorDue : null;
 
-  bool get _itemsValid =>
-      _items.any((i) => i.description.text.trim().isNotEmpty && (i.price ?? 0) > 0 && (i.quantity ?? 0) > 0);
+  bool get _itemsValid => _items.any((i) => i.description.text.trim().isNotEmpty && (i.price ?? 0) > 0 && (i.quantity ?? 0) > 0);
 
   Future<void> _save(InvoiceStatus status) async {
     if (_saving) return;
@@ -356,8 +357,14 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
         bottomNavigationBar: BottomActions(
           children: isDraft
               ? [
-                  OutlinedButton(onPressed: _saving ? null : () => _save(InvoiceStatus.draft), child: Text(l.invSaveDraft, overflow: TextOverflow.ellipsis)),
-                  FilledButton(onPressed: _saving ? null : () => _save(InvoiceStatus.issued), child: Text(l.invIssue, overflow: TextOverflow.ellipsis)),
+                  OutlinedButton(
+                    onPressed: _saving ? null : () => _save(InvoiceStatus.draft),
+                    child: Text(l.invSaveDraft, overflow: TextOverflow.ellipsis),
+                  ),
+                  FilledButton(
+                    onPressed: _saving ? null : () => _save(InvoiceStatus.issued),
+                    child: Text(l.invIssue, overflow: TextOverflow.ellipsis),
+                  ),
                 ]
               : [FilledButton(onPressed: _saving ? null : () => _save(_status), child: Text(l.invSave))],
         ),
@@ -477,8 +484,7 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
                         WidgetsBinding.instance.addPostFrameCallback((_) => removed.dispose());
                       },
                     ),
-                  if (_showErrors && _status != InvoiceStatus.draft && !_itemsValid)
-                    Text(l.invErrorItems, style: t.bodySmall!.copyWith(color: c.brick)),
+                  if (_showErrors && _status != InvoiceStatus.draft && !_itemsValid) Text(l.invErrorItems, style: t.bodySmall!.copyWith(color: c.brick)),
                   if (_items.length < 50)
                     OutlinedButton.icon(
                       onPressed: () => setState(() => _items.add(_newItem())),
@@ -540,7 +546,11 @@ class _Pair extends StatelessWidget {
         }
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Expanded(child: a), const SizedBox(width: 10), Expanded(child: b)],
+          children: [
+            Expanded(child: a),
+            const SizedBox(width: 10),
+            Expanded(child: b),
+          ],
         );
       },
     );
@@ -585,9 +595,15 @@ class _ItemCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text('${index + 1}.', style: t.titleMedium!.copyWith(fontFamily: Fonts.serif))),
+              Expanded(
+                child: Text('${index + 1}.', style: t.titleMedium!.copyWith(fontFamily: Fonts.serif)),
+              ),
               if (canRemove)
-                IconButton(tooltip: l.invRemoveItem, onPressed: onRemove, icon: Icon(Icons.close, size: 20, color: c.ink2))
+                IconButton(
+                  tooltip: l.invRemoveItem,
+                  onPressed: onRemove,
+                  icon: Icon(Icons.close, size: 20, color: c.ink2),
+                )
               else
                 const SizedBox(height: 48),
             ],
@@ -732,42 +748,42 @@ class _Totals extends StatelessWidget {
           if (needsRate) ...[
             switch (rateState) {
               _RateState.ok when invoice.rsdRate != null => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      LedgerRow(label: l.invTotalRsd, value: f.money(invoice.totalRsd ?? 0, 'RSD'), divider: false),
-                      Text(
-                        l.invRateLine(f.rate(invoice.rsdRate!), f.date(invoice.rsdRateDate ?? invoice.issueDate)),
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LedgerRow(label: l.invTotalRsd, value: f.money(invoice.totalRsd ?? 0, 'RSD'), divider: false),
+                    Text(
+                      l.invRateLine(f.rate(invoice.rsdRate!), f.date(invoice.rsdRateDate ?? invoice.issueDate)),
+                      style: t.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              _RateState.loading => Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: Row(
+                  children: [
+                    SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: c.ink2)),
+                    const SizedBox(width: 10),
+                    Text(l.invRateFetching, style: t.bodySmall),
+                  ],
+                ),
+              ),
+              _ => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        rateState == _RateState.failed ? l.invRateOffline : l.invRateUnavailable,
                         style: t.bodySmall,
                       ),
-                    ],
-                  ),
+                    ),
+                    TextButton(onPressed: onRetryRate, child: Text(l.invRateRetry)),
+                  ],
                 ),
-              _RateState.loading => Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: c.ink2)),
-                      const SizedBox(width: 10),
-                      Text(l.invRateFetching, style: t.bodySmall),
-                    ],
-                  ),
-                ),
-              _ => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          rateState == _RateState.failed ? l.invRateOffline : l.invRateUnavailable,
-                          style: t.bodySmall,
-                        ),
-                      ),
-                      TextButton(onPressed: onRetryRate, child: Text(l.invRateRetry)),
-                    ],
-                  ),
-                ),
+              ),
             },
           ],
         ],

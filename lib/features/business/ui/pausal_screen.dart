@@ -74,9 +74,7 @@ class PausalScreen extends StatelessWidget {
             const SizedBox(height: 14),
             if (status.projectedYearEnd != null)
               InfoNote(
-                status.projectedOverAnnual
-                    ? l.pausalProjectionOver(rsd(status.projectedYearEnd!))
-                    : l.pausalProjection(rsd(status.projectedYearEnd!)),
+                status.projectedOverAnnual ? l.pausalProjectionOver(rsd(status.projectedYearEnd!)) : l.pausalProjection(rsd(status.projectedYearEnd!)),
                 icon: Icons.trending_up,
                 warning: status.projectedOverAnnual,
               ),
@@ -228,7 +226,13 @@ class _AddRevenueSheetState extends State<_AddRevenueSheet> {
               onChanged: (v) => setState(() => _amount = v),
             ),
             const SizedBox(height: 12),
-            TextBox(controller: _note, label: l.pausalManualNote, maxLength: 80, textInputAction: TextInputAction.done, textCapitalization: TextCapitalization.sentences),
+            TextBox(
+              controller: _note,
+              label: l.pausalManualNote,
+              maxLength: 80,
+              textInputAction: TextInputAction.done,
+              textCapitalization: TextCapitalization.sentences,
+            ),
             const SizedBox(height: 18),
             FilledButton(onPressed: _save, child: Text(l.actionSave)),
           ],
@@ -237,4 +241,3 @@ class _AddRevenueSheetState extends State<_AddRevenueSheet> {
     );
   }
 }
-

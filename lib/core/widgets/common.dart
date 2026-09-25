@@ -45,7 +45,10 @@ class ScreenHeader extends StatelessWidget {
             const SizedBox(width: Gap.md),
             // At most half the row, so a long status or country name never
             // squeezes the title away at large text sizes.
-            ConstrainedBox(constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2), child: trailing!),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2),
+              child: trailing!,
+            ),
           ],
         ],
       ),
@@ -76,7 +79,9 @@ class InfoNote extends StatelessWidget {
         children: [
           Icon(warning ? Icons.warning_amber_rounded : icon, size: 18, color: warning ? c.warning : c.ink2),
           const SizedBox(width: 10),
-          Expanded(child: Text(text, style: t.bodySmall!.copyWith(color: warning ? c.ink : c.ink2))),
+          Expanded(
+            child: Text(text, style: t.bodySmall!.copyWith(color: warning ? c.ink : c.ink2)),
+          ),
         ],
       ),
     );
@@ -182,11 +187,15 @@ class SelectRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         constraints: const BoxConstraints(minHeight: 56),
-        decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: c.line)) : null),
+        decoration: BoxDecoration(
+          border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
+        ),
         child: Row(
           children: [
             if (leading != null) ...[leading!, const SizedBox(width: 12)],
-            Expanded(child: Text(label, style: t.bodyMedium!.copyWith(color: c.ink2))),
+            Expanded(
+              child: Text(label, style: t.bodyMedium!.copyWith(color: c.ink2)),
+            ),
             Flexible(
               child: Text(value, style: t.titleSmall, textAlign: TextAlign.right, overflow: TextOverflow.ellipsis),
             ),
@@ -251,7 +260,9 @@ class SwitchRow extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(minHeight: 60),
           padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: c.line)) : null),
+          decoration: BoxDecoration(
+            border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
+          ),
           child: Row(
             children: [
               Expanded(

@@ -96,7 +96,10 @@ class _BottomBar extends StatelessWidget {
     ];
     final bottomInset = MediaQuery.paddingOf(context).bottom;
     return Container(
-      decoration: BoxDecoration(color: c.surface, border: Border(top: BorderSide(color: c.line))),
+      decoration: BoxDecoration(
+        color: c.surface,
+        border: Border(top: BorderSide(color: c.line)),
+      ),
       padding: EdgeInsets.only(bottom: bottomInset),
       child: SizedBox(
         height: 68,

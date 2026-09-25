@@ -25,18 +25,17 @@ class RecentSummary {
   static bool supports(ToolId tool) => tool != ToolId.fx;
 
   static String toolTitle(AppLocalizations l, ToolId tool) => switch (tool) {
-        ToolId.payroll => l.toolPayroll,
-        ToolId.loan => l.toolLoan,
-        ToolId.deposit => l.toolDeposit,
-        ToolId.vat => l.toolVat,
-        ToolId.margin => l.toolMargin,
-        ToolId.breakEven => l.toolBreakEven,
-        ToolId.investment => l.toolInvestment,
-        ToolId.fx => l.toolConverter,
-      };
+    ToolId.payroll => l.toolPayroll,
+    ToolId.loan => l.toolLoan,
+    ToolId.deposit => l.toolDeposit,
+    ToolId.vat => l.toolVat,
+    ToolId.margin => l.toolMargin,
+    ToolId.breakEven => l.toolBreakEven,
+    ToolId.investment => l.toolInvestment,
+    ToolId.fx => l.toolConverter,
+  };
 
-  static String _term(AppLocalizations l, int months) =>
-      months >= 12 && months % 12 == 0 ? l.commonYearsCount(months ~/ 12) : l.commonMonthsCount(months);
+  static String _term(AppLocalizations l, int months) => months >= 12 && months % 12 == 0 ? l.commonYearsCount(months ~/ 12) : l.commonMonthsCount(months);
 
   static RecentSummary of(BuildContext context, SavedCalc calc, SettingsController settings) {
     final l = context.l10n;

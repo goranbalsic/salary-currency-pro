@@ -134,9 +134,7 @@ class PlayBillingGateway implements BillingGateway {
       final addition = _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
       final response = await addition.queryPastPurchases();
       if (response.error != null) return null;
-      return response.pastPurchases
-          .where((p) => p.billingClientPurchase.purchaseState == PurchaseStateWrapper.purchased)
-          .toList();
+      return response.pastPurchases.where((p) => p.billingClientPurchase.purchaseState == PurchaseStateWrapper.purchased).toList();
     } catch (_) {
       return null;
     }

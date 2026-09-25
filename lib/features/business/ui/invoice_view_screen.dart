@@ -62,7 +62,11 @@ class _InvoiceViewScreenState extends State<InvoiceViewScreen> {
       InvoiceStatus.draft => l.snackSaved,
     };
     final store = _store;
-    showSnack(context, message, action: SnackBarAction(label: l.actionUndo, onPressed: () => store.upsertInvoice(before)));
+    showSnack(
+      context,
+      message,
+      action: SnackBarAction(label: l.actionUndo, onPressed: () => store.upsertInvoice(before)),
+    );
   }
 
   Future<void> _issue(Invoice inv) async {
@@ -150,17 +154,23 @@ class _InvoiceViewScreenState extends State<InvoiceViewScreen> {
     );
     final actions = switch (status) {
       InvoiceStatus.draft => [
-          OutlinedButton(onPressed: () => _edit(inv), child: Text(l.actionEdit)),
-          FilledButton(onPressed: () => _issue(inv), child: Text(l.invIssue, overflow: TextOverflow.ellipsis)),
-        ],
+        OutlinedButton(onPressed: () => _edit(inv), child: Text(l.actionEdit)),
+        FilledButton(
+          onPressed: () => _issue(inv),
+          child: Text(l.invIssue, overflow: TextOverflow.ellipsis),
+        ),
+      ],
       InvoiceStatus.issued => [
-          shareButton,
-          FilledButton(onPressed: () => _setStatus(inv, InvoiceStatus.paid), child: Text(l.invMarkPaid, overflow: TextOverflow.ellipsis)),
-        ],
+        shareButton,
+        FilledButton(
+          onPressed: () => _setStatus(inv, InvoiceStatus.paid),
+          child: Text(l.invMarkPaid, overflow: TextOverflow.ellipsis),
+        ),
+      ],
       InvoiceStatus.paid => [shareButton],
       InvoiceStatus.cancelled => [
-          OutlinedButton(onPressed: () => _delete(inv), child: Text(l.invDelete)),
-        ],
+        OutlinedButton(onPressed: () => _delete(inv), child: Text(l.invDelete)),
+      ],
     };
 
     return Scaffold(
@@ -276,18 +286,17 @@ class InvoiceDocument extends StatelessWidget {
     final qr = showQr ? invoiceIpsQr(inv, profile, purposeLabel: l.invDocTitle) : null;
 
     Widget party(String title, InvoiceParty p, {bool seller = false}) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Overline(title, padding: const EdgeInsets.only(bottom: 4)),
-            Text(p.name.isEmpty ? '—' : p.name, style: t.titleMedium),
-            for (final line in [p.address, p.city, if (!seller) p.country])
-              if (line.trim().isNotEmpty) Text(line, style: t.bodySmall!.copyWith(color: c.ink2)),
-            if (p.taxId.isNotEmpty) Text('${serbian ? l.invPib : l.profTaxIdGeneric}: ${p.taxId}', style: t.bodySmall!.copyWith(color: c.ink2)),
-            if (p.registrationNo.isNotEmpty)
-              Text('${serbian ? l.invMb : l.profRegNoGeneric}: ${p.registrationNo}', style: t.bodySmall!.copyWith(color: c.ink2)),
-            if (p.email.isNotEmpty) Text(p.email, style: t.bodySmall!.copyWith(color: c.ink2)),
-          ],
-        );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Overline(title, padding: const EdgeInsets.only(bottom: 4)),
+        Text(p.name.isEmpty ? '—' : p.name, style: t.titleMedium),
+        for (final line in [p.address, p.city, if (!seller) p.country])
+          if (line.trim().isNotEmpty) Text(line, style: t.bodySmall!.copyWith(color: c.ink2)),
+        if (p.taxId.isNotEmpty) Text('${serbian ? l.invPib : l.profTaxIdGeneric}: ${p.taxId}', style: t.bodySmall!.copyWith(color: c.ink2)),
+        if (p.registrationNo.isNotEmpty) Text('${serbian ? l.invMb : l.profRegNoGeneric}: ${p.registrationNo}', style: t.bodySmall!.copyWith(color: c.ink2)),
+        if (p.email.isNotEmpty) Text(p.email, style: t.bodySmall!.copyWith(color: c.ink2)),
+      ],
+    );
 
     return Panel(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
@@ -313,18 +322,22 @@ class InvoiceDocument extends StatelessWidget {
           const SizedBox(height: 14),
           party(l.invBuyer, inv.client),
           const SizedBox(height: 14),
-          _MetaGrid(rows: [
-            (l.invIssueDate, f.date(inv.issueDate)),
-            (l.invServiceDate, f.date(inv.serviceDate)),
-            (l.invDueDate, f.date(inv.dueDate)),
-            if (inv.place.isNotEmpty) (l.invPlaceLabel, inv.place),
-          ]),
+          _MetaGrid(
+            rows: [
+              (l.invIssueDate, f.date(inv.issueDate)),
+              (l.invServiceDate, f.date(inv.serviceDate)),
+              (l.invDueDate, f.date(inv.dueDate)),
+              if (inv.place.isNotEmpty) (l.invPlaceLabel, inv.place),
+            ],
+          ),
           const SizedBox(height: 16),
           Container(height: 1.2, color: c.ink),
           for (final item in inv.lines)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: c.line)),
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -362,13 +375,15 @@ class InvoiceDocument extends StatelessWidget {
             ),
           if (!payment.isEmpty) ...[
             const SizedBox(height: 6),
-            _MetaGrid(rows: [
-              if (payment.account != null) (l.invAccount, payment.account!),
-              if (payment.iban != null) (l.invIban, payment.iban!),
-              if (payment.swift != null) (l.invSwift, payment.swift!),
-              if (payment.bank != null) (l.invBank, payment.bank!),
-              if (payment.reference != null) (l.invReferenceLabel, payment.reference!),
-            ]),
+            _MetaGrid(
+              rows: [
+                if (payment.account != null) (l.invAccount, payment.account!),
+                if (payment.iban != null) (l.invIban, payment.iban!),
+                if (payment.swift != null) (l.invSwift, payment.swift!),
+                if (payment.bank != null) (l.invBank, payment.bank!),
+                if (payment.reference != null) (l.invReferenceLabel, payment.reference!),
+              ],
+            ),
           ],
           if (qr != null) ...[
             const SizedBox(height: 16),
@@ -428,7 +443,10 @@ class _MetaGrid extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(width: 118, child: Text(label, style: t.bodySmall!.copyWith(color: c.ink2))),
+                SizedBox(
+                  width: 118,
+                  child: Text(label, style: t.bodySmall!.copyWith(color: c.ink2)),
+                ),
                 Expanded(child: SelectableText(value, style: t.bodyMedium)),
               ],
             ),

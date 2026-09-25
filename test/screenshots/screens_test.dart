@@ -16,33 +16,37 @@ import 'package:flutter_test/flutter_test.dart';
 import '../widgets/harness.dart';
 
 Future<void> seed(AppServices s) async {
-  await s.business.saveProfile(const BusinessProfile(
-    party: InvoiceParty(name: 'Studio Zeleni PR', address: 'Bulevar oslobođenja 12', city: '21000 Novi Sad', taxId: '101134702', registrationNo: '07012349'),
-    bankAccount: '160-5020001234-64',
-    bankName: 'Banca Intesa',
-    swift: 'DBDBRSBG',
-  ));
+  await s.business.saveProfile(
+    const BusinessProfile(
+      party: InvoiceParty(name: 'Studio Zeleni PR', address: 'Bulevar oslobođenja 12', city: '21000 Novi Sad', taxId: '101134702', registrationNo: '07012349'),
+      bankAccount: '160-5020001234-64',
+      bankName: 'Banca Intesa',
+      swift: 'DBDBRSBG',
+    ),
+  );
   final today = DateTime.now();
   DateTime d(int back) => DateTime(today.year, today.month, today.day - back);
   var n = 0;
   Future<void> add(String client, double price, int back, InvoiceStatus status, {String currency = 'RSD', double? rate}) async {
     n++;
-    await s.business.upsertInvoice(Invoice(
-      id: 'i$n',
-      number: '$n/${today.year}',
-      status: status,
-      issueDate: d(back),
-      serviceDate: d(back),
-      dueDate: d(back - 15),
-      place: 'Novi Sad',
-      client: InvoiceParty(name: client, city: 'Beograd'),
-      currency: currency,
-      items: [InvoiceItem(description: 'Razvoj softvera', quantity: 1, unit: 'kom', unitPrice: price)],
-      vatRegistered: false,
-      rsdRate: rate,
-      rsdRateDate: rate == null ? null : d(back),
-      createdAt: d(back),
-    ));
+    await s.business.upsertInvoice(
+      Invoice(
+        id: 'i$n',
+        number: '$n/${today.year}',
+        status: status,
+        issueDate: d(back),
+        serviceDate: d(back),
+        dueDate: d(back - 15),
+        place: 'Novi Sad',
+        client: InvoiceParty(name: client, city: 'Beograd'),
+        currency: currency,
+        items: [InvoiceItem(description: 'Razvoj softvera', quantity: 1, unit: 'kom', unitPrice: price)],
+        vatRegistered: false,
+        rsdRate: rate,
+        rsdRateDate: rate == null ? null : d(back),
+        createdAt: d(back),
+      ),
+    );
   }
 
   await add('Nordlicht GmbH', 4200, 200, InvoiceStatus.paid, currency: 'EUR', rate: 117.2);
@@ -52,7 +56,11 @@ Future<void> seed(AppServices s) async {
   await add('Panonija d.o.o.', 240000, 40, InvoiceStatus.paid);
   await add('Nordlicht GmbH', 4400, 20, InvoiceStatus.issued, currency: 'EUR', rate: 117.4);
   await add('Kafeterija Dunav', 96000, 3, InvoiceStatus.issued);
-  for (final (name, role, amount) in [('Ana Petrović', 'Developer', 320000.0), ('Marko Ilić', 'Designer', 210000.0), ('Jelena Kovač', 'Accountant', 150000.0)]) {
+  for (final (name, role, amount) in [
+    ('Ana Petrović', 'Developer', 320000.0),
+    ('Marko Ilić', 'Designer', 210000.0),
+    ('Jelena Kovač', 'Accountant', 150000.0),
+  ]) {
     await s.team.upsert(TeamMember(id: name, name: name, role: role, system: PayrollSystem.serbia, mode: PayrollInputMode.gross, amount: amount));
   }
   await s.store.writeJson('payroll.last.v1', {'system': 'serbia', 'mode': 'gross', 'amount': 150000, 'options': <String, Object?>{}});

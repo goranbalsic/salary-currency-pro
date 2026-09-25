@@ -40,7 +40,10 @@ abstract final class Backup {
   /// Replaces app data with [data], keeping this device's own keys.
   static Future<void> restore(Store store, Map<String, Object?> data) async {
     final current = store.exportAll();
-    final keep = {for (final k in _deviceOnly) if (current.containsKey(k)) k: current[k]};
+    final keep = {
+      for (final k in _deviceOnly)
+        if (current.containsKey(k)) k: current[k],
+    };
     final incoming = Map.of(data)..removeWhere((k, _) => _deviceOnly.contains(k));
     await store.importAll({...incoming, ...keep});
   }
@@ -48,10 +51,12 @@ abstract final class Backup {
   /// Deletes all app data except this device's own keys.
   static Future<void> wipe(Store store) async {
     final current = store.exportAll();
-    final keep = {for (final k in _deviceOnly) if (current.containsKey(k)) k: current[k]};
+    final keep = {
+      for (final k in _deviceOnly)
+        if (current.containsKey(k)) k: current[k],
+    };
     await store.importAll(keep);
   }
 
-  static String fileName(DateTime now) =>
-      'bilans-backup-${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}.json';
+  static String fileName(DateTime now) => 'bilans-backup-${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}.json';
 }

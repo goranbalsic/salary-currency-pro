@@ -74,12 +74,18 @@ class BusinessScreen extends StatelessWidget {
             const SizedBox(height: 22),
             Container(
               padding: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.ink))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: c.ink)),
+              ),
               child: Row(
                 children: [
                   Expanded(child: Text(l.bizInvoices, style: t.titleLarge)),
                   FilledButton.icon(
-                    style: FilledButton.styleFrom(minimumSize: const Size(0, 40), padding: const EdgeInsets.symmetric(horizontal: 14), shape: const StadiumBorder()),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size(0, 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      shape: const StadiumBorder(),
+                    ),
                     onPressed: () => startNewInvoice(context),
                     icon: const Icon(Icons.add, size: 18),
                     label: Text(l.bizNewInvoice),
@@ -88,7 +94,10 @@ class BusinessScreen extends StatelessWidget {
               ),
             ),
             if (!pro.can(ProFeature.unlimitedInvoices) && freeLeft > 0)
-              Padding(padding: const EdgeInsets.only(top: 8), child: Text(l.bizFreeLeft(freeLeft), style: t.bodySmall)),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(l.bizFreeLeft(freeLeft), style: t.bodySmall),
+              ),
             if (invoices.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -109,7 +118,9 @@ class BusinessScreen extends StatelessWidget {
             const SizedBox(height: 22),
             Container(
               padding: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.ink))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: c.ink)),
+              ),
               child: Overline(l.bizTools),
             ),
             for (final tool in tools)
@@ -117,7 +128,9 @@ class BusinessScreen extends StatelessWidget {
                 onTap: () => openTool(context, tool),
                 child: Container(
                   constraints: const BoxConstraints(minHeight: 60),
-                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+                  decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: c.line)),
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -162,7 +175,9 @@ class InvoiceRow extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 68),
         padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
         child: Row(
           children: [
             Expanded(
@@ -289,7 +304,11 @@ class PausalMeter extends StatelessWidget {
           Row(
             children: [
               Expanded(child: Text(label, style: t.bodyMedium)),
-              if (!blurred) Text(f.percent(share), style: t.bodySmall!.copyWith(color: over ? c.brick : c.ink2, fontFeatures: Fonts.tabular)),
+              if (!blurred)
+                Text(
+                  f.percent(share),
+                  style: t.bodySmall!.copyWith(color: over ? c.brick : c.ink2, fontFeatures: Fonts.tabular),
+                ),
             ],
           ),
           const SizedBox(height: 8),
@@ -300,7 +319,10 @@ class PausalMeter extends StatelessWidget {
                 Container(height: 10, color: c.sunken),
                 FractionallySizedBox(
                   widthFactor: fill,
-                  child: Container(height: 10, decoration: BoxDecoration(color: over ? c.brick : color, borderRadius: BorderRadius.circular(5))),
+                  child: Container(
+                    height: 10,
+                    decoration: BoxDecoration(color: over ? c.brick : color, borderRadius: BorderRadius.circular(5)),
+                  ),
                 ),
               ],
             ),

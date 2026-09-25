@@ -244,7 +244,9 @@ class _MemberRow extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 68),
         padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
         child: Row(
           children: [
             CodeTile(member.system.countryCode),
@@ -325,13 +327,13 @@ class _TeamMemberScreenState extends State<TeamMemberScreen> {
   }
 
   String _snapshot() => jsonEncode({
-        'n': _name.text.trim(),
-        'r': _role.text.trim(),
-        's': _system.name,
-        'm': _mode.name,
-        'a': _amount,
-        'o': _options.toJson(),
-      });
+    'n': _name.text.trim(),
+    'r': _role.text.trim(),
+    's': _system.name,
+    'm': _mode.name,
+    'a': _amount,
+    'o': _options.toJson(),
+  });
 
   bool get _dirty => _snapshot() != _initial;
 
@@ -387,10 +389,12 @@ class _TeamMemberScreenState extends State<TeamMemberScreen> {
     final messenger = ScaffoldMessenger.of(context);
     await team.remove(m.id);
     navigator.pop();
-    messenger.showSnackBar(SnackBar(
-      content: Text(l.snackDeleted),
-      action: SnackBarAction(label: l.actionUndo, onPressed: () => team.upsert(m)),
-    ));
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l.snackDeleted),
+        action: SnackBarAction(label: l.actionUndo, onPressed: () => team.upsert(m)),
+      ),
+    );
   }
 
   @override
@@ -429,7 +433,9 @@ class _TeamMemberScreenState extends State<TeamMemberScreen> {
             if (widget.member != null) IconButton(tooltip: l.actionRemove, onPressed: _delete, icon: const Icon(Icons.delete_outline)),
           ],
         ),
-        bottomNavigationBar: BottomActions(children: [FilledButton(onPressed: _save, child: Text(l.actionSave))]),
+        bottomNavigationBar: BottomActions(
+          children: [FilledButton(onPressed: _save, child: Text(l.actionSave))],
+        ),
         body: PageBody(
           padding: const EdgeInsets.fromLTRB(Gap.page, 8, Gap.page, 32),
           children: [

@@ -44,48 +44,48 @@ enum Tool {
   bool availableIn(String country) => onlyCountry == null || onlyCountry == country;
 
   String title(AppLocalizations l) => switch (this) {
-        Tool.payroll => l.toolPayroll,
-        Tool.team => l.toolTeam,
-        Tool.compareCountries => l.toolCompare,
-        Tool.loan => l.toolLoan,
-        Tool.deposit => l.toolDeposit,
-        Tool.loanCompare => l.toolLoanCompare,
-        Tool.prepay => l.toolPrepay,
-        Tool.converter => l.toolConverter,
-        Tool.rateHistory => l.toolRateHistory,
-        Tool.invoices => l.toolInvoices,
-        Tool.pausal => l.toolPausal,
-        Tool.vat => l.toolVat,
-        Tool.margin => l.toolMargin,
-        Tool.breakEven => l.toolBreakEven,
-        Tool.investment => l.toolInvestment,
-      };
+    Tool.payroll => l.toolPayroll,
+    Tool.team => l.toolTeam,
+    Tool.compareCountries => l.toolCompare,
+    Tool.loan => l.toolLoan,
+    Tool.deposit => l.toolDeposit,
+    Tool.loanCompare => l.toolLoanCompare,
+    Tool.prepay => l.toolPrepay,
+    Tool.converter => l.toolConverter,
+    Tool.rateHistory => l.toolRateHistory,
+    Tool.invoices => l.toolInvoices,
+    Tool.pausal => l.toolPausal,
+    Tool.vat => l.toolVat,
+    Tool.margin => l.toolMargin,
+    Tool.breakEven => l.toolBreakEven,
+    Tool.investment => l.toolInvestment,
+  };
 
   String description(AppLocalizations l, String country) => switch (this) {
-        Tool.payroll => l.toolPayrollDesc,
-        Tool.team => l.toolTeamDesc,
-        Tool.compareCountries => l.toolCompareDesc,
-        Tool.loan => l.toolLoanDesc,
-        Tool.deposit => l.toolDepositDesc,
-        Tool.loanCompare => l.toolLoanCompareDesc,
-        Tool.prepay => l.toolPrepayDesc,
-        Tool.converter => l.toolConverterDesc,
-        Tool.rateHistory => l.toolRateHistoryDesc,
-        Tool.invoices => country == 'RS' ? l.toolInvoicesDescRs : l.toolInvoicesDesc,
-        Tool.pausal => l.toolPausalDesc,
-        Tool.vat => l.toolVatDesc,
-        Tool.margin => l.toolMarginDesc,
-        Tool.breakEven => l.toolBreakEvenDesc,
-        Tool.investment => l.toolInvestmentDesc,
-      };
+    Tool.payroll => l.toolPayrollDesc,
+    Tool.team => l.toolTeamDesc,
+    Tool.compareCountries => l.toolCompareDesc,
+    Tool.loan => l.toolLoanDesc,
+    Tool.deposit => l.toolDepositDesc,
+    Tool.loanCompare => l.toolLoanCompareDesc,
+    Tool.prepay => l.toolPrepayDesc,
+    Tool.converter => l.toolConverterDesc,
+    Tool.rateHistory => l.toolRateHistoryDesc,
+    Tool.invoices => country == 'RS' ? l.toolInvoicesDescRs : l.toolInvoicesDesc,
+    Tool.pausal => l.toolPausalDesc,
+    Tool.vat => l.toolVatDesc,
+    Tool.margin => l.toolMarginDesc,
+    Tool.breakEven => l.toolBreakEvenDesc,
+    Tool.investment => l.toolInvestmentDesc,
+  };
 }
 
 String sectionTitle(AppLocalizations l, CatalogSection s) => switch (s) {
-      CatalogSection.payroll => l.homeSectionPayroll,
-      CatalogSection.credit => l.homeSectionCredit,
-      CatalogSection.fx => l.homeSectionFx,
-      CatalogSection.business => l.homeSectionBusiness,
-    };
+  CatalogSection.payroll => l.homeSectionPayroll,
+  CatalogSection.credit => l.homeSectionCredit,
+  CatalogSection.fx => l.homeSectionFx,
+  CatalogSection.business => l.homeSectionBusiness,
+};
 
 /// Opens a tool: switches tab or pushes its screen, asking for Pro first
 /// when the tool needs it.

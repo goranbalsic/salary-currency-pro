@@ -21,11 +21,11 @@ Future<LanguageChoice?> showLanguageSheet(BuildContext context, {required AppLan
       final t = Theme.of(context).textTheme;
       final l = context.l10n;
       Widget row(String label, bool selected, LanguageChoice value) => ListTile(
-            title: Text(label, style: t.titleMedium),
-            trailing: selected ? Icon(Icons.check, color: c.green) : null,
-            selected: selected,
-            onTap: () => Navigator.of(context).pop(value),
-          );
+        title: Text(label, style: t.titleMedium),
+        trailing: selected ? Icon(Icons.check, color: c.green) : null,
+        selected: selected,
+        onTap: () => Navigator.of(context).pop(value),
+      );
       return SafeArea(
         top: false,
         child: ListView(

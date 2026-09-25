@@ -25,11 +25,10 @@ Future<void> saveCalculation(BuildContext context, ToolId tool, Map<String, Obje
 }
 
 /// Asks for a calculation name. Returns null when cancelled.
-Future<String?> askName(BuildContext context, {required String title, String initial = '', bool showLimit = false}) =>
-    showDialog<String>(
-      context: context,
-      builder: (context) => _NameDialog(title: title, initial: initial, showLimit: showLimit),
-    );
+Future<String?> askName(BuildContext context, {required String title, String initial = '', bool showLimit = false}) => showDialog<String>(
+  context: context,
+  builder: (context) => _NameDialog(title: title, initial: initial, showLimit: showLimit),
+);
 
 class _NameDialog extends StatefulWidget {
   const _NameDialog({required this.title, required this.initial, required this.showLimit});

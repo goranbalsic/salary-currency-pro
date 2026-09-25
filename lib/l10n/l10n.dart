@@ -18,45 +18,45 @@ extension L10nContext on BuildContext {
 
 extension L10nNames on AppLocalizations {
   String countryName(String code) => switch (code) {
-        'RS' => countryRS,
-        'HR' => countryHR,
-        'BA' => countryBA,
-        'ME' => countryME,
-        'MK' => countryMK,
-        'SI' => countrySI,
-        'BG' => countryBG,
-        'RO' => countryRO,
-        _ => code,
-      };
+    'RS' => countryRS,
+    'HR' => countryHR,
+    'BA' => countryBA,
+    'ME' => countryME,
+    'MK' => countryMK,
+    'SI' => countrySI,
+    'BG' => countryBG,
+    'RO' => countryRO,
+    _ => code,
+  };
 
   String systemName(PayrollSystem s) => switch (s) {
-        PayrollSystem.fbih => systemFbih,
-        PayrollSystem.republikaSrpska => systemRepublikaSrpska,
-        _ => countryName(s.countryCode),
-      };
+    PayrollSystem.fbih => systemFbih,
+    PayrollSystem.republikaSrpska => systemRepublikaSrpska,
+    _ => countryName(s.countryCode),
+  };
 
   /// Localized currency name, or null for currencies without one.
   String? currencyName(String code) => switch (code) {
-        'EUR' => curEUR,
-        'USD' => curUSD,
-        'CHF' => curCHF,
-        'GBP' => curGBP,
-        'RSD' => curRSD,
-        'BAM' => curBAM,
-        'MKD' => curMKD,
-        'RON' => curRON,
-        'HUF' => curHUF,
-        'CZK' => curCZK,
-        'PLN' => curPLN,
-        'SEK' => curSEK,
-        'NOK' => curNOK,
-        'DKK' => curDKK,
-        'JPY' => curJPY,
-        'CNY' => curCNY,
-        'CAD' => curCAD,
-        'AUD' => curAUD,
-        'TRY' => curTRY,
-        'RUB' => curRUB,
-        _ => null,
-      };
+    'EUR' => curEUR,
+    'USD' => curUSD,
+    'CHF' => curCHF,
+    'GBP' => curGBP,
+    'RSD' => curRSD,
+    'BAM' => curBAM,
+    'MKD' => curMKD,
+    'RON' => curRON,
+    'HUF' => curHUF,
+    'CZK' => curCZK,
+    'PLN' => curPLN,
+    'SEK' => curSEK,
+    'NOK' => curNOK,
+    'DKK' => curDKK,
+    'JPY' => curJPY,
+    'CNY' => curCNY,
+    'CAD' => curCAD,
+    'AUD' => curAUD,
+    'TRY' => curTRY,
+    'RUB' => curRUB,
+    _ => null,
+  };
 }

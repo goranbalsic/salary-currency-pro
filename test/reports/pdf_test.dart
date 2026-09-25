@@ -23,11 +23,11 @@ void main() {
   setUpAll(() async => fonts = await ReportFonts.load());
 
   ReportKit kit(String lang, {String? script}) => ReportKit(
-        fonts: fonts,
-        l: lookupAppLocalizations(Locale.fromSubtags(languageCode: lang, scriptCode: script)),
-        f: Formats(lang, script: script),
-        issuer: 'Studio Zeleni · PIB 101134702',
-      );
+    fonts: fonts,
+    l: lookupAppLocalizations(Locale.fromSubtags(languageCode: lang, scriptCode: script)),
+    f: Formats(lang, script: script),
+    issuer: 'Studio Zeleni · PIB 101134702',
+  );
 
   void check(String name, List<int> bytes) {
     expect(ascii.decode(bytes.sublist(0, 5)), '%PDF-');
@@ -70,7 +70,9 @@ void main() {
   });
 
   test('deposit report', () async {
-    final r = const DepositEngine().compute(const DepositInput(principal: 10000, annualRatePercent: 3, months: 36, compounding: Compounding.annually, taxPercent: 15));
+    final r = const DepositEngine().compute(
+      const DepositInput(principal: 10000, annualRatePercent: 3, months: 36, compounding: Compounding.annually, taxPercent: 15),
+    );
     check('deposit', await buildDepositPdf(kit('hr'), r, 'EUR'));
   });
 
@@ -84,8 +86,16 @@ void main() {
 
   test('invoices: dinar with IPS QR, bilingual foreign-currency, long item lists', () async {
     check('invoice-rsd', await buildInvoicePdf(kit('sr', script: 'Latn'), invoice, profile, serbian: true));
-    final eur = invoice.copyWith(currency: 'EUR', rsdRate: 117.4831, rsdRateDate: DateTime(2026, 9, 25), items: const [InvoiceItem(description: 'Consulting', quantity: 1, unitPrice: 3000)]);
-    check('invoice-eur-bilingual', await buildInvoicePdf(kit('sr', script: 'Latn'), eur, profile, serbian: true, secondary: lookupAppLocalizations(const Locale('en'))));
+    final eur = invoice.copyWith(
+      currency: 'EUR',
+      rsdRate: 117.4831,
+      rsdRateDate: DateTime(2026, 9, 25),
+      items: const [InvoiceItem(description: 'Consulting', quantity: 1, unitPrice: 3000)],
+    );
+    check(
+      'invoice-eur-bilingual',
+      await buildInvoicePdf(kit('sr', script: 'Latn'), eur, profile, serbian: true, secondary: lookupAppLocalizations(const Locale('en'))),
+    );
     final vat = invoice.copyWith(vatRegistered: true, items: const [InvoiceItem(description: 'Roba', quantity: 3, unitPrice: 1000, vatPercent: 20)]);
     check('invoice-vat', await buildInvoicePdf(kit('en'), vat, profile, serbian: false));
   });
@@ -103,11 +113,20 @@ void main() {
       }
       final loan = const LoanEngine().compute(const LoanInput(principal: 25000, annualRatePercent: 6.5, months: 84, upfrontFeePercent: 1, monthlyFee: 3));
       check('all-$tag-loan', await buildLoanPdf(k, loan, 'EUR'));
-      final dep = const DepositEngine().compute(const DepositInput(principal: 5000, annualRatePercent: 4, months: 24, compounding: Compounding.monthly, taxPercent: 15, monthlyContribution: 100));
+      final dep = const DepositEngine().compute(
+        const DepositInput(principal: 5000, annualRatePercent: 4, months: 24, compounding: Compounding.monthly, taxPercent: 15, monthlyContribution: 100),
+      );
       check('all-$tag-deposit', await buildDepositPdf(k, dep, 'EUR'));
       final members = [
         for (final system in PayrollSystem.values)
-          TeamMember(id: system.name, name: 'Ime ${system.index}', role: 'Role', system: system, mode: PayrollInputMode.gross, amount: system.currency == 'RSD' ? 150000 : 2000),
+          TeamMember(
+            id: system.name,
+            name: 'Ime ${system.index}',
+            role: 'Role',
+            system: system,
+            mode: PayrollInputMode.gross,
+            amount: system.currency == 'RSD' ? 150000 : 2000,
+          ),
       ];
       check('all-$tag-team', await buildTeamPdf(k, members, annual: false));
       final eur = invoice.copyWith(

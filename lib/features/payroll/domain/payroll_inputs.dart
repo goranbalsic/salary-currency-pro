@@ -9,20 +9,19 @@ class PayrollInputs {
   final double? amount;
   final PayrollOptions options;
 
-  PayrollInputs copyWith({PayrollSystem? system, PayrollInputMode? mode, double? amount, bool clearAmount = false, PayrollOptions? options}) =>
-      PayrollInputs(
-        system: system ?? this.system,
-        mode: mode ?? this.mode,
-        amount: clearAmount ? null : (amount ?? this.amount),
-        options: options ?? this.options,
-      );
+  PayrollInputs copyWith({PayrollSystem? system, PayrollInputMode? mode, double? amount, bool clearAmount = false, PayrollOptions? options}) => PayrollInputs(
+    system: system ?? this.system,
+    mode: mode ?? this.mode,
+    amount: clearAmount ? null : (amount ?? this.amount),
+    options: options ?? this.options,
+  );
 
   Map<String, Object?> toJson() => {
-        'system': system.name,
-        'mode': mode.name,
-        'amount': amount,
-        'options': options.toJson(),
-      };
+    'system': system.name,
+    'mode': mode.name,
+    'amount': amount,
+    'options': options.toJson(),
+  };
 
   static PayrollInputs? fromJson(Object? raw) {
     if (raw is! Map) return null;

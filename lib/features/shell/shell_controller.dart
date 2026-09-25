@@ -24,8 +24,7 @@ class ShellController extends ChangeNotifier {
   int? takeSection(AppTab tab) => _sections.remove(tab);
 
   /// Tools that live in a tab (the rest open as pushed screens).
-  static bool restoresInTab(ToolId tool) =>
-      tool == ToolId.payroll || tool == ToolId.loan || tool == ToolId.deposit || tool == ToolId.fx;
+  static bool restoresInTab(ToolId tool) => tool == ToolId.payroll || tool == ToolId.loan || tool == ToolId.deposit || tool == ToolId.fx;
 
   /// Switches to the tab that owns [calc] and hands it the inputs.
   void restore(SavedCalc calc) {

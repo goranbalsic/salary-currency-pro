@@ -69,11 +69,11 @@ class ReportKit {
   static const margin = pw.EdgeInsets.fromLTRB(40, 36, 40, 36);
 
   pw.ThemeData get theme => pw.ThemeData.withFont(
-        base: fonts.sans,
-        bold: fonts.semibold,
-        italic: fonts.serifItalic,
-        boldItalic: fonts.serifItalic,
-      );
+    base: fonts.sans,
+    bold: fonts.semibold,
+    italic: fonts.serifItalic,
+    boldItalic: fonts.serifItalic,
+  );
 
   pw.Document document(String title) => pw.Document(theme: theme, title: title, author: issuer, creator: 'Bilans', producer: 'Bilans');
 
@@ -127,7 +127,9 @@ class ReportKit {
     return pw.Container(
       margin: const pw.EdgeInsets.only(top: 14),
       padding: const pw.EdgeInsets.only(top: 6),
-      decoration: const pw.BoxDecoration(border: pw.Border(top: pw.BorderSide(color: PdfInk.line, width: 0.6))),
+      decoration: const pw.BoxDecoration(
+        border: pw.Border(top: pw.BorderSide(color: PdfInk.line, width: 0.6)),
+      ),
       child: pw.Row(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
@@ -140,15 +142,19 @@ class ReportKit {
   }
 
   pw.Widget overline(String text, {double top = 14}) => pw.Padding(
-        padding: pw.EdgeInsets.only(top: top, bottom: 4),
-        child: pw.Text(text.toUpperCase(), style: label),
-      );
+    padding: pw.EdgeInsets.only(top: top, bottom: 4),
+    child: pw.Text(text.toUpperCase(), style: label),
+  );
 
   /// A statement line: label (with optional muted hint and note), amount.
   pw.Widget row(String labelText, String value, {String? hint, String? note, bool bold = false, bool divider = true}) {
     return pw.Container(
       padding: const pw.EdgeInsets.symmetric(vertical: 4.5),
-      decoration: divider ? const pw.BoxDecoration(border: pw.Border(bottom: pw.BorderSide(color: PdfInk.line, width: 0.5))) : null,
+      decoration: divider
+          ? const pw.BoxDecoration(
+              border: pw.Border(bottom: pw.BorderSide(color: PdfInk.line, width: 0.5)),
+            )
+          : null,
       child: pw.Row(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
@@ -160,7 +166,13 @@ class ReportKit {
                   text: pw.TextSpan(
                     text: labelText,
                     style: bold ? strong : body,
-                    children: [if (hint != null && hint.isNotEmpty) pw.TextSpan(text: '  $hint', style: body.copyWith(color: PdfInk.ink3))],
+                    children: [
+                      if (hint != null && hint.isNotEmpty)
+                        pw.TextSpan(
+                          text: '  $hint',
+                          style: body.copyWith(color: PdfInk.ink3),
+                        ),
+                    ],
                   ),
                 ),
                 if (note != null) pw.Text(note, style: small),
@@ -223,28 +235,40 @@ class ReportKit {
   }
 
   /// A plain table with an underlined header; [right] marks numeric columns.
-  pw.Widget table({required List<String> headers, required List<List<String>> rows, required List<double> flex, Set<int> right = const {}, List<String>? footer}) {
+  pw.Widget table({
+    required List<String> headers,
+    required List<List<String>> rows,
+    required List<double> flex,
+    Set<int> right = const {},
+    List<String>? footer,
+  }) {
     pw.Widget cell(String text, int col, pw.TextStyle style) => pw.Container(
-          padding: const pw.EdgeInsets.symmetric(vertical: 3.5, horizontal: 3),
-          alignment: right.contains(col) ? pw.Alignment.centerRight : pw.Alignment.centerLeft,
-          child: pw.Text(text, style: style),
-        );
+      padding: const pw.EdgeInsets.symmetric(vertical: 3.5, horizontal: 3),
+      alignment: right.contains(col) ? pw.Alignment.centerRight : pw.Alignment.centerLeft,
+      child: pw.Text(text, style: style),
+    );
     return pw.Table(
       columnWidths: {for (var i = 0; i < flex.length; i++) i: pw.FlexColumnWidth(flex[i])},
       children: [
         pw.TableRow(
-          decoration: const pw.BoxDecoration(border: pw.Border(bottom: pw.BorderSide(color: PdfInk.ink, width: 0.8))),
+          decoration: const pw.BoxDecoration(
+            border: pw.Border(bottom: pw.BorderSide(color: PdfInk.ink, width: 0.8)),
+          ),
           repeat: true,
           children: [for (var i = 0; i < headers.length; i++) cell(headers[i].toUpperCase(), i, label)],
         ),
         for (final r in rows)
           pw.TableRow(
-            decoration: const pw.BoxDecoration(border: pw.Border(bottom: pw.BorderSide(color: PdfInk.line, width: 0.4))),
+            decoration: const pw.BoxDecoration(
+              border: pw.Border(bottom: pw.BorderSide(color: PdfInk.line, width: 0.4)),
+            ),
             children: [for (var i = 0; i < r.length; i++) cell(r[i], i, body.copyWith(fontSize: 8.5))],
           ),
         if (footer != null)
           pw.TableRow(
-            decoration: const pw.BoxDecoration(border: pw.Border(top: pw.BorderSide(color: PdfInk.ink, width: 0.8))),
+            decoration: const pw.BoxDecoration(
+              border: pw.Border(top: pw.BorderSide(color: PdfInk.ink, width: 0.8)),
+            ),
             children: [for (var i = 0; i < footer.length; i++) cell(footer[i], i, strong.copyWith(fontSize: 8.5))],
           ),
       ],
@@ -288,7 +312,11 @@ class ReportKit {
                 pw.Row(
                   mainAxisSize: pw.MainAxisSize.min,
                   children: [
-                    pw.Container(width: 7, height: 7, decoration: pw.BoxDecoration(color: p.$3, borderRadius: pw.BorderRadius.circular(1.5))),
+                    pw.Container(
+                      width: 7,
+                      height: 7,
+                      decoration: pw.BoxDecoration(color: p.$3, borderRadius: pw.BorderRadius.circular(1.5)),
+                    ),
                     pw.SizedBox(width: 4),
                     pw.Text('${p.$1} ${p.$4}', style: small),
                   ],
@@ -299,6 +327,8 @@ class ReportKit {
     );
   }
 
-  pw.Widget paragraph(String text, {bool muted = true}) =>
-      pw.Padding(padding: const pw.EdgeInsets.only(top: 4), child: pw.Text(text, style: muted ? small : body));
+  pw.Widget paragraph(String text, {bool muted = true}) => pw.Padding(
+    padding: const pw.EdgeInsets.only(top: 4),
+    child: pw.Text(text, style: muted ? small : body),
+  );
 }

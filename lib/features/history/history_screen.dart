@@ -41,7 +41,10 @@ class HistoryScreen extends StatelessWidget {
             trailing: free ? Text('${saved.length}/${AppConfig.freeSavedLimit}', style: t.bodySmall) : null,
           ),
           if (saved.isEmpty)
-            Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(l.historySavedEmpty, style: t.bodyMedium!.copyWith(color: c.ink2)))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(l.historySavedEmpty, style: t.bodyMedium!.copyWith(color: c.ink2)),
+            )
           else
             for (final item in saved) _HistoryRow(item: item, saved: true),
           const SizedBox(height: 26),
@@ -111,7 +114,9 @@ class _HistoryRow extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 68),
         padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
         child: Row(
           children: [
             Expanded(

@@ -41,13 +41,15 @@ List<CountryComparison> compareCountries(RateBook book, PayrollInputMode mode, d
     if (!local.isFinite || local <= 0 || local > PayrollEngine.maxAmount) continue;
     try {
       final r = engine.compute(s, mode, local);
-      out.add(CountryComparison(
-        system: s,
-        gross: r.gross * back.rate,
-        net: r.net * back.rate,
-        totalCost: r.totalCost * back.rate,
-        wedge: r.taxWedge,
-      ));
+      out.add(
+        CountryComparison(
+          system: s,
+          gross: r.gross * back.rate,
+          net: r.net * back.rate,
+          totalCost: r.totalCost * back.rate,
+          wedge: r.taxWedge,
+        ),
+      );
     } on PayrollSolveException {
       continue;
     }
@@ -164,7 +166,12 @@ class _CompareCountriesScreenState extends State<CompareCountriesScreen> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(6),
-                    child: Row(children: [CodeTile(_currency, width: 42), Icon(Icons.expand_more, size: 18, color: c.ink2)]),
+                    child: Row(
+                      children: [
+                        CodeTile(_currency, width: 42),
+                        Icon(Icons.expand_more, size: 18, color: c.ink2),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -239,7 +246,9 @@ class _CompareRow extends StatelessWidget {
     final c = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line))),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: c.line)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -247,11 +256,16 @@ class _CompareRow extends StatelessWidget {
             children: [
               SizedBox(
                 width: 24,
-                child: Text('$rank', style: t.bodySmall!.copyWith(fontFamily: Fonts.serif, fontFeatures: Fonts.tabular)),
+                child: Text(
+                  '$rank',
+                  style: t.bodySmall!.copyWith(fontFamily: Fonts.serif, fontFeatures: Fonts.tabular),
+                ),
               ),
               CodeTile(item.system.countryCode, accent: home),
               const SizedBox(width: 10),
-              Expanded(child: Text(l.systemName(item.system), style: t.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis)),
+              Expanded(
+                child: Text(l.systemName(item.system), style: t.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+              ),
               const SizedBox(width: 8),
               Text(primary, style: t.titleLarge!.copyWith(fontSize: 18)),
             ],
@@ -272,7 +286,11 @@ class _CompareRow extends StatelessWidget {
                         children: [
                           Container(
                             width: w * costShare.clamp(0.0, 1.0),
-                            decoration: BoxDecoration(color: c.sunken, borderRadius: BorderRadius.circular(4), border: Border.all(color: c.line)),
+                            decoration: BoxDecoration(
+                              color: c.sunken,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: c.line),
+                            ),
                           ),
                           Container(
                             width: w * netShare.clamp(0.0, 1.0),
@@ -309,7 +327,11 @@ class _Key extends StatelessWidget {
         Container(
           width: 12,
           height: 12,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3), border: border == null ? null : Border.all(color: border!)),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(3),
+            border: border == null ? null : Border.all(color: border!),
+          ),
         ),
         const SizedBox(width: 6),
         Flexible(child: Text(label, style: t.bodySmall)),

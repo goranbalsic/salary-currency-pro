@@ -180,8 +180,8 @@ void main() {
 
 /// A monthly gross above every country's minimum, in [currency].
 String _typicalGross(String currency) => switch (currency) {
-      'RSD' => '150000',
-      'MKD' => '60000',
-      'RON' => '9000',
-      _ => '4000',
-    };
+  'RSD' => '150000',
+  'MKD' => '60000',
+  'RON' => '9000',
+  _ => '4000',
+};

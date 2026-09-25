@@ -49,7 +49,8 @@ class _DepositViewState extends State<DepositView> {
     if (_inputs == null) {
       final settings = context.read<SettingsController>();
       final store = context.read<AppServices>().store;
-      _inputs = DepositInputs.fromJson(store.readJson(depositInputsKey), fallbackCurrency: settings.homeCurrency) ??
+      _inputs =
+          DepositInputs.fromJson(store.readJson(depositInputsKey), fallbackCurrency: settings.homeCurrency) ??
           DepositInputs(
             currency: settings.homeCurrency,
             taxPercent: defaultDepositTax(settings.country.code, settings.homeCurrency),
@@ -128,10 +129,12 @@ class _DepositViewState extends State<DepositView> {
                 currency: cur,
                 currencies: creditCurrencies(settings.homeCurrency),
                 onChanged: (v) => _update(inputs.copyWith(principal: v, clearPrincipal: v == null)),
-                onCurrency: (code) => _update(inputs.copyWith(
-                  currency: code,
-                  taxPercent: defaultDepositTax(settings.country.code, code),
-                )),
+                onCurrency: (code) => _update(
+                  inputs.copyWith(
+                    currency: code,
+                    taxPercent: defaultDepositTax(settings.country.code, code),
+                  ),
+                ),
               ),
               NumberInputRow(
                 label: l.depRate,
@@ -164,7 +167,11 @@ class _DepositViewState extends State<DepositView> {
                           (Compounding.monthly, l.depMonthly),
                           (Compounding.annually, l.depAnnually),
                         ])
-                          PillChip(label: label, selected: inputs.compounding == mode, onTap: () => _update(inputs.copyWith(compounding: mode))),
+                          PillChip(
+                            label: label,
+                            selected: inputs.compounding == mode,
+                            onTap: () => _update(inputs.copyWith(compounding: mode)),
+                          ),
                       ],
                     ),
                   ],
@@ -250,16 +257,22 @@ class _YearTable extends StatelessWidget {
     final f = context.fmt;
     final cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular);
     Widget row(List<String> v, {bool header = false}) => Container(
-          padding: const EdgeInsets.symmetric(vertical: 9),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: header ? c.ink : c.line))),
-          child: Row(
-            children: [
-              SizedBox(width: 56, child: Text(v[0], style: header ? t.labelSmall : cell)),
-              Expanded(child: Text(v[1], textAlign: TextAlign.right, style: header ? t.labelSmall : cell)),
-              Expanded(child: Text(v[2], textAlign: TextAlign.right, style: header ? t.labelSmall : cell)),
-            ],
+      padding: const EdgeInsets.symmetric(vertical: 9),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: header ? c.ink : c.line)),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 56, child: Text(v[0], style: header ? t.labelSmall : cell)),
+          Expanded(
+            child: Text(v[1], textAlign: TextAlign.right, style: header ? t.labelSmall : cell),
           ),
-        );
+          Expanded(
+            child: Text(v[2], textAlign: TextAlign.right, style: header ? t.labelSmall : cell),
+          ),
+        ],
+      ),
+    );
     return Column(
       children: [
         row([l.depColYear.toUpperCase(), l.depColInterest.toUpperCase(), l.depColBalance.toUpperCase()], header: true),
