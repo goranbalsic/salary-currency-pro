@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app_config.dart';
+import '../../app/bootstrap.dart';
 import '../../core/widgets/common.dart';
 import '../../l10n/l10n.dart';
 import '../pro/pro_controller.dart';
@@ -13,6 +16,7 @@ import 'history_store.dart';
 Future<void> saveCalculation(BuildContext context, ToolId tool, Map<String, Object?> inputs, {String suggestedName = ''}) async {
   final history = context.read<HistoryStore>();
   final pro = context.read<ProController>();
+  final review = context.read<AppServices>().review;
   final l = context.l10n;
   if (!pro.can(ProFeature.unlimitedSaves) && history.savedCount >= AppConfig.freeSavedLimit) {
     final unlocked = await requirePro(context, ProFeature.unlimitedSaves);
@@ -22,6 +26,7 @@ Future<void> saveCalculation(BuildContext context, ToolId tool, Map<String, Obje
   if (name == null || !context.mounted) return;
   await history.saveNamed(tool, inputs, name);
   if (context.mounted) showSnack(context, l.snackSaved);
+  unawaited(review.recordWin());
 }
 
 /// Asks for a calculation name. Returns null when cancelled.

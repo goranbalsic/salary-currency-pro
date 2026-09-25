@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/bootstrap.dart';
 import '../../../core/design/tokens.dart';
 import '../../../core/widgets/common.dart';
 import '../../../core/widgets/forms.dart';
@@ -55,6 +58,7 @@ class _InvoiceViewScreenState extends State<InvoiceViewScreen> {
         : inv.copyWith(status: status, clearPaidDate: true);
     await _store.upsertInvoice(updated);
     if (!mounted) return;
+    final review = context.read<AppServices>().review;
     final message = switch (status) {
       InvoiceStatus.paid => l.invMarkedPaid,
       InvoiceStatus.issued => before.status == InvoiceStatus.draft ? l.invIssued : l.invMarkedUnpaid,
@@ -67,6 +71,9 @@ class _InvoiceViewScreenState extends State<InvoiceViewScreen> {
       message,
       action: SnackBarAction(label: l.actionUndo, onPressed: () => store.upsertInvoice(before)),
     );
+    if (status == InvoiceStatus.paid || (status == InvoiceStatus.issued && before.status == InvoiceStatus.draft)) {
+      unawaited(review.recordWin());
+    }
   }
 
   Future<void> _issue(Invoice inv) async {

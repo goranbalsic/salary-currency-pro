@@ -10,7 +10,7 @@ import '../../../core/storage/store.dart';
 abstract final class Backup {
   static const format = 'bilans-backup';
   static const version = 1;
-  static const _deviceOnly = {'pro.v1', 'pro.dev.simulated', 'fx.nbs.v1', 'fx.ecb.v1'};
+  static const _deviceOnly = {'pro.v1', 'pro.dev.simulated', 'fx.nbs.v1', 'fx.ecb.v1', 'review.v1'};
 
   static String encode(Store store, {DateTime? now}) {
     final data = Map.of(store.exportAll())..removeWhere((k, _) => _deviceOnly.contains(k));

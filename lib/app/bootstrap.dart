@@ -11,6 +11,7 @@ import '../features/fx/data/rates_controller.dart';
 import '../features/history/history_store.dart';
 import '../features/payroll/data/team_store.dart';
 import '../features/pro/pro_controller.dart';
+import '../features/settings/review_prompter.dart';
 import '../features/settings/settings_controller.dart';
 import '../features/shell/shell_controller.dart';
 import 'app.dart';
@@ -26,6 +27,7 @@ class AppServices {
     required this.team,
     required this.pro,
     required this.shell,
+    required this.review,
   });
 
   final Store store;
@@ -40,6 +42,9 @@ class AppServices {
   /// switch tabs too.
   final ShellController shell;
 
+  /// Asks Google Play for a review after moments of success.
+  final ReviewPrompter review;
+
   static AppServices create(Store store, {RateApi? rateApi, ProController? pro}) => AppServices(
     store: store,
     settings: SettingsController(store),
@@ -49,6 +54,7 @@ class AppServices {
     team: TeamStore(store),
     pro: pro ?? ProController(store),
     shell: ShellController(),
+    review: ReviewPrompter(store),
   );
 
   /// Re-reads every store after a backup restore or a data reset.
@@ -83,6 +89,7 @@ Future<void> bootstrap() async {
   // Network and store work happens after the first frame, never blocking it.
   unawaited(services.rates.refresh());
   unawaited(services.pro.start());
+  unawaited(services.review.recordOpen());
   // Rates published while the app sat in the background (overnight, say)
   // load when it returns; refresh() skips if it ran in the last 20 minutes.
   // Purchases are not re-checked here: coming back from Play's payment

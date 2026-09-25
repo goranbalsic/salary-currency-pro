@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/bootstrap.dart';
 import '../../../core/design/tokens.dart';
 import '../../../core/format/formats.dart';
 import '../../../core/widgets/common.dart';
@@ -308,7 +309,9 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
     setState(() => _saving = true);
     final invoice = _build(status);
     final store = context.read<BusinessStore>();
+    final review = context.read<AppServices>().review;
     await store.upsertInvoice(invoice);
+    if (issuing && !_existing) unawaited(review.recordWin());
     if (!mounted) return;
     _initial = _snapshot();
     Navigator.of(context).pop(invoice);
