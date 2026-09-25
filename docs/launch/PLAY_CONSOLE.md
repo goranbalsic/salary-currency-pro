@@ -35,12 +35,15 @@ min Android 7.0 (API 24) · target Android 16 (API 36).
    Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.
    The file is ~64 MB because it carries native debug symbols for crash
    reports; phones download about 11 MB.
-4. **You — website.** Merge the branch into `main`, then GitHub → repository
-   Settings → Pages → *Deploy from a branch* → `main` / `docs`. After a
-   minute these must open:
-   - https://goranbalsic.github.io/salary-currency-pro/ (landing page)
-   - https://goranbalsic.github.io/salary-currency-pro/privacy.html
-   - https://goranbalsic.github.io/salary-currency-pro/terms.html
+4. **Website.** The pages (source in `docs/`) are published from the public
+   repository `goranbalsic.github.io`, folder `bilans/`, so this code
+   repository can be private. These must open before you submit:
+   - https://goranbalsic.github.io/bilans/ (landing page)
+   - https://goranbalsic.github.io/bilans/privacy.html
+   - https://goranbalsic.github.io/bilans/terms.html
+
+   After editing `docs/index.html`, `privacy.html`, `terms.html` or
+   `site.css`, copy them to `bilans/` in that repository.
 
 ## 2. Create the app
 
@@ -52,7 +55,7 @@ declarations.
 
 | Section | Answer |
 |---|---|
-| Privacy policy | `https://goranbalsic.github.io/salary-currency-pro/privacy.html` |
+| Privacy policy | `https://goranbalsic.github.io/bilans/privacy.html` |
 | App access | All functionality is available without special access. (No login; Pro features unlock through an in-app purchase.) |
 | Ads | No, the app does not contain ads. |
 | Content rating | Category *All other app types*; answer **No** to every question (no violence, sexuality, gambling, user interaction or location sharing). Expected: PEGI 3 / Everyone. |
@@ -93,7 +96,7 @@ itself stores only the purchase status, on the device.
   (`tool/launch/make_store_graphics.py`).
 - Category: **Finance**. Tags: *Calculators*, *Invoicing*, *Currency converter*
   (whatever of these Play offers).
-- Website: `https://goranbalsic.github.io/salary-currency-pro/`.
+- Website: `https://goranbalsic.github.io/bilans/`.
 
 ## 6. Payments and products (Monetize with Play)
 

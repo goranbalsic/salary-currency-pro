@@ -128,6 +128,7 @@ jobs:
               echo "Signed with the upload key."
             else
               echo "Signed with a debug key: for testing and sideloading only. Google Play needs a build signed with the upload key (see docs/launch/PLAY_CONSOLE.md)."
+              echo "Each test release gets a new temporary key, so uninstall the previous test build before installing this one."
             fi
             echo
             echo "Install: download the APK on the phone, open it and allow installing from this source. Checksums: SHA256SUMS.txt."

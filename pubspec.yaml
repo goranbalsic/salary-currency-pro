@@ -3,7 +3,7 @@ description: "Bilans — payroll, loans, official exchange rates and invoices fo
 publish_to: 'none'
 
 # versionName+versionCode. versionCode must increase with every Play upload.
-version: 2.0.0+20
+version: 2.0.1+21
 
 environment:
   sdk: ^3.12.2

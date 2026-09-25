@@ -9,11 +9,11 @@
 | `assets/feature_graphic_<lang>.png` | Feature graphic, 1024 × 500, per language |
 | `assets/screenshots/<lang>/` | 8 phone screenshots, 1080 × 1920, per language — each market sees its own country, currency and payroll rules |
 
-Website (GitHub Pages from `main` / `docs`): landing page `docs/index.html`,
-`docs/privacy.html`, `docs/terms.html`.
+Website: source in `docs/` (`index.html`, `privacy.html`, `terms.html`,
+`site.css`), published from the public repository `goranbalsic.github.io`
+at https://goranbalsic.github.io/bilans/.
 
 **Still yours to do:** choose the support email (`AppConfig.supportEmail`
-and Play Console), create the upload key, enable GitHub Pages after
-merging, set up the payments profile and tax info, create the three
-products, and run the 14-day closed test with 12 testers. All of it is in
-PLAY_CONSOLE.md, in order.
+and Play Console), create the upload key, set up the payments profile and
+tax info, create the three products, and run the 14-day closed test with
+12 testers. All of it is in PLAY_CONSOLE.md, in order.

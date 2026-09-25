@@ -18,10 +18,11 @@ abstract final class AppConfig {
   static const subscriptionIds = {proMonthly, proYearly};
   static const allProductIds = {proMonthly, proYearly, proLifetime};
 
-  /// Public web pages required by Google Play. Host docs/web/ (GitHub
-  /// Pages works) and update these if the address differs.
-  static const privacyPolicyUrl = 'https://goranbalsic.github.io/salary-currency-pro/privacy.html';
-  static const termsUrl = 'https://goranbalsic.github.io/salary-currency-pro/terms.html';
+  /// Public web pages required by Google Play. Source in docs/; published
+  /// from the public repository goranbalsic.github.io (folder bilans/), so
+  /// this code repository can stay private.
+  static const privacyPolicyUrl = 'https://goranbalsic.github.io/bilans/privacy.html';
+  static const termsUrl = 'https://goranbalsic.github.io/bilans/terms.html';
 
   /// Support address shown in Settings → Contact. Leave empty to hide the
   /// row; set it before release (it is also your Play Console contact).

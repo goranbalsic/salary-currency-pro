@@ -62,7 +62,8 @@ flutter gen-l10n
 `docs/launch/` has the Play Console guide (`PLAY_CONSOLE.md`), pricing and
 growth plan (`GROWTH.md`), listing texts for 8 languages, screenshots and
 feature graphics. The privacy policy, terms and landing page are in `docs/`
-for GitHub Pages. To regenerate the store graphics:
+and published from the public repository `goranbalsic.github.io` at
+https://goranbalsic.github.io/bilans/. To regenerate the store graphics:
 
 ```
 SHOT_LANGS=en,srLatn,hr,bs,sl,mk,bg,ro flutter test --update-goldens --run-skipped --tags screenshots test/screenshots
