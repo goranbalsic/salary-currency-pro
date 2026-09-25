@@ -201,18 +201,27 @@ class SelectRow extends StatelessWidget {
         decoration: BoxDecoration(
           border: divider ? Border(bottom: BorderSide(color: c.line)) : null,
         ),
-        child: Row(
-          children: [
-            if (leading != null) ...[leading!, const SizedBox(width: 12)],
-            Expanded(
-              child: Text(label, style: t.bodyMedium!.copyWith(color: c.ink2)),
-            ),
-            Flexible(
-              child: Text(value, style: t.titleSmall, textAlign: TextAlign.right, overflow: TextOverflow.ellipsis),
-            ),
-            const SizedBox(width: 4),
-            Icon(Icons.chevron_right, size: 20, color: c.ink3),
-          ],
+        // The value keeps its natural width up to 60 % of the row and may
+        // wrap to a second line, so a summary like "Persoane în
+        // întreținere: 2" never loses its number; the label takes the rest.
+        child: LayoutBuilder(
+          builder: (context, constraints) => Row(
+            children: [
+              if (leading != null) ...[leading!, const SizedBox(width: 12)],
+              Expanded(
+                child: Text(label, style: t.bodyMedium!.copyWith(color: c.ink2)),
+              ),
+              if (value.isNotEmpty) ...[
+                const SizedBox(width: 12),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.6),
+                  child: Text(value, style: t.titleSmall, textAlign: TextAlign.right, maxLines: 2, overflow: TextOverflow.ellipsis),
+                ),
+              ],
+              const SizedBox(width: 4),
+              Icon(Icons.chevron_right, size: 20, color: c.ink3),
+            ],
+          ),
         ),
       ),
     );
