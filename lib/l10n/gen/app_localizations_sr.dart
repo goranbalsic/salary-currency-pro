@@ -1054,12 +1054,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get loanPrepayTitle => 'Превремена отплата';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Уплата од још $amount после рате $month скраћује кредит за $months и штеди $saved камате.';
   }
 
@@ -1230,7 +1225,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get depYieldLabel => 'Нето годишњи принос';
 
   @override
-  String get fxTitle => 'Курсна листа';
+  String get fxTitle => 'Девизни курсеви';
 
   @override
   String get fxTabConverter => 'Конвертор';
@@ -3445,12 +3440,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get loanPrepayTitle => 'Prevremena otplata';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Uplata od još $amount posle rate $month skraćuje kredit za $months i štedi $saved kamate.';
   }
 
@@ -3621,7 +3611,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get depYieldLabel => 'Neto godišnji prinos';
 
   @override
-  String get fxTitle => 'Kursna lista';
+  String get fxTitle => 'Devizni kursevi';
 
   @override
   String get fxTabConverter => 'Konvertor';

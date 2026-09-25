@@ -1054,12 +1054,7 @@ class AppLocalizationsBs extends AppLocalizations {
   String get loanPrepayTitle => 'Prijevremena otplata';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Uplata dodatnih $amount nakon rate $month skraćuje kredit za $months i štedi $saved kamate.';
   }
 
@@ -1230,7 +1225,7 @@ class AppLocalizationsBs extends AppLocalizations {
   String get depYieldLabel => 'Neto godišnji prinos';
 
   @override
-  String get fxTitle => 'Kursna lista';
+  String get fxTitle => 'Devizni kursevi';
 
   @override
   String get fxTabConverter => 'Konvertor';

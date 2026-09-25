@@ -64,47 +64,80 @@ class CompositionBar extends StatelessWidget {
               ),
             ),
           const SizedBox(height: Gap.md),
-          Wrap(
-            runSpacing: 8,
-            children: [
-              for (final s in segments)
-                FractionallySizedBox(
-                  widthFactor: 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: Gap.md),
-                    // Labels wrap rather than truncate ("Employee
-                    // contributions" needs two lines in half the width).
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(color: s.color, borderRadius: BorderRadius.circular(2)),
+          LayoutBuilder(
+            builder: (context, constraints) => Wrap(
+              runSpacing: 8,
+              children: [
+                for (final s in segments)
+                  FractionallySizedBox(
+                    widthFactor: _legendFitsTwoColumns(context, constraints.maxWidth) ? 0.5 : 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: Gap.md),
+                      // Labels wrap rather than truncate ("Employee
+                      // contributions" needs two lines in half the width).
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(color: s.color, borderRadius: BorderRadius.circular(2)),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink)),
-                        ),
-                        if (s.valueLabel != null) ...[
-                          const SizedBox(width: 6),
-                          Text(
-                            s.valueLabel!,
-                            style: t.bodySmall!.copyWith(color: c.ink2, fontFeatures: Fonts.tabular),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink)),
                           ),
+                          if (s.valueLabel != null) ...[
+                            const SizedBox(width: 6),
+                            Text(
+                              s.valueLabel!,
+                              style: t.bodySmall!.copyWith(color: c.ink2, fontFeatures: Fonts.tabular),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  /// Two legend columns only when every word of every label fits in half
+  /// the width; otherwise a long word ("работодателя", "angajatorului")
+  /// would break mid-word, so the legend uses one column.
+  bool _legendFitsTwoColumns(BuildContext context, double width) {
+    final t = Theme.of(context).textTheme;
+    final scaler = MediaQuery.textScalerOf(context);
+    final direction = Directionality.of(context);
+    double widthOf(String text, TextStyle? style) {
+      final painter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final w = painter.width;
+      painter.dispose();
+      return w;
+    }
+
+    final valueStyle = t.bodySmall?.copyWith(fontFeatures: Fonts.tabular);
+    for (final s in segments) {
+      // Half the width, less the right padding, the colour key and the value.
+      var room = width / 2 - Gap.md - 10 - 8;
+      if (s.valueLabel != null) room -= 6 + widthOf(s.valueLabel!, valueStyle);
+      for (final word in s.label.split(RegExp(r'\s+'))) {
+        if (word.isNotEmpty && widthOf(word, t.bodySmall) > room) return false;
+      }
+    }
+    return true;
   }
 }
 

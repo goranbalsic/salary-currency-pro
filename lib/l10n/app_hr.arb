@@ -358,7 +358,7 @@
   "cmpLoanBest": "Najmanji ukupni trošak",
   "cmpLoanSavesVs": "{amount} jeftinije od najskuplje ponude",
   "depYieldLabel": "Neto godišnji prinos",
-  "fxTitle": "Tečajna lista",
+  "fxTitle": "Tečajevi",
   "fxTabConverter": "Pretvornik",
   "fxTabList": "Tečajna lista",
   "fxAmount": "Iznos u {currency}",

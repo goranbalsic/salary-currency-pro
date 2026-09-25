@@ -359,14 +359,14 @@ class _InvoiceEditorScreenState extends State<InvoiceEditorScreen> {
               ? [
                   OutlinedButton(
                     onPressed: _saving ? null : () => _save(InvoiceStatus.draft),
-                    child: Text(l.invSaveDraft, overflow: TextOverflow.ellipsis),
+                    child: ButtonLabel(l.invSaveDraft),
                   ),
                   FilledButton(
                     onPressed: _saving ? null : () => _save(InvoiceStatus.issued),
-                    child: Text(l.invIssue, overflow: TextOverflow.ellipsis),
+                    child: ButtonLabel(l.invIssue),
                   ),
                 ]
-              : [FilledButton(onPressed: _saving ? null : () => _save(_status), child: Text(l.invSave))],
+              : [FilledButton(onPressed: _saving ? null : () => _save(_status), child: ButtonLabel(l.invSave))],
         ),
         body: Form(
           key: _form,

@@ -358,7 +358,7 @@
   "cmpLoanBest": "Најнизок вкупен трошок",
   "cmpLoanSavesVs": "{amount} поевтино од најскапата понуда",
   "depYieldLabel": "Нето годишен принос",
-  "fxTitle": "Курсна листа",
+  "fxTitle": "Девизни курсеви",
   "fxTabConverter": "Конвертор",
   "fxTabList": "Курсна листа",
   "fxAmount": "Износ во {currency}",

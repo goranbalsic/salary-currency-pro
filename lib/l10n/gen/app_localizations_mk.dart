@@ -1049,12 +1049,7 @@ class AppLocalizationsMk extends AppLocalizations {
   String get loanPrepayTitle => 'Предвремена отплата';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Дополнителна уплата од $amount по ратата $month го скратува кредитот за $months и заштедува $saved камата.';
   }
 
@@ -1225,7 +1220,7 @@ class AppLocalizationsMk extends AppLocalizations {
   String get depYieldLabel => 'Нето годишен принос';
 
   @override
-  String get fxTitle => 'Курсна листа';
+  String get fxTitle => 'Девизни курсеви';
 
   @override
   String get fxTabConverter => 'Конвертор';

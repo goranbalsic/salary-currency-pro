@@ -1043,12 +1043,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanPrepayTitle => 'Early repayment';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Paying $amount extra after installment $month shortens the loan by $months and saves $saved in interest.';
   }
 

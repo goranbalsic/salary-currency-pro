@@ -358,7 +358,7 @@
   "cmpLoanBest": "Najnižji skupni strošek",
   "cmpLoanSavesVs": "{amount} ceneje od najdražje ponudbe",
   "depYieldLabel": "Neto letni donos",
-  "fxTitle": "Tečajnica",
+  "fxTitle": "Menjalni tečaji",
   "fxTabConverter": "Pretvornik",
   "fxTabList": "Tečajnica",
   "fxAmount": "Znesek v {currency}",

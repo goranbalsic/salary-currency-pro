@@ -56,6 +56,17 @@ class ScreenHeader extends StatelessWidget {
   }
 }
 
+/// A button label that may take two lines — translated labels run long,
+/// especially at large text sizes — and never overflows the button.
+class ButtonLabel extends StatelessWidget {
+  const ButtonLabel(this.text, {super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center);
+}
+
 /// Small informational line with an icon.
 class InfoNote extends StatelessWidget {
   const InfoNote(this.text, {super.key, this.icon = Icons.info_outline, this.warning = false});
@@ -120,7 +131,7 @@ class ResultActions extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: onSave,
                 icon: const Icon(Icons.bookmark_border, size: 20),
-                label: Text(saveLabel, overflow: TextOverflow.ellipsis),
+                label: ButtonLabel(saveLabel),
               ),
             ),
             const SizedBox(width: 10),
@@ -128,7 +139,7 @@ class ResultActions extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: onShare,
                 icon: const Icon(Icons.ios_share, size: 20),
-                label: Text(shareLabel, overflow: TextOverflow.ellipsis),
+                label: ButtonLabel(shareLabel),
               ),
             ),
           ],
@@ -301,7 +312,7 @@ class SaveShareRow extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: onSave,
             icon: const Icon(Icons.bookmark_border, size: 20),
-            label: Text(saveLabel, overflow: TextOverflow.ellipsis),
+            label: ButtonLabel(saveLabel),
           ),
         ),
         const SizedBox(width: 10),
@@ -309,7 +320,7 @@ class SaveShareRow extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: onShare,
             icon: const Icon(Icons.ios_share, size: 20),
-            label: Text(shareLabel, overflow: TextOverflow.ellipsis),
+            label: ButtonLabel(shareLabel),
           ),
         ),
       ],

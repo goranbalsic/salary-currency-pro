@@ -1048,12 +1048,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get loanPrepayTitle => 'Rambursare anticipată';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'O plată suplimentară de $amount după rata $month scurtează creditul cu $months și economisește $saved din dobândă.';
   }
 

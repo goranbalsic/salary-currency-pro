@@ -150,26 +150,26 @@ class _InvoiceViewScreenState extends State<InvoiceViewScreen> {
       icon: _busy
           ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
           : const Icon(Icons.picture_as_pdf_outlined, size: 20),
-      label: Text(l.invShare, overflow: TextOverflow.ellipsis),
+      label: ButtonLabel(l.invShare),
     );
     final actions = switch (status) {
       InvoiceStatus.draft => [
-        OutlinedButton(onPressed: () => _edit(inv), child: Text(l.actionEdit)),
+        OutlinedButton(onPressed: () => _edit(inv), child: ButtonLabel(l.actionEdit)),
         FilledButton(
           onPressed: () => _issue(inv),
-          child: Text(l.invIssue, overflow: TextOverflow.ellipsis),
+          child: ButtonLabel(l.invIssue),
         ),
       ],
       InvoiceStatus.issued => [
         shareButton,
         FilledButton(
           onPressed: () => _setStatus(inv, InvoiceStatus.paid),
-          child: Text(l.invMarkPaid, overflow: TextOverflow.ellipsis),
+          child: ButtonLabel(l.invMarkPaid),
         ),
       ],
       InvoiceStatus.paid => [shareButton],
       InvoiceStatus.cancelled => [
-        OutlinedButton(onPressed: () => _delete(inv), child: Text(l.invDelete)),
+        OutlinedButton(onPressed: () => _delete(inv), child: ButtonLabel(l.invDelete)),
       ],
     };
 

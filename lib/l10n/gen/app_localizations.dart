@@ -1942,12 +1942,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Paying {amount} extra after installment {month} shortens the loan by {months} and saves {saved} in interest.'**
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  );
+  String loanPrepayTeaser(String amount, int month, String months, String saved);
 
   /// No description provided for @loanPrepayCta.
   ///
@@ -4359,16 +4354,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>[
-    'bg',
-    'bs',
-    'en',
-    'hr',
-    'mk',
-    'ro',
-    'sl',
-    'sr',
-  ].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['bg', 'bs', 'en', 'hr', 'mk', 'ro', 'sl', 'sr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

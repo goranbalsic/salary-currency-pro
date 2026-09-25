@@ -289,17 +289,19 @@ class _RatesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          // Title and source share a line when both fit; otherwise the
+          // source (with its date) moves below instead of being cut off.
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 2,
             children: [
-              Expanded(child: Overline(l.homeRatesTitle)),
+              Overline(l.homeRatesTitle),
               if (source != null && date != null)
-                Flexible(
-                  child: Text(
-                    source == RateSource.nbs ? l.homeRatesNbs(f.shortDate(date)) : l.homeRatesEcb(f.shortDate(date)),
-                    style: t.bodySmall,
-                    textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  source == RateSource.nbs ? l.homeRatesNbs(f.shortDate(date)) : l.homeRatesEcb(f.shortDate(date)),
+                  style: t.bodySmall,
                 ),
             ],
           ),

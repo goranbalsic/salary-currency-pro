@@ -1044,12 +1044,7 @@ class AppLocalizationsBg extends AppLocalizations {
   String get loanPrepayTitle => 'Предсрочно погасяване';
 
   @override
-  String loanPrepayTeaser(
-    String amount,
-    int month,
-    String months,
-    String saved,
-  ) {
+  String loanPrepayTeaser(String amount, int month, String months, String saved) {
     return 'Ако платите допълнително $amount след вноска $month, кредитът се скъсява с $months и спестявате $saved лихва.';
   }
 
