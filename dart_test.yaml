@@ -1,5 +1,5 @@
 # Screenshot rendering is run on demand, not with the regular suite:
-#   flutter test --update-goldens --tags screenshots test/screenshots
+#   flutter test --update-goldens --run-skipped --tags screenshots test/screenshots
 tags:
   screenshots:
-    skip: "Run on demand with --tags screenshots"
+    skip: "Run on demand with --run-skipped --tags screenshots"

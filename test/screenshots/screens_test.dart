@@ -1,8 +1,11 @@
 // Renders key screens to PNG for visual review and store screenshots:
-//   flutter test --update-goldens --tags screenshots test/screenshots
-// Output: test/screenshots/out/<theme>/<name>.png (not committed).
+//   flutter test --update-goldens --run-skipped --tags screenshots test/screenshots
+// Languages: SHOT_LANGS=en,srLatn (default) — any AppLanguage names.
+// Output: test/screenshots/out/<language>/<theme>/<name>.png (not committed).
 @Tags(['screenshots'])
 library;
+
+import 'dart:io';
 
 import 'package:bilans/app/bootstrap.dart';
 import 'package:bilans/features/business/data/business_store.dart';
@@ -10,6 +13,8 @@ import 'package:bilans/features/business/domain/invoice.dart';
 import 'package:bilans/features/payroll/data/team_store.dart';
 import 'package:bilans/features/payroll/domain/payroll_models.dart';
 import 'package:bilans/features/reports/pdf_kit.dart';
+import 'package:bilans/features/settings/settings_controller.dart';
+import 'package:bilans/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -73,72 +78,78 @@ void main() {
     await ReportFonts.load();
   });
 
-  for (final dark in [false, true]) {
-    final theme = dark ? 'dark' : 'light';
-    testWidgets('screens $theme', (tester) async {
-      // 1080 x 1920 physical: Play Store's 9:16 phone format.
+  final languages = (Platform.environment['SHOT_LANGS'] ?? 'en,srLatn').split(',').map((n) => AppLanguage.byName(n.trim())).nonNulls;
+  for (final lang in languages) {
+    final l = lookupAppLocalizations(lang.locale);
+    for (final dark in [false, true]) {
+      final theme = dark ? 'dark' : 'light';
+      testWidgets('screens ${lang.name} $theme', (tester) async {
+        // 1080 x 1920 physical: Play Store's 9:16 phone format.
+        tester.view.devicePixelRatio = 2.7;
+        tester.view.physicalSize = const Size(1080, 1920);
+        addTearDown(tester.view.reset);
+        final s = await makeServices(pro: true, language: lang.name);
+        await seed(s);
+        await s.settings.setTheme(dark ? ThemeMode.dark : ThemeMode.light);
+        await pumpApp(tester, s);
+        Future<void> shot(String name) async {
+          await tester.pumpAndSettle();
+          await expectLater(find.byType(MaterialApp), matchesGoldenFile('out/${lang.name}/$theme/$name.png'));
+        }
+
+        Future<void> tab(String label) async {
+          await tester.tap(find.bySemanticsLabel(label).last);
+          await tester.pumpAndSettle();
+        }
+
+        Future<void> pop() async {
+          Navigator.of(tester.element(find.byType(Scaffold).last)).pop();
+          await tester.pumpAndSettle();
+        }
+
+        await shot('01_home');
+        await tab(l.navPayroll);
+        await shot('02_pay');
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -700));
+        await shot('03_pay_breakdown');
+        await tab(l.navCredit);
+        await shot('04_loan');
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -650));
+        await shot('05_loan_years');
+        await tab(l.navFx);
+        await shot('06_rates');
+        await tab(l.navBusiness);
+        await shot('07_business');
+        await tester.tap(find.text('Kafeterija Dunav'));
+        await tester.pumpAndSettle();
+        await shot('08_invoice');
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -600));
+        await shot('09_invoice_qr');
+        await pop();
+        await tester.tap(find.textContaining(l.bizPausalCard(DateTime.now().year)));
+        await tester.pumpAndSettle();
+        await shot('10_pausal');
+        await pop();
+        await tab(l.navHome);
+        await tester.tap(find.text(l.toolTeam));
+        await tester.pumpAndSettle();
+        await shot('11_team');
+        await pop();
+        await tester.tap(find.text(l.toolCompare));
+        await tester.pumpAndSettle();
+        await shot('12_compare');
+      });
+    }
+
+    testWidgets('paywall ${lang.name}', (tester) async {
       tester.view.devicePixelRatio = 2.7;
       tester.view.physicalSize = const Size(1080, 1920);
       addTearDown(tester.view.reset);
-      final s = await makeServices(pro: true);
-      await seed(s);
-      await s.settings.setTheme(dark ? ThemeMode.dark : ThemeMode.light);
+      final s = await makeServices(language: lang.name);
       await pumpApp(tester, s);
-      Future<void> shot(String name) async {
-        await tester.pumpAndSettle();
-        await expectLater(find.byType(MaterialApp), matchesGoldenFile('out/$theme/$name.png'));
-      }
-
-      Future<void> tab(String label) async {
-        await tester.tap(find.bySemanticsLabel(label).last);
-        await tester.pumpAndSettle();
-      }
-
-      await shot('01_home');
-      await tab('Pay');
-      await shot('02_pay');
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -700));
-      await shot('03_pay_breakdown');
-      await tab('Loans');
-      await shot('04_loan');
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -650));
-      await shot('05_loan_years');
-      await tab('Rates');
-      await shot('06_rates');
-      await tab('Business');
-      await shot('07_business');
-      await tester.tap(find.text('Kafeterija Dunav'));
+      await tester.tap(find.text(l.toolTeam));
       await tester.pumpAndSettle();
-      await shot('08_invoice');
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -600));
-      await shot('09_invoice_qr');
-      Navigator.of(tester.element(find.byType(Scaffold).last)).pop();
-      await tester.pumpAndSettle();
-      await tester.tap(find.textContaining('Paušal ·'));
-      await tester.pumpAndSettle();
-      await shot('10_pausal');
-      Navigator.of(tester.element(find.byType(Scaffold).last)).pop();
-      await tester.pumpAndSettle();
-      await tab('Home');
-      await tester.tap(find.text('Team cost'));
-      await tester.pumpAndSettle();
-      await shot('11_team');
-      Navigator.of(tester.element(find.byType(Scaffold).last)).pop();
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Compare countries'));
-      await tester.pumpAndSettle();
-      await shot('12_compare');
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('out/${lang.name}/light/13_paywall.png'));
     });
   }
-
-  testWidgets('paywall', (tester) async {
-    tester.view.devicePixelRatio = 2.7;
-    tester.view.physicalSize = const Size(1080, 1920);
-    addTearDown(tester.view.reset);
-    final s = await makeServices();
-    await pumpApp(tester, s);
-    await tester.tap(find.text('Team cost'));
-    await tester.pumpAndSettle();
-    await expectLater(find.byType(MaterialApp), matchesGoldenFile('out/light/13_paywall.png'));
-  });
 }

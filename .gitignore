@@ -89,5 +89,5 @@ GoogleService-Info.plist
 .ctk-backup/
 CLAUDE.md.v2.*.bak
 
-# Rendered screenshots (flutter test --update-goldens --tags screenshots)
+# Rendered screenshots (see dart_test.yaml)
 test/screenshots/out/
