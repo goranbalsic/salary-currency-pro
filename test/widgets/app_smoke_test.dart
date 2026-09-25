@@ -2,15 +2,12 @@ import 'package:bilans/app/bootstrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'flows_test.dart' show Driver;
 import 'harness.dart';
 
-/// Taps the first widget matching [finder] after scrolling it into view.
-Future<void> tapOn(WidgetTester tester, Finder finder) async {
-  await tester.ensureVisible(finder.first);
-  await tester.pumpAndSettle();
-  await tester.tap(finder.first);
-  await tester.pumpAndSettle();
-}
+/// Taps the first widget matching [finder], scrolling lazy lists until it
+/// is built (short landscape screens build little at a time).
+Future<void> tapOn(WidgetTester tester, Finder finder) => Driver(tester).tap(finder.toString(), finder);
 
 Future<void> back(WidgetTester tester) async {
   final NavigatorState nav = tester.state(find.byType(Navigator).last);
@@ -26,7 +23,17 @@ Future<void> goTab(WidgetTester tester, String label) async {
 void main() {
   setUpAll(loadAppFonts);
 
-  for (final (width, height, scale) in [(360.0, 800.0, 1.0), (320.0, 640.0, 1.0), (360.0, 800.0, 1.6), (412.0, 915.0, 1.3)]) {
+  for (final (width, height, scale) in [
+    (360.0, 800.0, 1.0),
+    (320.0, 640.0, 1.0),
+    (360.0, 800.0, 1.6),
+    (412.0, 915.0, 1.3),
+    // Unfolded foldable, tablet portrait and landscape, landscape phone.
+    (673.0, 841.0, 1.0),
+    (800.0, 1280.0, 1.0),
+    (1280.0, 800.0, 1.0),
+    (800.0, 360.0, 1.0),
+  ]) {
     group('${width.toInt()}x${height.toInt()} @${scale}x', () {
       testWidgets('onboarding to home', (tester) async {
         setScreen(tester, width: width, height: height, textScale: scale);

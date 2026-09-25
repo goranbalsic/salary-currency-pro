@@ -83,6 +83,12 @@ Future<void> bootstrap() async {
   // Network and store work happens after the first frame, never blocking it.
   unawaited(services.rates.refresh());
   unawaited(services.pro.start());
+  // Rates published while the app sat in the background (overnight, say)
+  // load when it returns; refresh() skips if it ran in the last 20 minutes.
+  // Purchases are not re-checked here: coming back from Play's payment
+  // sheet is also a resume, and the purchase stream reports that result.
+  // The binding keeps the listener registered for the life of the app.
+  AppLifecycleListener(onResume: () => unawaited(services.rates.refresh()));
 }
 
 void _registerFontLicenses() {
