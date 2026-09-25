@@ -1,144 +1,94 @@
-name: salary_currency_pro
-description: "Balkan payroll, currency conversion, and personal-finance calculators for 9 countries and 9 languages — fully offline."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+name: bilans
+description: "Bilans — payroll, loans, official exchange rates and invoices for the Balkans. Offline-first, no account."
+publish_to: 'none'
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1+2
+# versionName+versionCode. versionCode must increase with every Play upload.
+version: 2.0.0+20
 
 environment:
   sdk: ^3.12.2
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
 
-  http: ^1.2.2
-  shared_preferences: ^2.3.3
-  provider: ^6.1.2
-  intl: ^0.20.2
-  in_app_purchase: ^3.2.1
+  file_selector: ^1.1.0
+  http: ^1.6.0
+  in_app_purchase: ^3.3.1
+  in_app_purchase_android: ^0.5.3
   in_app_purchase_platform_interface: ^1.4.0
-  fl_chart: ^0.69.2
-  flutter_local_notifications: ^22.3.0
-  timezone: ^0.11.1
-  home_widget: ^0.9.3
-  workmanager: ^0.10.7
-  pdf: ^3.11.3
-  printing: ^5.13.4
-  mobile_scanner: ^7.4.0
+  in_app_review: ^2.0.12
+  intl: ^0.20.2
+  package_info_plus: ^10.2.1
+  pdf: ^3.13.1
+  printing: ^5.15.1
+  provider: ^6.1.5
+  share_plus: ^13.3.0
+  shared_preferences: ^2.5.5
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
-  flutter_native_splash: ^2.4.3
+  flutter_native_splash: ^2.4.8
 
-# Icon source: /branding/ (SVG sources + the 1024x1024 PNGs rendered from
-# them). Regenerate with `dart run flutter_launcher_icons` after changing
-# any of the source images. See DECISIONS.md D-015 for the design spec.
-flutter_launcher_icons:
-  image_path: "branding/source/icon_full_1024.png"
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  adaptive_icon_background: "#0F2A43"
-  adaptive_icon_foreground: "branding/source/adaptive_foreground_1024.png"
-  adaptive_icon_foreground_inset: 0
-  adaptive_icon_monochrome: "branding/source/adaptive_monochrome_1024.png"
-  min_sdk_android: 21
-  web:
-    generate: true
-    image_path: "branding/source/icon_full_1024.png"
-    background_color: "#0F2A43"
-    theme_color: "#0F2A43"
-  windows:
-    generate: true
-    image_path: "branding/source/icon_full_1024.png"
-  macos:
-    generate: true
-    image_path: "branding/source/icon_full_1024.png"
-
-# Native splash screen: the app's navy brand background with the
-# adaptive-icon foreground mark centered on it, matching the launcher
-# icon's own background color for continuity between splash and icon.
-# No animation — a native splash is a single static frame the OS shows
-# before Flutter's first frame, gone as soon as the app is ready.
-# Regenerate with `dart run flutter_native_splash:create` after changing
-# any of the source images.
-flutter_native_splash:
-  color: "#0B2545"
-  image: "branding/source/adaptive_foreground_1024.png"
-  color_dark: "#0A1628"
-  image_dark: "branding/source/adaptive_foreground_1024.png"
-  android_12:
-    color: "#0B2545"
-    image: "branding/source/adaptive_foreground_1024.png"
-    color_dark: "#0A1628"
-    image_dark: "branding/source/adaptive_foreground_1024.png"
-  android: true
-  ios: true
-  web: false
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
   generate: true
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   assets:
-    - assets/config/
-    - assets/config/tax/
     - assets/fonts/
+    - assets/legal/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # Noto Sans (Regular + Bold), subset to Latin/Latin Extended-A/B +
-  # Cyrillic/Cyrillic Supplement + general punctuation + currency symbols —
-  # covers every glyph needed by all 9 supported app languages (including
-  # mk/bg Cyrillic and Romanian ș/ț) in the generated invoice PDF
-  # (PROMPT-003 Stage C item 12.4). See DECISIONS.md for the exact
-  # source/version/license and the subsetting method.
   fonts:
-    - family: Noto Sans
+    - family: Plex
       fonts:
-        - asset: assets/fonts/NotoSans-Regular.ttf
-        - asset: assets/fonts/NotoSans-Bold.ttf
-          weight: 700
+        - asset: assets/fonts/IBMPlexSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSans-SemiBold.ttf
+          weight: 600
+    - family: PlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Medium.ttf
+          weight: 500
+    - family: SourceSerif
+      fonts:
+        - asset: assets/fonts/SourceSerif4-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SourceSerif4-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/SourceSerif4-Italic.ttf
+          weight: 400
+          style: italic
+
+# Launcher icon: regenerate with `dart run flutter_launcher_icons` after
+# changing anything under tool/brand/.
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "tool/brand/out/icon_full_1024.png"
+  adaptive_icon_background: "#0E5A43"
+  adaptive_icon_foreground: "tool/brand/out/icon_foreground_1024.png"
+  adaptive_icon_monochrome: "tool/brand/out/icon_monochrome_1024.png"
+  min_sdk_android: 24
+
+# Native splash: regenerate with `dart run flutter_native_splash:create`.
+flutter_native_splash:
+  color: "#F3F0E8"
+  color_dark: "#0E1311"
+  image: "tool/brand/out/splash_mark_light.png"
+  image_dark: "tool/brand/out/splash_mark_dark.png"
+  android_12:
+    color: "#F3F0E8"
+    color_dark: "#0E1311"
+    image: "tool/brand/out/splash_icon_light.png"
+    image_dark: "tool/brand/out/splash_icon_dark.png"
+  android: true
+  ios: false
+  web: false

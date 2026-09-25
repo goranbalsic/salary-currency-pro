@@ -1,15 +1,9 @@
-import 'bootstrap.dart';
-import 'config/app_flavor.dart';
+import 'app/app_config.dart';
+import 'app/bootstrap.dart';
 
-/// The `dev` flavor's entrypoint — run via
-/// `flutter run --flavor dev -t lib/main_dev.dart`. Owner/local-QA only:
-/// distinct application ID (`applicationIdSuffix ".dev"`, see
-/// `android/app/build.gradle.kts`), distinct app label/icon (see
-/// `android/app/src/dev/res/`), and — via [AppConfig.flavor] —
-/// [EntitlementService] runs in simulated-entitlement mode (defaults to
-/// fully unlocked Pro, overridable via Settings → Entitlement Preview)
-/// instead of talking to real Play Billing. See DECISIONS.md D-034.
-void main() async {
-  AppConfig.initialize(AppFlavor.dev);
+/// Development entry point: `flutter run --flavor dev -t lib/main_dev.dart`.
+/// Installs next to the Play build and has a Pro simulator in Settings.
+Future<void> main() async {
+  AppConfig.flavor = Flavor.dev;
   await bootstrap();
 }
