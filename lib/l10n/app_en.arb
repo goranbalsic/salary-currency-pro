@@ -15,18 +15,15 @@
   "actionDone": "Done",
   "actionRetry": "Try again",
   "actionEdit": "Edit",
-  "actionAdd": "Add",
   "actionContinue": "Continue",
   "actionRemove": "Remove",
   "actionUndo": "Undo",
-  "actionOk": "OK",
   "actionDownloadPdf": "Download PDF",
   "actionRename": "Rename",
   "actionClear": "Clear",
   "commonMonthly": "Monthly",
   "commonAnnual": "Annual",
   "commonMonthsShort": "mo.",
-  "commonYearsShort": "yr.",
   "commonMonthsCount": "{count, plural, one{{count} month} other{{count} months}}",
   "@commonMonthsCount": {
     "placeholders": {
@@ -47,10 +44,8 @@
   "commonOptional": "optional",
   "commonSearch": "Search",
   "commonToday": "Today",
-  "commonYesterday": "Yesterday",
   "snackSaved": "Saved",
   "snackDeleted": "Deleted",
-  "snackCopied": "Copied",
   "errorGeneric": "Something went wrong. Please try again.",
   "errorShare": "Couldn't open the share sheet.",
   "errorOpenLink": "Couldn't open the link.",
@@ -649,7 +644,7 @@
     }
   },
   "loanSchedule": "Repayment schedule",
-  "loanScheduleAll": "Full schedule · {count} installments",
+  "loanScheduleAll": "{count, plural, one{Full schedule · {count} installment} other{Full schedule · {count} installments}}",
   "@loanScheduleAll": {
     "placeholders": {
       "count": {
@@ -772,7 +767,6 @@
       }
     }
   },
-  "cmpLoanResults": "Results",
   "depYieldLabel": "Net annual yield",
   "fxTitle": "Exchange rates",
   "fxTabConverter": "Converter",
@@ -974,7 +968,6 @@
   },
   "invDuplicate": "Duplicate",
   "invProfileMissing": "Add your business details first — they appear on every invoice.",
-  "invProfileSetup": "Set up business details",
   "invNotInVat": "The issuer is not registered for VAT.",
   "invValidWithoutStamp": "This invoice is valid without a stamp or signature.",
   "invQrCaption": "Scan to pay (NBS IPS)",
@@ -1020,16 +1013,7 @@
       }
     }
   },
-  "invLimitTitle": "You've created {count} free invoices",
-  "@invLimitTitle": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "invShare": "Share PDF",
-  "invPreview": "Preview",
   "invAccount": "Account",
   "invPib": "PIB",
   "invMb": "MB",
@@ -1320,7 +1304,7 @@
       }
     }
   },
-  "proTrialNote": "{days} days free, then billed yearly",
+  "proTrialNote": "{days, plural, one{{days} day free, then billed yearly} other{{days} days free, then billed yearly}}",
   "@proTrialNote": {
     "placeholders": {
       "days": {
@@ -1329,7 +1313,7 @@
     }
   },
   "proLifetimeNote": "Pay once, keep Pro for good",
-  "proStartTrial": "Start {days}-day free trial",
+  "proStartTrial": "{days, plural, one{Start {days}-day free trial} other{Start {days}-day free trial}}",
   "@proStartTrial": {
     "placeholders": {
       "days": {
@@ -1379,5 +1363,39 @@
   "settingsProActive": "Bilans Pro is active",
   "settingsManageSubscription": "Manage subscription",
   "settingsProPitch": "All countries, team payroll, unlimited invoices, PDF reports and more.",
-  "settingsSeePlans": "See plans"
+  "settingsSeePlans": "See plans",
+  "proIncluded": "Included in Pro",
+  "proSummaryTrial": "{days, plural, one{{days} day free, then {price} {period}. Cancel anytime.} other{{days} days free, then {price} {period}. Cancel anytime.}}",
+  "@proSummaryTrial": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "proSummary": "{price} {period}, renews automatically. Cancel anytime.",
+  "@proSummary": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "proSummaryLifetime": "One payment of {price}. No subscription.",
+  "@proSummaryLifetime": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  }
 }

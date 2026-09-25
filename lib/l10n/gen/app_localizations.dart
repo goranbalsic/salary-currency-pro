@@ -5,7 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_bg.dart';
+import 'app_localizations_bs.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_hr.dart';
+import 'app_localizations_mk.dart';
+import 'app_localizations_ro.dart';
+import 'app_localizations_sl.dart';
+import 'app_localizations_sr.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +99,17 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('bg'),
+    Locale('bs'),
+    Locale('en'),
+    Locale('hr'),
+    Locale('mk'),
+    Locale('ro'),
+    Locale('sl'),
+    Locale('sr'),
+    Locale.fromSubtags(languageCode: 'sr', scriptCode: 'Latn'),
+  ];
 
   /// No description provided for @appName.
   ///
@@ -184,12 +201,6 @@ abstract class AppLocalizations {
   /// **'Edit'**
   String get actionEdit;
 
-  /// No description provided for @actionAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get actionAdd;
-
   /// No description provided for @actionContinue.
   ///
   /// In en, this message translates to:
@@ -207,12 +218,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Undo'**
   String get actionUndo;
-
-  /// No description provided for @actionOk.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get actionOk;
 
   /// No description provided for @actionDownloadPdf.
   ///
@@ -250,12 +255,6 @@ abstract class AppLocalizations {
   /// **'mo.'**
   String get commonMonthsShort;
 
-  /// No description provided for @commonYearsShort.
-  ///
-  /// In en, this message translates to:
-  /// **'yr.'**
-  String get commonYearsShort;
-
   /// No description provided for @commonMonthsCount.
   ///
   /// In en, this message translates to:
@@ -292,12 +291,6 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get commonToday;
 
-  /// No description provided for @commonYesterday.
-  ///
-  /// In en, this message translates to:
-  /// **'Yesterday'**
-  String get commonYesterday;
-
   /// No description provided for @snackSaved.
   ///
   /// In en, this message translates to:
@@ -309,12 +302,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleted'**
   String get snackDeleted;
-
-  /// No description provided for @snackCopied.
-  ///
-  /// In en, this message translates to:
-  /// **'Copied'**
-  String get snackCopied;
 
   /// No description provided for @errorGeneric.
   ///
@@ -1915,7 +1902,7 @@ abstract class AppLocalizations {
   /// No description provided for @loanScheduleAll.
   ///
   /// In en, this message translates to:
-  /// **'Full schedule · {count} installments'**
+  /// **'{count, plural, one{Full schedule · {count} installment} other{Full schedule · {count} installments}}'**
   String loanScheduleAll(int count);
 
   /// No description provided for @loanColNo.
@@ -2270,12 +2257,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{amount} cheaper than the most expensive offer'**
   String cmpLoanSavesVs(String amount);
-
-  /// No description provided for @cmpLoanResults.
-  ///
-  /// In en, this message translates to:
-  /// **'Results'**
-  String get cmpLoanResults;
 
   /// No description provided for @depYieldLabel.
   ///
@@ -2871,12 +2852,6 @@ abstract class AppLocalizations {
   /// **'Add your business details first — they appear on every invoice.'**
   String get invProfileMissing;
 
-  /// No description provided for @invProfileSetup.
-  ///
-  /// In en, this message translates to:
-  /// **'Set up business details'**
-  String get invProfileSetup;
-
   /// No description provided for @invNotInVat.
   ///
   /// In en, this message translates to:
@@ -2979,23 +2954,11 @@ abstract class AppLocalizations {
   /// **'Invoice {number} already exists.'**
   String invErrorNumberTaken(String number);
 
-  /// No description provided for @invLimitTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'ve created {count} free invoices'**
-  String invLimitTitle(int count);
-
   /// No description provided for @invShare.
   ///
   /// In en, this message translates to:
   /// **'Share PDF'**
   String get invShare;
-
-  /// No description provided for @invPreview.
-  ///
-  /// In en, this message translates to:
-  /// **'Preview'**
-  String get invPreview;
 
   /// No description provided for @invAccount.
   ///
@@ -4092,7 +4055,7 @@ abstract class AppLocalizations {
   /// No description provided for @proTrialNote.
   ///
   /// In en, this message translates to:
-  /// **'{days} days free, then billed yearly'**
+  /// **'{days, plural, one{{days} day free, then billed yearly} other{{days} days free, then billed yearly}}'**
   String proTrialNote(int days);
 
   /// No description provided for @proLifetimeNote.
@@ -4104,7 +4067,7 @@ abstract class AppLocalizations {
   /// No description provided for @proStartTrial.
   ///
   /// In en, this message translates to:
-  /// **'Start {days}-day free trial'**
+  /// **'{days, plural, one{Start {days}-day free trial} other{Start {days}-day free trial}}'**
   String proStartTrial(int days);
 
   /// No description provided for @proContinue.
@@ -4364,6 +4327,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See plans'**
   String get settingsSeePlans;
+
+  /// No description provided for @proIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Included in Pro'**
+  String get proIncluded;
+
+  /// No description provided for @proSummaryTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{{days} day free, then {price} {period}. Cancel anytime.} other{{days} days free, then {price} {period}. Cancel anytime.}}'**
+  String proSummaryTrial(int days, String price, String period);
+
+  /// No description provided for @proSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} {period}, renews automatically. Cancel anytime.'**
+  String proSummary(String price, String period);
+
+  /// No description provided for @proSummaryLifetime.
+  ///
+  /// In en, this message translates to:
+  /// **'One payment of {price}. No subscription.'**
+  String proSummaryLifetime(String price);
 }
 
 class _AppLocalizationsDelegate
@@ -4376,18 +4363,52 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'bg',
+    'bs',
+    'en',
+    'hr',
+    'mk',
+    'ro',
+    'sl',
+    'sr',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+script codes are specified.
+  switch (locale.languageCode) {
+    case 'sr':
+      {
+        switch (locale.scriptCode) {
+          case 'Latn':
+            return AppLocalizationsSrLatn();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'bg':
+      return AppLocalizationsBg();
+    case 'bs':
+      return AppLocalizationsBs();
     case 'en':
       return AppLocalizationsEn();
+    case 'hr':
+      return AppLocalizationsHr();
+    case 'mk':
+      return AppLocalizationsMk();
+    case 'ro':
+      return AppLocalizationsRo();
+    case 'sl':
+      return AppLocalizationsSl();
+    case 'sr':
+      return AppLocalizationsSr();
   }
 
   throw FlutterError(

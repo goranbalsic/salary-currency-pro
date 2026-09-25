@@ -29,7 +29,7 @@
   "loanYearShort": "Yr {n}",
   "@loanYearShort": {"placeholders": {"n": {"type": "int"}}},
   "loanSchedule": "Repayment schedule",
-  "loanScheduleAll": "Full schedule · {count} installments",
+  "loanScheduleAll": "{count, plural, one{Full schedule · {count} installment} other{Full schedule · {count} installments}}",
   "@loanScheduleAll": {"placeholders": {"count": {"type": "int"}}},
   "loanColNo": "No.",
   "loanColInstallment": "Installment",
@@ -95,6 +95,5 @@
   "cmpLoanBest": "Lowest total cost",
   "cmpLoanSavesVs": "{amount} cheaper than the most expensive offer",
   "@cmpLoanSavesVs": {"placeholders": {"amount": {"type": "String"}}},
-  "cmpLoanResults": "Results",
   "depYieldLabel": "Net annual yield"
 }

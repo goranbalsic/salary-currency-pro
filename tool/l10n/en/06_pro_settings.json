@@ -22,10 +22,10 @@
   "proOnce": "one-time",
   "proSave": "SAVE {percent}%",
   "@proSave": {"placeholders": {"percent": {"type": "int"}}},
-  "proTrialNote": "{days} days free, then billed yearly",
+  "proTrialNote": "{days, plural, one{{days} day free, then billed yearly} other{{days} days free, then billed yearly}}",
   "@proTrialNote": {"placeholders": {"days": {"type": "int"}}},
   "proLifetimeNote": "Pay once, keep Pro for good",
-  "proStartTrial": "Start {days}-day free trial",
+  "proStartTrial": "{days, plural, one{Start {days}-day free trial} other{Start {days}-day free trial}}",
   "@proStartTrial": {"placeholders": {"days": {"type": "int"}}},
   "proContinue": "Continue",
   "proRestore": "Restore",
@@ -69,5 +69,12 @@
   "settingsProActive": "Bilans Pro is active",
   "settingsManageSubscription": "Manage subscription",
   "settingsProPitch": "All countries, team payroll, unlimited invoices, PDF reports and more.",
-  "settingsSeePlans": "See plans"
+  "settingsSeePlans": "See plans",
+  "proIncluded": "Included in Pro",
+  "proSummaryTrial": "{days, plural, one{{days} day free, then {price} {period}. Cancel anytime.} other{{days} days free, then {price} {period}. Cancel anytime.}}",
+  "@proSummaryTrial": {"placeholders": {"days": {"type": "int"}, "price": {"type": "String"}, "period": {"type": "String"}}},
+  "proSummary": "{price} {period}, renews automatically. Cancel anytime.",
+  "@proSummary": {"placeholders": {"price": {"type": "String"}, "period": {"type": "String"}}},
+  "proSummaryLifetime": "One payment of {price}. No subscription.",
+  "@proSummaryLifetime": {"placeholders": {"price": {"type": "String"}}}
 }

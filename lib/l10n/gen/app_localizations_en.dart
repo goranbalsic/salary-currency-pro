@@ -54,9 +54,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionEdit => 'Edit';
 
   @override
-  String get actionAdd => 'Add';
-
-  @override
   String get actionContinue => 'Continue';
 
   @override
@@ -64,9 +61,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionUndo => 'Undo';
-
-  @override
-  String get actionOk => 'OK';
 
   @override
   String get actionDownloadPdf => 'Download PDF';
@@ -85,9 +79,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonMonthsShort => 'mo.';
-
-  @override
-  String get commonYearsShort => 'yr.';
 
   @override
   String commonMonthsCount(int count) {
@@ -124,16 +115,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonToday => 'Today';
 
   @override
-  String get commonYesterday => 'Yesterday';
-
-  @override
   String get snackSaved => 'Saved';
 
   @override
   String get snackDeleted => 'Deleted';
-
-  @override
-  String get snackCopied => 'Copied';
 
   @override
   String get errorGeneric => 'Something went wrong. Please try again.';
@@ -1045,7 +1030,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String loanScheduleAll(int count) {
-    return 'Full schedule · $count installments';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Full schedule · $count installments',
+      one: 'Full schedule · $count installment',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1242,9 +1233,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String cmpLoanSavesVs(String amount) {
     return '$amount cheaper than the most expensive offer';
   }
-
-  @override
-  String get cmpLoanResults => 'Results';
 
   @override
   String get depYieldLabel => 'Net annual yield';
@@ -1581,9 +1569,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add your business details first — they appear on every invoice.';
 
   @override
-  String get invProfileSetup => 'Set up business details';
-
-  @override
   String get invNotInVat => 'The issuer is not registered for VAT.';
 
   @override
@@ -1648,15 +1633,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String invLimitTitle(int count) {
-    return 'You\'ve created $count free invoices';
-  }
-
-  @override
   String get invShare => 'Share PDF';
-
-  @override
-  String get invPreview => 'Preview';
 
   @override
   String get invAccount => 'Account';
@@ -2284,7 +2261,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String proTrialNote(int days) {
-    return '$days days free, then billed yearly';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days free, then billed yearly',
+      one: '$days day free, then billed yearly',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -2292,7 +2275,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String proStartTrial(int days) {
-    return 'Start $days-day free trial';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Start $days-day free trial',
+      one: 'Start $days-day free trial',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -2435,4 +2424,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSeePlans => 'See plans';
+
+  @override
+  String get proIncluded => 'Included in Pro';
+
+  @override
+  String proSummaryTrial(int days, String price, String period) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days free, then $price $period. Cancel anytime.',
+      one: '$days day free, then $price $period. Cancel anytime.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String proSummary(String price, String period) {
+    return '$price $period, renews automatically. Cancel anytime.';
+  }
+
+  @override
+  String proSummaryLifetime(String price) {
+    return 'One payment of $price. No subscription.';
+  }
 }
