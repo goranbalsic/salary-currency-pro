@@ -31,17 +31,24 @@ class ScreenHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (leading != null) ...[leading!, const SizedBox(width: 4)],
-        Expanded(
-          child: Semantics(
-            header: true,
-            child: Text(title, style: Theme.of(context).textTheme.headlineMedium),
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        children: [
+          if (leading != null) ...[leading!, const SizedBox(width: 4)],
+          Expanded(
+            child: Semantics(
+              header: true,
+              child: Text(title, style: Theme.of(context).textTheme.headlineMedium),
+            ),
           ),
-        ),
-        if (trailing != null) ...[const SizedBox(width: Gap.md), trailing!],
-      ],
+          if (trailing != null) ...[
+            const SizedBox(width: Gap.md),
+            // At most half the row, so a long status or country name never
+            // squeezes the title away at large text sizes.
+            ConstrainedBox(constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2), child: trailing!),
+          ],
+        ],
+      ),
     );
   }
 }

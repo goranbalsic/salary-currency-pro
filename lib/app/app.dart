@@ -52,10 +52,7 @@ class BilansApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          localeListResolutionCallback: (locales, supported) {
-            final device = locales?.isNotEmpty == true ? locales!.first : null;
-            return AppLanguage.fromLocale(device).locale;
-          },
+          localeListResolutionCallback: (locales, supported) => AppLanguage.fromLocales(locales).locale,
           builder: (context, child) {
             // Respect the person's font size, but keep layouts intact at the
             // extremes of the Android accessibility range.

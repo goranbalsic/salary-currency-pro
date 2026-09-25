@@ -9,6 +9,7 @@ import '../../core/design/tokens.dart';
 import '../../core/widgets/brand.dart';
 import '../../core/widgets/common.dart';
 import '../../core/widgets/controls.dart';
+import '../../core/widgets/ledger.dart';
 import '../../l10n/l10n.dart';
 import '../settings/settings_controller.dart';
 import 'billing_gateway.dart';
@@ -127,6 +128,48 @@ class _PaywallScreenState extends State<PaywallScreen> {
       return l.proContinue;
     }
 
+    // What the button will charge, spelled out under it (Play policy:
+    // price and renewal terms must be clear before the purchase).
+    String? summary() {
+      final p = selected;
+      if (p == null) return null;
+      if (p.id == AppConfig.proLifetime) return l.proSummaryLifetime(p.price);
+      final period = p.id == AppConfig.proYearly ? l.proPerYear : l.proPerMonth;
+      if (p.hasFreeTrial) return l.proSummaryTrial(p.freeTrialDays ?? 7, p.price, period);
+      return l.proSummary(p.price, period);
+    }
+
+    final plans = <Widget>[
+      if (yearly != null)
+        _PlanCard(
+          product: yearly,
+          selected: _selected == yearly.id,
+          title: l.proYearly,
+          period: l.proPerYear,
+          badge: yearlySaving != null ? l.proSave(yearlySaving) : null,
+          note: yearly.hasFreeTrial ? l.proTrialNote(yearly.freeTrialDays ?? 7) : null,
+          onTap: () => setState(() => _selected = yearly.id),
+        ),
+      if (monthly != null)
+        _PlanCard(
+          product: monthly,
+          selected: _selected == monthly.id,
+          title: l.proMonthly,
+          period: l.proPerMonth,
+          onTap: () => setState(() => _selected = monthly.id),
+        ),
+      if (lifetime != null)
+        _PlanCard(
+          product: lifetime,
+          selected: _selected == lifetime.id,
+          title: l.proLifetime,
+          period: l.proOnce,
+          note: l.proLifetimeNote,
+          onTap: () => setState(() => _selected = lifetime.id),
+        ),
+    ];
+    final summaryText = summary();
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(tooltip: l.actionClose, onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close)),
@@ -134,29 +177,79 @@ class _PaywallScreenState extends State<PaywallScreen> {
           TextButton(onPressed: loading || purchasing ? null : () => _restore(pro), child: Text(l.proRestore)),
         ],
       ),
+      // The purchase button stays in reach while the plans and benefits
+      // scroll.
+      bottomNavigationBar: unavailable
+          ? null
+          : Container(
+              decoration: BoxDecoration(color: c.paper, border: Border(top: BorderSide(color: c.line))),
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(Gap.page, 12, Gap.page, 12),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: c.brass,
+                          foregroundColor: c.onBrass,
+                          minimumSize: const Size.fromHeight(54),
+                        ),
+                        onPressed: selected == null || purchasing || loading ? null : () => _buy(pro),
+                        child: purchasing
+                            ? SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: c.onBrass))
+                            : Text(cta(), style: t.titleMedium!.copyWith(color: c.onBrass), textAlign: TextAlign.center),
+                      ),
+                      if (summaryText != null) ...[
+                        const SizedBox(height: 8),
+                        Text(summaryText, style: t.bodySmall, textAlign: TextAlign.center),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(Gap.page, 0, Gap.page, 24),
         children: [
           Row(
             children: [
-              const BrandMark(size: 40),
+              const BrandMark(size: 36),
               const SizedBox(width: 12),
               Text('Bilans', style: t.headlineSmall),
               const SizedBox(width: 8),
               const ProBadge(strong: true),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
           Text(
             widget.feature == null ? l.proHeadline : l.proFeatureTitle(proFeatureName(l, widget.feature!)),
             style: t.headlineMedium,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(l.proSubhead, style: t.bodyMedium!.copyWith(color: c.ink2)),
           const SizedBox(height: 18),
+          if (loading)
+            const Padding(padding: EdgeInsets.symmetric(vertical: 32), child: Center(child: CircularProgressIndicator()))
+          else if (unavailable)
+            _Unavailable(onRetry: pro.loadProducts)
+          else
+            ...plans,
+          if (pro.flow == PurchaseFlow.pending) ...[
+            const SizedBox(height: 4),
+            InfoNote(l.proPending, icon: Icons.hourglass_top),
+          ],
+          if (pro.flow == PurchaseFlow.error && pro.products.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            InfoNote(l.proError, warning: true),
+          ],
+          const SizedBox(height: 18),
+          Overline(l.proIncluded, padding: const EdgeInsets.only(bottom: 6)),
           for (final (icon, text) in benefits)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -166,61 +259,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ],
               ),
             ),
-          const SizedBox(height: 22),
-          if (loading)
-            const Padding(padding: EdgeInsets.symmetric(vertical: 32), child: Center(child: CircularProgressIndicator()))
-          else if (unavailable) ...[
-            _Unavailable(onRetry: pro.loadProducts),
-          ] else ...[
-            if (yearly != null)
-              _PlanCard(
-                product: yearly,
-                selected: _selected == yearly.id,
-                title: l.proYearly,
-                period: l.proPerYear,
-                badge: yearlySaving != null ? l.proSave(yearlySaving) : null,
-                note: yearly.hasFreeTrial ? l.proTrialNote(yearly.freeTrialDays ?? 7) : null,
-                onTap: () => setState(() => _selected = yearly.id),
-              ),
-            if (monthly != null)
-              _PlanCard(
-                product: monthly,
-                selected: _selected == monthly.id,
-                title: l.proMonthly,
-                period: l.proPerMonth,
-                onTap: () => setState(() => _selected = monthly.id),
-              ),
-            if (lifetime != null)
-              _PlanCard(
-                product: lifetime,
-                selected: _selected == lifetime.id,
-                title: l.proLifetime,
-                period: l.proOnce,
-                note: l.proLifetimeNote,
-                onTap: () => setState(() => _selected = lifetime.id),
-              ),
-          ],
-          if (pro.flow == PurchaseFlow.pending) ...[
-            const SizedBox(height: 12),
-            InfoNote(l.proPending, icon: Icons.hourglass_top),
-          ],
-          if (pro.flow == PurchaseFlow.error && pro.products.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            InfoNote(l.proError, warning: true),
-          ],
           const SizedBox(height: 18),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: c.brass,
-              foregroundColor: c.onBrass,
-              minimumSize: const Size.fromHeight(56),
-            ),
-            onPressed: selected == null || purchasing || loading ? null : () => _buy(pro),
-            child: purchasing
-                ? SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: c.onBrass))
-                : Text(cta(), style: t.titleMedium!.copyWith(color: c.onBrass)),
-          ),
-          const SizedBox(height: 14),
           Text(
             selected?.id == AppConfig.proLifetime ? l.proLegalLifetime : l.proLegal,
             style: t.bodySmall!.copyWith(height: 1.5),

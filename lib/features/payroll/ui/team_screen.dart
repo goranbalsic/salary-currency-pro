@@ -99,7 +99,7 @@ class _TeamScreenState extends State<TeamScreen> {
       final r = m.compute();
       String money(double v) => f.money(v * mult, m.system.currency, decimals: m.system.decimals);
       b.writeln('${m.name.isEmpty ? l.teamUnnamed : m.name}${m.role.isEmpty ? '' : ' (${m.role})'} · ${l.systemName(m.system)}');
-      b.writeln('  ${l.payGross}: ${money(r.gross)} · ${l.payNetTotal}: ${money(r.net)} · ${l.payTotalCost}: ${money(r.totalCost)}');
+      b.writeln('  ${l.payGross}: ${money(r.gross)} · ${l.payNetTotal}: ${r.net > 0 ? money(r.net) : '—'} · ${l.payTotalCost}: ${money(r.totalCost)}');
     }
     for (final t in totals) {
       String money(double v) => f.money(v * mult, t.currency, decimals: t.decimals);
@@ -256,7 +256,7 @@ class _MemberRow extends StatelessWidget {
                   Text(member.name.isEmpty ? l.teamUnnamed : member.name, style: t.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 2),
                   Text(
-                    [if (member.role.isNotEmpty) member.role, '${l.payNetTotal} ${money(r.net)}'].join(' · '),
+                    [if (member.role.isNotEmpty) member.role, '${l.payNetTotal} ${r.net > 0 ? money(r.net) : '—'}'].join(' · '),
                     style: t.bodySmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -491,11 +491,15 @@ class _TeamMemberScreenState extends State<TeamMemberScreen> {
                 child: Column(
                   children: [
                     LedgerRow(label: l.payGross, value: money(result.gross)),
-                    LedgerRow(label: l.payNetTotal, value: money(result.net)),
+                    LedgerRow(label: l.payNetTotal, value: result.net > 0 ? money(result.net) : '—'),
                     LedgerRow(label: l.payTotalCost, value: money(result.totalCost), emphasis: true, divider: false),
                   ],
                 ),
               ),
+              if (result.notes.contains(PayrollNote.nonPositiveNet)) ...[
+                const SizedBox(height: 8),
+                InfoNote(l.payNoteNonPositive, warning: true),
+              ],
             ],
           ],
         ),

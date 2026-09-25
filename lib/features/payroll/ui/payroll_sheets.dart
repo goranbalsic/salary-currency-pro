@@ -161,8 +161,8 @@ class _OptionsSheetState extends State<_OptionsSheet> {
           FinePrint(_hrValid
               ? l.payHrRatesHint
               : l.payHrRateError(
-                  '${f.number(lMin * 100, decimals: 0)}–${f.number(lMax * 100, decimals: 0)}%',
-                  '${f.number(hMin * 100, decimals: 0)}–${f.number(hMax * 100, decimals: 0)}%',
+                  '${f.number(lMin * 100, decimals: 0)}–${f.number(lMax * 100, decimals: 0)}${f.percentSign}',
+                  '${f.number(hMin * 100, decimals: 0)}–${f.number(hMax * 100, decimals: 0)}${f.percentSign}',
                 )),
           const SizedBox(height: 16),
           StepperRow(

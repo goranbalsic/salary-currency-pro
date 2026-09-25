@@ -84,6 +84,16 @@ enum AppLanguage {
     }
   }
 
+  /// The first of the device's preferred languages that the app ships in,
+  /// so "German, then Serbian" opens in Serbian rather than English.
+  static AppLanguage fromLocales(List<Locale>? locales) {
+    for (final l in locales ?? const <Locale>[]) {
+      final match = fromLocale(l);
+      if (match != AppLanguage.en || l.languageCode == 'en') return match;
+    }
+    return AppLanguage.en;
+  }
+
   /// Default country for a language when the device region is unknown.
   String get defaultCountry => switch (this) {
         AppLanguage.hr => 'HR',

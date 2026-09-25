@@ -59,6 +59,7 @@ class RecentSummary {
         if (inputs == null || amount == null) return null;
         final system = inputs.system;
         final r = const PayrollEngine().compute(system, inputs.mode, amount, inputs.options);
+        if (r.notes.contains(PayrollNote.nonPositiveNet)) return null;
         String money(double v) => f.money(v, system.currency, decimals: system.decimals);
         return RecentSummary(
           title: l.recentPayroll(l.systemName(system)),

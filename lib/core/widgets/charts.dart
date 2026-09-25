@@ -41,28 +41,26 @@ class CompositionBar extends StatelessWidget {
           if (total > 0)
             SizedBox(
               height: height,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  const gap = 2.0;
-                  final available = constraints.maxWidth - gap * (visible.length - 1);
-                  return Row(
-                    children: [
-                      for (var i = 0; i < visible.length; i++) ...[
-                        if (i > 0) const SizedBox(width: gap),
-                        Container(
-                          width: math.max(2, available * visible[i].value / total),
-                          decoration: BoxDecoration(
-                            color: visible[i].color,
-                            borderRadius: BorderRadius.horizontal(
-                              left: Radius.circular(i == 0 ? 4 : 1),
-                              right: Radius.circular(i == visible.length - 1 ? 4 : 1),
-                            ),
+              // Flex widths always sum to the available width exactly, so
+              // tiny segments can never push the bar past its box.
+              child: Row(
+                children: [
+                  for (var i = 0; i < visible.length; i++) ...[
+                    if (i > 0) const SizedBox(width: 2),
+                    Expanded(
+                      flex: math.max(1, (visible[i].value / total * 10000).round()),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: visible[i].color,
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(i == 0 ? 4 : 1),
+                            right: Radius.circular(i == visible.length - 1 ? 4 : 1),
                           ),
                         ),
-                      ],
-                    ],
-                  );
-                },
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           const SizedBox(height: Gap.md),
@@ -74,19 +72,25 @@ class CompositionBar extends StatelessWidget {
                   widthFactor: 0.5,
                   child: Padding(
                     padding: const EdgeInsets.only(right: Gap.md),
+                    // Labels wrap rather than truncate ("Employee
+                    // contributions" needs two lines in half the width).
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(color: s.color, borderRadius: BorderRadius.circular(2)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(color: s.color, borderRadius: BorderRadius.circular(2)),
+                          ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink), overflow: TextOverflow.ellipsis),
-                        ),
-                        if (s.valueLabel != null)
+                        Expanded(child: Text(s.label, style: t.bodySmall!.copyWith(color: c.ink))),
+                        if (s.valueLabel != null) ...[
+                          const SizedBox(width: 6),
                           Text(s.valueLabel!, style: t.bodySmall!.copyWith(color: c.ink2, fontFeatures: Fonts.tabular)),
+                        ],
                       ],
                     ),
                   ),
@@ -245,7 +249,9 @@ class _LegendKey extends StatelessWidget {
       children: [
         Container(width: 10, height: 10, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2))),
         const SizedBox(width: 6),
-        Text(label, style: t.bodySmall!.copyWith(color: context.colors.ink, fontFeatures: Fonts.tabular)),
+        // Wraps rather than overflows: legend labels are translated and can
+        // be long at large text sizes.
+        Flexible(child: Text(label, style: t.bodySmall!.copyWith(color: context.colors.ink, fontFeatures: Fonts.tabular))),
       ],
     );
   }

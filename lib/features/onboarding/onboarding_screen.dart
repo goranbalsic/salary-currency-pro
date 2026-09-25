@@ -25,10 +25,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_country == null) {
-      final device = WidgetsBinding.instance.platformDispatcher.locale;
-      final region = device.countryCode;
-      final fromRegion = HomeCountry.all.where((c) => c.code == region).firstOrNull;
-      _country = fromRegion?.code ?? AppLanguage.fromLocale(device).defaultCountry;
+      // The first preferred locale whose region the app supports, else the
+      // home country of the first supported language.
+      final device = WidgetsBinding.instance.platformDispatcher.locales;
+      final fromRegion = device
+          .map((l) => HomeCountry.all.where((c) => c.code == l.countryCode).firstOrNull)
+          .nonNulls
+          .firstOrNull;
+      _country = fromRegion?.code ?? AppLanguage.fromLocales(device).defaultCountry;
     }
   }
 

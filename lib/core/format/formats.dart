@@ -75,11 +75,18 @@ class Formats {
     return '$n$_nbsp$symbol';
   }
 
+  /// The percent sign as written after a number (CLDR): "37,1 %" in
+  /// Croatian, Slovenian, Macedonian and Romanian, "37,1%" elsewhere.
+  String get percentSign => switch (languageCode) {
+        'hr' || 'sl' || 'mk' || 'ro' => '$_nbsp%',
+        _ => '%',
+      };
+
   /// Percent from a fraction: 0.3714 → "37,1%".
-  String percent(double fraction, {int decimals = 1}) => '${number(fraction * 100, decimals: decimals)}%';
+  String percent(double fraction, {int decimals = 1}) => '${number(fraction * 100, decimals: decimals)}$percentSign';
 
   /// Percent from a percentage value: 7.49 → "7,49%".
-  String percentValue(double percent, {int decimals = 2}) => '${number(percent, decimals: decimals)}%';
+  String percentValue(double percent, {int decimals = 2}) => '${number(percent, decimals: decimals)}$percentSign';
 
   /// Exchange rate with 4 decimals, no grouping below 1000.
   String rate(double value, {int decimals = 4}) => number(value, decimals: decimals);

@@ -196,10 +196,11 @@ class _CompareCountriesScreenState extends State<CompareCountriesScreen> {
                 costShare: maxCost <= 0 ? 0 : results[i].totalCost / maxCost,
               ),
             const SizedBox(height: 14),
-            Row(
+            Wrap(
+              spacing: 16,
+              runSpacing: 6,
               children: [
                 _Key(color: c.chart1, label: l.segNet),
-                const SizedBox(width: 16),
                 _Key(color: c.sunken, label: l.cmpTaxesKey, border: c.line),
               ],
             ),
@@ -311,7 +312,7 @@ class _Key extends StatelessWidget {
           decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3), border: border == null ? null : Border.all(color: border!)),
         ),
         const SizedBox(width: 6),
-        Text(label, style: t.bodySmall),
+        Flexible(child: Text(label, style: t.bodySmall)),
       ],
     );
   }

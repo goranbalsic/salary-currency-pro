@@ -313,7 +313,7 @@ Future<Uint8List> buildTeamPdf(ReportKit kit, List<TeamMember> members, {bool an
                 mbr.role.isEmpty ? name : '$name\n${mbr.role}',
                 '${mbr.system.countryCode} · ${mbr.system.currency}',
                 n(r.gross),
-                n(r.net),
+                r.net > 0 ? n(r.net) : '—',
                 n(r.employerTotal),
                 n(r.totalCost),
               ];
@@ -577,7 +577,8 @@ Future<Uint8List> buildInvoicePdf(
         pw.Align(
           alignment: pw.Alignment.centerRight,
           child: pw.Text(
-            '${t((x) => x.invTotalRsd)}: ${f.money(inv.totalRsd!, 'RSD')}\n${l.invRateLine(f.rate(inv.rsdRate!), f.date(inv.rsdRateDate ?? inv.issueDate))}',
+            '${t((x) => x.invTotalRsd)}: ${f.money(inv.totalRsd!, 'RSD')}\n'
+            '${t((x) => x.invRateLine(f.rate(inv.rsdRate!), f.date(inv.rsdRateDate ?? inv.issueDate)))}',
             style: kit.small,
             textAlign: pw.TextAlign.right,
           ),

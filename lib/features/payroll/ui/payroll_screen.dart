@@ -80,10 +80,20 @@ class _PayrollScreenState extends State<PayrollScreen> {
     setState(() => _inputs = next);
     unawaited(_storeOf(context).writeJson(_lastKey, next.toJson()));
     _recordTimer?.cancel();
-    if (record && (next.amount ?? 0) > 0) {
+    if (record && (next.amount ?? 0) > 0 && !_nonPositive(next)) {
       _recordTimer = Timer(const Duration(milliseconds: 1500), () {
         if (mounted) unawaited(context.read<HistoryStore>().recordRecent(ToolId.payroll, next.toJson()));
       });
+    }
+  }
+
+  /// True when [inputs] give no positive net pay (charges on the minimum
+  /// base exceed the pay); such inputs are not kept in the recent list.
+  bool _nonPositive(PayrollInputs inputs) {
+    try {
+      return _engine.compute(inputs.system, inputs.mode, inputs.amount!, inputs.options).notes.contains(PayrollNote.nonPositiveNet);
+    } on PayrollSolveException {
+      return true;
     }
   }
 
@@ -196,6 +206,10 @@ class _PayrollScreenState extends State<PayrollScreen> {
               InfoNote(error, warning: true)
             else if (result == null)
               InfoNote(l.payEmpty)
+            else if (result.notes.contains(PayrollNote.nonPositiveNet))
+              // Contributions on the minimum base exceed this pay: there is
+              // no meaningful net figure to show, only the explanation.
+              ..._notes(l, f, result)
             else ...[
               _ResultHero(result: result, mode: inputs.mode),
               const SizedBox(height: 26),

@@ -62,6 +62,10 @@ void main() {
     test('percent from a fraction and from a percentage', () {
       expect(sr.percent(0.3714), '37,1%');
       expect(en.percentValue(7.49), '7.49%');
+      expect(Formats('bg').percentValue(20, decimals: 0), '20%');
+      // CLDR puts a no-break space before the sign in these languages.
+      expect(Formats('hr').percent(0.3714), '37,1$nbsp%');
+      expect(Formats('ro').percentValue(7.49), '7,49$nbsp%');
     });
 
     test('dates follow local convention', () {
