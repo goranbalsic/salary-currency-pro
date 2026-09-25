@@ -37,7 +37,7 @@ class Driver {
     await scrollToTop();
     final scrollable = find.byType(Scrollable);
     for (var i = 0; i < 40 && finder.evaluate().isEmpty && scrollable.evaluate().isNotEmpty; i++) {
-      await tester.drag(scrollable.first, const Offset(0, -250), warnIfMissed: false);
+      await tester.dragFrom(_grip(scrollable.first), const Offset(0, -250));
       await tester.pump(const Duration(milliseconds: 50));
     }
     await settle();
@@ -77,8 +77,15 @@ class Driver {
   Future<void> scrollToTop() async {
     final scrollables = find.byType(Scrollable);
     if (scrollables.evaluate().isEmpty) return;
-    await tester.fling(scrollables.first, const Offset(0, 5000), 5000);
+    await tester.flingFrom(_grip(scrollables.first), const Offset(0, 5000), 5000);
     await settle();
+  }
+
+  /// Where a thumb scrolls: the page margin at the left edge, so a drag
+  /// never starts on a focused field's selection handle or on a chart.
+  Offset _grip(Finder scrollable) {
+    final r = tester.getRect(scrollable);
+    return Offset(r.left + 6, r.center.dy);
   }
 }
 

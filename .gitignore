@@ -88,3 +88,6 @@ GoogleService-Info.plist
 # CTK v3 rollback artifacts: local-only, never committed.
 .ctk-backup/
 CLAUDE.md.v2.*.bak
+
+# Rendered screenshots (flutter test --update-goldens --tags screenshots)
+test/screenshots/out/
