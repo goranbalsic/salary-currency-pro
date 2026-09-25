@@ -103,10 +103,7 @@ abstract final class BilansTheme {
       visualDensity: VisualDensity.standard,
       materialTapTargetSize: MaterialTapTargetSize.padded,
       pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        },
+        builders: {TargetPlatform.android: PredictiveBackPageTransitionsBuilder()},
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: c.paper,

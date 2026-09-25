@@ -14,30 +14,17 @@ import '../../settings/settings_controller.dart';
 import '../data/business_store.dart';
 import '../domain/invoice.dart';
 import '../domain/pausal.dart';
+import 'invoice_common.dart';
 import 'invoice_editor_screen.dart';
 import 'invoice_view_screen.dart';
 import 'invoices_list_screen.dart';
 import 'pausal_screen.dart';
 import 'profile_screen.dart';
 
-String invoiceStatusLabel(AppLocalizations l, Invoice inv, DateTime today) {
-  if (inv.isOverdue(today)) return l.statusOverdue;
-  return switch (inv.status) {
-    InvoiceStatus.draft => l.statusDraft,
-    InvoiceStatus.issued => l.statusIssued,
-    InvoiceStatus.paid => l.statusPaid,
-    InvoiceStatus.cancelled => l.statusCancelled,
-  };
-}
-
 /// Starts a new invoice, enforcing the free quota and the profile setup.
 Future<void> startNewInvoice(BuildContext context) async {
+  if (!await ensureInvoiceQuota(context) || !context.mounted) return;
   final business = context.read<BusinessStore>();
-  final pro = context.read<ProController>();
-  if (!pro.can(ProFeature.unlimitedInvoices) && business.createdCount >= AppConfig.freeInvoiceLimit) {
-    final ok = await requirePro(context, ProFeature.unlimitedInvoices);
-    if (!ok || !context.mounted) return;
-  }
   if (business.profile.isEmpty) {
     final saved = await Navigator.of(context).push<bool>(MaterialPageRoute(builder: (_) => const ProfileScreen(firstRun: true)));
     if (saved != true || !context.mounted) return;
@@ -56,7 +43,6 @@ class BusinessScreen extends StatelessWidget {
     final c = context.colors;
     final t = Theme.of(context).textTheme;
     final l = context.l10n;
-    final f = context.fmt;
     final business = context.watch<BusinessStore>();
     final pro = context.watch<ProController>();
     final country = context.select<SettingsController, String>((s) => s.country.code);
@@ -154,8 +140,6 @@ class BusinessScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            const SizedBox(height: 8),
-            Text(f.date(today), style: t.bodySmall!.copyWith(color: Colors.transparent)),
           ],
         ),
       ),
@@ -172,16 +156,7 @@ class InvoiceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.colors;
     final t = Theme.of(context).textTheme;
-    final l = context.l10n;
     final f = context.fmt;
-    final overdue = invoice.isOverdue(today);
-    final (bg, fg) = switch (invoice.status) {
-      InvoiceStatus.paid => (c.greenTint, c.positive),
-      InvoiceStatus.issued when overdue => (c.warningTint, c.brick),
-      InvoiceStatus.issued => (c.brassTint, c.brassText),
-      InvoiceStatus.draft => (c.sunken, c.ink2),
-      InvoiceStatus.cancelled => (c.sunken, c.ink2),
-    };
     return InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => InvoiceViewScreen(invoiceId: invoice.id))),
       child: Container(
@@ -212,11 +187,7 @@ class InvoiceRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(5)),
-                  child: Text(invoiceStatusLabel(l, invoice, today), style: t.labelSmall!.copyWith(color: fg, letterSpacing: 0.2)),
-                ),
+                InvoiceStatusChip(invoice: invoice, today: today),
               ],
             ),
           ],

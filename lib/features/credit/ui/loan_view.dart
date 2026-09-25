@@ -280,8 +280,8 @@ class _SchedulePreview extends StatelessWidget {
     final f = context.fmt;
     final rows = result.rows;
     final shown = rows.length <= 5 ? rows : [...rows.take(3), rows.last];
-    TextStyle cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular, fontSize: 13.5);
-    TextStyle head = t.labelSmall!;
+    final cell = t.bodyMedium!.copyWith(fontFeatures: Fonts.tabular, fontSize: 13.5);
+    final head = t.labelSmall!;
     Widget r(List<String> v, {bool header = false, bool divider = true}) => Container(
           padding: const EdgeInsets.symmetric(vertical: 9),
           decoration: BoxDecoration(border: Border(bottom: BorderSide(color: header ? c.ink : c.line, width: header ? 1 : (divider ? 1 : 0)))),

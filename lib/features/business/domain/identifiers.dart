@@ -77,6 +77,28 @@ abstract final class Identifiers {
     return BigInt.parse(buffer.toString()) % BigInt.from(97) == BigInt.one;
   }
 
+  /// Builds an IBAN from a country code and a domestic account (BBAN),
+  /// computing the check digits. For a valid Serbian account this is
+  /// always `RS35…`.
+  static String ibanFrom(String country, String bban) {
+    final cc = country.toUpperCase();
+    final digits = StringBuffer();
+    for (final c in '$bban${cc}00'.codeUnits) {
+      if (c >= 65 && c <= 90) {
+        digits.write(c - 55);
+      } else {
+        digits.writeCharCode(c);
+      }
+    }
+    final check = 98 - (BigInt.parse(digits.toString()) % BigInt.from(97)).toInt();
+    return '$cc${check.toString().padLeft(2, '0')}$bban';
+  }
+
+  /// SWIFT/BIC: 4 bank letters, 2 country letters, 2 location characters
+  /// and an optional 3-character branch code.
+  static bool isValidBic(String input) =>
+      RegExp(r'^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$').hasMatch(input.replaceAll(' ', '').toUpperCase());
+
   /// Groups an IBAN in blocks of four for display.
   static String formatIban(String input) {
     final s = input.replaceAll(' ', '').toUpperCase();

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,7 +50,7 @@ class Segmented<T> extends StatelessWidget {
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
                       if (v != selected) {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         onChanged(v);
                       }
                     },
@@ -301,6 +303,7 @@ class NumberInputRow extends StatefulWidget {
     this.divider = true,
     this.error = false,
     this.hint,
+    this.signed = false,
   });
 
   final String label;
@@ -314,6 +317,9 @@ class NumberInputRow extends StatefulWidget {
   final bool error;
   final String? hint;
 
+  /// Accept negative values (typed with a leading minus).
+  final bool signed;
+
   @override
   State<NumberInputRow> createState() => _NumberInputRowState();
 }
@@ -324,8 +330,12 @@ class _NumberInputRowState extends State<NumberInputRow> {
       TextEditingController(text: widget.value == null ? '' : _formatter.formatNumberForEditing(widget.value!));
   final _focus = FocusNode();
 
-  AmountInputFormatter _make() =>
-      AmountInputFormatter(formats: widget.formats, decimals: widget.decimals, maxIntegerDigits: widget.maxIntegerDigits);
+  AmountInputFormatter _make() => AmountInputFormatter(
+        formats: widget.formats,
+        decimals: widget.decimals,
+        maxIntegerDigits: widget.maxIntegerDigits,
+        allowNegative: widget.signed,
+      );
 
   @override
   void didUpdateWidget(covariant NumberInputRow old) {
@@ -383,7 +393,7 @@ class _NumberInputRowState extends State<NumberInputRow> {
                 controller: _controller,
                 focusNode: _focus,
                 textAlign: TextAlign.right,
-                keyboardType: TextInputType.numberWithOptions(decimal: widget.decimals > 0),
+                keyboardType: TextInputType.numberWithOptions(decimal: widget.decimals > 0, signed: widget.signed),
                 textInputAction: TextInputAction.done,
                 inputFormatters: [_formatter],
                 onChanged: (s) => widget.onChanged(_formatter.parse(s)),
@@ -494,7 +504,7 @@ class StepperRow extends StatelessWidget {
             onPressed: next == null
                 ? null
                 : () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     onChanged(next);
                   },
             icon: Icon(icon, size: 18),

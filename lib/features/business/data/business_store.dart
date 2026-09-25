@@ -12,6 +12,8 @@ class BusinessProfile {
     this.party = const InvoiceParty(),
     this.bankAccount = '',
     this.bankName = '',
+    this.iban = '',
+    this.swift = '',
     this.phone = '',
     this.vatRegistered = false,
     this.paymentCode = '221',
@@ -26,6 +28,11 @@ class BusinessProfile {
   /// Serbian account (xxx-xxxxxxxxxxxxx-xx) or an IBAN.
   final String bankAccount;
   final String bankName;
+
+  /// Account for payments from abroad (printed on foreign-currency
+  /// invoices) and the bank's SWIFT/BIC code.
+  final String iban;
+  final String swift;
   final String phone;
   final bool vatRegistered;
 
@@ -44,6 +51,8 @@ class BusinessProfile {
     InvoiceParty? party,
     String? bankAccount,
     String? bankName,
+    String? iban,
+    String? swift,
     String? phone,
     bool? vatRegistered,
     String? paymentCode,
@@ -56,6 +65,8 @@ class BusinessProfile {
         party: party ?? this.party,
         bankAccount: bankAccount ?? this.bankAccount,
         bankName: bankName ?? this.bankName,
+        iban: iban ?? this.iban,
+        swift: swift ?? this.swift,
         phone: phone ?? this.phone,
         vatRegistered: vatRegistered ?? this.vatRegistered,
         paymentCode: paymentCode ?? this.paymentCode,
@@ -69,6 +80,8 @@ class BusinessProfile {
         'party': party.toJson(),
         'account': bankAccount,
         'bank': bankName,
+        'iban': iban,
+        'swift': swift,
         'phone': phone,
         'vat': vatRegistered,
         'sf': paymentCode,
@@ -85,6 +98,8 @@ class BusinessProfile {
       party: raw['party'] is Map ? InvoiceParty.fromJson((raw['party'] as Map).cast<String, Object?>()) : const InvoiceParty(),
       bankAccount: s('account'),
       bankName: s('bank'),
+      iban: s('iban'),
+      swift: s('swift'),
       phone: s('phone'),
       vatRegistered: raw['vat'] == true,
       paymentCode: s('sf', '221'),

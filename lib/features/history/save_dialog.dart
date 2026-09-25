@@ -18,18 +18,24 @@ Future<void> saveCalculation(BuildContext context, ToolId tool, Map<String, Obje
     final unlocked = await requirePro(context, ProFeature.unlimitedSaves);
     if (!unlocked || !context.mounted) return;
   }
-  final name = await showDialog<String>(
-    context: context,
-    builder: (context) => _NameDialog(initial: suggestedName),
-  );
+  final name = await askName(context, title: l.saveTitle, initial: suggestedName, showLimit: true);
   if (name == null || !context.mounted) return;
   await history.saveNamed(tool, inputs, name);
   if (context.mounted) showSnack(context, l.snackSaved);
 }
 
+/// Asks for a calculation name. Returns null when cancelled.
+Future<String?> askName(BuildContext context, {required String title, String initial = '', bool showLimit = false}) =>
+    showDialog<String>(
+      context: context,
+      builder: (context) => _NameDialog(title: title, initial: initial, showLimit: showLimit),
+    );
+
 class _NameDialog extends StatefulWidget {
-  const _NameDialog({required this.initial});
+  const _NameDialog({required this.title, required this.initial, required this.showLimit});
+  final String title;
   final String initial;
+  final bool showLimit;
 
   @override
   State<_NameDialog> createState() => _NameDialogState();
@@ -50,7 +56,7 @@ class _NameDialogState extends State<_NameDialog> {
     final pro = context.read<ProController>();
     final history = context.read<HistoryStore>();
     return AlertDialog(
-      title: Text(l.saveTitle),
+      title: Text(widget.title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,7 +69,7 @@ class _NameDialogState extends State<_NameDialog> {
             decoration: InputDecoration(labelText: l.saveNameLabel, hintText: l.saveNameHint, counterText: ''),
             onSubmitted: (v) => Navigator.of(context).pop(v.trim()),
           ),
-          if (!pro.can(ProFeature.unlimitedSaves)) ...[
+          if (widget.showLimit && !pro.can(ProFeature.unlimitedSaves)) ...[
             const SizedBox(height: 8),
             FinePrint('${l.saveLimit(AppConfig.freeSavedLimit)} (${history.savedCount}/${AppConfig.freeSavedLimit})'),
           ],

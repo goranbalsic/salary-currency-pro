@@ -95,5 +95,6 @@
   "cmpLoanBest": "Lowest total cost",
   "cmpLoanSavesVs": "{amount} cheaper than the most expensive offer",
   "@cmpLoanSavesVs": {"placeholders": {"amount": {"type": "String"}}},
-  "cmpLoanResults": "Results"
+  "cmpLoanResults": "Results",
+  "depYieldLabel": "Net annual yield"
 }

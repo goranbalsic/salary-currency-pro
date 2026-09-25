@@ -1,4 +1,1383 @@
 {
   "@@locale": "en",
-  "appTitle": "Bilans"
+  "appName": "Bilans",
+  "appTagline": "Finance calculator",
+  "navHome": "Home",
+  "navPayroll": "Pay",
+  "navCredit": "Loans",
+  "navFx": "Rates",
+  "navBusiness": "Business",
+  "actionSave": "Save",
+  "actionShare": "Share",
+  "actionDelete": "Delete",
+  "actionCancel": "Cancel",
+  "actionClose": "Close",
+  "actionDone": "Done",
+  "actionRetry": "Try again",
+  "actionEdit": "Edit",
+  "actionAdd": "Add",
+  "actionContinue": "Continue",
+  "actionRemove": "Remove",
+  "actionUndo": "Undo",
+  "actionOk": "OK",
+  "actionDownloadPdf": "Download PDF",
+  "actionRename": "Rename",
+  "actionClear": "Clear",
+  "commonMonthly": "Monthly",
+  "commonAnnual": "Annual",
+  "commonMonthsShort": "mo.",
+  "commonYearsShort": "yr.",
+  "commonMonthsCount": "{count, plural, one{{count} month} other{{count} months}}",
+  "@commonMonthsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonYearsCount": "{count, plural, one{{count} year} other{{count} years}}",
+  "@commonYearsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonPercentPa": "% p.a.",
+  "commonOptional": "optional",
+  "commonSearch": "Search",
+  "commonToday": "Today",
+  "commonYesterday": "Yesterday",
+  "snackSaved": "Saved",
+  "snackDeleted": "Deleted",
+  "snackCopied": "Copied",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "errorShare": "Couldn't open the share sheet.",
+  "errorOpenLink": "Couldn't open the link.",
+  "proFeatureTitle": "{feature} is part of Bilans Pro",
+  "@proFeatureTitle": {
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "countryRS": "Serbia",
+  "countryHR": "Croatia",
+  "countryBA": "Bosnia and Herzegovina",
+  "countryME": "Montenegro",
+  "countryMK": "North Macedonia",
+  "countrySI": "Slovenia",
+  "countryBG": "Bulgaria",
+  "countryRO": "Romania",
+  "systemFbih": "Federation of BiH",
+  "systemRepublikaSrpska": "Republika Srpska",
+  "curEUR": "Euro",
+  "curUSD": "US dollar",
+  "curCHF": "Swiss franc",
+  "curGBP": "British pound",
+  "curRSD": "Serbian dinar",
+  "curBAM": "Convertible mark",
+  "curMKD": "Macedonian denar",
+  "curRON": "Romanian leu",
+  "curHUF": "Hungarian forint",
+  "curCZK": "Czech koruna",
+  "curPLN": "Polish złoty",
+  "curSEK": "Swedish krona",
+  "curNOK": "Norwegian krone",
+  "curDKK": "Danish krone",
+  "curJPY": "Japanese yen",
+  "curCNY": "Chinese yuan",
+  "curCAD": "Canadian dollar",
+  "curAUD": "Australian dollar",
+  "curTRY": "Turkish lira",
+  "curRUB": "Russian ruble",
+  "formFixErrors": "Please fix the highlighted fields.",
+  "discardTitle": "Discard changes?",
+  "discardBody": "Your changes haven't been saved.",
+  "discardKeep": "Keep editing",
+  "discardAction": "Discard",
+  "commonMore": "More options",
+  "errorPdf": "Couldn't create the PDF. Please try again.",
+  "pdfLanguageTitle": "Invoice language",
+  "pdfLanguageBoth": "{language} + English",
+  "@pdfLanguageBoth": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "onbHeadline": "Numbers you can trust.",
+  "onbBody": "Pay, loans, official exchange rates and invoices — calculated to your country's rules. No account, no tracking.",
+  "onbCountry": "Your country",
+  "onbBihEntities": "Federation of BiH and Republika Srpska",
+  "onbLanguage": "App language",
+  "onbLanguageDevice": "Device language",
+  "onbPrivacy": "Your data stays on this phone.",
+  "homeSearchHint": "Search calculators",
+  "homeSettings": "Settings",
+  "homeRatesTitle": "Rates today",
+  "homeRatesNbs": "NBS middle rate · {date}",
+  "@homeRatesNbs": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRatesEcb": "ECB reference rate · {date}",
+  "@homeRatesEcb": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRatesEmpty": "Today's official rates appear here once you're online.",
+  "homeRecent": "Recent",
+  "homeSeeAll": "See all",
+  "homeSectionPayroll": "Pay",
+  "homeSectionCredit": "Loans and savings",
+  "homeSectionFx": "Exchange rates",
+  "homeSectionBusiness": "Business",
+  "homeNoResults": "No calculator matches “{query}”.",
+  "@homeNoResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "toolPayroll": "Gross and net pay",
+  "toolPayrollDesc": "Payroll for 9 tax systems",
+  "toolTeam": "Team cost",
+  "toolTeamDesc": "Monthly and annual payroll cost",
+  "toolCompare": "Compare countries",
+  "toolCompareDesc": "The same pay in 9 systems",
+  "toolLoan": "Loan",
+  "toolLoanDesc": "Installment, APR and schedule",
+  "toolDeposit": "Term deposit",
+  "toolDepositDesc": "Interest and tax on interest",
+  "toolLoanCompare": "Compare loans",
+  "toolLoanCompareDesc": "Up to three offers, ranked by APR",
+  "toolPrepay": "Early repayment",
+  "toolPrepayDesc": "How much interest you save",
+  "toolConverter": "Currency converter",
+  "toolConverterDesc": "Official NBS and ECB rates",
+  "toolRateHistory": "Rate history",
+  "toolRateHistoryDesc": "30, 90 and 365 days",
+  "toolInvoices": "Invoices",
+  "toolInvoicesDescRs": "PDF with NBS IPS QR code",
+  "toolInvoicesDesc": "Professional PDF invoices",
+  "toolPausal": "Paušal limits",
+  "toolPausalDesc": "6 and 8 million dinars, live",
+  "toolVat": "VAT",
+  "toolVatDesc": "Add or extract VAT",
+  "toolMargin": "Margin and markup",
+  "toolMarginDesc": "Cost, price and discount",
+  "toolBreakEven": "Break-even",
+  "toolBreakEvenDesc": "How much you need to sell",
+  "toolInvestment": "Investment",
+  "toolInvestmentDesc": "NPV, IRR and payback",
+  "recentPayroll": "Pay · {country}",
+  "@recentPayroll": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "recentFromGross": "net from {amount} gross",
+  "@recentFromGross": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentFromNet": "gross for {amount} net",
+  "@recentFromNet": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentFromCost": "gross within {amount} budget",
+  "@recentFromCost": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentLoan": "Loan · {term}",
+  "@recentLoan": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "recentLoanSub": "installment · APR {eir}",
+  "@recentLoanSub": {
+    "placeholders": {
+      "eir": {
+        "type": "String"
+      }
+    }
+  },
+  "recentDeposit": "Deposit · {term}",
+  "@recentDeposit": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "recentDepositSub": "at maturity · {rate}",
+  "@recentDepositSub": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "recentVatAdd": "{amount} + VAT {rate}",
+  "@recentVatAdd": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "recentVatExtract": "net of {amount} at {rate}",
+  "@recentVatExtract": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "recentMarginSub": "price with VAT · margin {margin}",
+  "@recentMarginSub": {
+    "placeholders": {
+      "margin": {
+        "type": "String"
+      }
+    }
+  },
+  "recentBreakEvenSub": "per month · revenue {amount}",
+  "@recentBreakEvenSub": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentInvestmentSub": "NPV · IRR {irr}",
+  "@recentInvestmentSub": {
+    "placeholders": {
+      "irr": {
+        "type": "String"
+      }
+    }
+  },
+  "historyTitle": "Saved and recent",
+  "historySaved": "Saved",
+  "historySavedEmpty": "Tap Save on any result to keep it here with a name.",
+  "historyRecentEmpty": "Calculations you finish appear here automatically.",
+  "historyClearTitle": "Clear the recent list?",
+  "payTitle": "Pay calculator",
+  "payModeGross": "Gross → net",
+  "payModeNet": "Net → gross",
+  "payModeCost": "Total cost",
+  "payModeSemantic": "Calculation direction",
+  "payInputGross": "Gross pay · monthly",
+  "payInputNet": "Desired net pay · monthly",
+  "payInputCost": "Employer budget · monthly",
+  "payHelperRsMinBase": "Minimum contribution base: {amount}",
+  "@payHelperRsMinBase": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payHelperNet": "The amount the employee receives",
+  "payHelperCost": "Gross pay plus all employer contributions",
+  "payResultNet": "Net pay",
+  "payResultGross": "Required gross pay",
+  "payResultGrossBudget": "Gross pay within budget",
+  "payShareOfGross": "{percent} of gross",
+  "@payShareOfGross": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "payNetLine": "Net pay: {amount}",
+  "@payNetLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payTotalCostLine": "Total employer cost: {amount}",
+  "@payTotalCostLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payApprox": "≈ {amount}",
+  "@payApprox": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payComposition": "Where the employer's total cost goes",
+  "segNet": "Net pay",
+  "segTax": "Tax",
+  "segEmployee": "Employee contributions",
+  "segEmployer": "Employer contributions",
+  "payBreakdown": "Breakdown",
+  "payAnnualToggle": "Annual ×12",
+  "payEmployee": "Employee",
+  "payEmployer": "Employer",
+  "payGross": "Gross pay",
+  "payNetTotal": "Net pay",
+  "payTotalCost": "Total cost of pay",
+  "payNonTaxable": "Non-taxable amount",
+  "payPersonalAllowance": "Personal allowance",
+  "payGeneralAllowance": "General allowance",
+  "payPersonalExemption": "Personal exemption",
+  "payPersonalDeduction": "Personal deduction",
+  "payTaxBase": "Tax base",
+  "payIncomeTax": "Income tax",
+  "payTaxOn": "{rate} on {amount}",
+  "@payTaxOn": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paySurtax": "Municipal surtax",
+  "payOnBase": "on {amount}",
+  "@payOnBase": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payFixedMonthly": "fixed monthly",
+  "payWedge": "Tax wedge {percent}",
+  "@payWedge": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "payRulesFrom": "Rules from {date}",
+  "@payRulesFrom": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paySources": "Sources",
+  "payDisclaimer": "Indicative calculation under the rules in force from {date}. It does not replace an official payroll.",
+  "@payDisclaimer": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "payAnnualNote": "Annual figures are 12 × the monthly amounts; year-end tax reconciliation may differ.",
+  "payNoteMinBase": "Contributions are charged on the minimum base of {amount}.",
+  "@payNoteMinBase": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payNoteMaxBase": "Contributions stop at the maximum base of {amount}.",
+  "@payNoteMaxBase": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payNoteRelief": "Low-wage relief lowers the pension contribution base to {amount}.",
+  "@payNoteRelief": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payNoteNonPositive": "Mandatory charges exceed this pay.",
+  "payEmpty": "Enter an amount to see the full breakdown — contributions, tax and the employer's total cost.",
+  "payErrorTooLarge": "That amount is too large to calculate.",
+  "paySystemTitle": "Tax system",
+  "paySystemProHint": "Your home country is free. Other countries are part of Pro.",
+  "payOptions": "Options",
+  "payOptionsHrSummary": "Tax {lower} / {higher} · children {children}",
+  "@payOptionsHrSummary": {
+    "placeholders": {
+      "lower": {
+        "type": "String"
+      },
+      "higher": {
+        "type": "String"
+      },
+      "children": {
+        "type": "int"
+      }
+    }
+  },
+  "payOptionsMeSummary": "Surtax {rate}",
+  "@payOptionsMeSummary": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "payOptionsRoSummary": "Dependants {count}",
+  "@payOptionsRoSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "payOptionsRoMinWage": "minimum-wage relief",
+  "payOptionsFbihSummary": "Disability fund {state}",
+  "@payOptionsFbihSummary": {
+    "placeholders": {
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "payOn": "on",
+  "payOff": "off",
+  "payHrRates": "Municipal income-tax rates",
+  "payHrLower": "Lower rate",
+  "payHrHigher": "Higher rate",
+  "payHrRatesHint": "Set by your city or municipality: 15–23% and 25–33%. Without a decision, 20% and 30% apply.",
+  "payHrRateError": "Lower rate {lowRange}, higher rate {highRange}",
+  "@payHrRateError": {
+    "placeholders": {
+      "lowRange": {
+        "type": "String"
+      },
+      "highRange": {
+        "type": "String"
+      }
+    }
+  },
+  "payChildren": "Children",
+  "payDependents": "Other dependants",
+  "payRoDependents": "Dependants",
+  "payRoMinWage": "Minimum-wage relief",
+  "payRoMinWageHint": "200 lei are exempt for employees paid the national minimum wage.",
+  "payMeSurtax": "Surtax rate",
+  "payMeSurtaxHint": "13% in most municipalities, 15% in Podgorica and Cetinje.",
+  "payFbihDisability": "Disability employment fund 0.5%",
+  "payFbihDisabilityHint": "Paid by companies that don't employ the required share of people with disabilities.",
+  "itemPension": "Pension and disability insurance",
+  "itemHealth": "Health insurance",
+  "itemUnemployment": "Unemployment insurance",
+  "itemChildProtection": "Child protection",
+  "itemWorkInjury": "Work injury insurance",
+  "itemLaborFund": "Labour Fund",
+  "itemChamber": "Chamber of Commerce",
+  "itemPillar1": "Pension insurance, pillar I",
+  "itemPillar2": "Pension insurance, pillar II",
+  "itemLongTermCare": "Long-term care",
+  "itemParental": "Parental protection",
+  "itemCompulsoryHealth": "Compulsory health contribution",
+  "itemWaterFee": "General water fee",
+  "itemDisasterFee": "Disaster protection fee",
+  "itemDisabilityFund": "Disability employment fund",
+  "itemSickness": "Sickness and maternity",
+  "itemSupplementaryPension": "Supplementary pension (UPF)",
+  "itemCas": "CAS (pension)",
+  "itemCass": "CASS (health)",
+  "itemCam": "CAM (work insurance)",
+  "saveTitle": "Save calculation",
+  "saveNameLabel": "Name",
+  "saveNameHint": "e.g. Offer for new hire",
+  "saveLimit": "The free plan keeps {count} saved calculations.",
+  "@saveLimit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareFooter": "Calculated with Bilans",
+  "sourcesTitle": "Sources and assumptions",
+  "teamTitle": "Team cost",
+  "teamAdd": "Add employee",
+  "teamEdit": "Edit employee",
+  "teamEmptyTitle": "Plan your payroll",
+  "teamEmpty": "Add your team — each person's gross, net and the employer's total cost, summed for the month and the year. Mix countries if you employ across borders.",
+  "teamMembers": "{count, plural, one{{count} employee} other{{count} employees}}",
+  "@teamMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamNote": "Each employee is calculated under the rules of their own tax system. Annual figures are 12 × monthly.",
+  "teamCurrenciesNote": "Totals are shown separately for each currency.",
+  "teamUnnamed": "Unnamed",
+  "teamTotal": "Total",
+  "teamCostShort": "total cost",
+  "teamRemoveTitle": "Remove {name} from the team?",
+  "@teamRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "teamName": "Name",
+  "teamRole": "Role",
+  "teamRoleHint": "e.g. Developer",
+  "teamAmountError": "Enter the pay amount.",
+  "cmpNeedsRates": "Comparing countries needs today's exchange rates. Connect to the internet once and they'll be saved for offline use.",
+  "cmpRankedByNet": "Ranked by net pay",
+  "cmpRankedByCost": "Ranked by employer cost",
+  "cmpCostLine": "Employer cost {cost} · tax wedge {wedge}",
+  "@cmpCostLine": {
+    "placeholders": {
+      "cost": {
+        "type": "String"
+      },
+      "wedge": {
+        "type": "String"
+      }
+    }
+  },
+  "cmpGrossLine": "Gross {gross} · tax wedge {wedge}",
+  "@cmpGrossLine": {
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      },
+      "wedge": {
+        "type": "String"
+      }
+    }
+  },
+  "cmpTaxesKey": "Taxes and contributions",
+  "cmpNote": "Amounts converted at official rates from {date}. Each country uses its default settings (no children, standard local rates). The tax wedge is the share of the employer's total cost that goes to taxes and contributions.",
+  "@cmpNote": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "payWedgeLabel": "Tax wedge",
+  "creditTitle": "Loans",
+  "creditTabLoan": "Loan",
+  "creditTabDeposit": "Savings",
+  "creditTabCompare": "Compare",
+  "loanAmount": "Loan amount",
+  "loanRate": "Nominal interest rate",
+  "loanTerm": "Term",
+  "loanFee": "Processing fee",
+  "loanMonthlyFee": "Monthly fees",
+  "loanMonthlyFeeHint": "Account, insurance…",
+  "loanRepayment": "Repayment",
+  "loanAnnuity": "Equal installments",
+  "loanLinear": "Equal principal",
+  "loanMore": "More options",
+  "loanLess": "Fewer options",
+  "loanCurrency": "Currency",
+  "loanInstallment": "Monthly installment",
+  "loanFirstInstallment": "First installment",
+  "loanEir": "APR",
+  "loanTotalInterest": "Total interest",
+  "loanTotal": "Total to repay",
+  "loanTotalIncludes": "Includes principal, interest and fees of {fees}.",
+  "@loanTotalIncludes": {
+    "placeholders": {
+      "fees": {
+        "type": "String"
+      }
+    }
+  },
+  "loanEirNote": "APR is the effective annual rate including all fees, per the EU consumer-credit formula.",
+  "loanByYear": "By year",
+  "loanPrincipal": "Principal",
+  "loanInterest": "Interest",
+  "loanYearShort": "Yr {n}",
+  "@loanYearShort": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "loanSchedule": "Repayment schedule",
+  "loanScheduleAll": "Full schedule · {count} installments",
+  "@loanScheduleAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "loanColNo": "No.",
+  "loanColInstallment": "Installment",
+  "loanColInterest": "Interest",
+  "loanColPrincipal": "Principal",
+  "loanColBalance": "Balance",
+  "loanPrepayTitle": "Early repayment",
+  "loanPrepayTeaser": "Paying {amount} extra after installment {month} shortens the loan by {months} and saves {saved} in interest.",
+  "@loanPrepayTeaser": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "month": {
+        "type": "int"
+      },
+      "months": {
+        "type": "String"
+      },
+      "saved": {
+        "type": "String"
+      }
+    }
+  },
+  "loanPrepayCta": "Calculate your scenario",
+  "loanErrorPrincipal": "Enter a loan amount.",
+  "loanErrorRate": "Enter an interest rate between 0 and 100%.",
+  "loanErrorTerm": "The term must be between 1 and 600 months.",
+  "loanErrorFee": "Fees must be smaller than the loan.",
+  "prepayTitle": "Early repayment",
+  "prepayIntro": "Based on your current loan: {amount} at {rate} for {term}.",
+  "@prepayIntro": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "prepayNoLoan": "Set up a loan in the Loans tab first.",
+  "prepayAmount": "Extra payment",
+  "prepayAfter": "Paid with installment no.",
+  "prepayMode": "After the payment",
+  "prepayShorten": "Shorter term",
+  "prepayLower": "Lower installment",
+  "prepayFee": "Prepayment fee",
+  "prepaySaved": "Interest saved",
+  "prepayNetSaving": "Net saving after fee",
+  "prepayNewTerm": "New term",
+  "prepayNewInstallment": "New installment",
+  "prepayMonthsSaved": "{months} sooner",
+  "@prepayMonthsSaved": {
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "prepayPaidOff": "The extra payment clears the entire remaining balance.",
+  "prepayBefore": "Before",
+  "prepayAfterLabel": "After",
+  "depAmount": "Deposit",
+  "depRate": "Interest rate",
+  "depTerm": "Term",
+  "depPayout": "Interest",
+  "depAtMaturity": "At maturity",
+  "depMonthly": "Monthly, added",
+  "depAnnually": "Yearly, added",
+  "depTax": "Tax on interest",
+  "depTaxHintRs": "In Serbia, interest on dinar savings is tax-free; on foreign-currency savings it is taxed at 15%.",
+  "depTaxHint": "Enter the withholding tax on interest that applies to you.",
+  "depContribution": "Monthly addition",
+  "depFinal": "At maturity",
+  "depGrossInterest": "Interest before tax",
+  "depTaxAmount": "Tax on interest",
+  "depNetInterest": "Net interest",
+  "depPaidIn": "Paid in",
+  "depYield": "Net yield {percent} a year",
+  "@depYield": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "depByYear": "By year",
+  "depColYear": "Year",
+  "depColInterest": "Net interest",
+  "depColBalance": "Balance",
+  "depErrorAmount": "Enter a deposit or a monthly addition.",
+  "depErrorRate": "Enter an interest rate between 0 and 100%.",
+  "cmpLoanIntro": "Same amount for every offer. The cheapest offer is the one with the lowest total cost.",
+  "cmpLoanOffer": "Offer {n}",
+  "@cmpLoanOffer": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "cmpLoanAdd": "Add offer",
+  "cmpLoanRemove": "Remove offer",
+  "cmpLoanBest": "Lowest total cost",
+  "cmpLoanSavesVs": "{amount} cheaper than the most expensive offer",
+  "@cmpLoanSavesVs": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cmpLoanResults": "Results",
+  "depYieldLabel": "Net annual yield",
+  "fxTitle": "Exchange rates",
+  "fxTabConverter": "Converter",
+  "fxTabList": "Rate list",
+  "fxAmount": "Amount in {currency}",
+  "@fxAmount": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "fxSwap": "Swap currencies",
+  "fxRateLine": "1 {from} = {rate} {to}",
+  "@fxRateLine": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "fxSourceNbsMiddle": "NBS middle rate",
+  "fxSourceNbsBuy": "NBS buying rate",
+  "fxSourceNbsSell": "NBS selling rate",
+  "fxSourceEcb": "ECB reference rate",
+  "fxSourceCross": "cross rate",
+  "fxKindMiddle": "Middle",
+  "fxKindBuy": "Buying",
+  "fxKindSell": "Selling",
+  "fxKindHint": "Buying and selling rates apply to dinar conversions.",
+  "fxUpdated": "Updated {date}",
+  "@fxUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fxOffline": "Offline · rates from {date}",
+  "@fxOffline": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fxLoading": "Updating rates…",
+  "fxNoRates": "No rates yet. Connect to the internet once to download today's official rates — after that the converter also works offline.",
+  "fxUnsupported": "There's no official rate for this pair.",
+  "fxHistoryTitle": "{from}/{to} · {days} days",
+  "@fxHistoryTitle": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "fxHistoryDays": "{days} d",
+  "@fxHistoryDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "fxHistoryError": "History isn't available offline.",
+  "fxHistoryPro": "Rate history for 30, 90 and 365 days is part of Pro.",
+  "fxHistoryMinMax": "min {min} · max {max}",
+  "@fxHistoryMinMax": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "fxPerUnit": "For 1 unit of currency",
+  "fxListNbs": "NBS exchange rate list",
+  "fxListEcb": "ECB reference rates, per 1 EUR",
+  "fxColBuy": "Buying",
+  "fxColMiddle": "Middle",
+  "fxColSell": "Selling",
+  "fxColRate": "Rate",
+  "fxRefresh": "Refresh rates",
+  "fxPickFrom": "Convert from",
+  "fxPickTo": "Convert to",
+  "fxSourcesNote": "Official National Bank of Serbia rates via kurs.resenje.org; European Central Bank reference rates via Frankfurter. The mark is pegged at 1.95583 per euro.",
+  "bizTitle": "Business",
+  "bizProfile": "Business details",
+  "bizInvoices": "Invoices",
+  "bizNewInvoice": "New",
+  "bizInvoicesEmpty": "No invoices yet. Create a professional invoice in under a minute.",
+  "bizFreeLeft": "{count, plural, one{{count} free invoice left} other{{count} free invoices left}}",
+  "@bizFreeLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bizTools": "Tools",
+  "bizShowAll": "Show all {count}",
+  "@bizShowAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bizPausalCard": "Paušal · {year}",
+  "@bizPausalCard": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "statusDraft": "Draft",
+  "statusIssued": "Awaiting payment",
+  "statusPaid": "Paid",
+  "statusCancelled": "Cancelled",
+  "statusOverdue": "Overdue",
+  "invNew": "New invoice",
+  "invEdit": "Edit invoice",
+  "invNumber": "Invoice number",
+  "invIssueDate": "Issue date",
+  "invServiceDate": "Date of supply",
+  "invDueDate": "Due date",
+  "invPlace": "Place of issue",
+  "invClient": "Client",
+  "invClientName": "Client name",
+  "invClientAddress": "Address",
+  "invClientCity": "Postcode and city",
+  "invClientCountry": "Country",
+  "invClientTaxId": "Tax ID (PIB / VAT)",
+  "invClientRegNo": "Registration number",
+  "invClientEmail": "Email",
+  "invRecentClients": "Recent clients",
+  "invCurrency": "Currency",
+  "invItems": "Items",
+  "invItemDescription": "Description",
+  "invItemQty": "Quantity",
+  "invItemUnit": "Unit",
+  "invItemUnitHint": "pcs, h, day…",
+  "invItemPrice": "Unit price",
+  "invItemVat": "VAT %",
+  "invAddItem": "Add item",
+  "invRemoveItem": "Remove item",
+  "invNote": "Note",
+  "invReference": "Payment reference",
+  "invReferenceHint": "Model and number, e.g. 97 1234",
+  "invSubtotal": "Subtotal",
+  "invVat": "VAT",
+  "invTotal": "Total",
+  "invTotalDue": "Total due",
+  "invTotalRsd": "Counter-value in RSD",
+  "invRateLine": "NBS middle rate {rate} on {date}",
+  "@invRateLine": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invRateFetching": "Fetching the NBS rate…",
+  "invRateUnavailable": "The NBS rate for this date isn't available yet.",
+  "invRateRetry": "Fetch rate",
+  "invSaveDraft": "Save draft",
+  "invIssue": "Issue invoice",
+  "invSave": "Save changes",
+  "invMarkPaid": "Mark as paid",
+  "invMarkUnpaid": "Mark as unpaid",
+  "invCancelInvoice": "Cancel invoice",
+  "invDelete": "Delete invoice",
+  "invDeleteConfirm": "Delete invoice {number}? This can't be undone.",
+  "@invDeleteConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invDuplicate": "Duplicate",
+  "invProfileMissing": "Add your business details first — they appear on every invoice.",
+  "invProfileSetup": "Set up business details",
+  "invNotInVat": "The issuer is not registered for VAT.",
+  "invValidWithoutStamp": "This invoice is valid without a stamp or signature.",
+  "invQrCaption": "Scan to pay (NBS IPS)",
+  "invQrHint": "Your client scans the QR code in their bank app — amount, account and reference fill in automatically.",
+  "invQrMissing": "No payment QR: {reason}",
+  "@invQrMissing": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invQrReasonAccount": "add a valid Serbian bank account in Business details",
+  "invQrReasonOther": "check the business name and payment reference",
+  "invDocTitle": "Invoice",
+  "invSeller": "Seller",
+  "invBuyer": "Buyer",
+  "invPaidOn": "Paid on {date}",
+  "@invPaidOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invDueOn": "Due {date}",
+  "@invDueOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invErrorClient": "Enter the client's name.",
+  "invErrorItems": "Add at least one item with a description and price.",
+  "invErrorNumber": "Enter an invoice number.",
+  "invErrorDue": "The due date can't be before the issue date.",
+  "invErrorNumberTaken": "Invoice {number} already exists.",
+  "@invErrorNumberTaken": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invLimitTitle": "You've created {count} free invoices",
+  "@invLimitTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invShare": "Share PDF",
+  "invPreview": "Preview",
+  "invAccount": "Account",
+  "invPib": "PIB",
+  "invMb": "MB",
+  "invReferenceLabel": "Reference",
+  "invPlaceLabel": "Place",
+  "invColItem": "Item",
+  "invColQty": "Qty",
+  "invColPrice": "Price",
+  "invColAmount": "Amount",
+  "profTitle": "Business details",
+  "profIntro": "Printed on your invoices and, if you choose, on PDF reports.",
+  "profName": "Business name",
+  "profAddress": "Street and number",
+  "profCity": "Postcode and city",
+  "profCountry": "Country",
+  "profTaxId": "Tax ID (PIB)",
+  "profRegNo": "Registration number (MB)",
+  "profAccount": "Bank account",
+  "profAccountHint": "Serbian account (160-0000000000000-00) or IBAN",
+  "profBank": "Bank",
+  "profEmail": "Email",
+  "profPhone": "Phone",
+  "profVat": "Registered for VAT",
+  "profVatHint": "Adds VAT lines to invoices. When off, invoices state that you're not in the VAT system.",
+  "profPaymentCode": "Payment code for the QR (šifra plaćanja)",
+  "profPaymentCodeHint": "221 for payments for goods and services",
+  "profDueDays": "Default payment term",
+  "profDueDaysSuffix": "days",
+  "profCurrency": "Default invoice currency",
+  "profNote": "Default invoice note",
+  "profShowOnReports": "Show business details on PDF reports",
+  "profInvalidPib": "The PIB check digit doesn't match — please check it.",
+  "profInvalidMb": "The registration number check digit doesn't match.",
+  "profInvalidAccount": "The account number check digits don't match.",
+  "profSaved": "Business details saved",
+  "pausalTitle": "Paušal limits",
+  "pausalIntro": "Flat-rate (paušal) entrepreneurs lose the regime above 6,000,000 RSD of revenue in a calendar year and must register for VAT above 8,000,000 RSD in any 12 months.",
+  "pausalAnnual": "Paušal limit, calendar year",
+  "pausalVat": "VAT limit, last 12 months",
+  "pausalOf": "of {amount}",
+  "@pausalOf": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pausalLeft": "{amount} left",
+  "@pausalLeft": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pausalProjection": "At this pace you'll invoice about {amount} by 31 December.",
+  "@pausalProjection": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pausalProjectionOver": "At this pace you'll pass the paušal limit before year-end (about {amount}).",
+  "@pausalProjectionOver": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pausalWarn": "You've used more than 80% of this limit.",
+  "pausalOver": "Limit exceeded — talk to your accountant.",
+  "pausalMissingRate": "{count, plural, one{{count} foreign-currency invoice has no NBS rate and isn't counted.} other{{count} foreign-currency invoices have no NBS rate and aren't counted.}}",
+  "@pausalMissingRate": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pausalSourceInvoices": "Counted from issued and paid invoices (by date of supply) plus revenue you add below.",
+  "pausalManual": "Revenue outside the app",
+  "pausalManualEmpty": "Add invoices you issued elsewhere this year to keep the totals complete.",
+  "pausalManualAdd": "Add revenue",
+  "pausalManualDate": "Date",
+  "pausalManualAmount": "Amount in RSD",
+  "pausalManualNote": "Note",
+  "vatTitle": "VAT calculator",
+  "vatAdd": "Add VAT",
+  "vatExtract": "Extract VAT",
+  "vatAmountNet": "Amount without VAT",
+  "vatAmountGross": "Amount with VAT",
+  "vatRate": "VAT rate",
+  "vatOther": "Other",
+  "vatNet": "Without VAT",
+  "vatVat": "VAT",
+  "vatGross": "With VAT",
+  "mrgTitle": "Margin and markup",
+  "mrgFromPrice": "Cost & price",
+  "mrgFromMarkup": "Markup",
+  "mrgFromMargin": "Margin",
+  "mrgCost": "Cost price",
+  "mrgPrice": "Selling price (excl. VAT)",
+  "mrgMarkup": "Markup",
+  "mrgMargin": "Margin",
+  "mrgDiscount": "Discount",
+  "mrgVat": "VAT",
+  "mrgProfit": "Gross profit",
+  "mrgPriceAfterDiscount": "Price after discount",
+  "mrgPriceWithVat": "Price with VAT",
+  "mrgMarginHint": "Margin is profit as a share of the price; markup is profit as a share of the cost.",
+  "mrgImpossible": "A margin of 100% or more isn't possible.",
+  "beTitle": "Break-even",
+  "beFixed": "Fixed costs per month",
+  "bePrice": "Price per unit",
+  "beVariable": "Variable cost per unit",
+  "beTarget": "Target profit per month",
+  "beUnits": "Units to sell per month",
+  "beUnitsValue": "{count, plural, one{{formatted} unit} other{{formatted} units}}",
+  "@beUnitsValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "formatted": {
+        "type": "String"
+      }
+    }
+  },
+  "beRevenue": "Revenue needed",
+  "beContribution": "Contribution margin",
+  "beImpossible": "The price must be higher than the variable cost per unit.",
+  "invsTitle": "Investment analysis",
+  "invsInitial": "Initial investment",
+  "invsRate": "Discount rate",
+  "invsFlows": "Net cash flow by year",
+  "invsYear": "Year {n}",
+  "@invsYear": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "invsAddYear": "Add year",
+  "invsRemoveYear": "Remove last year",
+  "invsNpv": "Net present value (NPV)",
+  "invsIrr": "Internal rate of return (IRR)",
+  "invsPayback": "Payback period",
+  "invsDiscountedPayback": "Discounted payback",
+  "invsPi": "Profitability index",
+  "invsYears": "{years} years",
+  "@invsYears": {
+    "placeholders": {
+      "years": {
+        "type": "String"
+      }
+    }
+  },
+  "invsNever": "Not within these years",
+  "invsNoIrr": "No IRR for these cash flows",
+  "invsGood": "Creates value at a {rate} discount rate.",
+  "@invsGood": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "invsBad": "Destroys value at a {rate} discount rate.",
+  "@invsBad": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "profSectionBusiness": "Business",
+  "profSectionPayment": "Payment",
+  "profSectionContact": "Contact",
+  "profSectionInvoices": "Invoice defaults",
+  "profTaxIdGeneric": "Tax ID",
+  "profRegNoGeneric": "Registration number",
+  "profNameRequired": "Enter the business name.",
+  "profPibLength": "The PIB has 9 digits.",
+  "profMbLength": "The registration number has 8 digits.",
+  "profInvalidAccountShape": "Enter a Serbian account (160-0000000000000-00) or an IBAN.",
+  "profInvalidEmail": "Check the email address.",
+  "profInvalidPaymentCode": "Use a three-digit payment code, e.g. 221.",
+  "profPrivacy": "Stored only on this phone. It is included in backups you export.",
+  "profIban": "IBAN for payments from abroad",
+  "profIbanHint": "Printed on foreign-currency invoices. Leave empty to use your account above in IBAN form.",
+  "profSwift": "SWIFT / BIC",
+  "profInvalidIban": "Check the IBAN — the check digits don't match.",
+  "profInvalidSwift": "A SWIFT/BIC code has 8 or 11 characters.",
+  "invIban": "IBAN",
+  "invSwift": "SWIFT/BIC",
+  "invBank": "Bank",
+  "invSefNote": "Invoices to the Serbian public sector — and, for VAT payers, to Serbian companies — must also go through SEF (e-Faktura). Bilans invoices suit clients abroad, individuals and your own records.",
+  "invRateOffline": "Couldn't reach the NBS. Check your connection — you can also save now and fetch the rate later.",
+  "invMarkedPaid": "Marked as paid",
+  "invMarkedUnpaid": "Marked as unpaid",
+  "invIssued": "Invoice issued",
+  "invCancelled": "Invoice cancelled",
+  "invCompleteFirst": "Add the client and at least one item before issuing.",
+  "invCancelConfirm": "Cancel invoice {number}?",
+  "@invCancelConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invCancelBody": "It stays in your list, marked as cancelled, and no longer counts as revenue.",
+  "invRateMissingNote": "No NBS rate yet — this invoice isn't counted toward your paušal limits until it has one.",
+  "pausalMonthlyRoom": "To stay under the limit, keep to about {amount} a month until the end of the year.",
+  "@pausalMonthlyRoom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pausalByMonth": "Revenue by month, {year}",
+  "@pausalByMonth": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "pausalFromInvoices": "Invoices",
+  "pausalDisclaimer": "Revenue is counted by the date of supply. Foreign-currency invoices use the NBS middle rate on the issue date. Check the final figures with your accountant.",
+  "pausalRemoveTitle": "Remove this revenue entry?",
+  "pausalManualAmountError": "Enter an amount.",
+  "invsFilterAll": "All",
+  "invsFilterDrafts": "Drafts",
+  "invsOutstanding": "Awaiting payment",
+  "invsSearchHint": "Search by client or number",
+  "invsNoMatch": "No invoices match.",
+  "vatEmpty": "Enter an amount to split it into the net amount and VAT.",
+  "vatRatesNote": "Rates shown are the standard and reduced VAT rates in {country}.",
+  "@vatRatesNote": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "mrgEmpty": "Enter the cost and a price, markup or margin.",
+  "mrgLoss": "At this price you sell below cost.",
+  "beFixedHint": "Rent, salaries, subscriptions…",
+  "beVariableHint": "Materials, commissions, delivery…",
+  "beEmpty": "Enter your fixed costs, price and variable cost per unit.",
+  "beContributionUnit": "Contribution per unit",
+  "beExplain": "Each unit sold contributes its price minus its variable cost toward fixed costs and profit. Amounts are without VAT.",
+  "invsFlowsHint": "Net cash flow at the end of each year. Type a minus sign for a year with more going out than coming in.",
+  "invsEmpty": "Enter the investment, a discount rate and at least one year's cash flow.",
+  "invsCumulative": "Cumulative cash flow",
+  "invCreatedWith": "Created with Bilans",
+  "proHeadline": "Bilans Pro",
+  "proSubhead": "Every calculator, every country, unlimited invoices and PDF reports. No ads, no account.",
+  "proFeatAllCountries": "Payroll for all 9 tax systems",
+  "proFeatUnlimitedInvoices": "Unlimited invoices",
+  "proFeatPdf": "PDF reports",
+  "proFeatUnlimitedSaves": "Unlimited saved calculations",
+  "proBenefitCountries": "Payroll for all 9 tax systems, and the same pay compared across countries",
+  "proBenefitTeam": "Team cost: your whole payroll by month and year",
+  "proBenefitInvoices": "Unlimited invoices as professional PDFs",
+  "proBenefitInvoicesRs": "Unlimited invoices with the NBS IPS payment QR code",
+  "proBenefitPausal": "Paušal limit tracker for the 6 and 8 million dinar limits",
+  "proBenefitLoans": "Compare loan offers and plan early repayments",
+  "proBenefitHistory": "Exchange-rate history for 30, 90 and 365 days",
+  "proBenefitInvestment": "Investment analysis: NPV, IRR and payback",
+  "proBenefitPdf": "PDF reports for pay, loans, savings and teams",
+  "proYearly": "Yearly",
+  "proMonthly": "Monthly",
+  "proLifetime": "Lifetime",
+  "proPerYear": "per year",
+  "proPerMonth": "per month",
+  "proOnce": "one-time",
+  "proSave": "SAVE {percent}%",
+  "@proSave": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "proTrialNote": "{days} days free, then billed yearly",
+  "@proTrialNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "proLifetimeNote": "Pay once, keep Pro for good",
+  "proStartTrial": "Start {days}-day free trial",
+  "@proStartTrial": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "proContinue": "Continue",
+  "proRestore": "Restore",
+  "proRestored": "Bilans Pro is active on this device.",
+  "proNothingToRestore": "No Bilans Pro purchase was found for this Google account.",
+  "proPending": "Your payment is pending. Pro unlocks automatically as soon as Google Play confirms it.",
+  "proError": "The purchase didn't go through. You haven't been charged — please try again.",
+  "proUnavailable": "Purchases aren't available right now. Check that Google Play is installed and you're signed in, then try again.",
+  "proLegal": "Subscriptions renew automatically at the price shown until you cancel. Cancel anytime in Google Play → Payments & subscriptions, at least 24 hours before the renewal date. A free trial turns into a paid yearly subscription unless you cancel before it ends.",
+  "proLegalLifetime": "A one-time purchase: no subscription and no renewals. Pro stays active on every device signed in to the same Google account.",
+  "proDevSimulate": "Simulate Pro (developer build)",
+  "proWelcome": "Welcome to Bilans Pro",
+  "proWelcomeBody": "Everything is unlocked. Thank you for supporting an independent app.",
+  "settingsPreferences": "Preferences",
+  "settingsTheme": "Appearance",
+  "settingsThemeSystem": "System",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsYourData": "Your data",
+  "settingsExport": "Export backup",
+  "settingsImport": "Restore from backup",
+  "settingsBackupSubject": "Bilans backup",
+  "settingsExported": "Backup ready",
+  "settingsImportInvalid": "That file isn't a Bilans backup.",
+  "settingsImportTitle": "Restore this backup?",
+  "settingsImportBody": "Everything in the app is replaced with the backup's contents — invoices, business details, team and saved calculations.",
+  "settingsImportAction": "Restore",
+  "settingsImported": "Backup restored",
+  "settingsDeleteAll": "Delete all data",
+  "settingsDeleteTitle": "Delete all data?",
+  "settingsDeleteBody": "Invoices, business details, your team, saved calculations and settings are removed from this phone. Export a backup first if you might need them. Your Pro purchase is not affected.",
+  "settingsDeleteAction": "Delete everything",
+  "settingsDataNote": "Bilans has no account and no servers: your data lives only on this phone. Export a backup to move it to a new phone.",
+  "settingsAbout": "About",
+  "settingsRate": "Rate Bilans on Google Play",
+  "settingsContact": "Contact",
+  "settingsPrivacy": "Privacy policy",
+  "settingsTerms": "Terms of use",
+  "settingsLicenses": "Open-source licences",
+  "settingsDisclaimer": "Calculations are indicative and do not replace professional tax, legal or financial advice.",
+  "settingsProActive": "Bilans Pro is active",
+  "settingsManageSubscription": "Manage subscription",
+  "settingsProPitch": "All countries, team payroll, unlimited invoices, PDF reports and more.",
+  "settingsSeePlans": "See plans"
 }

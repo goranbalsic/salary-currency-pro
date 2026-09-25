@@ -72,5 +72,15 @@
   "curCAD": "Canadian dollar",
   "curAUD": "Australian dollar",
   "curTRY": "Turkish lira",
-  "curRUB": "Russian ruble"
+  "curRUB": "Russian ruble",
+  "formFixErrors": "Please fix the highlighted fields.",
+  "discardTitle": "Discard changes?",
+  "discardBody": "Your changes haven't been saved.",
+  "discardKeep": "Keep editing",
+  "discardAction": "Discard",
+  "commonMore": "More options",
+  "errorPdf": "Couldn't create the PDF. Please try again.",
+  "pdfLanguageTitle": "Invoice language",
+  "pdfLanguageBoth": "{language} + English",
+  "@pdfLanguageBoth": {"placeholders": {"language": {"type": "String"}}}
 }

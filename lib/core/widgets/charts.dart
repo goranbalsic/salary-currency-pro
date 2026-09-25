@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -163,7 +164,7 @@ class _StackedColumnsState extends State<StackedColumns> {
                 behavior: HitTestBehavior.opaque,
                 onTapDown: (d) {
                   final i = (d.localPosition.dx / slot).floor().clamp(0, n - 1);
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   setState(() => _selected = _selected == i ? null : i);
                 },
                 child: CustomPaint(
@@ -327,6 +328,7 @@ class LineChart extends StatefulWidget {
     required this.formatY,
     this.height = 150,
     this.semanticLabel,
+    this.baseline,
   });
 
   final List<LinePoint> points;
@@ -335,19 +337,30 @@ class LineChart extends StatefulWidget {
   final double height;
   final String? semanticLabel;
 
+  /// Draws a reference line at this value (e.g. zero) when in range.
+  final double? baseline;
+
   @override
   State<LineChart> createState() => _LineChartState();
 }
 
 class _LineChartState extends State<LineChart> {
   int? _index;
+  Timer? _clear;
+
+  @override
+  void dispose() {
+    _clear?.cancel();
+    super.dispose();
+  }
 
   void _scrub(Offset p, double width) {
+    _clear?.cancel();
     final pts = widget.points;
     if (pts.length < 2) return;
     final i = ((p.dx / width) * (pts.length - 1)).round().clamp(0, pts.length - 1);
     if (i != _index) {
-      HapticFeedback.selectionClick();
+      unawaited(HapticFeedback.selectionClick());
       setState(() => _index = i);
     }
   }
@@ -383,12 +396,23 @@ class _LineChartState extends State<LineChart> {
                 onHorizontalDragUpdate: (d) => _scrub(d.localPosition, constraints.maxWidth),
                 onHorizontalDragEnd: (_) => setState(() => _index = null),
                 onTapDown: (d) => _scrub(d.localPosition, constraints.maxWidth),
-                onTapUp: (_) => Future<void>.delayed(const Duration(seconds: 2), () {
-                  if (mounted) setState(() => _index = null);
-                }),
+                onTapUp: (_) {
+                  _clear?.cancel();
+                  _clear = Timer(const Duration(seconds: 2), () {
+                    if (mounted) setState(() => _index = null);
+                  });
+                },
                 child: CustomPaint(
                   size: Size(constraints.maxWidth, widget.height),
-                  painter: _LinePainter(points: pts, color: widget.color, grid: c.line, surface: c.paper, active: _index, ink: c.ink2),
+                  painter: _LinePainter(
+                    points: pts,
+                    color: widget.color,
+                    grid: c.line,
+                    surface: c.paper,
+                    active: _index,
+                    ink: c.ink2,
+                    baseline: widget.baseline,
+                  ),
                 ),
               ),
             ),
@@ -400,7 +424,15 @@ class _LineChartState extends State<LineChart> {
 }
 
 class _LinePainter extends CustomPainter {
-  _LinePainter({required this.points, required this.color, required this.grid, required this.surface, required this.active, required this.ink});
+  _LinePainter({
+    required this.points,
+    required this.color,
+    required this.grid,
+    required this.surface,
+    required this.active,
+    required this.ink,
+    this.baseline,
+  });
 
   final List<LinePoint> points;
   final Color color;
@@ -408,6 +440,7 @@ class _LinePainter extends CustomPainter {
   final Color surface;
   final int? active;
   final Color ink;
+  final double? baseline;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -431,8 +464,18 @@ class _LinePainter extends CustomPainter {
     final gridPaint = Paint()
       ..color = grid
       ..strokeWidth = 1;
-    canvas.drawLine(Offset(0, pad), Offset(size.width, pad), gridPaint);
+    canvas.drawLine(const Offset(0, pad), Offset(size.width, pad), gridPaint);
     canvas.drawLine(Offset(0, size.height - pad), Offset(size.width, size.height - pad), gridPaint);
+    final b = baseline;
+    if (b != null && b > minY && b < maxY) {
+      final y = pad + (size.height - 2 * pad) * (1 - (b - minY) / (maxY - minY));
+      final dash = Paint()
+        ..color = ink.withValues(alpha: 0.6)
+        ..strokeWidth = 1;
+      for (var x = 0.0; x < size.width; x += 8) {
+        canvas.drawLine(Offset(x, y), Offset(math.min(x + 4, size.width), y), dash);
+      }
+    }
 
     final line = Path()..moveTo(pos(0).dx, pos(0).dy);
     for (var i = 1; i < points.length; i++) {
@@ -465,5 +508,6 @@ class _LinePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _LinePainter old) => old.points != points || old.active != active || old.color != color;
+  bool shouldRepaint(covariant _LinePainter old) =>
+      old.points != points || old.active != active || old.color != color || old.baseline != baseline;
 }

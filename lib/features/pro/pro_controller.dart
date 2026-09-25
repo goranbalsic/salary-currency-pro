@@ -28,9 +28,8 @@ enum PurchaseFlow { idle, loadingProducts, purchasing, pending, success, error, 
 /// start the app asks Play which products the account owns. A cached
 /// entitlement covers offline use for [AppConfig.entitlementOfflineGrace].
 class ProController extends ChangeNotifier {
-  ProController(this._store, {BillingGateway? gateway, bool? billingSupported, DateTime Function()? clock})
-      : _gateway = gateway,
-        _billingSupported = billingSupported ?? (defaultTargetPlatform == TargetPlatform.android && !kIsWeb),
+  ProController(this._store, {this._gateway, bool? billingSupported, DateTime Function()? clock})
+      : _billingSupported = billingSupported ?? (defaultTargetPlatform == TargetPlatform.android && !kIsWeb),
         _now = clock ?? DateTime.now {
     _loadCache();
   }

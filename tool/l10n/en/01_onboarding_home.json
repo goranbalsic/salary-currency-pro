@@ -68,5 +68,20 @@
   "recentDeposit": "Deposit · {term}",
   "@recentDeposit": {"placeholders": {"term": {"type": "String"}}},
   "recentDepositSub": "at maturity · {rate}",
-  "@recentDepositSub": {"placeholders": {"rate": {"type": "String"}}}
+  "@recentDepositSub": {"placeholders": {"rate": {"type": "String"}}},
+  "recentVatAdd": "{amount} + VAT {rate}",
+  "@recentVatAdd": {"placeholders": {"amount": {"type": "String"}, "rate": {"type": "String"}}},
+  "recentVatExtract": "net of {amount} at {rate}",
+  "@recentVatExtract": {"placeholders": {"amount": {"type": "String"}, "rate": {"type": "String"}}},
+  "recentMarginSub": "price with VAT · margin {margin}",
+  "@recentMarginSub": {"placeholders": {"margin": {"type": "String"}}},
+  "recentBreakEvenSub": "per month · revenue {amount}",
+  "@recentBreakEvenSub": {"placeholders": {"amount": {"type": "String"}}},
+  "recentInvestmentSub": "NPV · IRR {irr}",
+  "@recentInvestmentSub": {"placeholders": {"irr": {"type": "String"}}},
+  "historyTitle": "Saved and recent",
+  "historySaved": "Saved",
+  "historySavedEmpty": "Tap Save on any result to keep it here with a name.",
+  "historyRecentEmpty": "Calculations you finish appear here automatically.",
+  "historyClearTitle": "Clear the recent list?"
 }

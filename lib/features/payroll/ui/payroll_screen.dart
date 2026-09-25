@@ -265,38 +265,10 @@ class _PayrollScreenState extends State<PayrollScreen> {
     return null;
   }
 
-  List<Widget> _notes(AppLocalizations l, Formats fm, PayrollResult r) {
-    String m(double v) => fm.money(v, r.system.currency, decimals: r.system.decimals);
-    final out = <Widget>[];
-    void add(String text, {bool warning = false}) {
-      out.add(Padding(padding: const EdgeInsets.only(top: 8), child: InfoNote(text, warning: warning)));
-    }
-
-    if (r.notes.contains(PayrollNote.nonPositiveNet)) add(l.payNoteNonPositive, warning: true);
-    if (r.notes.contains(PayrollNote.minimumBaseApplied)) {
-      final min = switch (r.system) {
-        PayrollSystem.serbia => PayrollRules.rsMinBase,
-        PayrollSystem.northMacedonia => PayrollRules.mkMinBase,
-        _ => null,
-      };
-      if (min != null) add(l.payNoteMinBase(m(min)));
-    }
-    if (r.notes.contains(PayrollNote.maximumBaseApplied)) {
-      final max = switch (r.system) {
-        PayrollSystem.serbia => PayrollRules.rsMaxBase,
-        PayrollSystem.northMacedonia => PayrollRules.mkMaxBase,
-        PayrollSystem.bulgaria => PayrollRules.bgMaxBase,
-        PayrollSystem.croatia => PayrollRules.hrMaxPensionBase,
-        PayrollSystem.montenegro => PayrollRules.meMaxBase,
-        _ => null,
-      };
-      if (max != null) add(l.payNoteMaxBase(m(max)));
-    }
-    if (r.notes.contains(PayrollNote.pensionReliefApplied)) {
-      add(l.payNoteRelief(m(PayrollEngine.croatiaPensionBase(r.gross))));
-    }
-    return out;
-  }
+  List<Widget> _notes(AppLocalizations l, Formats fm, PayrollResult r) => [
+        for (final (text, warning) in payrollNoteTexts(l, fm, r))
+          Padding(padding: const EdgeInsets.only(top: 8), child: InfoNote(text, warning: warning)),
+      ];
 
   void _showSources(BuildContext context, PayrollSystem system) {
     final l = context.l10n;
@@ -381,27 +353,8 @@ class _OptionsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final f = context.fmt;
-    final summary = switch (system) {
-      PayrollSystem.croatia => l.payOptionsHrSummary(
-          f.percentValue(options.croatiaLowerRate * 100, decimals: _dec(options.croatiaLowerRate)),
-          f.percentValue(options.croatiaHigherRate * 100, decimals: _dec(options.croatiaHigherRate)),
-          options.children,
-        ),
-      PayrollSystem.montenegro =>
-        l.payOptionsMeSummary(f.percentValue(options.montenegroSurtaxRate * 100, decimals: _dec(options.montenegroSurtaxRate))),
-      PayrollSystem.romania => [
-          l.payOptionsRoSummary(options.dependents),
-          if (options.romaniaMinimumWageFacility) l.payOptionsRoMinWage,
-        ].join(' · '),
-      PayrollSystem.fbih => l.payOptionsFbihSummary(options.fbihDisabilityFund ? l.payOn : l.payOff),
-      _ => '',
-    };
+    final summary = payrollOptionsSummary(l, f, system, options);
     return SelectRow(label: l.payOptions, value: summary, onTap: onTap, divider: false);
-  }
-
-  static int _dec(double rate) {
-    final p = rate * 100;
-    return (p - p.roundToDouble()).abs() < 1e-9 ? 0 : 2;
   }
 }
 

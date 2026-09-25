@@ -122,19 +122,37 @@ class ResultActions extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        FilledButton(
-          onPressed: onPdf,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.picture_as_pdf_outlined, size: 20),
-              const SizedBox(width: 10),
-              Flexible(child: Text(pdfLabel, overflow: TextOverflow.ellipsis)),
-              if (pdfLocked) ...[const SizedBox(width: 10), const ProBadge(strong: true)],
-            ],
-          ),
-        ),
+        PdfButton(label: pdfLabel, locked: pdfLocked, onPressed: onPdf),
       ],
+    );
+  }
+}
+
+/// The primary "PDF" action, tagged PRO when locked.
+class PdfButton extends StatelessWidget {
+  const PdfButton({super.key, required this.label, required this.locked, required this.onPressed, this.busy = false});
+
+  final String label;
+  final bool locked;
+  final bool busy;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+      onPressed: busy ? null : onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (busy)
+            const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+          else
+            const Icon(Icons.picture_as_pdf_outlined, size: 20),
+          const SizedBox(width: 10),
+          Flexible(child: Text(label, overflow: TextOverflow.ellipsis)),
+          if (locked) ...[const SizedBox(width: 10), const ProBadge(strong: true)],
+        ],
+      ),
     );
   }
 }
@@ -246,4 +264,50 @@ class SwitchRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Save + Share buttons for calculators without a PDF report.
+class SaveShareRow extends StatelessWidget {
+  const SaveShareRow({super.key, required this.saveLabel, required this.shareLabel, required this.onSave, required this.onShare});
+
+  final String saveLabel;
+  final String shareLabel;
+  final VoidCallback? onSave;
+  final VoidCallback? onShare;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: onSave,
+            icon: const Icon(Icons.bookmark_border, size: 20),
+            label: Text(saveLabel, overflow: TextOverflow.ellipsis),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: onShare,
+            icon: const Icon(Icons.ios_share, size: 20),
+            label: Text(shareLabel, overflow: TextOverflow.ellipsis),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Builds the plain-text share body: a title, "label: value" lines and
+/// the footer.
+String shareBody(String title, List<(String, String)> lines, String footer) {
+  final b = StringBuffer(title)..writeln();
+  for (final (label, value) in lines) {
+    b.writeln('$label: $value');
+  }
+  b
+    ..writeln()
+    ..write('— $footer');
+  return b.toString();
 }

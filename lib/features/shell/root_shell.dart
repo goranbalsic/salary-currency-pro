@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -7,61 +9,11 @@ import '../../l10n/l10n.dart';
 import '../business/ui/business_screen.dart';
 import '../credit/ui/credit_screen.dart';
 import '../fx/ui/fx_screen.dart';
-import '../history/history_store.dart';
 import '../home/home_screen.dart';
 import '../payroll/ui/payroll_screen.dart';
+import 'shell_controller.dart';
 
-enum AppTab { home, payroll, credit, fx, business }
-
-/// Tab selection plus one-shot requests for a tab (open a section, restore
-/// a saved calculation). Tab screens consume requests addressed to them.
-class ShellController extends ChangeNotifier {
-  AppTab _tab = AppTab.home;
-  final Map<AppTab, int> _sections = {};
-  SavedCalc? _restore;
-
-  AppTab get tab => _tab;
-
-  void select(AppTab tab, {int? section}) {
-    if (section != null) _sections[tab] = section;
-    _tab = tab;
-    notifyListeners();
-  }
-
-  /// Returns and clears a pending section request for [tab].
-  int? takeSection(AppTab tab) => _sections.remove(tab);
-
-  void restore(SavedCalc calc) {
-    _restore = calc;
-    final (tab, section) = switch (calc.tool) {
-      ToolId.payroll => (AppTab.payroll, null),
-      ToolId.loan => (AppTab.credit, 0),
-      ToolId.deposit => (AppTab.credit, 1),
-      ToolId.fx => (AppTab.fx, 0),
-      _ => (AppTab.business, null),
-    };
-    select(tab, section: section);
-  }
-
-  /// Returns and clears a pending restore for [tool].
-  SavedCalc? takeRestore(ToolId tool) {
-    final r = _restore;
-    if (r == null || r.tool != tool) return null;
-    _restore = null;
-    return r;
-  }
-}
-
-/// Convenience accessor used by screens outside the shell's build method.
-abstract final class ShellScope {
-  static ShellController? of(BuildContext context) {
-    try {
-      return Provider.of<ShellController>(context, listen: false);
-    } on ProviderNotFoundException {
-      return null;
-    }
-  }
-}
+export 'shell_controller.dart';
 
 class RootShell extends StatefulWidget {
   const RootShell({super.key});
@@ -71,7 +23,7 @@ class RootShell extends StatefulWidget {
 }
 
 class _RootShellState extends State<RootShell> {
-  final _controller = ShellController();
+  late final ShellController _controller = context.read<ShellController>();
   final Set<AppTab> _built = {AppTab.home};
 
   AppTab get _tab => _controller.tab;
@@ -80,6 +32,7 @@ class _RootShellState extends State<RootShell> {
   void initState() {
     super.initState();
     _controller.addListener(_onChange);
+    _built.add(_controller.tab);
   }
 
   void _onChange() {
@@ -90,7 +43,6 @@ class _RootShellState extends State<RootShell> {
   @override
   void dispose() {
     _controller.removeListener(_onChange);
-    _controller.dispose();
     super.dispose();
   }
 
@@ -114,15 +66,12 @@ class _RootShellState extends State<RootShell> {
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _select(AppTab.home);
       },
-      child: ChangeNotifierProvider<ShellController>.value(
-        value: _controller,
-        child: Scaffold(
-          body: IndexedStack(
-            index: _tab.index,
-            children: [for (final t in AppTab.values) TickerMode(enabled: t == _tab, child: _page(t))],
-          ),
-          bottomNavigationBar: _BottomBar(current: _tab, onSelect: _select),
+      child: Scaffold(
+        body: IndexedStack(
+          index: _tab.index,
+          children: [for (final t in AppTab.values) TickerMode(enabled: t == _tab, child: _page(t))],
         ),
+        bottomNavigationBar: _BottomBar(current: _tab, onSelect: _select),
       ),
     );
   }
@@ -162,7 +111,7 @@ class _BottomBar extends StatelessWidget {
                   excludeSemantics: true,
                   child: InkResponse(
                     onTap: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       onSelect(tab);
                     },
                     highlightShape: BoxShape.rectangle,

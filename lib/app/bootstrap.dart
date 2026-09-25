@@ -12,6 +12,7 @@ import '../features/history/history_store.dart';
 import '../features/payroll/data/team_store.dart';
 import '../features/pro/pro_controller.dart';
 import '../features/settings/settings_controller.dart';
+import '../features/shell/shell_controller.dart';
 import 'app.dart';
 
 /// Everything the widget tree needs, created once at startup.
@@ -24,6 +25,7 @@ class AppServices {
     required this.business,
     required this.team,
     required this.pro,
+    required this.shell,
   });
 
   final Store store;
@@ -34,6 +36,10 @@ class AppServices {
   final TeamStore team;
   final ProController pro;
 
+  /// Tab selection, provided above the Navigator so pushed screens can
+  /// switch tabs too.
+  final ShellController shell;
+
   static AppServices create(Store store, {RateApi? rateApi, ProController? pro}) => AppServices(
         store: store,
         settings: SettingsController(store),
@@ -42,6 +48,7 @@ class AppServices {
         business: BusinessStore(store),
         team: TeamStore(store),
         pro: pro ?? ProController(store),
+        shell: ShellController(),
       );
 
   /// Re-reads every store after a backup restore or a data reset.
@@ -52,6 +59,7 @@ class AppServices {
     business.reload();
     team.reload();
     pro.reloadCache();
+    shell.reset();
   }
 }
 

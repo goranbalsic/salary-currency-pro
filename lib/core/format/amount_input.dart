@@ -13,17 +13,50 @@ class AmountInputFormatter extends TextInputFormatter {
     required this.formats,
     this.decimals = 2,
     this.maxIntegerDigits = 12,
+    this.allowNegative = false,
   });
 
   final Formats formats;
   final int decimals;
   final int maxIntegerDigits;
 
+  /// Accept a leading minus (typed as '-' or '−'), shown as '−'.
+  final bool allowNegative;
+
+  static const _minus = '−';
+
   String get _group => formats.group;
   String get _decimal => formats.decimal;
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    if (!allowNegative) return _format(oldValue, newValue);
+    // Peel off a leading sign, format the magnitude, then put it back.
+    String strip(String t) => t.startsWith('-') || t.startsWith(_minus) ? t.substring(1) : t;
+    bool signed(String t) => t.startsWith('-') || t.startsWith(_minus);
+    final negative = signed(newValue.text);
+    if (negative && newValue.text.length == 1) {
+      return const TextEditingValue(text: _minus, selection: TextSelection.collapsed(offset: 1));
+    }
+    int shift(TextSelection sel, bool neg) => sel.isValid && neg ? (sel.baseOffset - 1).clamp(0, 1 << 30) : sel.baseOffset;
+    final oldNeg = signed(oldValue.text);
+    final innerOld = TextEditingValue(
+      text: strip(oldValue.text),
+      selection: TextSelection.collapsed(offset: shift(oldValue.selection, oldNeg)),
+    );
+    final innerNew = TextEditingValue(
+      text: strip(newValue.text),
+      selection: TextSelection.collapsed(offset: shift(newValue.selection, negative)),
+    );
+    final out = _format(innerOld, innerNew);
+    if (!negative) return out;
+    return TextEditingValue(
+      text: '$_minus${out.text}',
+      selection: TextSelection.collapsed(offset: out.selection.baseOffset + 1),
+    );
+  }
+
+  TextEditingValue _format(TextEditingValue oldValue, TextEditingValue newValue) {
     final newText = newValue.text;
     if (newText.isEmpty) return const TextEditingValue();
 
@@ -118,6 +151,10 @@ class AmountInputFormatter extends TextInputFormatter {
   /// Text for putting a stored value back into a field: grouped, with
   /// decimals only when non-zero.
   String formatNumberForEditing(double value) {
+    if (allowNegative && value < 0 && value.isFinite) {
+      final body = formatNumberForEditing(-value);
+      return body.isEmpty ? '' : '$_minus$body';
+    }
     if (!value.isFinite || value <= 0) return '';
     final fixed = value.toStringAsFixed(decimals);
     var parts = fixed.split('.');
@@ -132,8 +169,15 @@ class AmountInputFormatter extends TextInputFormatter {
 
   /// Reads the numeric value of text produced by this formatter.
   double? parse(String text) {
-    final cleaned = text.replaceAll(_group, '').replaceAll(_decimal, '.');
+    var t = text;
+    var sign = 1.0;
+    if (allowNegative && (t.startsWith(_minus) || t.startsWith('-'))) {
+      sign = -1;
+      t = t.substring(1);
+    }
+    final cleaned = t.replaceAll(_group, '').replaceAll(_decimal, '.');
     if (cleaned.isEmpty) return null;
-    return double.tryParse(cleaned);
+    final v = double.tryParse(cleaned);
+    return v == null ? null : sign * v;
   }
 }

@@ -14,6 +14,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  barcode: ^2.2.9
   file_selector: ^1.1.0
   http: ^1.6.0
   in_app_purchase: ^3.3.1

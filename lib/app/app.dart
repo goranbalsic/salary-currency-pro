@@ -35,6 +35,7 @@ class BilansApp extends StatelessWidget {
         ChangeNotifierProvider<BusinessStore>.value(value: services.business),
         ChangeNotifierProvider<TeamStore>.value(value: services.team),
         ChangeNotifierProvider<ProController>.value(value: services.pro),
+        ChangeNotifierProvider<ShellController>.value(value: services.shell),
       ],
       child: Consumer<SettingsController>(
         builder: (context, settings, _) => MaterialApp(
@@ -62,9 +63,21 @@ class BilansApp extends StatelessWidget {
             final scaler = media.textScaler.clamp(minScaleFactor: 0.85, maxScaleFactor: 1.6);
             return MediaQuery(data: media.copyWith(textScaler: scaler), child: child!);
           },
-          home: settings.onboarded ? const RootShell() : const OnboardingScreen(),
+          home: const _Root(),
         ),
       ),
     );
+  }
+}
+
+/// Onboarding until a country is chosen, then the app. Watching here (not
+/// in MaterialApp.home) swaps the screen reliably after a data reset.
+class _Root extends StatelessWidget {
+  const _Root();
+
+  @override
+  Widget build(BuildContext context) {
+    final onboarded = context.select<SettingsController, bool>((s) => s.onboarded);
+    return onboarded ? const RootShell() : const OnboardingScreen();
   }
 }

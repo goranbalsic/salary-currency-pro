@@ -497,7 +497,7 @@ class PayrollEngine {
 
   /// Romanian monthly personal deduction (whole lei) for [gross] pay.
   static double romaniaDeduction(double gross, int dependents) {
-    final min = PayrollRules.roMinimumWage;
+    const min = PayrollRules.roMinimumWage;
     if (gross > min + PayrollRules.roDeductionCeilingAboveMinimum) return 0;
     final idx = dependents.clamp(0, PayrollRules.roDeductionBasePercent.length - 1);
     var percent = PayrollRules.roDeductionBasePercent[idx];

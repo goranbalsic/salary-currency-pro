@@ -8,12 +8,13 @@ import '../../core/widgets/ledger.dart';
 import '../../l10n/l10n.dart';
 import '../fx/data/rates_controller.dart';
 import '../fx/domain/rates.dart';
+import '../history/history_screen.dart';
 import '../history/history_store.dart';
+import '../history/open_saved.dart';
 import '../history/recent_summary.dart';
 import '../pro/pro_controller.dart';
 import '../settings/settings_controller.dart';
 import '../settings/ui/settings_screen.dart';
-import '../shell/root_shell.dart';
 import 'catalog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -335,26 +336,37 @@ class _RecentStrip extends StatelessWidget {
     final history = context.watch<HistoryStore>();
     final settings = context.watch<SettingsController>();
     final items = history.recent.where((e) => RecentSummary.supports(e.tool)).take(2).toList();
-    if (items.isEmpty) return const SizedBox.shrink();
+    if (items.isEmpty && history.savedCount == 0) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Overline(l.homeRecent, padding: const EdgeInsets.only(bottom: 8)),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (var i = 0; i < 2; i++) ...[
-                if (i > 0) const SizedBox(width: 10),
-                Expanded(
-                  child: i < items.length
-                      ? _RecentCard(summary: RecentSummary.of(context, items[i], settings), onTap: () => ShellScope.of(context)?.restore(items[i]))
-                      : const SizedBox.shrink(),
-                ),
-              ],
+              Expanded(child: Overline(l.homeRecent)),
+              TextButton(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HistoryScreen())),
+                style: TextButton.styleFrom(minimumSize: const Size(48, 36), padding: const EdgeInsets.symmetric(horizontal: 8)),
+                child: Text(l.homeSeeAll),
+              ),
             ],
           ),
+          const SizedBox(height: 4),
+          if (items.isNotEmpty)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < 2; i++) ...[
+                  if (i > 0) const SizedBox(width: 10),
+                  Expanded(
+                    child: i < items.length
+                        ? _RecentCard(summary: RecentSummary.of(context, items[i], settings), onTap: () => openSavedCalc(context, items[i]))
+                        : const SizedBox.shrink(),
+                  ),
+                ],
+              ],
+            ),
         ],
       ),
     );
